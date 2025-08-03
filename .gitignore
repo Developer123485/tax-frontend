@@ -1,0 +1,42 @@
+# Node.js dependencies
+node_modules/
+
+# Next.js build output
+.next/
+
+# Log files
+*.log
+
+# Environment variables file (sensitive information)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# npm package-lock files, if you use yarn instead
+package-lock.json
+
+# Yarn lock file (if using npm, you can ignore this)
+yarn.lock
+
+# OS-specific files (macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# IDE and editor specific files (VS Code, WebStorm, etc.)
+.vscode/
+.idea/
+
+# Test output
+coverage/
+
+# Files related to various deployment platforms
+.vercel/
+
+# Exclude build folder (sometimes used for exporting static sites)
+out/
+
+# Docker files
+docker-compose.yml
+Dockerfile

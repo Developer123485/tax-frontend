@@ -1,0 +1,93 @@
+import { apiRequest } from "../config";
+import api from "../utils/interceptors";
+let axiosConfig = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+export const AuthService = {
+  login,
+  submitOtpToEmail,
+  submitVerifyDetail,
+  submitOtpToPhone,
+  SendOtpForForgotPassword,
+  forgotPassword,
+};
+
+async function login(model) {
+  return apiRequest
+    .post("Auth/SignIn", model, axiosConfig)
+    .then((result) => {
+      if (result && result.data && result.data) {
+        window.sessionStorage.setItem("token", result.data.token);
+        window.sessionStorage.setItem(
+          "userDetail",
+          JSON.stringify(result.data)
+        );
+      }
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+async function submitOtpToEmail(email) {
+  return apiRequest
+    .get(`auth/sendOtpToEmail/${email}`, axiosConfig)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+async function SendOtpForForgotPassword(email) {
+  return apiRequest
+    .get(`auth/SendOtpForForgotPassword/${email}`, axiosConfig)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+async function forgotPassword(model) {
+  return apiRequest
+    .post(`auth/forgotPassword`, model, axiosConfig)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+async function submitOtpToPhone(phone) {
+  return apiRequest
+    .get(`auth/sendOtpToPhone/${phone}`, axiosConfig)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+async function submitVerifyDetail(model) {
+  return apiRequest
+    .post("auth/verifyMobileEmailOtpRegistraion", model, axiosConfig)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
+}
+
+// async function logOut() {
+//   const result = await api.post(`Auth/SignOut`);
+//   return result;
+// }
