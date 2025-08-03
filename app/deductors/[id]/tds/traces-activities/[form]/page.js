@@ -237,7 +237,7 @@ export default function TracesActivities({ params }) {
       const model = {
         userName: tracesActivity.userName,
         password: tracesActivity.password,
-        tanNumber: deductorInfo?.deductorTan;
+        tanNumber: deductorInfo?.deductorTan
       }
       TracesActivitiesService.startLogin(model).then(res => {
         if (res) {
