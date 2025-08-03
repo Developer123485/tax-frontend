@@ -198,6 +198,7 @@ export default function TracesActivities({ params }) {
       toast.error("Input Captcha is required");
       return false;
     }
+    tracesActivity.tan = deductorInfo?.deductorTan;
     TracesActivitiesService.continueRequestConsoFile(tracesActivity).then(res => {
 
     }).catch(e => {
@@ -236,7 +237,7 @@ export default function TracesActivities({ params }) {
       const model = {
         userName: tracesActivity.userName,
         password: tracesActivity.password,
-        tanNumber: deductorInfo?.deductorTan
+        tanNumber: deductorInfo?.deductorTan;
       }
       TracesActivitiesService.startLogin(model).then(res => {
         if (res) {
