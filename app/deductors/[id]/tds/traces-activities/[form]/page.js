@@ -282,6 +282,7 @@ export default function TracesActivities({ params }) {
             ["financialYear"]: financialYear,
             ["quarter"]: quarter,
             ["formType"]: formType,
+            ["captcha"]: "",
           }));
         }
       })
@@ -367,7 +368,7 @@ export default function TracesActivities({ params }) {
                     aria-label="Default select example"
                     value={quarter}
                     style={highlightStyle1}
-                    disabled={formType == "24Q"}
+                    disabled={formType == "24Q" && form == "request-form-16-16a-27d"}
                     onChange={(e) => {
                       setQuarter(e.target.value);
                     }}
@@ -388,7 +389,7 @@ export default function TracesActivities({ params }) {
                     value={formType}
                     onChange={(e) => {
                       setFormType(e.target.value);
-                      if (e.target.value == "24Q") {
+                      if (e.target.value == "24Q" && form == "request-form-16-16a-27d") {
                         setQuarter("Q4");
                       }
                     }}
