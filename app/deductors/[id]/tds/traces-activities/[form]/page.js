@@ -434,7 +434,7 @@ export default function TracesActivities({ params }) {
                       </span>
                     )}
                   </div>
-                  <div className="col-md-6 mt-2 d-flex align-items-center">
+                  <div className="col-md-6 mt-1 d-flex align-items-center">
                     <div class="form-check form-check-inline">
                       <input
                         class="form-check-input"
