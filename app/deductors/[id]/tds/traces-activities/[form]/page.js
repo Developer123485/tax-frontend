@@ -20,7 +20,7 @@ export default function TracesActivities({ params }) {
   const [isFocused2, setIsFocused2] = useState(false);
   const [financialYear, setFinancialYear] = useState("");
   const [quarter, setQuarter] = useState("");
-  const [formType, setFormType] = useState("24Q");
+  const [formType, setFormType] = useState("27EQ");
   const [showLoader, setShowLoader] = useState(true);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
   const currentYear = new Date().getFullYear();
@@ -199,28 +199,61 @@ export default function TracesActivities({ params }) {
       return false;
     }
     tracesActivity.tan = deductorInfo?.deductorTan;
-    TracesActivitiesService.continueRequestConsoFile(tracesActivity).then(res => {
+    if (form == "request-conso-file") {
+      TracesActivitiesService.continueRequestConsoFile(tracesActivity).then(res => {
 
-    }).catch(e => {
-      toast.error(e?.message);
-      setConfirmModal(false);
-    })
+      }).catch(e => {
+        toast.error(e?.message);
+        setConfirmModal(false);
+      })
+    }
+    if (form == "request-form-16-16a-27d") {
+      if (formType == "24Q" && quarter == "Q4") {
+        TracesActivitiesService.continueRequest16(tracesActivity).then(res => {
+
+        }).catch(e => {
+          toast.error(e?.message);
+          setConfirmModal(false);
+        })
+      }
+      if (formType == "27EQ") {
+        TracesActivitiesService.continueRequest27D(tracesActivity).then(res => {
+
+        }).catch(e => {
+          toast.error(e?.message);
+          setConfirmModal(false);
+        })
+      }
+      if (formType == "27Q" || formType == "26Q") {
+        TracesActivitiesService.continueRequest16A(tracesActivity).then(res => {
+
+        }).catch(e => {
+          toast.error(e?.message);
+          setConfirmModal(false);
+        })
+      }
+    }
   }
 
   function validateTraces(params) {
     let userNameError = "";
     let passwordError = "";
+    let tokenError = "";
     if (!tracesActivity.userName) {
       userNameError = "User name is required";
     }
     if (!tracesActivity.password) {
       passwordError = "Passwrod is required";
     }
-    if (userNameError || passwordError) {
+    if (!tracesActivity.token) {
+      tokenError = "Token is required";
+    }
+    if (userNameError || passwordError || tokenError) {
       setTracesError((prevState) => ({
         ...prevState,
         userNameError,
         passwordError,
+        tokenError
       }));
       return false;
     }
@@ -228,6 +261,7 @@ export default function TracesActivities({ params }) {
       ...prevState,
       userNameError,
       passwordError,
+      tokenError
     }));
     return true;
   }
@@ -333,6 +367,7 @@ export default function TracesActivities({ params }) {
                     aria-label="Default select example"
                     value={quarter}
                     style={highlightStyle1}
+                    disabled={formType == "24Q"}
                     onChange={(e) => {
                       setQuarter(e.target.value);
                     }}
@@ -353,6 +388,9 @@ export default function TracesActivities({ params }) {
                     value={formType}
                     onChange={(e) => {
                       setFormType(e.target.value);
+                      if (e.target.value == "24Q") {
+                        setQuarter("Q4");
+                      }
                     }}
                   >
                     <option value={""} hidden>
