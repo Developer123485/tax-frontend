@@ -290,6 +290,12 @@ export default function TracesActivities({ params }) {
         "amount3": "",
       },
     }));
+    setTracesError((prevState) => ({
+      ...prevState,
+      userNameError: "",
+      passwordError: "",
+      tokenError: ""
+    }));
   }
 
   function validateTraces(params) {
