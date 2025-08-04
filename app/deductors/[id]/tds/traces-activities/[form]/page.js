@@ -49,29 +49,29 @@ export default function TracesActivities({ params }) {
     userName: "",
     password: "",
     tan: "",
-    validation_Mode: "",
+    validation_Mode: "without_dsc",
     token: "",
-    isNullChallan: "",
-    isBookAdjustment: "",
-    isInvalidPan: "",
+    isNullChallan: null,
+    isBookAdjustment: null,
+    isInvalidPan: null,
     financialYear: "",
     formType: "",
     quarter: "",
     captcha: "",
     deduction: {
-      pan1: "",
-      amount1: "",
-      pan2: "",
-      amount2: "",
-      pan3: "",
-      amount3: "",
+      pan1: null,
+      amount1: null,
+      pan2: null,
+      amount2: null,
+      pan3: null,
+      amount3: null,
     },
     challan: {
-      bsr: "",
-      date: "",
-      challanSrNo: "",
-      amount: "",
-      cdRecordNo: "",
+      bsr: null,
+      date: null,
+      challanSrNo: null,
+      amount: null,
+      cdRecordNo: null,
     },
   });
   const highlightStyle2 = {
@@ -128,20 +128,20 @@ export default function TracesActivities({ params }) {
       array.push(financialYear);
     }
     const currentMonth = new Date().getMonth();
-    let quart = "";
-    if (currentMonth >= 3 && currentMonth <= 5) {
-      quart = "Q4";
-    } else if (currentMonth >= 6 && currentMonth <= 8) {
-      quart = "Q1";
-    } else if (currentMonth >= 9 && currentMonth <= 11) {
-      quart = "Q2";
-    } else {
-      quart = "Q3";
-    }
-    quart = sessionStorage.getItem("quart")
-      ? sessionStorage.getItem("quart")
-      : quart;
-    setQuarter(quart);
+    // let quart = "";
+    // if (currentMonth >= 3 && currentMonth <= 5) {
+    //   quart = "Q4";
+    // } else if (currentMonth >= 6 && currentMonth <= 8) {
+    //   quart = "Q1";
+    // } else if (currentMonth >= 9 && currentMonth <= 11) {
+    //   quart = "Q2";
+    // } else {
+    //   quart = "Q3";
+    // }
+    // quart = sessionStorage.getItem("quart")
+    //   ? sessionStorage.getItem("quart")
+    //   : quart;
+    // // setQuarter(quart);
     setFinancialYears(array);
     let startYear = currentDate.getFullYear();
     if (currentMonth >= 6) {
@@ -201,7 +201,10 @@ export default function TracesActivities({ params }) {
     tracesActivity.tan = deductorInfo?.deductorTan;
     if (form == "request-conso-file") {
       TracesActivitiesService.continueRequestConsoFile(tracesActivity).then(res => {
-
+        if (res) {
+          setConfirmModal(false);
+          alert(res);
+        }
       }).catch(e => {
         toast.error(e?.message);
         setConfirmModal(false);
@@ -210,7 +213,10 @@ export default function TracesActivities({ params }) {
     if (form == "request-form-16-16a-27d") {
       if (formType == "24Q" && quarter == "Q4") {
         TracesActivitiesService.continueRequest16(tracesActivity).then(res => {
-
+          if (res) {
+            setConfirmModal(false);
+            alert(res);
+          }
         }).catch(e => {
           toast.error(e?.message);
           setConfirmModal(false);
@@ -218,7 +224,10 @@ export default function TracesActivities({ params }) {
       }
       if (formType == "27EQ") {
         TracesActivitiesService.continueRequest27D(tracesActivity).then(res => {
-
+          if (res) {
+            setConfirmModal(false);
+            alert(res);
+          }
         }).catch(e => {
           toast.error(e?.message);
           setConfirmModal(false);
@@ -226,7 +235,10 @@ export default function TracesActivities({ params }) {
       }
       if (formType == "27Q" || formType == "26Q") {
         TracesActivitiesService.continueRequest16A(tracesActivity).then(res => {
-
+          if (res) {
+            setConfirmModal(false);
+            alert(res);
+          }
         }).catch(e => {
           toast.error(e?.message);
           setConfirmModal(false);
@@ -436,33 +448,33 @@ export default function TracesActivities({ params }) {
                     )}
                   </div>
                   <div className="col-md-6 mt-1 d-flex align-items-center">
-                    <div class="form-check form-check-inline">
+                    <div className="form-check form-check-inline">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         id="nilChallan"
                       />
-                      <label class="form-check-label" for="nilChallan">
+                      <label className="form-check-label" htmlFor="nilChallan">
                         NIL Challan Statement
                       </label>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <div className="form-check form-check-inline">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         id="bookAdj"
                       />
-                      <label class="form-check-label" for="bookAdj">
+                      <label className="form-check-label" htmlFor="bookAdj">
                         Book Adjustment
                       </label>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <div className="form-check form-check-inline">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         id="noValidPan"
                       />
-                      <label class="form-check-label" for="noValidPan">
+                      <label className="form-check-label" htmlFor="noValidPan">
                         No Valid Pan
                       </label>
                     </div>
@@ -473,11 +485,11 @@ export default function TracesActivities({ params }) {
                     <h6 className="mb-4">
                       Provide any one challan information of that return
                     </h6>
-                    <div class="row mb-3">
-                      <label for="" class="col-md-4 col-form-label">
+                    <div className="row mb-3">
+                      <label htmlFor="" className="col-md-4 col-form-label">
                         CD Record Number
                       </label>
-                      <div class="col-md-8">
+                      <div className="col-md-8">
                         <input
                           type="text"
                           className="form-control "
@@ -486,11 +498,11 @@ export default function TracesActivities({ params }) {
                         />
                       </div>
                     </div>
-                    <div class="row mb-3">
-                      <label for="" class="col-md-4 col-form-label">
+                    <div className="row mb-3">
+                      <label htmlFor="" className="col-md-4 col-form-label">
                         Challan Serial Number / DDO
                       </label>
-                      <div class="col-md-8">
+                      <div className="col-md-8">
                         <input
                           type="text"
                           className="form-control "
@@ -500,10 +512,10 @@ export default function TracesActivities({ params }) {
                       </div>
                     </div>
                     <div className="row mb-3">
-                      <label for="" class="col-md-4 col-form-label">
+                      <label htmlFor="" className="col-md-4 col-form-label">
                         BSR Code / Receipt Numbers
                       </label>
-                      <div class="col-md-8">
+                      <div className="col-md-8">
                         <input
                           type="text"
                           className="form-control "
@@ -512,11 +524,11 @@ export default function TracesActivities({ params }) {
                         />
                       </div>
                     </div>
-                    <div class="row mb-3">
-                      <label for="" class="col-md-4 col-form-label">
+                    <div className="row mb-3">
+                      <label htmlFor="" className="col-md-4 col-form-label">
                         Date Of Tax Deposited
                       </label>
-                      <div class="col-md-8">
+                      <div className="col-md-8">
                         <input
                           type="text"
                           className="form-control "
@@ -526,11 +538,11 @@ export default function TracesActivities({ params }) {
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="" class="col-md-4 col-form-label">
+                    <div className="row mb-3">
+                      <label htmlFor="" className="col-md-4 col-form-label">
                         Challan Amount / Transfer Voucher
                       </label>
-                      <div class="col-md-8">
+                      <div className="col-md-8">
                         <input
                           type="text"
                           className="form-control "
@@ -632,7 +644,7 @@ export default function TracesActivities({ params }) {
                             )}
                           </div>
                           <div className="me-4">
-                            <button type="submit" class="btn btn-primary"
+                            <button type="submit" className="btn btn-primary"
                               onClick={(e) => submitLogin(e)}
                             >
                               Submit
