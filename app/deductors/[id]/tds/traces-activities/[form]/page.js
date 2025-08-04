@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { useRouter } from "next/navigation";
 import ProcessPopup from "@/app/components/modals/processing";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { DeductorsService } from "@/app/services/deductors.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 import Modal from "react-bootstrap/Modal";
@@ -16,6 +17,7 @@ export default function TracesActivities({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
   const [isFocused, setIsFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [financialYear, setFinancialYear] = useState("");
@@ -672,22 +674,17 @@ export default function TracesActivities({ params }) {
                             <label className="form-label">Password</label>
                             <div className="input-group ">
                               <input
-                                type="password"
                                 className="form-control rounded-2"
+                                type={showPassword ? "text" : "password"}
                                 id="pwd"
                                 value={tracesActivity.password}
                                 onChange={(e) => handleInputTracesActivities("password", e)}
                               />
-                              <button type="button" className="eye-icon">
-                                <span role="img" aria-label="Hide password">
-                                  <Image
-                                    className="pe-1"
-                                    src="/images/icons/mail_eye_icon.svg"
-                                    alt="mail_eye_icon"
-                                    width={24}
-                                    height={25}
-                                  />
-                                </span>
+
+                              <button type="button" className="eye-icon"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                              >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
                               </button>
 
                             </div>

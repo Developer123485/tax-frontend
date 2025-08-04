@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProcessPopup from "../../modals/processing";
 import { CommonService } from "@/app/services/common.service";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function DeductorDetail(props) {
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [isFocused3, setIsFocused3] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showTracesPassword, setShowTracesPassword] = useState(false);
   const highlightStyle = {
     padding: "8px",
     border: "1px solid",
@@ -92,17 +94,24 @@ export default function DeductorDetail(props) {
                 <label htmlFor="inputPassword" className="form-label">
                   <span>Password</span>
                 </label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="form-control"
-                  id="inputPassword"
-                  name="no-autofill-password"
-                  maxLength={25}
-                  autoComplete="new-password"
-                  value={deductorDetail.itdPassword ? deductorDetail.itdPassword : ""}
-                  onChange={(e) => handleInput("itdPassword", e)}
-                />
+                <div className="input-group ">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="form-control"
+                    id="inputPassword"
+                    name="no-autofill-password"
+                    maxLength={25}
+                    autoComplete="new-password"
+                    value={deductorDetail.itdPassword ? deductorDetail.itdPassword : ""}
+                    onChange={(e) => handleInput("itdPassword", e)}
+                  />
+                  <button type="button" className="eye-icon"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
               </div>
               <div className="col-md-1 justify-content-end">
                 <button type="button" className="btn btn-primary px-2 w-100">
@@ -113,6 +122,7 @@ export default function DeductorDetail(props) {
                 <label htmlFor="inputUserName" className="form-label">
                   <span>User Name</span>
                 </label>
+
                 <input
                   type="text"
                   placeholder="User Name"
@@ -129,16 +139,23 @@ export default function DeductorDetail(props) {
                 <label htmlFor="inputUserPassword" className="form-label">
                   <span>Password</span>
                 </label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="form-control"
-                  id="inputUserPassword"
-                  maxLength={20}
-                  autoComplete="off"
-                  value={deductorDetail.tracesPassword}
-                  onChange={(e) => handleInput("tracesPassword", e)}
-                />
+                <div className="input-group ">
+                  <input
+                    type={showTracesPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="form-control"
+                    id="inputUserPassword"
+                    maxLength={20}
+                    autoComplete="off"
+                    value={deductorDetail.tracesPassword}
+                    onChange={(e) => handleInput("tracesPassword", e)}
+                  />
+                  <button type="button" className="eye-icon"
+                    onClick={() => setShowTracesPassword((prev) => !prev)}
+                  >
+                    {showTracesPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
               </div>
               <div className="col-md-1 justify-content-end">
                 <button type="button" className="btn btn-primary" onClick={(e) => props.verify(e)}>
