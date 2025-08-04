@@ -19,7 +19,7 @@ export default function TracesActivities({ params }) {
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [financialYear, setFinancialYear] = useState("");
-  const [quarter, setQuarter] = useState("");
+  const [quarter, setQuarter] = useState("Q1");
   const [formType, setFormType] = useState("27EQ");
   const [showLoader, setShowLoader] = useState(true);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
@@ -167,10 +167,14 @@ export default function TracesActivities({ params }) {
     formData.append("form", formType);
     formData.append("deductorId", deductorId);
     TracesActivitiesService.autoFillLogin(formData).then((res) => {
-      if (res) {
+      if (res && res?.challan) {
         setTracesActivity(res);
+      } else {
+        toast.error("Auto-fill data not retrieved")
       }
-    });
+    }).catch((e) => {
+      toast.error(e?.message);
+    });;
   }
 
   function getDeductorDetail() {
@@ -245,6 +249,47 @@ export default function TracesActivities({ params }) {
         })
       }
     }
+  }
+
+  function resetForm() {
+    setTracesActivity((prevState) => ({
+      ...prevState,
+      "userName": "",
+      "password": "",
+      "tan": "",
+      "validation_Mode": "without_dsc",
+      "token": "",
+      "isNullChallan": null,
+      "isBookAdjustment": null,
+      "isInvalidPan": null,
+      "financialYear": "",
+      "formType": "",
+      "quarter": "",
+      "captcha": "",
+    }));
+    setTracesActivity((prev) => ({
+      ...prev,
+      challan: {
+        ...prev.challan,
+        "bsr": "",
+        "date": "",
+        "challanSrNo": "",
+        "amount": "",
+        "cdRecordNo": "",
+      },
+    }));
+    setTracesActivity((prev) => ({
+      ...prev,
+      deduction: {
+        ...prev.deduction,
+        "pan1": "",
+        "amount1": "",
+        "pan2": "",
+        "amount2": "",
+        "pan3": "",
+        "amount3": "",
+      },
+    }));
   }
 
   function validateTraces(params) {
@@ -366,6 +411,7 @@ export default function TracesActivities({ params }) {
                     style={highlightStyle}
                     onChange={(e) => {
                       setFinancialYear(e.target.value);
+                      resetForm();
                     }}
                   >
                     {financialYears?.map((option, index) => (
@@ -383,6 +429,7 @@ export default function TracesActivities({ params }) {
                     disabled={formType == "24Q" && form == "request-form-16-16a-27d"}
                     onChange={(e) => {
                       setQuarter(e.target.value);
+                      resetForm();
                     }}
                   >
                     {quarters?.map((option, index) => (
@@ -401,7 +448,8 @@ export default function TracesActivities({ params }) {
                     value={formType}
                     onChange={(e) => {
                       setFormType(e.target.value);
-                      if (e.target.value == "24Q" && form == "request-form-16-16a-27d") {
+                      resetForm();
+                      if (e.target.value == "24Q") {
                         setQuarter("Q4");
                       }
                     }}
