@@ -684,7 +684,7 @@ export default function TracesActivities({ params }) {
                               <button type="button" className="eye-icon"
                                 onClick={() => setShowPassword((prev) => !prev)}
                               >
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
                               </button>
 
                             </div>
@@ -695,7 +695,7 @@ export default function TracesActivities({ params }) {
                             )}
                           </div>
                           <div className="me-4">
-                               <label className="form-label"> &nbsp;</label>
+                            <label className="form-label"> &nbsp;</label>
                             <button type="submit" className="btn btn-primary"
                               onClick={(e) => submitLogin(e)}
                             >
@@ -703,7 +703,7 @@ export default function TracesActivities({ params }) {
                             </button>
                             {tracesError.passwordError && (
                               <span className="text-danger">
-                               &nbsp;
+                                &nbsp;
                               </span>
                             )}
                           </div>

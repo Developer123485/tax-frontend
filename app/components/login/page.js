@@ -7,6 +7,7 @@ import { AuthService } from "@/app/services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonService } from "@/app/services/common.service";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginForm() {
   const router = useRouter(null);
@@ -201,27 +202,7 @@ export default function LoginForm() {
                           onClick={togglePassword}
                           className="eye-icon"
                         >
-                          {passwordVisible ? (
-                            <span role="img" aria-label="Hide password">
-                              <Image
-                                className="pe-1"
-                                src="/images/icons/mail_eye_icon.svg"
-                                alt="mail_eye_icon"
-                                width={24}
-                                height={25}
-                              />
-                            </span>
-                          ) : (
-                            <span role="img" aria-label="Show password">
-                              <Image
-                                className="pe-1"
-                                src="/images/icons/mail_eye_icon.svg"
-                                alt="mail_eye_icon"
-                                width={24}
-                                height={25}
-                              />
-                            </span>
-                          )}
+                          {passwordVisible ? <FaEye /> : <FaEyeSlash />}
                         </button>
                         {isDirty && loginDetails.passwordError && (
                           <span className="text-danger">

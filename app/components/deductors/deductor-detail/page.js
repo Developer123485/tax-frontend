@@ -110,7 +110,7 @@ export default function DeductorDetail(props) {
                     <button type="button" className="eye-icon"
                       onClick={() => setShowPassword((prev) => !prev)}
                     >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
                     </button>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export default function DeductorDetail(props) {
                     <button type="button" className="eye-icon"
                       onClick={() => setShowTracesPassword((prev) => !prev)}
                     >
-                      {showTracesPassword ? <FaEyeSlash /> : <FaEye />}
+                      {showTracesPassword ? <FaEye /> : <FaEyeSlash />}
                     </button>
                   </div>
                 </div>
