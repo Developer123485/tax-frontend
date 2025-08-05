@@ -28,6 +28,8 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [requestResponseModal, setRequestResponseModal] = useState(false);
+  const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [captchaBase64, setCaptchaBase64] = useState('');
   const form = resolvedParams?.form;
@@ -199,58 +201,22 @@ export default function TracesActivities({ params }) {
     }));
   }
 
-  function handleSubmit(params) {
+  function handleSubmit() {
     if (!tracesActivity.captcha) {
       toast.error("Input Captcha is required");
       return false;
     }
     tracesActivity.tan = deductorInfo?.deductorTan;
-    if (form == "request-conso-file") {
-      TracesActivitiesService.continueRequestConsoFile(tracesActivity).then(res => {
-        if (res) {
-          setConfirmModal(false);
-          alert(res);
-        }
-      }).catch(e => {
-        toast.error(e?.message);
+    TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
+      if (res) {
         setConfirmModal(false);
-      })
-    }
-    if (form == "request-form-16-16a-27d") {
-      if (formType == "24Q" && quarter == "Q4") {
-        TracesActivitiesService.continueRequest16(tracesActivity).then(res => {
-          if (res) {
-            setConfirmModal(false);
-            alert(res);
-          }
-        }).catch(e => {
-          toast.error(e?.message);
-          setConfirmModal(false);
-        })
+        setRequestResponseModal(true);
+        setRequestResponseValue(res);
       }
-      if (formType == "27EQ") {
-        TracesActivitiesService.continueRequest27D(tracesActivity).then(res => {
-          if (res) {
-            setConfirmModal(false);
-            alert(res);
-          }
-        }).catch(e => {
-          toast.error(e?.message);
-          setConfirmModal(false);
-        })
-      }
-      if (formType == "27Q" || formType == "26Q") {
-        TracesActivitiesService.continueRequest16A(tracesActivity).then(res => {
-          if (res) {
-            setConfirmModal(false);
-            alert(res);
-          }
-        }).catch(e => {
-          toast.error(e?.message);
-          setConfirmModal(false);
-        })
-      }
-    }
+    }).catch(e => {
+      toast.error(e?.message);
+      setConfirmModal(false);
+    })
   }
 
   function resetForm() {
@@ -743,6 +709,37 @@ export default function TracesActivities({ params }) {
                       </button>
                     </div>
                   </div>
+                </Modal.Body>
+              </Modal>
+              <Modal
+                size="md"
+                centered
+                keyboard={false}
+                backdrop="static"
+                show={requestResponseModal}
+              >
+                <Modal.Body>
+                  <div className="container">
+                    <div className="row">
+                      <b>{requestResponseValue}</b>
+                      <br></br>
+                    </div>
+                    <div
+                      className="row"
+                      style={{ textAlign: "center" }}
+                    >
+                      <a
+                        href="Javascript:void(0)"
+                        onClick={() => {
+                          setRequestResponseModal(false);
+                          resetForm();
+                        }}
+                      >
+                        Ok
+                      </a>
+                    </div>
+                  </div>
+
                 </Modal.Body>
               </Modal>
             </div>
