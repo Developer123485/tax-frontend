@@ -1193,3 +1193,7 @@ margin: 5px 0px;
   height: 42px;
   padding: 8px 15px !important;
 }
+
+.eye-icon {
+  z-index: 5!important;
+}

@@ -672,7 +672,7 @@ export default function TracesActivities({ params }) {
                           </div>
                           <div className="me-4">
                             <label className="form-label">Password</label>
-                            <div className="input-group ">
+                            <div className="input-group">
                               <input
                                 className="form-control rounded-2"
                                 type={showPassword ? "text" : "password"}
@@ -695,11 +695,17 @@ export default function TracesActivities({ params }) {
                             )}
                           </div>
                           <div className="me-4">
+                               <label className="form-label"> &nbsp;</label>
                             <button type="submit" className="btn btn-primary"
                               onClick={(e) => submitLogin(e)}
                             >
                               Submit
                             </button>
+                            {tracesError.passwordError && (
+                              <span className="text-danger">
+                               &nbsp;
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
