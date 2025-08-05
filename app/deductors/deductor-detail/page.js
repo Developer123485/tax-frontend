@@ -41,13 +41,13 @@ export default function AddDeductor() {
   ]);
   const [deductorDetail, setDeductorDetail] = useState({
     id: 0,
-    deductorTan: "PTLJ10787A",
+    deductorTan: "",
     deductorName: "",
     deductorBranch: "",
     itdLogin: "",
     itdPassword: "",
-    tracesLogin: "PTLJ10787",
-    tracesPassword: "BANSAL123",
+    tracesLogin: "",
+    tracesPassword: "",
     deductorState: "",
     deductorStateValue: "",
     deductorPincode: "",
@@ -342,7 +342,7 @@ export default function AddDeductor() {
     if (!deductorDetail.deductorName) {
       deductorNameError = "Deductor name is required";
     }
-     if (deductorDetail.deductorName && regexs.test(deductorDetail.deductorName)) {
+    if (deductorDetail.deductorName && regexs.test(deductorDetail.deductorName)) {
       deductorNameError = "Only special characters are not allowed";
     }
 
@@ -473,7 +473,7 @@ export default function AddDeductor() {
     if (!deductorDetail.responsibleState) {
       responsibleStateError = "Responsible state is required";
     }
-        if (deductorDetail.responsibleName && regexs.test(deductorDetail.responsibleName)) {
+    if (deductorDetail.responsibleName && regexs.test(deductorDetail.responsibleName)) {
       responsibleNameError = "Only special characters are not allowed";
     }
     if (!deductorDetail.responsiblePincode) {
