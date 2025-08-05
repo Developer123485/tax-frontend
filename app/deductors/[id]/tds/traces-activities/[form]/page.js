@@ -434,7 +434,7 @@ export default function TracesActivities({ params }) {
                     aria-label="Default select example"
                     value={quarter}
                     style={highlightStyle1}
-                    disabled={formType == "24Q" && form == "request-form-16-16a-27d"}
+                    disabled={formType == "24Q"}
                     onChange={(e) => {
                       setQuarter(e.target.value);
                       resetForm();
