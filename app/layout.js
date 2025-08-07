@@ -4,6 +4,7 @@ import Header from "./components/header/header";
 import React from "react";
 import Footer from "./components/footer/footer";
 import { Suspense } from "react";
+import { AuthProvider } from "./components/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,7 +66,9 @@ export default function RootLayout({ children }) {
             className="main-content mt-5 mt-md-5 pt-3 pt-md-3"
             role="main"
           >
-            {children}
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </main>
           <Footer></Footer>
         </Suspense>
