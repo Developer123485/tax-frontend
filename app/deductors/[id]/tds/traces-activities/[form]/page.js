@@ -132,20 +132,6 @@ export default function TracesActivities({ params }) {
       array.push(financialYear);
     }
     const currentMonth = new Date().getMonth();
-    // let quart = "";
-    // if (currentMonth >= 3 && currentMonth <= 5) {
-    //   quart = "Q4";
-    // } else if (currentMonth >= 6 && currentMonth <= 8) {
-    //   quart = "Q1";
-    // } else if (currentMonth >= 9 && currentMonth <= 11) {
-    //   quart = "Q2";
-    // } else {
-    //   quart = "Q3";
-    // }
-    // quart = sessionStorage.getItem("quart")
-    //   ? sessionStorage.getItem("quart")
-    //   : quart;
-    // // setQuarter(quart);
     setFinancialYears(array);
     let startYear = currentDate.getFullYear();
     if (currentMonth >= 6) {
