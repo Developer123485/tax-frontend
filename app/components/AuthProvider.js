@@ -20,9 +20,6 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) setUser(JSON.parse(storedUser));
-
         const events = ['mousemove', 'keydown', 'scroll', 'click'];
         events.forEach(event => window.addEventListener(event, resetTimer));
         resetTimer();
