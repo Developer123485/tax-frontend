@@ -13,6 +13,9 @@ import ProcessPopup from "@/app/components/modals/processing";
 import HeaderList from "@/app/components/header/header-list";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import FormConfirmation from "@/app/components/modals/form-confimation";
+import { FormsService } from "@/app/services/forms.service";
+import { saveAs } from "file-saver";
 
 export default function TDSDashboard({ params }) {
   const router = useRouter();
@@ -26,8 +29,11 @@ export default function TDSDashboard({ params }) {
   const [fileName, setFileName] = useState("");
   const [showLoader, setShowLoader] = useState(false);
   const [deducteeCount, setDeducteeCount] = useState(0);
+  const [isLoading, setIsloading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [isDownloadFormConfirmation, setIsDownloadFormConfirmation] =
+    useState(false);
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
@@ -144,6 +150,25 @@ export default function TDSDashboard({ params }) {
         });
     }
   }, []);
+
+  function downloadFile(e) {
+    setIsloading(true);
+    e.preventDefault();
+    const model = {
+      financialYear: financialYear,
+      deductorId: deductorId,
+    };
+    FormsService.final24GReport(model)
+      .then((res) => {
+        const blob = new Blob([res], { type: "text/plain" });
+        saveAs(blob, "24G" + ".txt");
+      })
+      .finally((f) => {
+        setIsDownloadFormConfirmation(false);
+        setIsLoading(false);
+      });
+  }
+
 
   async function handleFileChange(file) {
     let formData = new FormData();
@@ -573,6 +598,30 @@ export default function TDSDashboard({ params }) {
                               </div>
                             </div>
                           </div>
+                          <div className="col-md-12">
+                            <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
+                              <div className="row align-items-center"
+                                onClick={(e) => setIsDownloadFormConfirmation(true)}
+                              >
+                                <div className="col-md-4">
+                                  <Image
+                                    className="img-fluid"
+                                    src="/images/dashboards/download_excel_file_icon.svg"
+                                    alt="download_excel_file_icon"
+                                    width={80}
+                                    height={80}
+                                  />
+                                </div>
+                                <div className="col-md-8">
+                                  <h5
+                                    className="fw-bold text-uppercase mb-0"
+                                  >
+                                    Download 24G
+                                  </h5>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       {/* <div className="row">
@@ -727,6 +776,13 @@ export default function TDSDashboard({ params }) {
         </section>
       )}
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
+      <FormConfirmation
+        isFormConfirmation={isDownloadFormConfirmation}
+        setIsFormConfirmation={setIsDownloadFormConfirmation}
+        isLoading={isLoading}
+        name={"Download Final Report for 24G"}
+        submitForm={downloadFile}
+      ></FormConfirmation>
     </>
   );
 }

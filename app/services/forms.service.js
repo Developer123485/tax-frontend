@@ -5,6 +5,7 @@ export const FormsService = {
   exportFormData,
   generateForm,
   finalReport,
+  final24GReport,
   fetchTaxDeposits,
   fetchInterestCalculate,
   fetchShortDeductions,
@@ -119,6 +120,14 @@ async function finalReport(model) {
   });
   return result;
 }
+
+async function final24GReport(model) {
+  const result = await api.post(`forms/final24GReport`, model, {
+    responseType: "blob",
+  });
+  return result;
+}
+
 
 async function getFormsDashboard(model) {
   const result = await api.post(`forms/fetch`, model);
