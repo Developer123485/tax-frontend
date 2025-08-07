@@ -1,4 +1,4 @@
-name: Run Script on Ubuntu Server
+name: Run Script on Ubuntu
 
 on:
   push:
