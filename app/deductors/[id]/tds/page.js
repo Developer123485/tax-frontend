@@ -20,6 +20,7 @@ import { saveAs } from "file-saver";
 export default function TDSDashboard({ params }) {
   const router = useRouter();
   const resolvedParams = use(params);
+  const [deductorInfo, setDeductorInfo] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const deductorId = resolvedParams?.id;
   const [selectedFile, setSelectedFile] = useState(null);
@@ -150,6 +151,19 @@ export default function TDSDashboard({ params }) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    getDeductorDetail();
+  }, []);
+
+  function getDeductorDetail() {
+    DeductorsService.getDeductor(deductorId).then(
+      (res) => {
+        if (res) {
+          setDeductorInfo(res);
+        }
+      });
+  }
 
   function downloadFile(e) {
     setIsloading(true);
@@ -598,7 +612,7 @@ export default function TDSDashboard({ params }) {
                               </div>
                             </div>
                           </div>
-                          <div className="col-md-12">
+                          {deductorInfo?.ainCode && <div className="col-md-12">
                             <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
                               <div className="row align-items-center"
                                 onClick={(e) =>
@@ -625,7 +639,7 @@ export default function TDSDashboard({ params }) {
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div>}
                         </div>
                       </div>
                       {/* <div className="row">
