@@ -189,6 +189,7 @@ export default function DDODetail(props) {
                 <div className="col-md-3">
                     <label htmlFor="state" className="form-label">
                         <span>State</span>
+                        <span className="text-danger"> *</span>
                     </label>
                     <select
                         className="form-select"
@@ -215,6 +216,7 @@ export default function DDODetail(props) {
                 <div className="col-md-3">
                     <label htmlFor="Pincode" className="form-label">
                         <span>Pincode</span>
+                        <span className="text-danger"> *</span>
                     </label>
                     <input
                         type="text"
