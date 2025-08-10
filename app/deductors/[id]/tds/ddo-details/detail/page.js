@@ -2,7 +2,7 @@
 import React, { useState, useEffect, use } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import DDODetail from "@/app/components/ddo-details/page";
+import DDODetail from "@/app/components/ddo-details/detail";
 import { EnumService } from "@/app/services/enum.service";
 import { DdoDetailService } from "@/app/services/ddoDetail.service";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
