@@ -215,7 +215,7 @@ export default function DdoDetails({ params }) {
                 deductorId: deductorId,
                 categoryId: parseInt(searchParams.get("categoryId")),
             };
-            DdoDetailService.deleteAllDdoDetail(model)
+            DdoDetailService.deleteAllDdoDetail(model, deductorId)
                 .then((res) => {
                     if (res) {
                         toast.success("Delete All Successfully!");
@@ -227,7 +227,7 @@ export default function DdoDetails({ params }) {
                     setDeleteConfirm(false);
                 });
         } else if (confirmTitle === "Delete DDO Detail") {
-            DdoDetailService.deleteDdoDetail(deleteId)
+            DdoDetailService.deleteDdoDetail(deleteId, deductorId)
                 .then((res) => {
                     if (res) {
                         toast.success("Delete DDO Successfully!");
@@ -243,7 +243,7 @@ export default function DdoDetails({ params }) {
                 const model = {
                     Ids: selectedData.map((p) => p.id),
                 };
-                DdoDetailService.deleteBulkDdoDetail(model)
+                DdoDetailService.deleteBulkDdoDetail(model, deductorId)
                     .then((res) => {
                         if (res) {
                             toast.success("Delete Bulk DDO Detail Successfully!");
