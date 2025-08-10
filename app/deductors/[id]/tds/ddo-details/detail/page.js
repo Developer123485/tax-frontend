@@ -108,7 +108,6 @@ export default function AddDdoDetail({ params }) {
     }
 
     function handleInput(names, e) {
-        debugger
         setDdoDetail((prevState) => ({
             ...prevState,
             [names]: e.target.value,

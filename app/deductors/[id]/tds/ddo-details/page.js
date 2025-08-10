@@ -139,7 +139,7 @@ export default function DdoDetails({ params }) {
                             <a
                                 onClick={(e) => {
                                     router.push(
-                                        pathname + `/detail${window.location.search}&id=${row.id}`
+                                        pathname + `/detail?id=${row.id}`
                                     );
                                 }}
                             >
