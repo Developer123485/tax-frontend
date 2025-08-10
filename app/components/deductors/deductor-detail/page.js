@@ -770,22 +770,22 @@ export default function DeductorDetail(props) {
                   />
                 </div>
 
-                {/* <div className="col-md-3">
-                <label htmlFor="inputAINCode" className="form-label">
-                  <span>AIN Code</span>
-                </label>
+                <div className="col-md-3">
+                  <label htmlFor="inputAINCode" className="form-label">
+                    <span>AIN Code</span>
+                  </label>
 
-                <input
-                  type="text"
-                  placeholder=""
-                  className="form-control"
-                  id="inputAINCode"
-                  autoComplete="off"
-                  maxLength={15}
-                  value={deductorDetail.ainCode}
-                  onChange={(e) => handleInput("ainCode", e)}
-                />
-              </div> */}
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    id="inputAINCode"
+                    autoComplete="off"
+                    maxLength={15}
+                    value={deductorDetail.ainCode}
+                    onChange={(e) => handleInput("ainCode", e)}
+                  />
+                </div>
                 <div className="col-md-3">
                   <label htmlFor="inputPAORegNo" className="form-label">
                     <span>PAO Reg No.</span>
