@@ -42,7 +42,7 @@ export default function DdoDetails({ params }) {
             href: `/deductors/${deductorId}/tds`,
         },
         {
-            name: "DDO Details",
+            name: "DDO List",
             isActive: true,
         },
     ]);
@@ -390,7 +390,7 @@ export default function DdoDetails({ params }) {
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
                             <div className="col-md-4">
                                 <h4 className="mb-0">
-                                    DDO Details
+                                    DDO List
                                 </h4>
                             </div>
                             <div className="col-md-8 d-flex align-items-center justify-content-end">
