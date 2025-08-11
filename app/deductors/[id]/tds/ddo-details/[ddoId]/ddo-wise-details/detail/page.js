@@ -2,7 +2,6 @@
 import React, { useState, useEffect, use } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import DDODetail from "@/app/components/ddo-details/detail";
 import { EnumService } from "@/app/services/enum.service";
 import { DdoDetailService } from "@/app/services/ddoDetail.service";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
@@ -11,13 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CommonService } from "@/app/services/common.service";
 import HeaderList from "@/app/components/header/header-list";
+import DDOWiseDetail from "@/app/components/ddo-wise-details/detail";
 
-export default function AddDdoDetail({ params }) {
+export default function AddDdoWiseDetail({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
+    const ddoId = resolvedParams?.ddoId;
     const [active, setActive] = useState(0);
-    const [enumList, setEnumList] = useState({});
-    const [isNextDirty, setIsNextDirty] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -45,26 +44,26 @@ export default function AddDdoDetail({ params }) {
             href: `/deductors/${deductorId}/tds/ddo-details`,
         },
         {
+            name: "DDO Wise Details",
+            isActive: false,
+            href: `/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`,
+        },
+        {
             name: "Details",
             isActive: true,
         },
     ]);
-    const [ddoDetail, setDdoDetail] = useState({
+    const [ddoDetail, setDdoDetail] = useState({});
+    const [ddoWiseDetail, setDdoWiseDetail] = useState({
         id: 0,
-        name: "",
-        tan: "",
-        address1: "",
-        address2: "",
-        address3: "",
-        address4: "",
-        city: "",
-        state: "",
-        pincode: "",
-        emailID: "",
-        ddoRegNo: "",
-        ddoCode: "",
+        taxAmount: null,
+        totalTds: null,
+        nature: "",
+        assesmentYear: "",
+        financialYear: "",
+        month: "",
         userId: null,
-        deductorId: "",
+        ddoDetailId: "",
     });
     const [ddoErrors, setDdoErrors] = useState({
         nameError: "",
@@ -75,29 +74,25 @@ export default function AddDdoDetail({ params }) {
         pincodeError: "",
     });
     useEffect(() => {
-        EnumService.getEnumStatues().then((res) => {
-            if (res) {
-                setEnumList(res);
-            }
-        });
         getDDODetail();
+        getDDOWiseDetail();
     }, []);
 
-    useEffect(() => {
-        validateDetail();
-    }, [
-        ddoDetail.name,
-        ddoDetail.tan,
-        ddoDetail.state,
-        ddoDetail.address1,
-        ddoDetail.pincode,
-        ddoDetail.city,
-    ]);
+    // useEffect(() => {
+    //     validateDetail();
+    // }, [
+    //     ddoDetail.name,
+    //     ddoDetail.tan,
+    //     ddoDetail.state,
+    //     ddoDetail.address1,
+    //     ddoDetail.pincode,
+    //     ddoDetail.city,
+    // ]);
 
 
     function getDDODetail() {
-        if (searchParams.get("ddoId")) {
-            DdoDetailService.getDdoWiseDetail(parseInt(searchParams.get("ddoId"))).then(
+        if (ddoId > 0) {
+            DdoDetailService.getDdoDetail(ddoId).then(
                 (res) => {
                     if (res && res.id > 0) {
                         setDdoDetail(res);
@@ -107,8 +102,20 @@ export default function AddDdoDetail({ params }) {
         }
     }
 
+    function getDDOWiseDetail() {
+        if (searchParams.get("ddoWiseId")) {
+            DdoDetailService.getDdoWiseDetail(parseInt(searchParams.get("ddoWiseId"))).then(
+                (res) => {
+                    if (res && res.id > 0) {
+                        setDdoWiseDetail(res);
+                    }
+                }
+            );
+        }
+    }
+
     function handleInput(names, e) {
-        setDdoDetail((prevState) => ({
+        setDdoWiseDetail((prevState) => ({
             ...prevState,
             [names]: e.target.value,
         }));
@@ -170,22 +177,22 @@ export default function AddDdoDetail({ params }) {
         return true;
     }
 
-    function saveDdoDetail(e) {
+    function saveDdoWiseDetail(e) {
         e.preventDefault();
         setIsDirty(true);
-        if (validateDetail()) {
-            ddoDetail.deductorId = deductorId;
-            DdoDetailService.saveDdoDetail(ddoDetail)
-                .then((res) => {
-                    if (res && res > 0) {
-                        toast.success("DDO Detail saved successfully");
-                        router.push(`/deductors/${deductorId}/tds/ddo-details`);
-                    }
-                })
-                .catch((res) => {
-                    toast.error(res);
-                });
-        }
+        // if (validateDetail()) {
+        ddoDetail.ddoDetailId = ddoDetail;
+        DdoDetailService.saveDdoWiseDetail(ddoDetail)
+            .then((res) => {
+                if (res && res > 0) {
+                    toast.success("DDO Detail saved successfully");
+                    router.push(`/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`);
+                }
+            })
+            .catch((res) => {
+                toast.error(res);
+            });
+        // }
     }
 
     return (
@@ -196,16 +203,15 @@ export default function AddDdoDetail({ params }) {
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
                     <div className="">
-                        <DDODetail
+                        <DDOWiseDetail
                             setActive={(e) => setActive(e)}
-                            enumList={enumList}
-                            isNextDirty={isNextDirty}
                             ddoDetail={ddoDetail}
+                            ddoWiseDetail={ddoWiseDetail}
                             ddoErrors={ddoErrors}
                             isDirty={isDirty}
                             handleInput={handleInput}
-                            handleSaveDDODetail={saveDdoDetail}
-                        ></DDODetail>
+                            handleSaveDDOWiseDetail={saveDdoWiseDetail}
+                        ></DDOWiseDetail>
                     </div>
                 </div>
             </section>

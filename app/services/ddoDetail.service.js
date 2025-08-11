@@ -8,6 +8,12 @@ export const DdoDetailService = {
     deleteDdoDetail,
     deleteAllDdoDetail,
     deleteBulkDdoDetail,
+    getDdoWiseDetails,
+    getDdoWiseDetail,
+    saveDdoWiseDetail,
+    deleteDdoWiseDetail,
+    deleteAllDdoWiseDetail,
+    deleteBulkDdoWiseDetail,
 };
 
 async function getDdoDetails(model) {
@@ -37,6 +43,40 @@ async function getDdoDetail(id) {
 
 async function saveDdoDetail(model) {
     const result = await api.post("ddoDetails/create", model);
+    return result;
+}
+
+
+
+
+
+async function getDdoWiseDetails(model) {
+    const result = await api.post(`ddoDetails/fetch/ddoWiseDetails`, model);
+    return result;
+}
+
+async function deleteDdoWiseDetail(id) {
+    const result = await api.get(`ddoDetails/delete/ddoWiseDetails/${id}`);
+    return result;
+}
+
+async function deleteBulkDdoWiseDetail(model) {
+    const result = await api.post(`ddoDetails/deleteBulk/ddoWiseDetails`, model);
+    return result;
+}
+
+async function deleteAllDdoWiseDetail(ddoId) {
+    const result = await api.post(`ddoDetails/deleteAll/ddoWiseDetails/${ddoId}`);
+    return result;
+}
+
+async function getDdoWiseDetail(id) {
+    const result = await api.get(`ddoDetails/ddoWiseDetails/${id}`);
+    return result;
+}
+
+async function saveDdoWiseDetail(model) {
+    const result = await api.post("ddoDetails/ddoWiseDetails/create", model);
     return result;
 }
 

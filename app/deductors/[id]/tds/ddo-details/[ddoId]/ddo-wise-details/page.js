@@ -15,9 +15,10 @@ import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-export default function DdoDetails({ params }) {
+export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
+    const ddoId = resolvedParams?.ddoId;
     const pathname = usePathname();
     const [showLoader, setShowLoader] = useState(false);
     const router = useRouter();
@@ -25,7 +26,7 @@ export default function DdoDetails({ params }) {
     const [pageSize, setPageSize] = useState(20);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
-    const [ddoDetails, setDdoDetails] = useState(null);
+    const [ddoWiseDetails, setDdoWiseDetails] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
     const [confirmTitle, setConfirmTitle] = useState("");
     const [totalItems, setTotalItems] = useState(0);
@@ -43,6 +44,11 @@ export default function DdoDetails({ params }) {
         },
         {
             name: "DDO Details",
+            isActive: false,
+            href: `/deductors/${deductorId}/tds/ddo-details`,
+        },
+        {
+            name: "DDO Wise Details",
             isActive: true,
         },
     ]);
@@ -76,7 +82,6 @@ export default function DdoDetails({ params }) {
             },
         },
     };
-
     const columns = [
         {
             name: "Serial No",
@@ -163,7 +168,7 @@ export default function DdoDetails({ params }) {
                             {" "}
                             <a
                                 onClick={(e) => {
-                                    setConfirmTitle("Delete DDO Detail");
+                                    setConfirmTitle("Delete DDO Wise Detail");
                                     setDeleteId(row.id);
                                     setDeleteConfirm(true);
                                 }}
@@ -197,37 +202,35 @@ export default function DdoDetails({ params }) {
             width: "135px",
         },
     ];
+
     const totalPages = Math.ceil(totalItems / pageSize);
 
     useEffect(() => {
-        fetchDdoDetails();
+        fetchDdoWiseDetails();
     }, [currentPage, pageSize]);
 
     function deleteEntry(e) {
         e.preventDefault();
         setDeleteConfirm(false);
         setShowLoader(true);
-        if (confirmTitle === "All DDO Details") {
-            const model = {
-                deductorId: deductorId,
-            };
-            DdoDetailService.deleteAllDdoDetail(model, deductorId)
+        if (confirmTitle === "All DDO Wise Details") {
+            DdoDetailService.deleteAllDdoWiseDetail(ddoId)
                 .then((res) => {
                     if (res) {
                         toast.success("Delete All Successfully!");
                         setShowLoader(false);
-                        fetchDdoDetails("");
+                        fetchDdoWiseDetails("");
                     }
                 })
                 .catch((e) => {
                     setDeleteConfirm(false);
                 });
-        } else if (confirmTitle === "Delete DDO Detail") {
-            DdoDetailService.deleteDdoDetail(deleteId, deductorId)
+        } else if (confirmTitle === "Delete DDO Wise Detail") {
+            DdoDetailService.deleteDdoWiseDetail(deleteId)
                 .then((res) => {
                     if (res) {
-                        toast.success("Delete DDO Successfully!");
-                        fetchDdoDetails("");
+                        toast.success("Delete Successfully!");
+                        fetchDdoWiseDetails("");
                         setDeleteConfirm(false);
                     }
                 })
@@ -239,11 +242,11 @@ export default function DdoDetails({ params }) {
                 const model = {
                     Ids: selectedData.map((p) => p.id),
                 };
-                DdoDetailService.deleteBulkDdoDetail(model, deductorId)
+                DdoDetailService.deleteBulkDdoWiseDetail(model)
                     .then((res) => {
                         if (res) {
-                            toast.success("Delete Bulk DDO Detail Successfully!");
-                            fetchDdoDetails("");
+                            toast.success("Delete Bulk DDO Wise Detail Successfully!");
+                            fetchDdoWiseDetails("");
                             setDeleteConfirm(false);
                             setSelectedData([]);
                         }
@@ -259,17 +262,17 @@ export default function DdoDetails({ params }) {
         setSelectedData(state.selectedRows);
     };
 
-    function fetchDdoDetails() {
+    function fetchDdoWiseDetails() {
         setShowLoader(true);
         const model = {
             pageSize: pageSize,
             pageNumber: currentPage,
-            deductorId: deductorId,
+            ddoDetailId: ddoId,
         };
-        DdoDetailService.getDdoDetails(model)
+        DdoDetailService.getDdoWiseDetails(model)
             .then((res) => {
                 if (res) {
-                    setDdoDetails(res);
+                    setDdoWiseDetails(res);
                 }
             })
             .finally((f) => {
@@ -278,13 +281,6 @@ export default function DdoDetails({ params }) {
                 }, 100);
             });
     }
-
-
-    const handleRowDoubleClick = (row) => {
-        debugger
-        router.push(`/deductors/${deductorId}/tds/ddo-details/${row.id}/ddo-wise-details`);
-    };
-
     return (
         <>
             <ToastContainer />
@@ -297,7 +293,7 @@ export default function DdoDetails({ params }) {
                             <h2 className="fw-bold">Simplify TDS Filing -</h2>
                             <p className="fs-18 mb-0">
                                 Enter, Import, or Download <br />
-                                Data Instantly for DDO Details!
+                                Data Instantly for DDO Wise Details!
                             </p>
                         </div>
                         <div className="col-md-8">
@@ -305,7 +301,7 @@ export default function DdoDetails({ params }) {
                                 <div
                                     className="col-md-4"
                                     onClick={(e) =>
-                                        router.push(`/deductors/${deductorId}/tds/ddo-details/detail`)
+                                        router.push(`/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details/detail`)
                                     }
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
@@ -345,11 +341,11 @@ export default function DdoDetails({ params }) {
                                                     {/* {fileName && <span className="text-danger">{fileName}</span>} */}
                                                     <label className="w-100 text-capitalize cursor-pointer">
                                                         <span className="fw-bold"> </span>
-                                                        <input
+                                                        {/* <input
                                                             type="file"
                                                             className="visually-hidden"
                                                             accept=".xlsx"
-                                                        />
+                                                        /> */}
                                                         <h5 className="fw-bold mb-0">
                                                             {" "}
                                                             {/* {isloading ? "Uploading..." : "Import Excel File"} */}
@@ -393,14 +389,14 @@ export default function DdoDetails({ params }) {
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
                             <div className="col-md-4">
                                 <h4 className="mb-0">
-                                    DDO Details
+                                    DDO Wise Details
                                 </h4>
                             </div>
                             <div className="col-md-8 d-flex align-items-center justify-content-end">
                                 <button
                                     type="button"
                                     onClick={(e) => {
-                                        setConfirmTitle("Bulk DDO Details");
+                                        setConfirmTitle("Bulk DDO Wise Details");
                                         setDeleteConfirm(true);
                                     }}
                                     disabled={
@@ -413,12 +409,12 @@ export default function DdoDetails({ params }) {
                                 <button
                                     type="button"
                                     onClick={(e) => {
-                                        setConfirmTitle("All DDO Details");
+                                        setConfirmTitle("All DDO Wise Details");
                                         setDeleteConfirm(true);
                                     }}
                                     disabled={
-                                        ddoDetails &&
-                                            ddoDetails.ddoDetailList?.length == 0
+                                        ddoWiseDetails &&
+                                            ddoWiseDetails.ddoWiseDetailList?.length == 0
                                             ? true
                                             : false
                                     }
@@ -432,31 +428,30 @@ export default function DdoDetails({ params }) {
                             <div className="col-md-12">
                                 <div className="table-responsive">
                                     <div>
-                                        {ddoDetails &&
-                                            ddoDetails.ddoDetailList &&
-                                            ddoDetails.ddoDetailList.length > 0 && (
+                                        {ddoWiseDetails &&
+                                            ddoWiseDetails.ddoWiseDetailList &&
+                                            ddoWiseDetails.ddoWiseDetailList.length > 0 && (
                                                 <DataTable
                                                     fixedHeader
                                                     fixedHeaderScrollHeight="400px"
                                                     columns={columns}
-                                                    data={ddoDetails.ddoDetailList}
+                                                    data={ddoWiseDetails.ddoWiseDetailList}
                                                     highlightOnHover
                                                     pagination={true}
                                                     paginationServer
                                                     selectableRows={true}
                                                     customStyles={customStyles}
-                                                    paginationTotalRows={ddoDetails.totalRows}
+                                                    paginationTotalRows={ddoWiseDetails.totalRows}
                                                     paginationPerPage={pageSize}
                                                     selectableRowsNoSelectAll={true}
                                                     onSelectedRowsChange={handleChange}
-                                                    onRowDoubleClicked={handleRowDoubleClick}
                                                     customInput={<CustomCheckbox />}
                                                     paginationComponentOptions={{
                                                         noRowsPerPage: true,
                                                     }}
                                                     onChangePage={(page) => {
                                                         setCurrentPage(page);
-                                                        fetchDdoDetails(page);
+                                                        fetchDdoWiseDetails(page);
                                                     }}
                                                 />
                                             )}
