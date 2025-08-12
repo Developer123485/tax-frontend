@@ -14,6 +14,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import FormConfirmation from "@/app/components/modals/form-confimation";
+import { FormsService } from "@/app/services/forms.service";
 
 export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
@@ -21,6 +23,7 @@ export default function DdoWiseDetails({ params }) {
     const ddoId = resolvedParams?.ddoId;
     const pathname = usePathname();
     const [showLoader, setShowLoader] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
@@ -47,6 +50,8 @@ export default function DdoWiseDetails({ params }) {
     const [confirmTitle, setConfirmTitle] = useState("");
     const [totalItems, setTotalItems] = useState(0);
     const searchParams = useSearchParams(null);
+    const [isDownloadFormConfirmation, setIsDownloadFormConfirmation] =
+        useState(false);
     const [quarter, setQuarter] = useState("");
     const currentYear = new Date().getFullYear();
     const [financialYears, setFinancialYears] = useState([]);
@@ -312,6 +317,25 @@ export default function DdoWiseDetails({ params }) {
         }
     }
 
+    function downloadFile(e) {
+        setIsloading(true);
+        e.preventDefault();
+        const model = {
+            financialYear: financialYear,
+            deductorId: deductorId,
+        };
+        FormsService.final24GReport(model)
+            .then((res) => {
+                const blob = new Blob([res], { type: "text/plain" });
+                saveAs(blob, "24G" + ".txt");
+            })
+            .finally((f) => {
+                setIsDownloadFormConfirmation(false);
+                setIsloading(false);
+            });
+    }
+
+
     const handleChange = (state) => {
         setSelectedData(state.selectedRows);
     };
@@ -444,7 +468,7 @@ export default function DdoWiseDetails({ params }) {
                 <div className="container">
                     <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                            <div className="col-md-5">
+                            <div className="col-md-4">
                                 <h4 className="mb-0">
                                     DDO Wise Details
                                 </h4>
@@ -465,7 +489,7 @@ export default function DdoWiseDetails({ params }) {
                                     ))}
                                 </select>
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-1">
                                 <select
                                     className="form-select m-100"
                                     aria-label="Default select example"
@@ -481,7 +505,16 @@ export default function DdoWiseDetails({ params }) {
                                     ))}
                                 </select>
                             </div>
-                            <div className="col-md-3 d-flex align-items-center justify-content-end">
+                            <div className="col-md-5 d-flex align-items-center">
+                                <button
+                                    type="button"
+                                    onClick={(e) => {
+                                        setIsDownloadFormConfirmation(true);
+                                    }}
+                                    className="btn btn-outline-primary me-3"
+                                >
+                                    Download
+                                </button>
                                 <button
                                     type="button"
                                     onClick={(e) => {
@@ -558,6 +591,13 @@ export default function DdoWiseDetails({ params }) {
                 setDeleteConfirm={(e) => setDeleteConfirm(e)}
                 delete={(e) => deleteEntry(e)}
             ></DeleteConfirmation>
+            <FormConfirmation
+                isFormConfirmation={isDownloadFormConfirmation}
+                setIsFormConfirmation={setIsDownloadFormConfirmation}
+                isLoading={isLoading}
+                name={"Download Final Report for 24G"}
+                submitForm={downloadFile}
+            ></FormConfirmation>
         </>
     );
 }

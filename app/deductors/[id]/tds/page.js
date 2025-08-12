@@ -13,7 +13,6 @@ import ProcessPopup from "@/app/components/modals/processing";
 import HeaderList from "@/app/components/header/header-list";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import FormConfirmation from "@/app/components/modals/form-confimation";
 import { FormsService } from "@/app/services/forms.service";
 import { saveAs } from "file-saver";
 
@@ -30,11 +29,9 @@ export default function TDSDashboard({ params }) {
   const [fileName, setFileName] = useState("");
   const [showLoader, setShowLoader] = useState(false);
   const [deducteeCount, setDeducteeCount] = useState(0);
-  const [isLoading, setIsloading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [isDownloadFormConfirmation, setIsDownloadFormConfirmation] =
-    useState(false);
+
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
@@ -164,25 +161,6 @@ export default function TDSDashboard({ params }) {
         }
       });
   }
-
-  function downloadFile(e) {
-    setIsloading(true);
-    e.preventDefault();
-    const model = {
-      financialYear: financialYear,
-      deductorId: deductorId,
-    };
-    FormsService.final24GReport(model)
-      .then((res) => {
-        const blob = new Blob([res], { type: "text/plain" });
-        saveAs(blob, "24G" + ".txt");
-      })
-      .finally((f) => {
-        setIsDownloadFormConfirmation(false);
-        setIsLoading(false);
-      });
-  }
-
 
   async function handleFileChange(file) {
     let formData = new FormData();
@@ -795,13 +773,7 @@ export default function TDSDashboard({ params }) {
       )
       }
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
-      <FormConfirmation
-        isFormConfirmation={isDownloadFormConfirmation}
-        setIsFormConfirmation={setIsDownloadFormConfirmation}
-        isLoading={isLoading}
-        name={"Download Final Report for 24G"}
-        submitForm={downloadFile}
-      ></FormConfirmation>
+      
     </>
   );
 }
