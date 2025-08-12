@@ -70,8 +70,8 @@ export default function AddDdoWiseDetail({ params }) {
     const [ddoDetail, setDdoDetail] = useState({});
     const [ddoWiseDetail, setDdoWiseDetail] = useState({
         id: 0,
-        taxAmount: null,
-        totalTds: null,
+        taxAmount: 0,
+        totalTds: 0,
         nature: "",
         assesmentYear: "",
         financialYear: "",
@@ -189,7 +189,7 @@ export default function AddDdoWiseDetail({ params }) {
                                 <div className="col-md-12">
                                     <h5 className="text-blue fw-bold">
                                         Detail ({searchParams.get("financial_year")},{" "}
-                                        {monthsShort.find(p => p.value == searchParams.get("month"))?.label})   
+                                        {monthsShort.find(p => p.value == searchParams.get("month"))?.label})
                                     </h5>
                                 </div>
                             </div>
