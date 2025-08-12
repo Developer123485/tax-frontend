@@ -96,8 +96,8 @@ export default function AddDdoDetail({ params }) {
 
 
     function getDDODetail() {
-        if (searchParams.get("ddoId")) {
-            DdoDetailService.getDdoWiseDetail(parseInt(searchParams.get("ddoId"))).then(
+        if (searchParams.get("id")) {
+            DdoDetailService.getDdoDetail(parseInt(searchParams.get("id"))).then(
                 (res) => {
                     if (res && res.id > 0) {
                         setDdoDetail(res);

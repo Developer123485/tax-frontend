@@ -246,9 +246,9 @@ export default function DDODetail(props) {
                         type="text"
                         placeholder=""
                         className="form-control"
-                        id="emailId"
-                        value={ddoDetail.emailId}
-                        onChange={(e) => handleInput("emailId", e)}
+                        id="emailID"
+                        value={ddoDetail.emailID}
+                        onChange={(e) => handleInput("emailID", e)}
                     />
                 </div>
                 <div className="col-md-3">
