@@ -22,6 +22,20 @@ export default function AddDdoWiseDetail({ params }) {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     const tanRegex = /^[A-Z]{4}[0-9]{5}[A-Z]{1}$/;
     const searchParams = useSearchParams(null);
+    const monthsShort = [
+        { value: '01', label: 'Jan' },
+        { value: '02', label: 'Feb' },
+        { value: '03', label: 'Mar' },
+        { value: '04', label: 'Apr' },
+        { value: '05', label: 'May' },
+        { value: '06', label: 'Jun' },
+        { value: '07', label: 'Jul' },
+        { value: '08', label: 'Aug' },
+        { value: '09', label: 'Sep' },
+        { value: '10', label: 'Oct' },
+        { value: '11', label: 'Nov' },
+        { value: '12', label: 'Dec' }
+    ];
     const [captchaBase64, setCaptchaBase64] = useState('');
     const [inputCaptcha, setInputCaptcha] = useState('');
     const emailRegex =
@@ -181,7 +195,9 @@ export default function AddDdoWiseDetail({ params }) {
         e.preventDefault();
         setIsDirty(true);
         ddoWiseDetail.ddoDetailId = ddoId;
-        DdoDetailService.saveDdoWiseDetail(ddoDetail)
+        ddoWiseDetail.month = searchParams.get("month");
+        ddoWiseDetail.financialYear = searchParams.get("financial_year");
+        DdoDetailService.saveDdoWiseDetail(ddoWiseDetail)
             .then((res) => {
                 if (res && res > 0) {
                     toast.success("DDO Detail saved successfully");
@@ -201,15 +217,33 @@ export default function AddDdoWiseDetail({ params }) {
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
                     <div className="">
-                        <DDOWiseDetail
-                            setActive={(e) => setActive(e)}
-                            ddoDetail={ddoDetail}
-                            ddoWiseDetail={ddoWiseDetail}
-                            ddoErrors={ddoErrors}
-                            isDirty={isDirty}
-                            handleInput={handleInput}
-                            handleSaveDDOWiseDetail={saveDdoWiseDetail}
-                        ></DDOWiseDetail>
+                        <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h5 className="text-blue fw-bold">
+                                        {searchParams.get("financial_year")},{" "}
+                                        {monthsShort.find(p => p.value == searchParams.get("month"))?.label} - Detail
+                                    </h5>
+                                </div>
+                            </div>
+                            <DDOWiseDetail
+                                setActive={(e) => setActive(e)}
+                                ddoDetail={ddoDetail}
+                                ddoWiseDetail={ddoWiseDetail}
+                                ddoErrors={ddoErrors}
+                                isDirty={isDirty}
+                                handleInput={handleInput}
+                            ></DDOWiseDetail>
+                        </div>
+                        <div className="col-md-12 justify-content-start">
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={(e) => saveDdoWiseDetail(e)}
+                            >
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

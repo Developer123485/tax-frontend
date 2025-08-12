@@ -45,7 +45,7 @@ export default function DDOWiseDetail(props) {
 
     return (
         <>
-            <div className="row align-items-start bg-light-gray px-3 py-4 px-md-2 pt-0 pb-md-3 rounded-3 mb-4 mt-0 g-3">
+            <div className="row">
                 <div className="col-md-3">
                     <label htmlFor="inputName" className="form-label">
                         <span>DDO Name</span>
@@ -183,17 +183,6 @@ export default function DDOWiseDetail(props) {
                         <option value="TDS-Non-Resident (27Q)">TDS-Non-Resident (27Q)</option>
                         <option value="TCS (27EQ)">TCS (27EQ)</option>
                     </select>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-12 px-0 d-flex justify-content-start">
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={(e) => props.handleSaveDDOWiseDetail(e)}
-                    >
-                        Save
-                    </button>
                 </div>
             </div>
         </>

@@ -26,11 +26,30 @@ export default function DdoWiseDetails({ params }) {
     const [pageSize, setPageSize] = useState(20);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
+    const [financialYear, setFinancialYear] = useState("");
+    const monthsShort = [
+        { value: '01', label: 'Jan' },
+        { value: '02', label: 'Feb' },
+        { value: '03', label: 'Mar' },
+        { value: '04', label: 'Apr' },
+        { value: '05', label: 'May' },
+        { value: '06', label: 'Jun' },
+        { value: '07', label: 'Jul' },
+        { value: '08', label: 'Aug' },
+        { value: '09', label: 'Sep' },
+        { value: '10', label: 'Oct' },
+        { value: '11', label: 'Nov' },
+        { value: '12', label: 'Dec' }
+    ];
+    const [selectedMonth, setSelectedMonth] = useState("");
     const [ddoWiseDetails, setDdoWiseDetails] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
     const [confirmTitle, setConfirmTitle] = useState("");
     const [totalItems, setTotalItems] = useState(0);
     const searchParams = useSearchParams(null);
+    const [quarter, setQuarter] = useState("");
+    const currentYear = new Date().getFullYear();
+    const [financialYears, setFinancialYears] = useState([]);
     const [breadcrumbs, setBreadcrumbs] = useState([
         {
             name: "Deductors",
@@ -88,48 +107,29 @@ export default function DdoWiseDetails({ params }) {
             selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
         },
         {
-            name: "Name",
+            name: "DDO Name",
             selector: (row) => (row.name ? row.name : "-"),
             grow: 3,
         },
         {
-            name: "Tan",
+            name: "DDO Tan",
             selector: (row) => (row.tan ? row.tan : "-"),
             grow: 2.2,
         },
         {
-            name: "Address",
-            selector: (row) => (row.address1 ? row.address1 : "-"),
+            name: "Tax Amount",
+            selector: (row) => (row.taxAmount ? row.taxAmount?.toFixed(2) : "-"),
             grow: 1.5,
         },
         {
-            name: "City",
-            selector: (row) => `${row?.city || "-"}`,
+            name: "Total Tds",
+            selector: (row) => (row.totalTds ? row.totalTds?.toFixed(2) : "-"),
+            grow: 1.5,
         },
         {
-            name: "State",
-            selector: (row) => `${row?.state || "-"}`,
-            grow: 2.5,
-        },
-        {
-            name: "Pincode",
-            selector: (row) => `${row?.pincode || "-"}`,
-            grow: 2.5,
-        },
-        {
-            name: "Email ID",
-            selector: (row) => `${row?.emailID || "-"}`,
-            grow: 2.5,
-        },
-        {
-            name: "Ddo RegNo",
-            selector: (row) => row.ddoRegNo || "-",
-            grow: 2,
-        },
-        {
-            name: "Ddo Code",
-            selector: (row) => row.ddoCode || "-",
-            grow: 3,
+            name: "nature",
+            selector: (row) => (row.nature ? row.nature : "-"),
+            grow: 1.5,
         },
         {
             name: "Actions",
@@ -143,7 +143,7 @@ export default function DdoWiseDetails({ params }) {
                             <a
                                 onClick={(e) => {
                                     router.push(
-                                        pathname + `/detail?id=${row.id}`
+                                        pathname + `/detail?ddoWiseId=${row.id}&financial_year=${financialYear}&month=${selectedMonth}`
                                     );
                                 }}
                             >
@@ -206,8 +206,62 @@ export default function DdoWiseDetails({ params }) {
     const totalPages = Math.ceil(totalItems / pageSize);
 
     useEffect(() => {
+        let array = [];
+        const tdsQuarterMonths = {
+            Q1: [
+                { value: "04", label: "Apr" },
+                { value: "05", label: "May" },
+                { value: "06", label: "Jun" }
+            ],
+            Q2: [
+                { value: "07", label: "Jul" },
+                { value: "08", label: "Aug" },
+                { value: "09", label: "Sep" }
+            ],
+            Q3: [
+                { value: "10", label: "Oct" },
+                { value: "11", label: "Nov" },
+                { value: "12", label: "Dec" }
+            ],
+            Q4: [
+                { value: "01", label: "Jan" },
+                { value: "02", label: "Feb" },
+                { value: "03", label: "Mar" }
+            ]
+        };
+        const currentDate = new Date();
+        for (let index = 6; index >= 0; index--) {
+            const startYear = currentYear - index;
+            const endYear = startYear + 1;
+            const finYear = `${startYear}-${endYear.toString().slice(-2)}`;
+            array.push(finYear);
+        }
+        let quarter = "";
+        const now = new Date();
+        const month = now.getMonth(); // Jan=0, Dec=11
+        if (month >= 3 && month <= 5) quarter = "Q1"; // Apr–Jun
+        else if (month >= 6 && month <= 8) quarter = "Q2"; // Jul–Sep
+        else if (month >= 9 && month <= 11) quarter = "Q3"; // Oct–Dec
+        else quarter = "Q4"; // Jan–Mar
+        setFinancialYears(array);
+        let startYear = currentDate.getFullYear();
+        if (month >= 6) {
+            // If month is after March, it's in the current FY
+            startYear = currentDate.getFullYear();
+        } else {
+            // If month is before April, it's in the previous FY
+            startYear = currentDate.getFullYear() - 1;
+        }
+
+        const fy = `${startYear}-${(startYear + 1).toString().slice(-2)}`;
+        const currentMonthValue = String(month).padStart(2, "0");
+        setSelectedMonth(currentMonthValue);
+        setFinancialYear(fy);
+    }, []);
+
+    useEffect(() => {
         fetchDdoWiseDetails();
-    }, [currentPage, pageSize]);
+    }, [financialYear, selectedMonth, currentPage, pageSize]);
 
     function deleteEntry(e) {
         e.preventDefault();
@@ -268,6 +322,9 @@ export default function DdoWiseDetails({ params }) {
             pageSize: pageSize,
             pageNumber: currentPage,
             ddoDetailId: ddoId,
+            deductorId: deductorId,
+            financialYear: financialYear,
+            month: selectedMonth
         };
         DdoDetailService.getDdoWiseDetails(model)
             .then((res) => {
@@ -301,7 +358,7 @@ export default function DdoWiseDetails({ params }) {
                                 <div
                                     className="col-md-4"
                                     onClick={(e) =>
-                                        router.push(`/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details/detail`)
+                                        router.push(`/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details/detail?financial_year=${financialYear}&month=${selectedMonth}`)
                                     }
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
@@ -387,12 +444,44 @@ export default function DdoWiseDetails({ params }) {
                 <div className="container">
                     <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                            <div className="col-md-4">
+                            <div className="col-md-5">
                                 <h4 className="mb-0">
                                     DDO Wise Details
                                 </h4>
                             </div>
-                            <div className="col-md-8 d-flex align-items-center justify-content-end">
+                            <div className="col-md-2">
+                                <select
+                                    className="form-select m-100"
+                                    aria-label="Default select example"
+                                    value={financialYear}
+                                    onChange={(e) => {
+                                        setFinancialYear(e.target.value);
+                                    }}
+                                >
+                                    {financialYears?.map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-md-2">
+                                <select
+                                    className="form-select m-100"
+                                    aria-label="Default select example"
+                                    value={selectedMonth}
+                                    onChange={(e) => {
+                                        setSelectedMonth(e.target.value);
+                                    }}
+                                >
+                                    {monthsShort && monthsShort?.map((option, index) => (
+                                        <option key={index} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-md-3 d-flex align-items-center justify-content-end">
                                 <button
                                     type="button"
                                     onClick={(e) => {
