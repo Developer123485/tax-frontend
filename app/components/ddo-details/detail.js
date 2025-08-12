@@ -165,7 +165,7 @@ export default function DDODetail(props) {
                         placeholder=""
                         className="form-control"
                         id="address4"
-                        maxLength={10}
+                        maxLength={100}
                         value={
                             ddoDetail.address4
                         }
@@ -185,6 +185,7 @@ export default function DDODetail(props) {
                         className="form-control"
                         id="city"
                         value={ddoDetail.city}
+                        maxLength={100}
                         onChange={(e) => handleInput("city", e)}
                     />
                     {isDirty && ddoErrors.cityError && (
@@ -230,7 +231,7 @@ export default function DDODetail(props) {
                         placeholder=""
                         className="form-control"
                         id="Pincode"
-                        maxLength={10}
+                        maxLength={6}
                         value={ddoDetail.pincode}
                         onChange={(e) => {
                             handleInput("pincode", e)
@@ -254,6 +255,7 @@ export default function DDODetail(props) {
                         placeholder=""
                         className="form-control"
                         id="emailID"
+                        maxLength={75}
                         value={ddoDetail.emailID}
                         onChange={(e) => handleInput("emailID", e)}
                     />
