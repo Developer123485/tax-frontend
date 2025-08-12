@@ -114,7 +114,7 @@ export default function DdoWiseDetails({ params }) {
         {
             name: "DDO Tan",
             selector: (row) => (row.tan ? row.tan : "-"),
-            grow: 2.2,
+            grow: 2,
         },
         {
             name: "Tax Amount",
@@ -129,7 +129,7 @@ export default function DdoWiseDetails({ params }) {
         {
             name: "nature",
             selector: (row) => (row.nature ? row.nature : "-"),
-            grow: 1.5,
+            grow: 3,
         },
         {
             name: "Actions",

@@ -79,29 +79,21 @@ export default function AddDdoWiseDetail({ params }) {
         userId: null,
         ddoDetailId: "",
     });
-    const [ddoErrors, setDdoErrors] = useState({
-        nameError: "",
-        tanError: "",
-        address1Error: "",
-        cityError: "",
-        stateError: "",
-        pincodeError: "",
+    const [ddoErrors, setDdoWiseErrors] = useState({
+        totalTdsError: "",
+        taxAmountError: "",
     });
     useEffect(() => {
         getDDODetail();
         getDDOWiseDetail();
     }, []);
 
-    // useEffect(() => {
-    //     validateDetail();
-    // }, [
-    //     ddoDetail.name,
-    //     ddoDetail.tan,
-    //     ddoDetail.state,
-    //     ddoDetail.address1,
-    //     ddoDetail.pincode,
-    //     ddoDetail.city,
-    // ]);
+    useEffect(() => {
+        validateDetail();
+    }, [
+        ddoWiseDetail.totalTds,
+        ddoWiseDetail.taxAmount,
+    ]);
 
 
     function getDDODetail() {
@@ -136,57 +128,30 @@ export default function AddDdoWiseDetail({ params }) {
     }
 
     function validateDetail() {
-        let nameError = "";
-        let tanError = "";
-        let address1Error = "";
-        let cityError = "";
-        let stateError = "";
-        let pincodeError = "";
-        if (!ddoDetail.name) {
-            nameError = "DDO name is required";
+        debugger
+        let totalTdsError = "";
+        let taxAmountError = "";
+        if (!ddoWiseDetail.totalTds) {
+            totalTdsError = "Total Tds is required";
         }
-        if (!ddoDetail.tan) {
-            tanError = "DDO tan is required";
-        }
-        if (!ddoDetail.state) {
-            stateError = "DDO State is required";
-        }
-        if (!ddoDetail.city) {
-            cityError = "DDO city is required";
-        }
-        if (!ddoDetail.address1) {
-            address1Error = "Address 1 is required";
-        }
-        if (!ddoDetail.pincode) {
-            pincodeError = "DDO pincode is required";
+        if (!ddoWiseDetail.taxAmount) {
+            taxAmountError = "Tax Amount is required";
         }
         if (
-            nameError ||
-            tanError ||
-            address1Error ||
-            cityError ||
-            stateError ||
-            pincodeError
+            totalTdsError ||
+            taxAmountError
         ) {
-            setDdoErrors((prevState) => ({
+            setDdoWiseErrors((prevState) => ({
                 ...prevState,
-                nameError,
-                tanError,
-                address1Error,
-                cityError,
-                stateError,
-                pincodeError
+                totalTdsError,
+                taxAmountError,
             }));
             return false;
         }
-        setDdoErrors((prevState) => ({
+        setDdoWiseErrors((prevState) => ({
             ...prevState,
-            nameError,
-            tanError,
-            address1Error,
-            cityError,
-            stateError,
-            pincodeError
+            totalTdsError,
+            taxAmountError,
         }));
         return true;
     }
@@ -194,19 +159,21 @@ export default function AddDdoWiseDetail({ params }) {
     function saveDdoWiseDetail(e) {
         e.preventDefault();
         setIsDirty(true);
-        ddoWiseDetail.ddoDetailId = ddoId;
-        ddoWiseDetail.month = searchParams.get("month");
-        ddoWiseDetail.financialYear = searchParams.get("financial_year");
-        DdoDetailService.saveDdoWiseDetail(ddoWiseDetail)
-            .then((res) => {
-                if (res && res > 0) {
-                    toast.success("DDO Detail saved successfully");
-                    router.push(`/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`);
-                }
-            })
-            .catch((res) => {
-                toast.error(res);
-            });
+        if (validateDetail()) {
+            ddoWiseDetail.ddoDetailId = ddoId;
+            ddoWiseDetail.month = searchParams.get("month");
+            ddoWiseDetail.financialYear = searchParams.get("financial_year");
+            DdoDetailService.saveDdoWiseDetail(ddoWiseDetail)
+                .then((res) => {
+                    if (res) {
+                        toast.success("DDO Detail saved successfully");
+                        window.location.href = `/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`;
+                    }
+                })
+                .catch((res) => {
+                    toast.error(res);
+                });
+        }
     }
 
     return (
