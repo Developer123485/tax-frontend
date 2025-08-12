@@ -188,8 +188,8 @@ export default function AddDdoWiseDetail({ params }) {
                             <div className="row">
                                 <div className="col-md-12">
                                     <h5 className="text-blue fw-bold">
-                                        {searchParams.get("financial_year")},{" "}
-                                        {monthsShort.find(p => p.value == searchParams.get("month"))?.label} - Detail
+                                        Detail ({searchParams.get("financial_year")},{" "}
+                                        {monthsShort.find(p => p.value == searchParams.get("month"))?.label})   
                                     </h5>
                                 </div>
                             </div>
