@@ -281,7 +281,6 @@ export default function DdoDetails({ params }) {
 
 
     const handleRowDoubleClick = (row) => {
-        debugger
         router.push(`/deductors/${deductorId}/tds/ddo-details/${row.id}/ddo-wise-details`);
     };
 

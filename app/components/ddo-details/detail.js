@@ -46,6 +46,13 @@ export default function DDODetail(props) {
     return (
         <>
             <div className="row align-items-start bg-light-gray px-3 py-4 px-md-2 pt-0 pb-md-3 rounded-3 mb-4 mt-0 g-3">
+                <div className="row mt-4">
+                    <div className="col-md-12">
+                        <h5 className="text-blue fw-bold">
+                            Detail
+                        </h5>
+                    </div>
+                </div>
                 <div className="col-md-3">
                     <label htmlFor="inputName" className="form-label">
                         <span>Name</span>
