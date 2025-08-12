@@ -142,7 +142,7 @@ export default function DDOWiseDetail(props) {
                         value={ddoWiseDetail.taxAmount}
                         onChange={(e) => {
                             if (CommonService.isNumeric(e.target.value)) {
-                                handleInput("nature", e)
+                                handleInput("taxAmount", e)
                             }
                         }}
                     />

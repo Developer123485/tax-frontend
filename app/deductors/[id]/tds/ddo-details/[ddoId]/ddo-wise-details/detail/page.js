@@ -180,8 +180,7 @@ export default function AddDdoWiseDetail({ params }) {
     function saveDdoWiseDetail(e) {
         e.preventDefault();
         setIsDirty(true);
-        // if (validateDetail()) {
-        ddoDetail.ddoDetailId = ddoDetail;
+        ddoWiseDetail.ddoDetailId = ddoId;
         DdoDetailService.saveDdoWiseDetail(ddoDetail)
             .then((res) => {
                 if (res && res > 0) {
@@ -192,7 +191,6 @@ export default function AddDdoWiseDetail({ params }) {
             .catch((res) => {
                 toast.error(res);
             });
-        // }
     }
 
     return (
