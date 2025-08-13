@@ -323,6 +323,7 @@ export default function DdoWiseDetails({ params }) {
         const model = {
             financialYear: financialYear,
             deductorId: deductorId,
+            ddoId: ddoId
         };
         FormsService.final24GReport(model)
             .then((res) => {
