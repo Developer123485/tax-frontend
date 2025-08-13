@@ -21,6 +21,9 @@ async function submitFormRequest(model, form, formType, quarter) {
     if (form == "request-conso-file") {
         result = await api.post("tracesActivities/continueRequestConsoFile", model);
     }
+    if (form == "request-justification-report") {
+        result = await api.post("tracesActivities/justrepdwnld", model);
+    }
     if (form == "request-form-16-16a-27d") {
         if (formType == "24Q" && quarter == "Q4") {
             result = await api.post("tracesActivities/continueRequest16", model);

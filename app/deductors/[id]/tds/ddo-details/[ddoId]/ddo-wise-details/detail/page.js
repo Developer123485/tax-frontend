@@ -128,7 +128,6 @@ export default function AddDdoWiseDetail({ params }) {
     }
 
     function validateDetail() {
-        debugger
         let totalTdsError = "";
         let taxAmountError = "";
         if (!ddoWiseDetail.totalTds) {
