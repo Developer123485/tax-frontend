@@ -273,7 +273,7 @@ export default function DdoWiseDetails({ params }) {
         setDeleteConfirm(false);
         setShowLoader(true);
         if (confirmTitle === "All DDO Wise Details") {
-            DdoDetailService.deleteAllDdoWiseDetail(ddoId)
+            DdoDetailService.deleteAllDdoWiseDetail(ddoId, financialYear, selectedMonth)
                 .then((res) => {
                     if (res) {
                         toast.success("Delete All Successfully!");

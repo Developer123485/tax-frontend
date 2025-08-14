@@ -46,10 +46,6 @@ async function saveDdoDetail(model) {
     return result;
 }
 
-
-
-
-
 async function getDdoWiseDetails(model) {
     const result = await api.post(`ddoDetails/fetch/ddoWiseDetails`, model);
     return result;
@@ -65,8 +61,8 @@ async function deleteBulkDdoWiseDetail(model) {
     return result;
 }
 
-async function deleteAllDdoWiseDetail(ddoId) {
-    const result = await api.post(`ddoDetails/deleteAll/ddoWiseDetails/${ddoId}`);
+async function deleteAllDdoWiseDetail(ddoId, fy, month) {
+    const result = await api.post(`ddoDetails/deleteAll/ddoWiseDetails/${ddoId}/${fy}/${month}`);
     return result;
 }
 
