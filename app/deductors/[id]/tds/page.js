@@ -414,7 +414,7 @@ export default function TDSDashboard({ params }) {
                       <div className="my-3">
                         <div className="col-md-12">
                           <h5 className="text-uppercase fw-bold mb-3">
-                            TRACES and more
+                            TRACES, 24G Form and more
                           </h5>
                         </div>
                       </div>
@@ -534,7 +534,6 @@ export default function TDSDashboard({ params }) {
                                 </div>
                                 <div className="col-md-8">
                                   <h5 className="fw-bold text-capitalize mb-0">
-                                    {/* {fileName && <span className="text-danger">{fileName}</span>} */}
                                     <label className="w-100 text-capitalize">
                                       <span className="fw-bold"> </span>
                                       <input
@@ -599,126 +598,6 @@ export default function TDSDashboard({ params }) {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="row">
-                    <div
-                      className="col-12 col-md-12 pe-md-0 mb-2"
-                      onClick={(e) =>
-                        router.push(`/deductors/${deductorId}/tds/deductees`)
-                      }
-                    >
-                      <div className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
-                        <h6>Deductees Master</h6>
-                        <span className="fs-3">{deducteeCount}</span>
-                        <span>List of deductees used in this deductors</span>
-                      </div>
-                    </div>
-                  </div> */}
-                      {/*     <div className="row">
-                        <div className="col-12 col-md-12 pe-md-0">
-                          <div className="media-upload-sec bg-white border border-1 rounded-2 p-4 text-center mb-md-0">
-                            <label className="btn btn-default w-100 py-md-5 my-3 drag-file-field">
-                              <Image
-                                className="mb-2"
-                                src="/images/icons/media_upload_icon.svg"
-                                alt="media_upload_icon"
-                                width={64}
-                                height={64}
-                              />
-                              <br />
-                              Drag your file(s) or
-                              <span className="fw-bold"> browse</span>
-                              <input
-                                className="visually-hidden"
-                                accept=""
-                                type="file"
-                                onChange={fileSelectHandler}
-                              ></input>
-                            </label>
-                            <div className="">
-                              {fileName && (
-                                <span className="text-danger">{fileName}</span>
-                              )}
-                              {!selectedFile && (
-                                <button
-                                  type="button"
-                                  onClick={(e) => handleFileChange()}
-                                  className="btn btn-primary w-100"
-                                  disabled={!selectedFile}
-                                >
-                                  Import from Excel
-                                </button>
-                              )}
-                              {selectedFile && (
-                                <button
-                                  type="button"
-                                  className="btn btn-outline-primary w-100"
-                                  onClick={handleFileChange}
-                                  disabled={isUploading}
-                                >
-                                  {isUploading ? "Uploading...." : "Upload"}
-                                </button>
-                              )}
-                            </div>
-                            <div className="mt-3">
-                              {isUploading && (
-                                <ProgressBar animated now={uploadProgress} />
-                              )}
-                            </div>
-                            <div className="row d-flex justify-content-center align-items-center text-center"></div>
-                            <div className="mt-2">
-                              <button
-                                type="button"
-                                onClick={(e) =>
-                                  router.push(
-                                    `/deductors/${deductorId}/tds/deductees/detail`
-                                  )
-                                }
-                                className="btn btn-outline-primary w-100"
-                              >
-                                Add Deductee Manually
-                              </button>
-                            </div>
-                            <div className="mt-2">
-                              <button
-                                type="button"
-                                onClick={(e) =>
-                                  router.push(
-                                    `/deductors/${deductorId}/tds/deductees`
-                                  )
-                                }
-                                className="btn btn-outline-primary w-100"
-                              >
-                                Deductees
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-12 col-md-12 pe-md-0 mb-2">
-                          <div className="bg-white border border-1 rounded-2 p-4 py-md-3 px-md-3 my-3 d-flex flex-column justify-content-center align-items-center text-center">
-                            <h5 className="text-uppercase fw-bold mb-3">Download excel template</h5>
-                            <p>
-                              Download and fill data in the latest version of
-                              our excel templates below. Remember not to change
-                              the column order and names in the sheet.
-                            </p>
-                            <Image
-                              className="mx-auto img-fluid"
-                              src="/images/icons/download_excel.svg"
-                              alt="download_excel"
-                              width={200}
-                              height={150}
-                            />
-                            <button
-                              type="button"
-                              className="btn btn-primary w-100 mt-2"
-                            >
-                              Download File
-                            </button>
-                          </div>
-                        </div>
-                      </div> */}
                     </div>
                   </div>
                 </div>
