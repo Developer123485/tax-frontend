@@ -14,6 +14,7 @@ export const DdoDetailService = {
     deleteDdoWiseDetail,
     deleteAllDdoWiseDetail,
     deleteBulkDdoWiseDetail,
+    getDdoDropdowns
 };
 
 async function getDdoDetails(model) {
@@ -40,6 +41,12 @@ async function getDdoDetail(id) {
     const result = await api.get(`ddoDetails/${id}`);
     return result;
 }
+
+async function getDdoDropdowns(DeductorId) {
+    const result = await api.get(`ddoDetails/ddoDropdowns/${DeductorId}`);
+    return result;
+}
+
 
 async function saveDdoDetail(model) {
     const result = await api.post("ddoDetails/create", model);

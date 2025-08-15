@@ -15,8 +15,8 @@ import DDOWiseDetail from "@/app/components/ddo-wise-details/detail";
 export default function AddDdoWiseDetail({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
-    const ddoId = resolvedParams?.ddoId;
     const [active, setActive] = useState(0);
+    const [ddoDropdowns, setDdoDropdowns] = useState([]);
     const [confirmModal, setConfirmModal] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -82,10 +82,16 @@ export default function AddDdoWiseDetail({ params }) {
     const [ddoErrors, setDdoWiseErrors] = useState({
         totalTdsError: "",
         taxAmountError: "",
+        nameError: "",
     });
     useEffect(() => {
         getDDODetail();
         getDDOWiseDetail();
+        DdoDetailService.getDdoDropdowns(deductorId).then((res) => {
+            if (res) {
+                setDdoDropdowns(res);
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -93,12 +99,13 @@ export default function AddDdoWiseDetail({ params }) {
     }, [
         ddoWiseDetail.totalTds,
         ddoWiseDetail.taxAmount,
+        ddoWiseDetail.ddoDetailId
     ]);
 
 
     function getDDODetail() {
-        if (ddoId > 0) {
-            DdoDetailService.getDdoDetail(ddoId).then(
+        if (searchParams.get("ddoId")) {
+            DdoDetailService.getDdoDetail(parseInt(searchParams.get("ddoId"))).then(
                 (res) => {
                     if (res && res.id > 0) {
                         setDdoDetail(res);
@@ -159,14 +166,13 @@ export default function AddDdoWiseDetail({ params }) {
         e.preventDefault();
         setIsDirty(true);
         if (validateDetail()) {
-            ddoWiseDetail.ddoDetailId = ddoId;
             ddoWiseDetail.month = searchParams.get("month");
             ddoWiseDetail.financialYear = searchParams.get("financial_year");
             DdoDetailService.saveDdoWiseDetail(ddoWiseDetail)
                 .then((res) => {
                     if (res) {
                         toast.success("DDO Detail saved successfully");
-                        window.location.href = `/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`;
+                        window.location.href = `/deductors/${deductorId}/tds/24g-form/ddo-wise-details`;
                     }
                 })
                 .catch((res) => {
@@ -196,9 +202,14 @@ export default function AddDdoWiseDetail({ params }) {
                                 setActive={(e) => setActive(e)}
                                 ddoDetail={ddoDetail}
                                 ddoWiseDetail={ddoWiseDetail}
+                                ddoDropdowns={ddoDropdowns}
                                 ddoErrors={ddoErrors}
                                 isDirty={isDirty}
                                 handleInput={handleInput}
+                                setDdoId={(e) => setDdoWiseDetail((prevState) => ({
+                                    ...prevState,
+                                    ["ddoDetailId"]: e ? parseInt(e) : null,
+                                }))}
                             ></DDOWiseDetail>
                         </div>
                         <div className="col-md-12 justify-content-start">

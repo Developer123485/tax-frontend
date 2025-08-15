@@ -298,7 +298,6 @@ export default function DdoDetails({ params }) {
         }
     }
 
-
     const handleChange = (state) => {
         setSelectedData(state.selectedRows);
     };
@@ -323,10 +322,6 @@ export default function DdoDetails({ params }) {
             });
     }
 
-
-    const handleRowDoubleClick = (row) => {
-        router.push(`/deductors/${deductorId}/tds/ddo-details/${row.id}/ddo-wise-details`);
-    };
 
     return (
         <>
@@ -492,7 +487,6 @@ export default function DdoDetails({ params }) {
                                                     paginationPerPage={pageSize}
                                                     selectableRowsNoSelectAll={true}
                                                     onSelectedRowsChange={handleChange}
-                                                    onRowDoubleClicked={handleRowDoubleClick}
                                                     customInput={<CustomCheckbox />}
                                                     paginationComponentOptions={{
                                                         noRowsPerPage: true,

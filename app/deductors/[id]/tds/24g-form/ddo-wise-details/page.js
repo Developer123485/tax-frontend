@@ -273,7 +273,7 @@ export default function DdoWiseDetails({ params }) {
         setDeleteConfirm(false);
         setShowLoader(true);
         if (confirmTitle === "All DDO Wise Details") {
-            DdoDetailService.deleteAllDdoWiseDetail(ddoId, financialYear, selectedMonth)
+            DdoDetailService.deleteAllDdoWiseDetail(deductorId, financialYear, selectedMonth)
                 .then((res) => {
                     if (res) {
                         toast.success("Delete All Successfully!");
@@ -513,7 +513,7 @@ export default function DdoWiseDetails({ params }) {
                                     }}
                                     className="btn btn-outline-primary me-3"
                                 >
-                                    Download
+                                    Download 24G 
                                 </button>
                                 <button
                                     type="button"

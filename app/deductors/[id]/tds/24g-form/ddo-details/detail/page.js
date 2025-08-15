@@ -184,7 +184,7 @@ export default function AddDdoDetail({ params }) {
                 .then((res) => {
                     if (res && res > 0) {
                         toast.success("DDO Detail saved successfully");
-                        router.push(`/deductors/${deductorId}/tds/ddo-details`);
+                        router.push(`/deductors/${deductorId}/tds/24-form/ddo-details`);
                     }
                 })
                 .catch((res) => {

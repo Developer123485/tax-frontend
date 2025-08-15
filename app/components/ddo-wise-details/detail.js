@@ -37,6 +37,7 @@ export default function DDOWiseDetail(props) {
         ddoWiseDetail,
         ddoErrors,
         isDirty,
+        ddoDropdowns
     } = props;
 
     function handleInput(name, e) {
@@ -46,94 +47,36 @@ export default function DDOWiseDetail(props) {
     return (
         <>
             <div className="row">
-                <div className="col-md-3">
-                    <label htmlFor="inputName" className="form-label">
-                        <span>DDO Name</span>
-                    </label>
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="inputName"
-                        value={ddoDetail.name}
-                        readOnly
-
-                    />
-                </div>
-                <div className="col-md-3">
-                    <label htmlFor="name" className="form-label">
-                        <span>DDO Tan</span>
-                    </label>
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="tan"
-                        maxLength={10}
-                        readOnly
-
-                        value={ddoDetail.tan}
-                    />
-                </div>
                 <div className="col-md-6">
-                    <label htmlFor="inputPan" className="form-label">
-                        <span>DDO Address</span>
+                    <label htmlFor="inputddo" className="form-label">
+                        <span>DDO Details</span>
                         <span className="text-danger"> *</span>
                     </label>
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="inputPan"
-                        value={
-                            ddoDetail.address1 + ", " + ddoDetail.city + ", " + ddoDetail.state + "-" + ddoDetail.pincode
-                        }
-                        readOnly
-
-                    />{" "}
-                </div>
-                <div className="col-md-3">
-                    <label htmlFor="emailId" className="form-label">
-                        <span>Email Id</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="emailId"
-                        value={ddoDetail.emailId}
-                        readOnly
-
-                    />
-                </div>
-                <div className="col-md-3">
-                    <label htmlFor="ddoRegNo" className="form-label">
-                        <span>DDO Reg No</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="ddoRegNo"
-                        value={ddoDetail.ddoRegNo}
-                        readOnly
-
-                    />
-                </div>
-                <div className="col-md-3">
-                    <label htmlFor="ddoCode" className="form-label">
-                        <span>DDO Code</span>
-                    </label>
-                    <input
-                        type="text"
-                        placeholder=""
-                        className="form-control"
-                        id="ddoCode"
-                        value={ddoDetail.ddoCode}
-                        readOnly
-                    />
+                    <div className="d-flex align-items-center">
+                        {ddoDropdowns && ddoDropdowns.length > 0 && <SearchableDropdown
+                            setEventId={props.setDdoId}
+                            id={ddoWiseDetail.ddoDetailId}
+                            options={ddoDropdowns}
+                        ></SearchableDropdown>}
+                        <button
+                            type="button"
+                            className="btn btn-primary w-100 ms-3"
+                            onClick={(e) =>
+                                router.push(
+                                    `/deductors/${props.deductorId}/tds/24g-form/ddo-details/detail`
+                                )
+                            }
+                        >
+                            Add
+                        </button>
+                    </div>
+                    <div className="">
+                        {isDirty && ddoErrors.nameError && (
+                            <span className="text-danger">
+                                {ddoErrors.nameError}
+                            </span>
+                        )}
+                    </div>
                 </div>
                 <div className="col-md-3">
                     <label htmlFor="taxAmount" className="form-label">
