@@ -137,20 +137,26 @@ export default function AddDdoWiseDetail({ params }) {
     function validateDetail() {
         let totalTdsError = "";
         let taxAmountError = "";
+        let nameError = "";
         if (!ddoWiseDetail.totalTds) {
             totalTdsError = "Total Tds is required";
         }
+        if (!ddoWiseDetail.ddoDetailId) {
+            totalTdsError = "DDO detail is required";
+        }
         if (!ddoWiseDetail.taxAmount) {
-            taxAmountError = "Tax Amount is required";
+            nameError = "Tax Amount is required";
         }
         if (
             totalTdsError ||
-            taxAmountError
+            taxAmountError ||
+            nameError
         ) {
             setDdoWiseErrors((prevState) => ({
                 ...prevState,
                 totalTdsError,
                 taxAmountError,
+                nameError
             }));
             return false;
         }
@@ -158,6 +164,7 @@ export default function AddDdoWiseDetail({ params }) {
             ...prevState,
             totalTdsError,
             taxAmountError,
+            nameError
         }));
         return true;
     }
@@ -205,6 +212,7 @@ export default function AddDdoWiseDetail({ params }) {
                                 ddoDropdowns={ddoDropdowns}
                                 ddoErrors={ddoErrors}
                                 isDirty={isDirty}
+                                deductorId={deductorId}
                                 handleInput={handleInput}
                                 setDdoId={(e) => setDdoWiseDetail((prevState) => ({
                                     ...prevState,
