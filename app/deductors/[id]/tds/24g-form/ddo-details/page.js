@@ -348,7 +348,7 @@ export default function DdoDetails({ params }) {
                                 <div
                                     className="col-md-4"
                                     onClick={(e) =>
-                                        router.push(`/deductors/${deductorId}/tds/ddo-details/detail`)
+                                        router.push(`/deductors/${deductorId}/tds/24g-form/ddo-details/detail`)
                                     }
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">

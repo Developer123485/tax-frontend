@@ -77,9 +77,9 @@ export default function TDSDashboard({ params }) {
       descrption: "Reconcile Form 26AS against your TDS recievables",
     },
     {
-      name: "26AS Reconcilation",
-      code: "INT",
-      descrption: "Reconcile Form 26AS against your TDS recievables",
+      name: "24G Form",
+      code: "24G",
+      descrption: "Monthly statement submitted by a DDO to report TDS/TCS payments without challan through book adjustment",
     },
   ]);
   const [breadcrumbs, setBreadcrumbs] = useState([
@@ -429,6 +429,13 @@ export default function TDSDashboard({ params }) {
                                   `/deductors/${deductorId}/tds/traces-activities`
                                 );
                               }
+                              if (
+                                option.name == "24G Form"
+                              ) {
+                                router.push(
+                                  `/deductors/${deductorId}/tds/24g-form`
+                                )
+                              }
                             }
                             }
                           >
@@ -590,34 +597,6 @@ export default function TDSDashboard({ params }) {
                               </div>
                             </div>
                           </div>
-                          {deductorInfo?.ainCode && <div className="col-md-12">
-                            <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
-                              <div className="row align-items-center"
-                                onClick={(e) =>
-                                  router.push(
-                                    `/deductors/${deductorId}/tds/24g-form`
-                                  )
-                                }
-                              >
-                                <div className="col-md-4">
-                                  <Image
-                                    className="img-fluid"
-                                    src="/images/dashboards/download_excel_file_icon.svg"
-                                    alt="download_excel_file_icon"
-                                    width={80}
-                                    height={80}
-                                  />
-                                </div>
-                                <div className="col-md-8">
-                                  <h5
-                                    className="fw-bold text-uppercase mb-0"
-                                  >
-                                    Download 24G
-                                  </h5>
-                                </div>
-                              </div>
-                            </div>
-                          </div>}
                         </div>
                       </div>
                       {/* <div className="row">
@@ -773,7 +752,7 @@ export default function TDSDashboard({ params }) {
       )
       }
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
-      
+
     </>
   );
 }
