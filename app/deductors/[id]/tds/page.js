@@ -595,7 +595,7 @@ export default function TDSDashboard({ params }) {
                               <div className="row align-items-center"
                                 onClick={(e) =>
                                   router.push(
-                                    `/deductors/${deductorId}/tds/ddo-details`
+                                    `/deductors/${deductorId}/tds/24g-form`
                                   )
                                 }
                               >

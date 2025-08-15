@@ -57,7 +57,7 @@ export default function DDOWiseDetail(props) {
                         id="inputName"
                         value={ddoDetail.name}
                         readOnly
-                        disabled
+
                     />
                 </div>
                 <div className="col-md-3">
@@ -71,7 +71,7 @@ export default function DDOWiseDetail(props) {
                         id="tan"
                         maxLength={10}
                         readOnly
-                        disabled
+
                         value={ddoDetail.tan}
                     />
                 </div>
@@ -89,7 +89,7 @@ export default function DDOWiseDetail(props) {
                             ddoDetail.address1 + ", " + ddoDetail.city + ", " + ddoDetail.state + "-" + ddoDetail.pincode
                         }
                         readOnly
-                        disabled
+
                     />{" "}
                 </div>
                 <div className="col-md-3">
@@ -104,7 +104,7 @@ export default function DDOWiseDetail(props) {
                         id="emailId"
                         value={ddoDetail.emailId}
                         readOnly
-                        disabled
+
                     />
                 </div>
                 <div className="col-md-3">
@@ -119,7 +119,7 @@ export default function DDOWiseDetail(props) {
                         id="ddoRegNo"
                         value={ddoDetail.ddoRegNo}
                         readOnly
-                        disabled
+
                     />
                 </div>
                 <div className="col-md-3">
@@ -133,7 +133,6 @@ export default function DDOWiseDetail(props) {
                         id="ddoCode"
                         value={ddoDetail.ddoCode}
                         readOnly
-                        disabled
                     />
                 </div>
                 <div className="col-md-3">

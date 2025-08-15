@@ -40,9 +40,14 @@ export default function AddDdoDetail({ params }) {
             href: `/deductors/${deductorId}/tds`,
         },
         {
+            name: "24G Details",
+            isActive: false,
+            href: `/deductors/${deductorId}/tds/24g-form`,
+        },
+        {
             name: "DDO Details",
             isActive: false,
-            href: `/deductors/${deductorId}/tds/ddo-details`,
+            href: `/deductors/${deductorId}/tds/24g-form/ddo-details`,
         },
         {
             name: "Details",

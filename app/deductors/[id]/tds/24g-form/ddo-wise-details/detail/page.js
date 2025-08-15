@@ -53,14 +53,14 @@ export default function AddDdoWiseDetail({ params }) {
             href: `/deductors/${deductorId}/tds`,
         },
         {
-            name: "DDO Details",
+            name: "24G Details",
             isActive: false,
-            href: `/deductors/${deductorId}/tds/ddo-details`,
+            href: `/deductors/${deductorId}/tds/24g-form`,
         },
         {
             name: "DDO Wise Details",
             isActive: false,
-            href: `/deductors/${deductorId}/tds/ddo-details/${ddoId}/ddo-wise-details`,
+            href: `/deductors/${deductorId}/tds/24g-form/ddo-wise-details`,
         },
         {
             name: "Details",
