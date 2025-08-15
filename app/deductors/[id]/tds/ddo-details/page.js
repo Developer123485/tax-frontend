@@ -29,6 +29,7 @@ export default function DdoDetails({ params }) {
     const [selectedData, setSelectedData] = useState(null);
     const [confirmTitle, setConfirmTitle] = useState("");
     const [totalItems, setTotalItems] = useState(0);
+    const [isloading, setIsLoading] = useState(false);
     const searchParams = useSearchParams(null);
     const [breadcrumbs, setBreadcrumbs] = useState([
         {
@@ -255,6 +256,44 @@ export default function DdoDetails({ params }) {
         }
     }
 
+    const fileSelectHandler = (event) => {
+        handleFileChange(event.target.files[0]);
+    };
+
+    async function handleFileChange(file) {
+        let formData = new FormData();
+        let isFormValidation = true;
+        let fy = "";
+        let month = "";
+        let type = "1"
+        formData.append("file", file);
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        try {
+            setIsLoading(true);
+            const result = await api.post(
+                `ddoDetails/uploadDDODetailExcelFile/${deductorId}/${type}/${isFormValidation}/${fy}/${month}`,
+                formData,
+                config
+            );
+            if (result) {
+                setIsLoading(false);
+                toast.success("File upload successfully");
+            } else {
+                setIsLoading(false);
+                toast.error("File upload failed");
+            }
+        } catch (error) {
+            toast.error("Error during file upload");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+
     const handleChange = (state) => {
         setSelectedData(state.selectedRows);
     };
@@ -346,13 +385,13 @@ export default function DdoDetails({ params }) {
                                                         <span className="fw-bold"> </span>
                                                         <input
                                                             type="file"
+                                                            onChange={fileSelectHandler}
                                                             className="visually-hidden"
                                                             accept=".xlsx"
                                                         />
                                                         <h5 className="fw-bold mb-0">
                                                             {" "}
-                                                            {/* {isloading ? "Uploading..." : "Import Excel File"} */}
-                                                            {"Import Excel File"}
+                                                            {isloading ? "Uploading..." : "Import Excel File"}
                                                         </h5>
                                                     </label>
                                                 </h5>
