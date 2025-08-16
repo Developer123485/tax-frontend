@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { saveAs } from "file-saver";
 
 export default function DdoDetails({ params }) {
     const resolvedParams = use(params);
@@ -289,7 +290,8 @@ export default function DdoDetails({ params }) {
                 toast.success("File upload successfully");
                 fetchDdoDetails();
             } else {
-                setIsLoading(false);
+                const blob = new Blob([result], { type: "text/plain" });
+                saveAs(blob, "errors.txt");
                 toast.error("File upload failed");
             }
         } catch (error) {
