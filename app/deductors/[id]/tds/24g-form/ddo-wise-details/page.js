@@ -16,6 +16,7 @@ import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import FormConfirmation from "@/app/components/modals/form-confimation";
 import { FormsService } from "@/app/services/forms.service";
+import api from "@/app/utils/interceptors";
 
 export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
@@ -27,6 +28,7 @@ export default function DdoWiseDetails({ params }) {
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
+    const [isloading, setIsLoading] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
     const [financialYear, setFinancialYear] = useState("");
@@ -317,6 +319,44 @@ export default function DdoWiseDetails({ params }) {
         }
     }
 
+    const fileSelectHandler = (event) => {
+        handleFileChange(event.target.files[0]);
+    };
+
+    async function handleFileChange(file) {
+        let formData = new FormData();
+        let isFormValidation = true;
+        let fy = financialYear;
+        let month = selectedMonth;
+        let type = "2"
+        formData.append("file", file);
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        try {
+            setIsLoading(true);
+            const result = await api.post(
+                `ddoDetails/uploadDDODetailExcelFile/${deductorId}/${type}/${isFormValidation}/${fy}/${month}`,
+                formData,
+                config
+            );
+            if (result) {
+                setIsLoading(false);
+                toast.success("File upload successfully");
+                fetchDdoWiseDetails();
+            } else {
+                setIsLoading(false);
+                toast.error("File upload failed");
+            }
+        } catch (error) {
+            toast.error("Error during file upload");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     function downloadFile(e) {
         setIsloading(true);
         e.preventDefault();
@@ -422,15 +462,15 @@ export default function DdoWiseDetails({ params }) {
                                                     {/* {fileName && <span className="text-danger">{fileName}</span>} */}
                                                     <label className="w-100 text-capitalize cursor-pointer">
                                                         <span className="fw-bold"> </span>
-                                                        {/* <input
+                                                        <input
                                                             type="file"
+                                                            onChange={fileSelectHandler}
                                                             className="visually-hidden"
                                                             accept=".xlsx"
-                                                        /> */}
+                                                        />
                                                         <h5 className="fw-bold mb-0">
                                                             {" "}
-                                                            {/* {isloading ? "Uploading..." : "Import Excel File"} */}
-                                                            {"Import Excel File"}
+                                                            {isloading ? "Uploading..." : "Import Excel File"}
                                                         </h5>
                                                     </label>
                                                 </h5>
@@ -513,7 +553,7 @@ export default function DdoWiseDetails({ params }) {
                                     }}
                                     className="btn btn-outline-primary me-3"
                                 >
-                                    Download 24G 
+                                    Download 24G
                                 </button>
                                 <button
                                     type="button"

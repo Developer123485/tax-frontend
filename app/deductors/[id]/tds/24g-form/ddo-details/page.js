@@ -287,6 +287,7 @@ export default function DdoDetails({ params }) {
             if (result) {
                 setIsLoading(false);
                 toast.success("File upload successfully");
+                fetchDdoDetails();
             } else {
                 setIsLoading(false);
                 toast.error("File upload failed");
