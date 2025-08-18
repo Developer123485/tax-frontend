@@ -16,7 +16,7 @@ export const AuthService = {
 
 async function login(model) {
   return apiRequest
-    .get("FuvValidateReturn/start-validation?filePath=dfdsfd&csiFilePath=dgfg&outputPath=fbfdgfg",  axiosConfig)
+    .post("Auth/SignIn", model, axiosConfig)
     .then((result) => {
       if (result && result.data && result.data) {
         window.sessionStorage.setItem("token", result.data.token);
