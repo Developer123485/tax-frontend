@@ -615,7 +615,7 @@ export default function TDSForm({ params }) {
                     />
                   </div>
                   <div className="col-12 col-md-7">
-                    <h4 className="fw-bold">Import from TXT</h4>
+                    <h4 className="fw-bold">Import from TXT/TDS</h4>
                     <span>
                       Auto-import of deductions, challans, deductee details,
                       {searchParams.get("quarter") == "Q4" &&
