@@ -420,7 +420,7 @@ export default function Deductors() {
                   Export
                 </button>
                 <button onClick={() => setShow(true)} type="button" className="btn btn-primary me-2">
-                  Import TXT File
+                  Import TXT/TDS File
                 </button>
                 <div className="d-flex">
                   <div className="input-group searchbox">

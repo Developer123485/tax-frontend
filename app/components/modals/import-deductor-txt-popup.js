@@ -158,7 +158,7 @@ export default function ImportDeductorTXTPopup(props) {
                                 className="visually-hidden"
                                 accept=".txt"
                               />
-                              <h5 className="fw-bold mb-0">Import from TXT</h5>
+                              <h5 className="fw-bold mb-0">Import from TXT/TDS</h5>
                             </label>
                           </h5>
                         </div>
