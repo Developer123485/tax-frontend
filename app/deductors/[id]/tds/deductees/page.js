@@ -312,6 +312,7 @@ export default function Deductees({ params }) {
         if (res) {
           setSelectedDeducteeData([]);
         }
+        toast.success(res);
         fetchDeductees("");
         setConfirmModal(false);
         setVerifyType("");
@@ -330,6 +331,7 @@ export default function Deductees({ params }) {
           setSelectedEmployeeData([]);
           fetchEmployees("");
         }
+        toast.success(res);
         setConfirmModal(false);
         setVerifyType("");
         setSubmitLoading(false);
