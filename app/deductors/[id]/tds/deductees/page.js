@@ -294,6 +294,12 @@ export default function Deductees({ params }) {
         setAllLoading(false);
       })
     } else {
+      setAllLoading(false);
+      setBulkLoading(false);
+      setCaptchaBase64("");
+      setToggleCleared(false);
+      setVerifyType("");
+      setCaptcha("");
       toast.error("TRACES username and password do not exist for the deductor");
     }
   }
