@@ -668,6 +668,9 @@ export default function Deductees({ params }) {
                       submitLogin(e);
                     }}
                   >
+                    {bulkLoading && (
+                      <div className="spinner-border me-2" role="status"></div>
+                    )}
                     Bulk PAN Verify
                   </button>
                   <button type="button"
@@ -679,6 +682,9 @@ export default function Deductees({ params }) {
                       submitLogin(e)
                     }}
                   >
+                    {allLoading && (
+                      <div className="spinner-border me-2" role="status"></div>
+                    )}
                     Verify All PANs
                   </button>
                   <button
@@ -885,6 +891,9 @@ export default function Deductees({ params }) {
                 className="btn btn-primary"
                 disabled={submitLoading}
                 onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                {submitLoading && (
+                  <div className="spinner-border me-2" role="status"></div>
+                )}
                 Submit
               </button>
             </div>
