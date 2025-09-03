@@ -312,6 +312,7 @@ export default function Deductees({ params }) {
     }
     const model = {
       captcha: captcha,
+      deductorId: deductorId,
       ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id))
     }
     if (type === "Deductees") {
