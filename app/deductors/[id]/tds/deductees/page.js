@@ -39,7 +39,7 @@ export default function Deductees({ params }) {
   const [verifyType, setVerifyType] = useState("");
   const [captchaBase64, setCaptchaBase64] = useState('');
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
-  const [captcha, seCaptcha] = useState("");
+  const [captcha, setCaptcha] = useState("");
   const [totalEmployeeItems, setTotalEmployeeItems] = useState(0);
   const [selectedDeducteeData, setSelectedDeducteeData] = useState([]);
   const [selectedEmployeeData, setSelectedEmployeeData] = useState([]);
@@ -273,7 +273,7 @@ export default function Deductees({ params }) {
   }
 
   function submitLogin(e) {
-    seCaptcha("");
+    setCaptcha("");
     if (deductorInfo.tracesLogin && deductorInfo.tracesPassword) {
       const model = {
         userName: deductorInfo.tracesLogin,
@@ -307,21 +307,41 @@ export default function Deductees({ params }) {
       captcha: captcha,
       ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id))
     }
-    TracesActivitiesService.verifyDeducteePans(model).then(res => {
-      if (res) {
-        setSelectedDeducteeData([]);
-      }
-      setConfirmModal(false);
-      setVerifyType("");
-      setSubmitLoading(false);
-      setCaptchaBase64("");
-    }).catch(e => {
-      toast.error(e?.message);
-      setVerifyType("");
-      setConfirmModal(false);
-      setSubmitLoading(false);
-      setCaptchaBase64("");
-    })
+    if (type === "Deductees") {
+      TracesActivitiesService.verifyDeducteePans(model).then(res => {
+        if (res) {
+          setSelectedDeducteeData([]);
+        }
+        fetchDeductees("");
+        setConfirmModal(false);
+        setVerifyType("");
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+      }).catch(e => {
+        toast.error(e?.message);
+        setVerifyType("");
+        setConfirmModal(false);
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+      })
+    } else {
+      TracesActivitiesService.verifyEmployeePans(model).then(res => {
+        if (res) {
+          setSelectedEmployeeData([]);
+          fetchEmployees("");
+        }
+        setConfirmModal(false);
+        setVerifyType("");
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+      }).catch(e => {
+        toast.error(e?.message);
+        setVerifyType("");
+        setConfirmModal(false);
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+      })
+    }
   }
 
   function deleteDeductee(e) {
@@ -490,7 +510,14 @@ export default function Deductees({ params }) {
                     id="deductees"
                     value="deductees"
                     checked={type === "Deductees"}
-                    onChange={(e) => setType("Deductees", e)}
+                    onChange={(e) => {
+                      setAllLoading(false);
+                      setBulkLoading(false);
+                      setVerifyType("");
+                      setCaptchaBase64("");
+                      setCaptcha("");
+                      setType("Deductees", e)
+                    }}
                   />
                   <label
                     className="form-check-label  fw-bold"
@@ -508,6 +535,11 @@ export default function Deductees({ params }) {
                     value="employees"
                     checked={type === "Employees"}
                     onChange={(e) => {
+                      setAllLoading(false);
+                      setBulkLoading(false);
+                      setCaptchaBase64("");
+                      setVerifyType("");
+                      setCaptcha("");
                       setType("Employees", e);
                     }}
                   />
@@ -725,16 +757,31 @@ export default function Deductees({ params }) {
               {type == "Employees" &&
                 <div className="col-md-6 d-flex align-items-center">
                   <button type="button"
-                    disabled={selectedEmployeeData.length == 0}
+                    disabled={selectedEmployeeData.length == 0 || bulkLoading}
                     className="btn btn-primary me-3"
-                    onClick={(e) => submitLogin(e)}
+                    onClick={(e) => {
+                      setAllLoading(true);
+                      setVerifyType("bulk");
+                      submitLogin(e)
+                    }}
                   >
-                    Bulk Pan Verify
+                    {bulkLoading && (
+                      <div className="spinner-border me-2" role="status"></div>
+                    )}
+                    Bulk PAN Verify
                   </button>
                   <button type="button" className="btn btn-primary me-3"
-                    onClick={(e) => submitLogin(e)}
+                    disabled={employees.length == 0 || allLoading}
+                    onClick={(e) => {
+                      setAllLoading(true);
+                      setVerifyType("all");
+                      submitLogin(e)
+                    }}
                   >
-                    All Pan Verify
+                    {allLoading && (
+                      <div className="spinner-border me-2" role="status"></div>
+                    )}
+                    Verify All PANs
                   </button>
                   <button
                     type="button"
@@ -881,7 +928,7 @@ export default function Deductees({ params }) {
               <input
                 type="text"
                 value={captcha}
-                onChange={(e) => seCaptcha(
+                onChange={(e) => setCaptcha(
                   e.target.value,
                 )}
                 style={{ padding: 10, fontSize: 16, marginBottom: 10 }}

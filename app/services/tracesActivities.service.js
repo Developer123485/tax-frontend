@@ -4,7 +4,8 @@ export const TracesActivitiesService = {
     autoFillLogin,
     startLogin,
     submitFormRequest,
-    verifyDeducteePans
+    verifyDeducteePans,
+    verifyEmployeePans
 };
 
 async function autoFillLogin(model) {
@@ -44,5 +45,13 @@ async function verifyDeducteePans(model) {
     result = await api.post("tracesActivities/verifyDeducteePans", model);
     return result;
 }
+
+async function verifyEmployeePans(model) {
+    let result = null;
+    result = await api.post("tracesActivities/verifyEmployeePans", model);
+    return result;
+}
+
+
 
 
