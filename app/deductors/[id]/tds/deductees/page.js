@@ -44,6 +44,7 @@ export default function Deductees({ params }) {
   const [selectedDeducteeData, setSelectedDeducteeData] = useState([]);
   const [selectedEmployeeData, setSelectedEmployeeData] = useState([]);
   const [deductorInfo, setDeductorInfo] = useState(null);
+  const [toggleCleared, setToggleCleared] = useState(false);
   const [breadcrumbs, setBreadcrumbs] = useState([
     {
       name: "Deductors",
@@ -317,12 +318,15 @@ export default function Deductees({ params }) {
         setConfirmModal(false);
         setVerifyType("");
         setSubmitLoading(false);
+        setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
         toast.error(e?.message);
         setVerifyType("");
         setConfirmModal(false);
         setSubmitLoading(false);
+        setSelectedDeducteeData([]);
+        setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       })
     } else {
@@ -335,11 +339,13 @@ export default function Deductees({ params }) {
         setConfirmModal(false);
         setVerifyType("");
         setSubmitLoading(false);
+        setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
         toast.error(e?.message);
         setVerifyType("");
         setConfirmModal(false);
+        setToggleCleared(!toggleCleared);
         setSubmitLoading(false);
         setCaptchaBase64("");
       })
@@ -517,6 +523,7 @@ export default function Deductees({ params }) {
                       setBulkLoading(false);
                       setVerifyType("");
                       setCaptchaBase64("");
+                      setToggleCleared(false);
                       setCaptcha("");
                       setType("Deductees", e)
                     }}
@@ -540,6 +547,7 @@ export default function Deductees({ params }) {
                       setAllLoading(false);
                       setBulkLoading(false);
                       setCaptchaBase64("");
+                      setToggleCleared(false);
                       setVerifyType("");
                       setCaptcha("");
                       setType("Employees", e);
@@ -858,6 +866,7 @@ export default function Deductees({ params }) {
                           pagination={true}
                           paginationServer
                           selectableRows={true}
+                          clearSelectedRows={toggleCleared}  // ✅ This clears checkboxes
                           customStyles={customStyles}
                           selectableRowsNoSelectAll={true}
                           onSelectedRowsChange={handleDeducteeChange}
@@ -889,6 +898,7 @@ export default function Deductees({ params }) {
                           pagination={true}
                           selectableRows={true}
                           paginationServer
+                          clearSelectedRows={toggleCleared}  // ✅ This clears checkboxes
                           customStyles={customStyles}
                           onSelectedRowsChange={handleEmployeeChange}
                           selectableRowsNoSelectAll={true}
