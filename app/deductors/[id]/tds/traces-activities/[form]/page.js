@@ -28,10 +28,12 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
+  
   const [requestResponseModal, setRequestResponseModal] = useState(false);
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [captchaBase64, setCaptchaBase64] = useState('');
+
   const form = resolvedParams?.form;
   const router = useRouter();
   const highlightStyle = {

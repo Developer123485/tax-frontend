@@ -12,8 +12,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { EmployeeService } from "@/app/services/employee.service";
 import DataTable from "react-data-table-component";
 import HeaderList from "@/app/components/header/header-list";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import api from "@/app/utils/interceptors";
+import { DeductorsService } from "@/app/services/deductors.service";
+import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 export default function Deductees({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
@@ -27,11 +29,20 @@ export default function Deductees({ params }) {
   const [employeePageSize, setEmployeePageSize] = useState(20);
   const [employeePageNumber, setEmployeePageNumber] = useState(1);
   const [deductees, setDeductees] = useState([]);
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [allLoading, setAllLoading] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [type, setType] = useState("Deductees");
+  const [verifyType, setVerifyType] = useState("");
+  const [captchaBase64, setCaptchaBase64] = useState('');
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
+  const [captcha, seCaptcha] = useState("");
   const [totalEmployeeItems, setTotalEmployeeItems] = useState(0);
+  const [selectedDeducteeData, setSelectedDeducteeData] = useState([]);
+  const [selectedEmployeeData, setSelectedEmployeeData] = useState([]);
+  const [deductorInfo, setDeductorInfo] = useState(null);
   const [breadcrumbs, setBreadcrumbs] = useState([
     {
       name: "Deductors",
@@ -91,8 +102,8 @@ export default function Deductees({ params }) {
       grow: 1.5,
     },
     {
-      name: "PAN validation",
-      selector: (row) => "-",
+      name: "PAN Status",
+      selector: (row) => (row.status ? row.status : "-"),
       grow: 2,
     },
     {
@@ -191,7 +202,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "Pan Status",
-      selector: (row) => `${row?.interestAmount || "NA"}`,
+      selector: (row) => `${row?.status || "NA"}`,
     },
     {
       name: "Actions",
@@ -241,11 +252,73 @@ export default function Deductees({ params }) {
   ];
   useEffect(() => {
     fetchDeductees("");
+    getDeductorDetail()
   }, [currentPage, pageSize]);
 
   useEffect(() => {
     fetchEmployees("");
   }, [employeePageSize, employeePageNumber]);
+
+  function getDeductorDetail() {
+    DeductorsService.getDeductor(deductorId)
+      .then((res) => {
+        if (res) {
+          setDeductorInfo(res);
+        }
+      })
+      .catch((e) => {
+        toast.error(e?.message);
+      });
+  }
+
+  function submitLogin(e) {
+    seCaptcha("");
+    if (deductorInfo.tracesLogin && deductorInfo.tracesPassword) {
+      const model = {
+        userName: deductorInfo.tracesLogin,
+        password: deductorInfo.tracesPassword,
+        tanNumber: deductorInfo?.deductorTan
+      }
+      TracesActivitiesService.startLogin(model).then(res => {
+        if (res) {
+          setCaptchaBase64(res.captcha);
+          setConfirmModal(true);
+          setBulkLoading(false);
+          setAllLoading(false);
+        }
+      }).catch(e => {
+        toast.error(e?.message);
+        setBulkLoading(false);
+        setAllLoading(false);
+      })
+    } else {
+      toast.error("TRACES username and password do not exist for the deductor");
+    }
+  }
+
+  function handleSubmit() {
+    if (!captcha) {
+      toast.error("Input Captcha is required");
+      return false;
+    }
+    const model = {
+      captcha: captcha,
+      ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id))
+    }
+    TracesActivitiesService.verifyDeducteePans(model).then(res => {
+      if (res) {
+        setSelectedDeducteeData([]);
+      }
+      setConfirmModal(false);
+      setVerifyType("");
+      setCaptchaBase64("");
+    }).catch(e => {
+      toast.error(e?.message);
+      setVerifyType("");
+      setConfirmModal(false);
+      setCaptchaBase64("");
+    })
+  }
 
   function deleteDeductee(e) {
     e.preventDefault();
@@ -343,6 +416,14 @@ export default function Deductees({ params }) {
       setFileName("");
     }
   }
+
+  const handleDeducteeChange = (state) => {
+    setSelectedDeducteeData(state.selectedRows);
+  };
+
+  const handleEmployeeChange = (state) => {
+    setSelectedEmployeeData(state.selectedRows);
+  };
 
   const fileSelectHandler = (event) => {
     handleFileChange(event.target.files[0]);
@@ -567,13 +648,35 @@ export default function Deductees({ params }) {
           </div> */}
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-6">
+              <div className="col-md-5">
                 <h4 className="fw-bold mb-0">
                   {type === "Deductees" ? "Deductees" : "Employees"}
                 </h4>
               </div>
               {type == "Deductees" &&
-                <div className="col-md-6 d-flex align-items-center">
+                <div className="col-md-7 d-flex align-items-center">
+                  <button type="button"
+                    disabled={selectedDeducteeData.length == 0 || bulkLoading}
+                    className="btn btn-primary me-3"
+                    onClick={(e) => {
+                      setBulkLoading(true);
+                      setVerifyType("bulk");
+                      submitLogin(e);
+                    }}
+                  >
+                    Bulk PAN Verify
+                  </button>
+                  <button type="button"
+                    disabled={deductees.length == 0 || allLoading}
+                    className="btn btn-primary me-3"
+                    onClick={(e) => {
+                      setAllLoading(true);
+                      setVerifyType("all");
+                      submitLogin(e)
+                    }}
+                  >
+                    Verify All PANs
+                  </button>
                   <button
                     type="button"
                     onClick={exportFile}
@@ -611,6 +714,18 @@ export default function Deductees({ params }) {
               }
               {type == "Employees" &&
                 <div className="col-md-6 d-flex align-items-center">
+                  <button type="button"
+                    disabled={selectedEmployeeData.length == 0}
+                    className="btn btn-primary me-3"
+                    onClick={(e) => submitLogin(e)}
+                  >
+                    Bulk Pan Verify
+                  </button>
+                  <button type="button" className="btn btn-primary me-3"
+                    onClick={(e) => submitLogin(e)}
+                  >
+                    All Pan Verify
+                  </button>
                   <button
                     type="button"
                     onClick={exportFile}
@@ -683,7 +798,10 @@ export default function Deductees({ params }) {
                           highlightOnHover
                           pagination={true}
                           paginationServer
+                          selectableRows={true}
                           customStyles={customStyles}
+                          selectableRowsNoSelectAll={true}
+                          onSelectedRowsChange={handleDeducteeChange}
                           paginationTotalRows={totalItems}
                           paginationPerPage={pageSize}
                           paginationComponentOptions={{
@@ -710,8 +828,11 @@ export default function Deductees({ params }) {
                           data={employees}
                           highlightOnHover
                           pagination={true}
+                          selectableRows={true}
                           paginationServer
                           customStyles={customStyles}
+                          onSelectedRowsChange={handleEmployeeChange}
+                          selectableRowsNoSelectAll={true}
                           paginationTotalRows={totalEmployeeItems}
                           paginationPerPage={employeePageSize}
                           paginationComponentOptions={{
@@ -732,6 +853,37 @@ export default function Deductees({ params }) {
         </div>
       </section >
       <ProcessPopup showLoader={showLoader}></ProcessPopup>
+      <Modal
+        className=""
+        size="sm"
+        centered
+        keyboard={false}
+        backdrop="static"
+        show={confirmModal}
+      >
+        <Modal.Body>
+          <div className="container">
+            <div style={{ padding: 10 }}>
+              {captchaBase64 && (
+                <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
+              )}
+              <br />
+              <input
+                type="text"
+                value={captcha}
+                onChange={(e) => seCaptcha(
+                  e.target.value,
+                )}
+                style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
+              />
+              <br />
+              <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                Submit
+              </button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       <DeleteConfirmation
         show={deleteConfirm}
         setDeleteConfirm={(e) => setDeleteConfirm(e)}
