@@ -32,6 +32,7 @@ export default function Deductees({ params }) {
   const [bulkLoading, setBulkLoading] = useState(false);
   const [allLoading, setAllLoading] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [type, setType] = useState("Deductees");
@@ -297,6 +298,7 @@ export default function Deductees({ params }) {
   }
 
   function handleSubmit() {
+    setSubmitLoading(true);
     if (!captcha) {
       toast.error("Input Captcha is required");
       return false;
@@ -311,11 +313,13 @@ export default function Deductees({ params }) {
       }
       setConfirmModal(false);
       setVerifyType("");
+      setSubmitLoading(false);
       setCaptchaBase64("");
     }).catch(e => {
       toast.error(e?.message);
       setVerifyType("");
       setConfirmModal(false);
+      setSubmitLoading(false);
       setCaptchaBase64("");
     })
   }
@@ -877,7 +881,10 @@ export default function Deductees({ params }) {
                 style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
               />
               <br />
-              <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+              <button
+                className="btn btn-primary"
+                disabled={submitLoading}
+                onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
                 Submit
               </button>
             </div>
