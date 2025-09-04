@@ -706,13 +706,14 @@ export default function Deductees({ params }) {
           </div> */}
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-5">
+              <div className="col-md-3">
                 <h4 className="fw-bold mb-0">
                   {type === "Deductees" ? "Deductees" : "Employees"}
                 </h4>
               </div>
               {type == "Deductees" &&
-                <div className="col-md-7 d-flex align-items-center">
+<>
+                <div className="col-md-5 d-flex align-items-center justify-content-end">
                   <button type="button"
                     disabled={selectedDeducteeData.length == 0 || bulkLoading}
                     className="btn btn-primary me-3"
@@ -744,11 +745,13 @@ export default function Deductees({ params }) {
                   <button
                     type="button"
                     onClick={exportFile}
-                    className="btn btn-primary me-3"
+                    className="btn btn-primary"
                   >
                     Export
                   </button>
-                  <div className="input-group searchbox me-3">
+                </div>
+                <div className="col-md-4">
+                 <div className="input-group searchbox me-3">
                     <input
                       type="search"
                       placeholder={`Search ${type}`}
@@ -774,10 +777,12 @@ export default function Deductees({ params }) {
                       />
                     </button>
                   </div>
-                </div>
+                  </div>
+                  </>
               }
               {type == "Employees" &&
-                <div className="col-md-6 d-flex align-items-center">
+             <>
+                               <div className="col-md-5 d-flex align-items-center justify-content-end">
                   <button type="button"
                     disabled={selectedEmployeeData.length == 0 || bulkLoading}
                     className="btn btn-primary me-3"
@@ -808,10 +813,12 @@ export default function Deductees({ params }) {
                   <button
                     type="button"
                     onClick={exportFile}
-                    className="btn btn-primary me-3"
+                    className="btn btn-primary"
                   >
                     Export
                   </button>
+                    </div>
+                  <div className="col-md-4">
                   <div className="input-group searchbox me-3">
                     <input
                       type="search"
@@ -838,6 +845,7 @@ export default function Deductees({ params }) {
                       />
                     </button>
                   </div>
+                    </div>
 
                   {/* <button
                   type="button"
@@ -859,7 +867,7 @@ export default function Deductees({ params }) {
                 >
                   Import
                 </button> */}
-                </div>
+                </>
               }
             </div>
             <div className="">

@@ -550,7 +550,7 @@ export default function TaxDeposit() {
               <div className="container">
                 <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                   <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                    <div className="col-md-7">
+                    <div className="col-md-4">
                       <h4 className="fw-bold mb-0">Tax Deposit</h4>
                     </div>
                     {/* <div className="col-md-4">
@@ -629,7 +629,7 @@ export default function TaxDeposit() {
                       Add
                     </button>
                   </div> */}
-                    <div className="col-md-2 d-flex align-items-center justify-content-end">
+                    <div className="col-md-8 d-flex align-items-center justify-content-end">
                       <span className="me-2">FY: </span>
                       <select
                         className="form-select m-100"
@@ -646,20 +646,16 @@ export default function TaxDeposit() {
                           </option>
                         ))}
                       </select>
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                                            <button
+                        className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!financialYear}
                         onClick={(e) => fetchTaxDeposit()}
                       >
                         Search
                       </button>
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                                            <button
+                        className="btn btn-outline-primary ms-3"
                         type="button"
                         onClick={(e) => {
                           setFinancialYear("");
@@ -670,10 +666,8 @@ export default function TaxDeposit() {
                       >
                         Reset
                       </button>
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                                            <button
+                        className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!selectedData}
                         onClick={(e) => {

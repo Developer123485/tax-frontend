@@ -527,7 +527,9 @@ export default function ReturnFilling() {
                     <div className="col-md-3">
                       <h4 className="fw-bold mb-0">Return Fillings</h4>
                     </div>
-                    <div className="col-md-2 d-flex align-items-center justify-content-end">
+                    <div className="col-md-6">
+<div className="d-flex">
+                       <div className="d-flex align-items-center justify-content-end w-100">
                       <span className="me-2">Forms: </span>
                       <select
                         className="form-select"
@@ -546,7 +548,7 @@ export default function ReturnFilling() {
                         <option value={"24Q"}>24Q</option>
                       </select>
                     </div>
-                    <div className="col-md-2 d-flex align-items-center justify-content-end">
+                    <div className="d-flex align-items-center justify-content-end w-100 ms-2">
                       <span className="me-2">FY: </span>
                       <select
                         className="form-select m-100"
@@ -565,7 +567,7 @@ export default function ReturnFilling() {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-2 d-flex align-items-center justify-content-end">
+                    <div className="d-flex align-items-center justify-content-end w-100 ms-2">
                       <span className="me-2">Quarter: </span>
                       <select
                         className="form-select"
@@ -583,9 +585,13 @@ export default function ReturnFilling() {
                         <option value={"Q3"}>Q3</option>
                         <option value={"Q4"}>Q4</option>
                       </select>
+                      
                     </div>
-                    <div className="col-md-1">
-                      <button
+</div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="d-flex">
+                         <button
                         className="btn btn-outline-primary"
                         type="button"
                         disabled={!formType && !financialYear && !quarter}
@@ -593,10 +599,8 @@ export default function ReturnFilling() {
                       >
                         Search
                       </button>
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                                            <button
+                        className="btn btn-outline-primary ms-2"
                         type="button"
                         onClick={(e) => {
                           setQuarter("");
@@ -609,10 +613,8 @@ export default function ReturnFilling() {
                       >
                         Reset
                       </button>
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                                            <button
+                        className="btn btn-outline-primary ms-2"
                         type="button"
                         disabled={!selectedData}
                         onClick={(e) => {
@@ -622,6 +624,7 @@ export default function ReturnFilling() {
                       >
                         Delete
                       </button>
+                      </div>
                     </div>
                     {/* <div className="col-md-4">
                     <div className="d-flex align-items-center">
