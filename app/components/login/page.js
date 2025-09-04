@@ -291,7 +291,7 @@ export default function LoginForm() {
                       height={48}
                     />
                   </div>
-                  {/* <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                  <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
                     <span>Don't have an account?</span>
                     <button
                       className="btn btn-link px-1 py-0 text-decoration-none"
@@ -302,7 +302,7 @@ export default function LoginForm() {
                     >
                       Sign up
                     </button>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
