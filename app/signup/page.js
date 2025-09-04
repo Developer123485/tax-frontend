@@ -7,8 +7,8 @@ import Header from "../components/header/header";
 export default function Signup() {
   return (
     <>
-      {/* <Header></Header>
-      <SignupForm></SignupForm> */}
+      <Header></Header>
+      <SignupForm></SignupForm>
     </>
   );
 }
