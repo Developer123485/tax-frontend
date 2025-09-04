@@ -941,7 +941,17 @@ export default function Deductees({ params }) {
         keyboard={false}
         backdrop="static"
         show={confirmModal}
+        onHide={() => {
+          setAllLoading(false);
+          setBulkLoading(false);
+          setCaptchaBase64("");
+          setToggleCleared(false);
+          setVerifyType("");
+          setCaptcha("");
+          setConfirmModal(false)
+        }}
       >
+        <Modal.Header className="border-0" closeButton></Modal.Header>
         <Modal.Body>
           <div className="container">
             <div style={{ padding: 10 }}>
