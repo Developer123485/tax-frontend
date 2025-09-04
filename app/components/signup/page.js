@@ -9,7 +9,6 @@ import "react-phone-input-2/lib/bootstrap.css";
 import { AuthService } from "@/app/services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UsersService } from "@/app/services/users.services";
 
 export default function SignupForm() {
   const [isDirty, setIsDirty] = useState(false);
@@ -68,7 +67,7 @@ export default function SignupForm() {
         "token_ukwes",
         Buffer.from(JSON.stringify(res).toString("base64"))
       );
-      UsersService.register(model)
+      AuthService.register(model)
         .then((res) => {
           if (res) {
             router.push("/verification");

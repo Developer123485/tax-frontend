@@ -12,7 +12,10 @@ export const AuthService = {
   submitOtpToPhone,
   SendOtpForForgotPassword,
   forgotPassword,
+  register
 };
+
+
 
 async function login(model) {
   return apiRequest
@@ -30,6 +33,11 @@ async function login(model) {
     .catch((err) => {
       return Promise.reject(err.response.data);
     });
+}
+
+async function register(model) {
+  const result = await api.post(`Auth/signUp`, model);
+  return result;
 }
 
 async function submitOtpToEmail(email) {
