@@ -408,10 +408,10 @@ export default function Deductors() {
         <div className="container">
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-sm-4 col-md-5">
+              <div className="col-md-4">
                 <h4 className="fw-bold mb-0">Deductors</h4>
               </div>
-              <div className="col-sm-4 col-md-7 d-flex justify-content-end">
+              <div className="col-md-4 d-flex justify-content-end">
                 <button
                   type="button"
                   onClick={exportFile}
@@ -422,6 +422,8 @@ export default function Deductors() {
                 <button onClick={() => setShow(true)} type="button" className="btn btn-primary me-2">
                   Import TXT/TDS File
                 </button>
+              </div>
+              <div className="col-md-4">
                 <div className="d-flex">
                   <div className="input-group searchbox">
                     <input

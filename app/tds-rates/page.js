@@ -586,11 +586,11 @@ export default function TDSRates() {
               <div className="container">
                 <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                   <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                    <div className="col-md-7">
+                    <div className="col-md-4">
                       <h4 className="fw-bold mb-0">TDS Rates</h4>
                     </div>
 
-                    <div className="col-md-4 d-flex align-items-center justify-content-end">
+                    <div className="col-md-8 d-flex align-items-center justify-content-end">
 
                       <span className="me-2">Forms: </span>
                       <select
@@ -637,11 +637,8 @@ export default function TDSRates() {
                           </button>
                         </div>
                       </div>
-
-                    </div>
-                    <div className="col-md-1">
-                      <button
-                        className="btn btn-outline-primary"
+                  <button
+                        className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!selectedData}
                         onClick={(e) => {
@@ -651,6 +648,7 @@ export default function TDSRates() {
                       >
                         Delete
                       </button>
+
                     </div>
                     {/* <div className="col-md-4">
                       <div className="d-flex align-items-center">
