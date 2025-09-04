@@ -110,7 +110,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "Name as per PAN",
-      selector: (row) => "-",
+      selector: (row) => (row.nameAsPerPan ? row.nameAsPerPan : "-"),
       grow: 2,
     },
     {
@@ -205,6 +205,11 @@ export default function Deductees({ params }) {
     {
       name: "Pan Status",
       selector: (row) => `${row?.status || "NA"}`,
+    },
+    {
+      name: "Name as per PAN",
+      selector: (row) => (row.nameAsPerPan ? row.nameAsPerPan : "-"),
+      grow: 2,
     },
     {
       name: "Actions",
