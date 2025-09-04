@@ -67,9 +67,9 @@ export default function TDSDashboard({ params }) {
         "Track fillings status, filling history and e-filling order status",
     },
     {
-      name: "Repository",
-      code: "3CD",
-      descrption: "Report of TDS Rationallsation (Form 3CD) for Audit Form",
+      name: "Traces Lower Deduction",
+      code: "TLD",
+      descrption: "Validate Lower Deduction Certificate u/s 197/195(3)/195(2)",
     },
     {
       name: "26AS Reconcilation",
@@ -434,6 +434,13 @@ export default function TDSDashboard({ params }) {
                               ) {
                                 router.push(
                                   `/deductors/${deductorId}/tds/24g-form`
+                                )
+                              }
+                              if (
+                                option.name == "Traces Lower Deduction"
+                              ) {
+                                router.push(
+                                  `/deductors/${deductorId}/tds/traces-lower-deductions`
                                 )
                               }
                             }
