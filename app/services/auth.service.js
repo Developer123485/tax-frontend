@@ -36,7 +36,7 @@ async function login(model) {
 }
 
 async function register(model) {
-  const result = await api.post(`Auth/signUp`, model);
+  const result = await apiRequest.post(`Auth/signUp`, model, axiosConfig);
   return result;
 }
 
