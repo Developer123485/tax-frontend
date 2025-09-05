@@ -85,6 +85,7 @@ export default function ForgotPasswordForm() {
         .then((res) => {
           if (res) {
             setLoading(false);
+            toast.success("Password reset successfully");
             router.push("/login");
           }
         })
