@@ -412,7 +412,6 @@ export default function SignupForm() {
                             className="form-label"
                           >
                             <span>Organization</span>
-                            <span className="text-danger"> *</span>
                           </label>
                           <input
                             type="text"
