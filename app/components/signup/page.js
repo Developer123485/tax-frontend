@@ -304,44 +304,8 @@ export default function SignupForm() {
                             </span>
                           )}
                         </div>
-                        <div className="col-md-6 mob-num">
-                          <label className="form-label">
-                            <span>Mobile Number</span>
-                            <span className="text-danger"> *</span>
-                          </label>
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex">
-                                <PhoneInput
-                                  country={"in"}
-                                  disabled
-                                  value={userDetails.phoneCode}
-                                />
-                                <input
-                                  type="text"
-                                  placeholder=""
-                                  className="form-control react-phone"
-                                  maxLength={"10"}
-                                  autoComplete="off"
-                                  value={userDetails.phoneNumber}
-                                  onChange={(e) => {
-                                    e.preventDefault();
-                                    setUserDetails((prevState) => ({
-                                      ...prevState,
-                                      phoneNumber: e.target.value,
-                                    }));
-                                  }}
-                                />
-                              </div>
-                            </div>
-                            {isDirty && userDetails.phoneNumberError && (
-                              <span className="text-danger">
-                                {userDetails.phoneNumberError}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="col-md-6 password-container">
+
+                        <div className="col-md-6  mt-2 mt-md-1">
                           <label htmlFor="inputPassword" className="form-label">
                             <span>Password</span>
                             <span className="text-danger"> *</span>
@@ -397,7 +361,44 @@ export default function SignupForm() {
                             </span>
                           )}
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6  mt-2 mt-md-1">
+                          <label className="form-label">
+                            <span>Mobile Number</span>
+                            <span className="text-danger"> *</span>
+                          </label>
+                          <div className="row">
+                            <div className="col-12">
+                              <div className="d-flex">
+                                {/* <PhoneInput
+                                  country={"in"}
+                                  disabled
+                                  value={userDetails.phoneCode}
+                                /> */}
+                                <input
+                                  type="text"
+                                  placeholder=""
+                                  className="form-control "
+                                  maxLength={"10"}
+                                  autoComplete="off"
+                                  value={userDetails.phoneNumber}
+                                  onChange={(e) => {
+                                    e.preventDefault();
+                                    setUserDetails((prevState) => ({
+                                      ...prevState,
+                                      phoneNumber: e.target.value,
+                                    }));
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            {isDirty && userDetails.phoneNumberError && (
+                              <span className="text-danger">
+                                {userDetails.phoneNumberError}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-12  mt-2 mt-md-1">
                           <label
                             htmlFor="inputOrganization"
                             className="form-label"
