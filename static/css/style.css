@@ -357,6 +357,7 @@ h6 {
 
 .form-sec .content-box {
   margin: 64px 32px !important;
+  height: fit-content;
 }
 
 .form-sec .form-control:disabled {
