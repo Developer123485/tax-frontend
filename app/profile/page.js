@@ -232,7 +232,9 @@ export default function Profile() {
                                 </label>
                               </div>
                             </div>
-                            {isDirty && userDetails.firmTypeError && (
+                          </div>
+                          <div className="">
+                             {isDirty && userDetails.firmTypeError && (
                               <span className="text-danger">
                                 {userDetails.firmTypeError}
                               </span>

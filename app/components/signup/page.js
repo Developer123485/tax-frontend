@@ -241,7 +241,8 @@ export default function SignupForm() {
                                 </label>
                               </div>
                             </div>
-
+                          </div>
+                          <div className="">
                             {isDirty && userDetails.firmTypeError && (
                               <span className="text-danger">
                                 {userDetails.firmTypeError}

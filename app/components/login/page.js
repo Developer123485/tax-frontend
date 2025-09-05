@@ -131,7 +131,7 @@ export default function LoginForm() {
                         <span>Email Address</span>
                         <span className="text-danger"> *</span>
                       </label>
-                      <div className="input-group mb-3">
+                      <div className="input-group mb-2">
                         <span className="input-group-text pe-0">
                           <span className="pe-2 border-end">
                             <Image
@@ -158,7 +158,9 @@ export default function LoginForm() {
                             }));
                           }}
                         />
-                        {isDirty && loginDetails.emailError && (
+                      </div>
+                      <div className="">
+                         {isDirty && loginDetails.emailError && (
                           <span className="text-danger">
                             {loginDetails.emailError}
                           </span>
@@ -204,6 +206,8 @@ export default function LoginForm() {
                         >
                           {passwordVisible ? <FaEye /> : <FaEyeSlash />}
                         </button>
+                      </div>
+                      <div className="">
                         {isDirty && loginDetails.passwordError && (
                           <span className="text-danger">
                             {loginDetails.passwordError}
