@@ -59,6 +59,7 @@ export default function ForgotPasswordForm() {
       AuthService.SendOtpForForgotPassword(email)
         .then((res) => {
           if (res) {
+            toast.success("OTP sent to your email");
             setIsChangePassword(true);
             setLoading(false);
           }
