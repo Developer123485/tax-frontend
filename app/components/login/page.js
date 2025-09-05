@@ -265,7 +265,7 @@ export default function LoginForm() {
                       </button>
                     </div>
                   </form>
-                  <div className="text-center d-flex flex-md-row align-items-center justify-content-center">
+{/*                   <div className="text-center d-flex flex-md-row align-items-center justify-content-center">
                     <div className="col">
                       <hr />
                     </div>
@@ -294,7 +294,7 @@ export default function LoginForm() {
                       width={48}
                       height={48}
                     />
-                  </div>
+                  </div> */}
                   <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
                     <span>Don't have an account?</span>
                     <button
