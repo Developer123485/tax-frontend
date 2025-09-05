@@ -76,7 +76,7 @@ export default function SignupForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.response?.data);
         });
     }
   }
