@@ -316,15 +316,6 @@ export default function SignupForm() {
                                   country={"in"}
                                   disabled
                                   value={userDetails.phoneCode}
-                                  onChange={(e) => {
-                                    setUserDetails((prevState) => ({
-                                      ...prevState,
-                                      phoneCode: e,
-                                    }));
-                                  }}
-                                  onKeyDown={(e) => {
-                                    e.preventDefault();
-                                  }}
                                 />
                                 <input
                                   type="text"
