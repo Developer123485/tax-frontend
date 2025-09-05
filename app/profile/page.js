@@ -85,6 +85,8 @@ export default function Profile() {
         .then((res) => {
           if (res) {
             setLoading(false);
+            sessionStorage.clear();
+            router.push("/login");
             toast.success("User profile Updated!");
           }
         })

@@ -46,7 +46,7 @@ export default function LoginForm() {
 
       AuthService.login(model)
         .then((res) => {
-          if (res && res?.email) {
+          if (res) {
             // To Next sprint
             // if (res.data && res.data.isDeductorList) {
             window.location.href = "/deductors";
