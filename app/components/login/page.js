@@ -120,9 +120,9 @@ export default function LoginForm() {
               paragraph="We're delighted to have you back! Access your account now by logging in to continue your journey with us."
               backgroundImage="/images/signin_bg.jpg"
             ></HomeBanner>
-            <div className="col-md-6 d-flex align-items-center form-sec">
+            <div className="col-md-6 d-flex form-sec">
               <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box rounded-3">
-                <h3 className="mb-0 mb-md-3 text-capitalize">Login</h3>
+                <h4 className="mb-0 mb-md-3 text-capitalize">Login</h4>
                 <br />
                 <div className="row g-3">
                   <form>
