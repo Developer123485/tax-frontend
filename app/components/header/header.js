@@ -118,7 +118,7 @@ export default function Header() {
                       type="button"
                       className="btn btn-primary me-3 d-none d-md-block"
                     >
-                      Start for Free
+                      Sign up
                     </button>
                     <button
                       onClick={(e) => {
