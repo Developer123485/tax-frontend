@@ -70,6 +70,7 @@ export default function SignupForm() {
       AuthService.register(model)
         .then((res) => {
           if (res) {
+            toast.success("User created successfully");
             router.push("/verification");
             setLoading(false);
           }
@@ -241,8 +242,7 @@ export default function SignupForm() {
                                 </label>
                               </div>
                             </div>
-                          </div>
-                          <div className="">
+
                             {isDirty && userDetails.firmTypeError && (
                               <span className="text-danger">
                                 {userDetails.firmTypeError}
