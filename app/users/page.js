@@ -29,6 +29,7 @@ export default function Users() {
   const [deducteeCount, setDeducteeCount] = useState(1);
   const [challanCount, setChallanCount] = useState(1);
   const [deducteeEntryCount, setDeducteeEntryCount] = useState(1);
+  const [salaryCount, setSalaryCount] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const customStyles = {
     rows: {
@@ -194,6 +195,7 @@ export default function Users() {
             setDeducteeCount(res.deducteeCount);
             setChallanCount(res.challanCount);
             setDeducteeEntryCount(res.deducteeEntry);
+            setSalaryCount(res.salaryCount);
           }
         })
         .finally((f) => {
