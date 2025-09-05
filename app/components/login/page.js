@@ -43,17 +43,10 @@ export default function LoginForm() {
         email: loginDetails.email,
         Password: loginDetails.password,
       };
-      const res = {
-        email: loginDetails.email,
-        phoneNumber: "",
-      };
-      sessionStorage.setItem(
-        "token_ukwes",
-        Buffer.from(JSON.stringify(res).toString("base64"))
-      );
+
       AuthService.login(model)
         .then((res) => {
-          if (res) {
+          if (res && res?.email) {
             // To Next sprint
             // if (res.data && res.data.isDeductorList) {
             window.location.href = "/deductors";
@@ -64,10 +57,20 @@ export default function LoginForm() {
           }
         })
         .catch((e) => {
-          if (e === "Verification Is Pending") {
+          if (e?.title && e?.email && e?.phoneNumber) {
+            const res = {
+              email: e?.email,
+              phoneNumber: e?.phoneNumber,
+            };
+            sessionStorage.setItem(
+              "token_ukwes",
+              Buffer.from(JSON.stringify(res).toString("base64"))
+            );
+            toast.error(e?.title);
             router.push("/verification");
+          } else {
+            toast.error(e?.message);
           }
-          toast.error(e?.message);
           setLoading(false);
         });
     }

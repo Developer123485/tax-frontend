@@ -81,10 +81,8 @@ export default function VerificationForm() {
           }
         })
         .catch((e) => {
-          if (e?.message) {
-            setPhoneOtpLoading(false);
-            toast.error(e?.message);
-          }
+          setPhoneOtpLoading(false);
+          toast.error(e?.message);
         });
     }
   }
