@@ -92,7 +92,7 @@ export default function Users() {
         <>
           {" "}
           <div className="d-flex justify-content-center">
-            <span>
+            {/* <span>
               {" "}
               <a
                 onClick={(e) => {
@@ -114,9 +114,9 @@ export default function Users() {
                   </div>
                 </OverlayTrigger>
               </a>
-            </span>
+            </span> */}
             <span className="mx-2 opacity-50">|</span>
-            <span>
+            {/* <span>
               {" "}
               <a
                 onClick={(e) => {
@@ -140,7 +140,7 @@ export default function Users() {
                   </div>
                 </OverlayTrigger>
               </a>
-            </span>
+            </span> */}
           </div>
         </>
       ),
@@ -319,13 +319,13 @@ export default function Users() {
                       <h4 className="fw-bold mb-0">Users</h4>
                     </div>
                     <div className="col-sm-4 col-md-6 d-flex justify-content-end">
-                      <button
+                      {/* <button
                         type="button"
                         onClick={(e) => setOpenAddUser(true)}
                         className="btn btn-primary me-2"
                       >
                         Add User
-                      </button>
+                      </button> */}
                       <div className="d-flex">
                         <div className="input-group searchbox">
                           <input
