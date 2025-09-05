@@ -168,7 +168,7 @@ export default function SignupForm() {
               paragraph="Join our group in few minutes! Sign up with your details to get started"
               backgroundImage="/images/signup_bg.jpg"
             ></HomeBanner>
-            <div className="col-md-6 d-flex align-items-center form-sec">
+            <div className="col-md-6 d-flex form-sec">
               <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box border border-1 rounded-3">
                 <h4 className="mb-md-3">Create Account</h4>
                 <div>
