@@ -177,7 +177,7 @@ export default function ForgotPasswordForm() {
             <div className="col-md-6 d-flex align-items-center form-sec">
               {!isPasswordUpdate && !isChangePassword && (
                 <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box rounded-3">
-                  <h3 className="mb-4 mb-md-4">Forgot your Password?</h3>
+                  <h4 className="mb-4 mb-md-4">Forgot your Password?</h4>
                   <p>
                     Provide the email address associated with your account to
                     recover your password.
@@ -235,7 +235,7 @@ export default function ForgotPasswordForm() {
               )}
               {!isPasswordUpdate && isChangePassword && (
                 <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box rounded-3">
-                  <h3 className="mb-3 mb-md-3">Change Password</h3>
+                  <h4 className="mb-3 mb-md-3">Change Password</h4>
                   <p className="mb-4 mb-md-4">
                     Create a new password. Ensure it differs from previous ones
                     for security.
@@ -396,7 +396,7 @@ export default function ForgotPasswordForm() {
                     width={90}
                     height={90}
                   />
-                  <h3 className="mb-4 mb-md-4">Successful</h3>
+                  <h4 className="mb-4 mb-md-4">Successful</h4>
                   <p>
                     Congratulations! your password has been changed. Click login
                     to contiune.
