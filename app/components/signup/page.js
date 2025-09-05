@@ -77,7 +77,11 @@ export default function SignupForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e?.response?.data);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          } else {
+            toast.error(e?.message);
+          }
         });
     }
   }

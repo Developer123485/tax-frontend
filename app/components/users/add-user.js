@@ -88,7 +88,7 @@ export default function AddUser(props) {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }

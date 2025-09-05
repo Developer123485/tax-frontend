@@ -185,7 +185,7 @@ export default function ChallanDetail({ params }) {
           }
         })
         .catch((e) => {
-          toast.error(e);
+          toast.error(e?.message);
           setLoading(false);
         });
     }

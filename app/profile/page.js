@@ -56,7 +56,7 @@ export default function Profile() {
         }));
       }
     }).catch((e) => {
-      toast.error(e);
+      toast.error(e?.message);
     });
   }, []);
 
@@ -90,7 +90,7 @@ export default function Profile() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }

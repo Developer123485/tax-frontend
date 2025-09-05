@@ -67,7 +67,7 @@ export default function LoginForm() {
           if (e === "Verification Is Pending") {
             router.push("/verification");
           }
-          toast.error(e);
+          toast.error(e?.message);
           setLoading(false);
         });
     }

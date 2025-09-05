@@ -66,7 +66,7 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }
@@ -91,7 +91,7 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }

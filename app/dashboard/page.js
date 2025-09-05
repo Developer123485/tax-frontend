@@ -86,7 +86,7 @@ export default function dashboard() {
     //     }
     //   })
     //   .catch((e) => {
-    //     toast.error(e);
+    //     toast.error(e?.message);
     //     setIsLoading(false);
     //     setSelectedFile(null);
     //   });
