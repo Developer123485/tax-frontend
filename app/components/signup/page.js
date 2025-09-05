@@ -170,12 +170,12 @@ export default function SignupForm() {
             ></HomeBanner>
             <div className="col-md-6 d-flex align-items-center form-sec">
               <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box border border-1 rounded-3">
-                <h3 className="mb-4 mb-md-3">Create Account</h3>
+                <h4 className="mb-md-3">Create Account</h4>
                 <div>
                   <div className="content">
                     <form onSubmit={(e) => submitUserDetail(e)}>
                       <div className="row g-3">
-                        <div className="col-md-12 py-3 pt-md-4">
+                        <div className="col-md-12 py-2">
                           <label htmlFor="inputFirmType" className="form-label">
                             <span>Firm Type</span>
                             <span className="text-danger"> *</span>
@@ -249,7 +249,7 @@ export default function SignupForm() {
                             )}
                           </div>
                         </div>
-                        <div className="col-md-12 mt-2 mt-md-1">
+                        <div className="col-md-6 mt-2 mt-md-1">
                           <label htmlFor="userName" className="form-label">
                             <span>First & Last Name</span>
                             <span className="text-danger"> *</span>
@@ -262,7 +262,7 @@ export default function SignupForm() {
                             id="userName"
                             autoComplete="off"
                             minLength={"2"}
-                            maxLength={"30"}
+                            maxLength={"40"}
                             onChange={(e) => {
                               e.preventDefault();
                               setUserDetails((prevState) => ({
@@ -277,7 +277,7 @@ export default function SignupForm() {
                             </span>
                           )}
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-md-6 mt-2 mt-md-1">
                           <label htmlFor="inputEmail" className="form-label">
                             <span>Email</span>
                             <span className="text-danger"> *</span>
@@ -286,7 +286,7 @@ export default function SignupForm() {
                             type="email"
                             placeholder=""
                             className="form-control"
-                            maxLength={"30"}
+                            maxLength={"50"}
                             id="inputEmail"
                             autoComplete="off"
                             value={userDetails.email}
