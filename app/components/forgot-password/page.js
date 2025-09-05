@@ -162,6 +162,11 @@ export default function ForgotPasswordForm() {
     setEmailError("");
     return true;
   }
+
+  function goBack() {
+    window.history.back();
+  }
+
   return (
     <>
       <ToastContainer />
@@ -175,8 +180,10 @@ export default function ForgotPasswordForm() {
               backgroundImage="/images/for_pass_bg.jpg"
             ></HomeBanner>
             <div className="col-md-6 d-flex align-items-center form-sec">
+
               {!isPasswordUpdate && !isChangePassword && (
                 <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box rounded-3">
+
                   <h4 className="mb-4 mb-md-4">Forgot your Password?</h4>
                   <p>
                     Provide the email address associated with your account to
@@ -227,6 +234,16 @@ export default function ForgotPasswordForm() {
                             width={24}
                             height={25}
                           />
+                        </button>
+                      </div>
+                      <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                        <span>Back to</span>
+                        <button
+                          type="button"
+                          className="btn btn-link py-0 px-1 text-decoration-none"
+                          onClick={goBack}
+                        >
+                          Sign In
                         </button>
                       </div>
                     </div>
@@ -383,6 +400,16 @@ export default function ForgotPasswordForm() {
                           />
                         </button>
                       </div>
+                      <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                        <span>Back to</span>
+                        <button
+                          type="button"
+                          className="btn btn-link py-0 px-1 text-decoration-none"
+                          onClick={goBack}
+                        >
+                          Sign In
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -418,11 +445,23 @@ export default function ForgotPasswordForm() {
                           />
                         </button>
                       </div>
+                      <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                        <span>Back to</span>
+                        <button
+                          type="button"
+                          className="btn btn-link py-0 px-1 text-decoration-none"
+                          onClick={goBack}
+                        >
+                          Sign In
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>
               )}
+
             </div>
+
           </div>
         </div>
       </section>
