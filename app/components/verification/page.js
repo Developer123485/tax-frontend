@@ -251,13 +251,13 @@ export default function VerificationForm() {
                               value={verificationDetails.email}
                               autoComplete="off"
                               maxLength={"30"}
-                              onChange={(e) => {
-                                e.preventDefault();
-                                setVerificationDetails((prevState) => ({
-                                  ...prevState,
-                                  email: e.target.value,
-                                }));
-                              }}
+                              // onChange={(e) => {
+                              //   e.preventDefault();
+                              //   setVerificationDetails((prevState) => ({
+                              //     ...prevState,
+                              //     email: e.target.value,
+                              //   }));
+                              // }}
                               readOnly={true}
                               disabled={true}
                             />
@@ -312,7 +312,7 @@ export default function VerificationForm() {
                           <div className="row">
                             <div className="col-12">
                               <div className="d-flex position-relative">
-                                <PhoneInput
+                                {/* <PhoneInput
                                   country={"in"}
                                   value={verificationDetails.phoneCode}
                                   onChange={(e) => {
@@ -326,21 +326,21 @@ export default function VerificationForm() {
                                   onKeyDown={(e) => {
                                     e.preventDefault();
                                   }}
-                                />
+                                /> */}
                                 <input
                                   type="text"
                                   placeholder=""
-                                  className="form-control react-phone "
+                                  className="form-control"
                                   maxLength={"10"}
                                   autoComplete="off"
                                   value={verificationDetails.phoneNumber}
-                                  onChange={(e) => {
-                                    e.preventDefault();
-                                    setVerificationDetails((prevState) => ({
-                                      ...prevState,
-                                      phoneNumber: e.target.value,
-                                    }));
-                                  }}
+                                  // onChange={(e) => {
+                                  //   e.preventDefault();
+                                  //   setVerificationDetails((prevState) => ({
+                                  //     ...prevState,
+                                  //     phoneNumber: e.target.value,
+                                  //   }));
+                                  // }}
                                   readOnly={verificationDetails?.phoneNumber}
                                   disabled={verificationDetails?.phoneNumber}
                                 />
