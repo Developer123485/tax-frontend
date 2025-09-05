@@ -314,6 +314,7 @@ export default function SignupForm() {
                               <div className="d-flex">
                                 <PhoneInput
                                   country={"in"}
+                                  disabled
                                   value={userDetails.phoneCode}
                                   onChange={(e) => {
                                     setUserDetails((prevState) => ({
