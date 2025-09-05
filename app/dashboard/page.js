@@ -104,24 +104,24 @@ export default function dashboard() {
 
   return (
     <>
-    <HeaderList></HeaderList>
+      <HeaderList></HeaderList>
       <ToastContainer close={5000} />
       <section className="add-deductors-hero add-deductors-ban">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-8 text-white">
               <div className="py-5">
-              <span className="fs-18">Hi, Naresh</span>
-              <h1 className="fw-bold mt-4 mt-md-2">
-                Currently, No Deductor has been added.
-                <br />
-                Please add one.
-              </h1>
-              <p>Import or enter details to create deductors</p>
+                <span className="fs-18">Hi, Developer</span>
+                <h1 className="fw-bold mt-4 mt-md-2">
+                  Currently, No Deductor has been added.
+                  <br />
+                  Please add one.
+                </h1>
+                <p>Import or enter details to create deductors</p>
               </div>
             </div>
             <div className="col-md-4 d-flex justify-content-center">
-         
+
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ export default function dashboard() {
                   )}
                 </div>
                 {isloading && <div className="mt-3">
-                 <ProgressBar animated now={uploadProgress} />
+                  <ProgressBar animated now={uploadProgress} />
                 </div>}
               </div>
             </div>

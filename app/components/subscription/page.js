@@ -29,7 +29,7 @@ export default function Subscription() {
             }
             </div>
             <div className="col-md-6 text-center py-4 py-md-4">
-            {pathname === "/plans" && <span className="fs-18">Hi, Naresh</span> }
+            {pathname === "/plans" && <span className="fs-18">Hi, Developer</span> }
               <h1 className="fw-bold">Ready to start with TaxVahan</h1>
               <p>Choose The Package that suits you</p>
             </div>
