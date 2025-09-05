@@ -61,7 +61,7 @@ export default function ImportDeductee({ params }) {
         }
       })
       .catch((e) => {
-        toast.error(e);
+        toast.error(e?.message);
         setIsloading(false);
         setSelectedFile(null);
       });

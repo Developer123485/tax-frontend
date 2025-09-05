@@ -66,7 +66,7 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }
@@ -85,12 +85,13 @@ export default function ForgotPasswordForm() {
         .then((res) => {
           if (res) {
             setLoading(false);
+            toast.success("Password reset successfully");
             router.push("/login");
           }
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }

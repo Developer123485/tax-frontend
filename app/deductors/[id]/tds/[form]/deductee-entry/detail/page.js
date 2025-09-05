@@ -360,7 +360,7 @@ export default function DeducteeEntryDetail({ params }) {
           }
         })
         .catch((e) => {
-          toast.error(e);
+          toast.error(e?.message);
           setLoading(false);
         });
     }

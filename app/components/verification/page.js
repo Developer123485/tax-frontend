@@ -59,7 +59,7 @@ export default function VerificationForm() {
           }
         })
         .catch((e) => {
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }
@@ -70,11 +70,12 @@ export default function VerificationForm() {
       AuthService.submitOtpToPhone(verificationDetails.phoneNumber)
         .then((res) => {
           if (res) {
-            toast.success("OTP has been sent to your Phone");
+            toast.success("OTP has been sent to your Mobile");
           }
         })
         .catch((e) => {
-          toast.error(e);
+          if (e?.message)
+            toast.error(e?.message);
         });
     }
   }
@@ -94,12 +95,13 @@ export default function VerificationForm() {
         .then((res) => {
           if (res) {
             router.push("/login");
+            toast.success("OTP verified on mobile and email");
             setLoading(false);
           }
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e);
+          toast.error(e?.message);
         });
     }
   }

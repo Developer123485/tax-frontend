@@ -169,7 +169,7 @@ export default function Users() {
         setOpenAddUser(true);
       }
     }).catch((e) => {
-      toast.error(e);
+      toast.error(e?.message);
     });
   }
 
