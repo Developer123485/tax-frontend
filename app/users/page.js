@@ -23,13 +23,13 @@ export default function Users() {
   const [userId, setUserId] = useState(0);
   const searchParams = useSearchParams(null);
   const [showLoader, setShowLoader] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [userCount, setUserCount] = useState(1);
-  const [deductorCount, setDeductorCount] = useState(1);
-  const [deducteeCount, setDeducteeCount] = useState(1);
-  const [challanCount, setChallanCount] = useState(1);
-  const [deducteeEntryCount, setDeducteeEntryCount] = useState(1);
-  const [salaryCount, setSalaryCount] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [deductorCount, setDeductorCount] = useState(0);
+  const [deducteeCount, setDeducteeCount] = useState(0);
+  const [challanCount, setChallanCount] = useState(0);
+  const [deducteeEntryCount, setDeducteeEntryCount] = useState(0);
+  const [salaryCount, setSalaryCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const customStyles = {
     rows: {
