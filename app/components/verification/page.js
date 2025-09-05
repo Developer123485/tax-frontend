@@ -14,6 +14,8 @@ import { Fontdiner_Swanky } from "next/font/google";
 export default function VerificationForm() {
   const [isDirty, setIsDirty] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [phoneOtpLoading, setPhoneOtpLoading] = useState(false);
+  const [emailOtpLoading, setEmailOtpLoading] = useState(false);
   const router = useRouter(null);
 
   const emailRegex =
@@ -52,13 +54,16 @@ export default function VerificationForm() {
   function submitOtpToEmail(e) {
     e.preventDefault();
     if (emailValidate()) {
+      setEmailOtpLoading(true);
       AuthService.submitOtpToEmail(verificationDetails.email)
         .then((res) => {
           if (res) {
+            setEmailOtpLoading(false);
             toast.success("OTP has been sent to your Email");
           }
         })
         .catch((e) => {
+          setEmailOtpLoading(false);
           toast.error(e?.message);
         });
     }
@@ -67,15 +72,19 @@ export default function VerificationForm() {
   function submitOtpToPhone(e) {
     e.preventDefault();
     if (phoneValidate()) {
+      setPhoneOtpLoading(true);
       AuthService.submitOtpToPhone(verificationDetails.phoneNumber)
         .then((res) => {
           if (res) {
+            setPhoneOtpLoading(false);
             toast.success("OTP has been sent to your Mobile");
           }
         })
         .catch((e) => {
-          if (e?.message)
+          if (e?.message) {
+            setPhoneOtpLoading(false);
             toast.error(e?.message);
+          }
         });
     }
   }
@@ -94,8 +103,8 @@ export default function VerificationForm() {
       AuthService.submitVerifyDetail(model)
         .then((res) => {
           if (res) {
-            router.push("/login");
             toast.success("OTP verified on mobile and email");
+            router.push("/login");
             setLoading(false);
           }
         })
@@ -256,7 +265,10 @@ export default function VerificationForm() {
                             />
                             <button
                               className="btn btn-primary px-2 py-1 sendotp text-decoration-none position-absolute end-0"
-                              onClick={(e) => submitOtpToEmail(e)}
+                              disabled={emailOtpLoading}
+                              onClick={(e) => {
+                                submitOtpToEmail(e)
+                              }}
                             >
                               Send OTP
                             </button>
@@ -336,7 +348,10 @@ export default function VerificationForm() {
                                 />
                                 <button
                                   className="btn btn-primary px-2 py-1 sendotp text-decoration-none position-absolute end-0"
-                                  onClick={(e) => submitOtpToPhone(e)}
+                                  disabled={phoneOtpLoading}
+                                  onClick={(e) => {
+                                    submitOtpToPhone(e);
+                                  }}
                                 >
                                   Send OTP
                                 </button>

@@ -85,7 +85,7 @@ export default function Profile() {
         .then((res) => {
           if (res) {
             setLoading(false);
-            toast.success("User profile updated")
+            toast.success("User profile Updated!");
           }
         })
         .catch((e) => {
@@ -234,7 +234,7 @@ export default function Profile() {
                             </div>
                           </div>
                           <div className="">
-                             {isDirty && userDetails.firmTypeError && (
+                            {isDirty && userDetails.firmTypeError && (
                               <span className="text-danger">
                                 {userDetails.firmTypeError}
                               </span>
@@ -334,7 +334,7 @@ export default function Profile() {
                             className="form-label"
                           >
                             <span>Organization</span>
-                            <span className="text-danger"> *</span>
+                            {/* <span className="text-danger"> *</span> */}
                           </label>
                           <input
                             type="text"
