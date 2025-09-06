@@ -58,7 +58,7 @@ async function SendOtpForForgotPassword(email) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 
