@@ -406,6 +406,7 @@ export default function DdoWiseDetails({ params }) {
 
     function fetchDdoWiseDetails() {
         setShowLoader(true);
+        setDdoWiseDetails(null);
         const model = {
             pageSize: pageSize,
             pageNumber: currentPage,

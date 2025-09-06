@@ -288,7 +288,6 @@ export default function DdoDetails({ params }) {
             if (result) {
                 setIsLoading(false);
                 toast.success("File upload successfully");
-                fetchDdoDetails();
             } else {
                 const blob = new Blob([result], { type: "text/plain" });
                 saveAs(blob, "errors.txt");
@@ -302,6 +301,7 @@ export default function DdoDetails({ params }) {
                 toast.error(e?.message);
             }
         } finally {
+            fetchDdoDetails();
             setIsLoading(false);
         }
     }
@@ -312,6 +312,7 @@ export default function DdoDetails({ params }) {
 
     function fetchDdoDetails() {
         setShowLoader(true);
+        setDdoDetails(null);
         const model = {
             pageSize: pageSize,
             pageNumber: currentPage,
