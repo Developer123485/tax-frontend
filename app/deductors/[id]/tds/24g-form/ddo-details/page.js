@@ -337,6 +337,16 @@ export default function DdoDetails({ params }) {
             });
     }
 
+    function download() {
+        const url = "/static/pdf/24G_Excel_Template.xlsx";
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "24G_Excel_Template.xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
 
     return (
         <>
@@ -416,7 +426,7 @@ export default function DdoDetails({ params }) {
                                 </label>
                                 <div className="col-md-4">
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
-                                        <div className="row align-items-center">
+                                        <div className="row align-items-center" onClick={download}>
                                             <div className="col-md-5">
                                                 <Image
                                                     className="img-fluid"

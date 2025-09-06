@@ -17,6 +17,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import FormConfirmation from "@/app/components/modals/form-confimation";
 import { FormsService } from "@/app/services/forms.service";
 import api from "@/app/utils/interceptors";
+import { saveAs } from "file-saver";
 
 export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
@@ -319,6 +320,16 @@ export default function DdoWiseDetails({ params }) {
         }
     }
 
+    function download() {
+        const url = "/static/pdf/24G_Excel_Template.xlsx";
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "24G_Excel_Template.xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     const fileSelectHandler = (event) => {
         handleFileChange(event.target.files[0]);
     };
@@ -499,7 +510,7 @@ export default function DdoWiseDetails({ params }) {
                                 </label>
                                 <div className="col-md-4">
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
-                                        <div className="row align-items-center">
+                                        <div className="row align-items-center" onClick={download}>
                                             <div className="col-md-5">
                                                 <Image
                                                     className="img-fluid"
