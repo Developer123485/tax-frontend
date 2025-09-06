@@ -261,6 +261,7 @@ export default function Users() {
                       <div className="d-flex align-items-start text-start flex-column">
                         <h1 className="mb-0 fw-bold">{deducteeCount}</h1>
                         <p className="mb-0 fs-12">Deductee Master</p>
+                        
                       </div>
                     </div>
                   </div>
