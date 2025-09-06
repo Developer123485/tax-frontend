@@ -342,7 +342,6 @@ export default function TDSDashboard({ params }) {
                         </div>
                       </div>
                       <div className="row g-3"
-
                       >
                         {reportsData?.map((option, index) => (
                           <div className="col-md-3" key={index}
@@ -430,7 +429,7 @@ export default function TDSDashboard({ params }) {
                                 );
                               }
                               if (
-                                option.name == "24G Form"
+                                option.name == "24G Form" && deductorInfo.ainCode
                               ) {
                                 router.push(
                                   `/deductors/${deductorId}/tds/24g-form`

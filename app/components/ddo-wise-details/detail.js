@@ -3,12 +3,14 @@ import { CommonService } from "@/app/services/common.service";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/navigation";
 import SearchableDropdown from "../deductors/searchable-dropdown";
 
 export default function DDOWiseDetail(props) {
     const [isFocused, setIsFocused] = useState(false);
     const [isFocused1, setIsFocused1] = useState(false);
     const [isFocused2, setIsFocused2] = useState(false);
+    const router = useRouter(null);
     const highlightStyle = {
         padding: "8px",
         border: "1px solid",
