@@ -68,7 +68,11 @@ export default function LoginForm() {
             );
             toast.error(e?.title);
             router.push("/verification");
-          } else {
+          }
+          else if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
             toast.error(e?.message);
           }
           setLoading(false);
