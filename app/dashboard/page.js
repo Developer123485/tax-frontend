@@ -63,8 +63,13 @@ export default function dashboard() {
           "Invalid File. check error in deductor errors text downloded file"
         );
       }
-    } catch (error) {
-      toast.error("Error during file upload");
+    } catch (e) {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       setIsLoading(false);
       setSelectedFile("");

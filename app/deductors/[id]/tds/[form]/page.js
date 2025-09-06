@@ -283,8 +283,13 @@ export default function TDSForm({ params }) {
         saveAs(blob, "errors.txt");
         toast.error("File upload failed");
       }
-    } catch (error) {
-      toast.error(error?.response?.data);
+    } catch (e) {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       setIsUploading(false);
       setFileName("");
@@ -324,7 +329,12 @@ export default function TDSForm({ params }) {
       );
     }
     catch (error) {
-      toast.error(error?.response?.data);
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       getFormsDetails();
       toast.success("File upload successfully");
@@ -370,7 +380,12 @@ export default function TDSForm({ params }) {
         toast.error("File upload failed");
       }
     } catch (error) {
-      alert("Error during file upload");
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       setIsSalaryUploading(false);
       setFileSalaryName("");

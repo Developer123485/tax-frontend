@@ -350,8 +350,13 @@ export default function DdoWiseDetails({ params }) {
                 setIsLoading(false);
                 toast.error("File upload failed");
             }
-        } catch (error) {
-            toast.error("Error during file upload");
+        } catch (e) {
+            if (e?.response?.data) {
+                toast.error(e?.response?.data);
+            }
+            else {
+                toast.error(e?.message);
+            }
         } finally {
             setIsLoading(false);
         }

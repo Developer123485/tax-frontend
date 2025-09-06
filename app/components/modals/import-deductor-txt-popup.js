@@ -103,8 +103,13 @@ export default function ImportDeductorTXTPopup(props) {
         toast.error("File upload failed");
         setIsloading(false);
       }
-    } catch (error) {
-      toast.error(error?.response?.data);
+    } catch (e) {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
       setIsloading(false);
     }
   }

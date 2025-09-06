@@ -271,8 +271,13 @@ export default function Deductors() {
         const blob = new Blob([result], { type: "text/plain" });
         saveAs(blob, "errors.txt");
       }
-    } catch (error) {
-      toast.error("Error during file upload");
+    } catch (e) {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       setIsLoading(false);
       setSelectedFile("");

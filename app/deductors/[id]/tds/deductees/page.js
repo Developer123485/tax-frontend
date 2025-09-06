@@ -471,8 +471,13 @@ export default function Deductees({ params }) {
         saveAs(blob, "errors.txt");
         setShowLoader(false);
       }
-    } catch (error) {
-      toast.error("Error during file upload");
+    } catch (e) {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     } finally {
       setIsLoading(false);
       setShowLoader(false);
