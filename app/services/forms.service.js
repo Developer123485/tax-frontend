@@ -27,9 +27,6 @@ async function exportFormData(model) {
 }
 
 async function generateForm(model) {
-  let axiosConfig = {
-    responseType: "blob",
-  };
   const result = await api.post(`forms/generatedocument`, model);
   return result;
 }
@@ -115,16 +112,12 @@ async function fetchTaxDeposits(model, value) {
 }
 
 async function finalReport(model) {
-  const result = await api.post(`forms/finalReport`, model, {
-    responseType: "blob",
-  });
+  const result = await api.post(`forms/finalReport`, model);
   return result;
 }
 
 async function final24GReport(model) {
-  const result = await api.post(`forms/final24GReport`, model, {
-    responseType: "blob",
-  });
+  const result = await api.post(`forms/final24GReport`, model);
   return result;
 }
 
