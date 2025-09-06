@@ -264,6 +264,21 @@ export default function Users() {
                       </div>
                     </div>
                   </div>
+                  <div className="col">
+                    <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
+                      <Image
+                        className="me-2"
+                        src="/images/dashboards/challans_icon.svg"
+                        alt="challans_icon"
+                        width={64}
+                        height={64}
+                      />
+                      <div className="d-flex align-items-start text-start flex-column">
+                        <h1 className="mb-0 fw-bold">{challanCount}</h1>
+                        <p className="mb-0 fs-12">Challans</p>
+                      </div>
+                    </div>
+                  </div>
 
                   <div className="col">
                     <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
@@ -280,21 +295,7 @@ export default function Users() {
                       </div>
                     </div>
                   </div>
-                  <div className="col">
-                    <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
-                      <Image
-                        className="me-2"
-                        src="/images/dashboards/challans_icon.svg"
-                        alt="challans_icon"
-                        width={64}
-                        height={64}
-                      />
-                      <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{challanCount}</h1>
-                        <p className="mb-0 fs-12">Challans</p>
-                      </div>
-                    </div>
-                  </div>
+
                   <div className="col">
                     <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
                       <Image
@@ -305,7 +306,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{deducteeEntryCount}</h1>
+                        <h1 className="mb-0 fw-bold">{salaryCount}</h1>
                         <p className="mb-0 fs-12">Salary Details</p>
                       </div>
                     </div>

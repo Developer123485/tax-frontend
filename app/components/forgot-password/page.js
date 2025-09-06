@@ -256,8 +256,7 @@ export default function ForgotPasswordForm() {
                 <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box rounded-3">
                   <h4 className="mb-3 mb-md-3">Change Password</h4>
                   <p className="mb-4 mb-md-4">
-                    Create a new password. Ensure it differs from previous ones
-                    for security.
+                    Create a new password. Make sure it is different from your previous passwords for security.
                   </p>
                   <form>
                     <div className="row g-3">
