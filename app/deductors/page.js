@@ -92,14 +92,14 @@ export default function Deductors() {
       name: "Ain Code",
       selector: (row) => row?.ainCode || "-",
     },
-    {
-      name: "Traces User",
-      selector: (row) => row?.tracesLogin || "-",
-    },
-    {
-      name: "Traces Password",
-      selector: (row) => row?.tracesPassword ? "XXXXXXX" : "-",
-    },
+    // {
+    //   name: "Traces User",
+    //   selector: (row) => row?.tracesLogin || "-",
+    // },
+    // {
+    //   name: "Traces Password",
+    //   selector: (row) => row?.tracesPassword ? "XXXXXXX" : "-",
+    // },
     {
       name: "Actions",
       selector: (row) => (
