@@ -445,7 +445,7 @@ export default function TDSDashboard({ params }) {
                             }
                             }
                           >
-                            <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
+                            {option.name == "24G Form" && deductorInfo.ainCode && <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
                               <span
                                 style={{
                                   width: 65,
@@ -463,7 +463,26 @@ export default function TDSDashboard({ params }) {
                                   </p>
                                 </div>
                               </div>
-                            </span>
+                            </span>}
+                            {option.name != "24G Form" && <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
+                              <span
+                                style={{
+                                  width: 65,
+                                  height: 65,
+                                }}
+                                className="fs-6 rounded-4 fw-bold bg-dark-blue d-flex align-items-center justify-content-center"
+                              >
+                                {option.code}
+                              </span>
+                              <div className="d-flex gap-2 w-100 justify-content-between mt-md-3">
+                                <div>
+                                  <h6 className="fw-bold">{option.name}</h6>
+                                  <p className="mb-0 fs-10">
+                                    {option.descrption}
+                                  </p>
+                                </div>
+                              </div>
+                            </span>}
                           </div>
                         ))}
                       </div>
