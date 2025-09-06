@@ -130,7 +130,13 @@ export default function PotentialNotices({ params }) {
           }
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {
@@ -173,7 +179,13 @@ export default function PotentialNotices({ params }) {
           }
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {
@@ -213,7 +225,13 @@ export default function PotentialNotices({ params }) {
           setShowLoader(false);
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {
@@ -253,7 +271,13 @@ export default function PotentialNotices({ params }) {
           setShowLoader(false);
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {
@@ -293,7 +317,13 @@ export default function PotentialNotices({ params }) {
           setShowLoader(false);
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {

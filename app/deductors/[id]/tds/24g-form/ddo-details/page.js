@@ -322,6 +322,13 @@ export default function DdoDetails({ params }) {
                 if (res) {
                     setDdoDetails(res);
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setTimeout(() => {

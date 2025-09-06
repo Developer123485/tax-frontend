@@ -202,6 +202,13 @@ export default function Users() {
             setDeducteeEntryCount(res.deducteeEntry);
             setSalaryCount(res.salaryCount);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         })
         .finally((f) => {
           setShowLoader(false);

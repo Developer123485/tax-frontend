@@ -145,6 +145,13 @@ export default function TDSForm({ params }) {
             saveAs(blob, form + searchParams.get("quarter") + ".docx");
             toast.success("Genrate Form Successfully!");
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         })
         .finally((f) => {
           setIsDownloding(false);
@@ -205,6 +212,13 @@ export default function TDSForm({ params }) {
           });
           toast.success("Genrate Form Successfully!");
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
       })
       .finally((f) => {
         setIsDownloding(false);
@@ -232,6 +246,13 @@ export default function TDSForm({ params }) {
             let url = window.URL.createObjectURL(new Blob([res]));
             toast.success("Export Data Successfully!");
             saveAs(url, "CHALLAN-DEDUCCTEE-EXPORT-" + form + ".xlsx");
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
           }
         })
         .finally((f) => {
@@ -434,6 +455,13 @@ export default function TDSForm({ params }) {
             deducteeDetailCount: res.deducteeDetailCount,
             salaryDetailCount: res.salaryDetailCount,
           }));
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {

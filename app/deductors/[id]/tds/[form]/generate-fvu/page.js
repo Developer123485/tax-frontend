@@ -118,8 +118,16 @@ export default function GenerateFVU({ params }) {
           setReturnErrors(res);
         }
       })
-      .catch((e) => {
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
+      })
+      .catch((e) => {
       })
       .finally((f) => {
         setShowLoader(false);
@@ -147,8 +155,13 @@ export default function GenerateFVU({ params }) {
         if (res) {
           setInterestAndfines(res);
         }
-      })
-      .catch((e) => {
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setShowLoader(false);
       })
       .finally((f) => {

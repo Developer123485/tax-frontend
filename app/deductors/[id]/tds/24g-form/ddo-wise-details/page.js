@@ -407,6 +407,13 @@ export default function DdoWiseDetails({ params }) {
                 if (res) {
                     setDdoWiseDetails(res);
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setTimeout(() => {

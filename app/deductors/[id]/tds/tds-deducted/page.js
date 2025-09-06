@@ -157,6 +157,13 @@ export default function TDSDeducted({ params }) {
                         setTdsDeductedList(res);
                     }
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);

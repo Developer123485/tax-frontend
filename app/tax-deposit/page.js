@@ -268,6 +268,13 @@ export default function TaxDeposit() {
             fetchReturnFilling();
             selectedData(null);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         }).finally((f) => {
           setDeleteConfirm(false);
         });
@@ -279,6 +286,13 @@ export default function TaxDeposit() {
           if (res) {
             toast.success("Tax Deposit Rate Deleted!");
             fetchTaxDeposit();
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
           }
         })
         .finally((f) => {
@@ -382,9 +396,12 @@ export default function TaxDeposit() {
           fetchTaxDeposit();
         }
       })
-      .catch((e) => {
+      .catch(e => {
         if (e?.response?.data) {
-          toast.error(e.response.data, "Error in uploading file");
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -423,6 +440,13 @@ export default function TaxDeposit() {
         if (res) {
           toast.success("Tax Deposited Rate Created!");
           fetchTaxDeposit();
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -646,7 +670,7 @@ export default function TaxDeposit() {
                           </option>
                         ))}
                       </select>
-                                            <button
+                      <button
                         className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!financialYear}
@@ -654,7 +678,7 @@ export default function TaxDeposit() {
                       >
                         Search
                       </button>
-                                            <button
+                      <button
                         className="btn btn-outline-primary ms-3"
                         type="button"
                         onClick={(e) => {
@@ -666,7 +690,7 @@ export default function TaxDeposit() {
                       >
                         Reset
                       </button>
-                                            <button
+                      <button
                         className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!selectedData}

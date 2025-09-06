@@ -73,6 +73,14 @@ export default function Miscellaneous({ params }) {
                 if (res) {
                     setMiscellaneousAReport(res);
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+                setShowLoader(false);
             })
             .finally((f) => {
                 setShowLoader(false);
@@ -95,6 +103,13 @@ export default function Miscellaneous({ params }) {
                 if (res) {
                     setMiscellaneousBReport(res);
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);
@@ -116,6 +131,13 @@ export default function Miscellaneous({ params }) {
             .then((res) => {
                 setMiscellaneousCReport(res);
                 setShowLoader(false);
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);
@@ -141,6 +163,13 @@ export default function Miscellaneous({ params }) {
                 let url = window.URL.createObjectURL(new Blob([res]));
                 toast.success("Export Data Successfully!");
                 saveAs(url, fileName);
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);

@@ -118,8 +118,13 @@ export default function InterestCalculate({ params }) {
                     setInterestCalculate(res);
                     setShowLoader(false);
                 }
-            })
-            .catch((e) => {
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
                 setShowLoader(false);
             })
             .finally((f) => {

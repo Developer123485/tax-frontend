@@ -284,6 +284,13 @@ export default function TDSRates() {
             fetchReturnFilling();
             selectedData(null);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         }).finally((f) => {
           setDeleteConfirm(false);
         });
@@ -295,6 +302,13 @@ export default function TDSRates() {
           if (res) {
             toast.success("TDS Rate Deleted!");
             fetchTdsRates();
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
           }
         })
         .finally((f) => {
@@ -379,6 +393,13 @@ export default function TDSRates() {
             setTDSRates(res);
             setSelectedData(null);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         })
         .finally((f) => {
           setShowLoader(false);
@@ -433,9 +454,12 @@ export default function TDSRates() {
           setIsLoading(false);
         }
       })
-      .catch((e) => {
+      .catch(e => {
         if (e?.response?.data) {
-          toast.error(e.response.data);
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -465,6 +489,13 @@ export default function TDSRates() {
         if (res) {
           toast.success("TDS Rate Created!");
           fetchTdsRates();
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -637,7 +668,7 @@ export default function TDSRates() {
                           </button>
                         </div>
                       </div>
-                  <button
+                      <button
                         className="btn btn-outline-primary ms-3"
                         type="button"
                         disabled={!selectedData}

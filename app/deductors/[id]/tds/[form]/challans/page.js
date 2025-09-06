@@ -281,8 +281,13 @@ export default function Challans({ params }) {
               setDeleteConfirm(false);
               setSelectedData([]);
             }
-          })
-          .catch((e) => {
+          }).catch(e => {
+            if (e?.response?.data) {
+              toast.error(e?.response?.data);
+            }
+            else {
+              toast.error(e?.message);
+            }
             setDeleteConfirm(false);
           })
           .finally((f) => {

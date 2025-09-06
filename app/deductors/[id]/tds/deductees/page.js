@@ -393,6 +393,14 @@ export default function Deductees({ params }) {
             toast.success("Delete Deductee Successfully");
             fetchDeductees("");
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
+          setShowLoader(false);
         })
         .finally((e) => {
           setDeleteConfirm(false);
@@ -403,6 +411,13 @@ export default function Deductees({ params }) {
           if (res) {
             toast.success("Delete Employee Successfully");
             fetchEmployees("");
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
           }
         })
         .finally((e) => {
@@ -530,6 +545,13 @@ export default function Deductees({ params }) {
             saveAs(url, "DEDUCTEE-EMPLOYEE-MASTER-FINAL.xlsx");
             toast.success("Export Data Successfully!");
           }
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {

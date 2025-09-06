@@ -267,9 +267,17 @@ export default function ReturnFilling() {
             fetchReturnFilling();
             selectedData(null);
           }
-        }).finally((f) => {
-          setDeleteConfirm(false);
-        });
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
+        })
+          .finally((f) => {
+            setDeleteConfirm(false);
+          });
       }
     }
     else {
@@ -278,6 +286,13 @@ export default function ReturnFilling() {
           if (res) {
             toast.success("Return Filling Deleted!");
             fetchReturnFilling();
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
           }
         })
         .finally((f) => {
@@ -343,6 +358,13 @@ export default function ReturnFilling() {
             setReturnFillings(res);
             setSelectedData(null);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         })
         .finally((f) => {
           setShowLoader(false);
@@ -374,9 +396,12 @@ export default function ReturnFilling() {
           fetchReturnFilling();
         }
       })
-      .catch((e) => {
+      .catch(e => {
         if (e?.response?.data) {
-          toast.error(e.response.data);
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -403,6 +428,13 @@ export default function ReturnFilling() {
         if (res) {
           toast.success("Return Filling Created!");
           fetchReturnFilling();
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
@@ -528,102 +560,102 @@ export default function ReturnFilling() {
                       <h4 className="fw-bold mb-0">Return Fillings</h4>
                     </div>
                     <div className="col-md-6">
-<div className="d-flex">
-                       <div className="d-flex align-items-center justify-content-end w-100">
-                      <span className="me-2">Forms: </span>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        autoComplete="off"
-                        value={formType}
-                        style={highlightStyle}
-                        onChange={(e) => setFormType(e.target.value)}
-                      >
-                        <option value={""} hidden>
-                          Select
-                        </option>
-                        <option value={"26Q"}>26Q</option>
-                        <option value={"27EQ"}>27EQ</option>
-                        <option value={"27Q"}>27Q</option>
-                        <option value={"24Q"}>24Q</option>
-                      </select>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-end w-100 ms-2">
-                      <span className="me-2">FY: </span>
-                      <select
-                        className="form-select m-100"
-                        aria-label="Default select example"
-                        value={financialYear}
-                        style={highlightStyle1}
-                        onChange={(e) => setFinancialYear(e.target.value)}
-                      >
-                        <option value={""} hidden>
-                          Select
-                        </option>
-                        {financialYears?.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-end w-100 ms-2">
-                      <span className="me-2">Quarter: </span>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        autoComplete="off"
-                        value={quarter}
-                        style={highlightStyle1}
-                        onChange={(e) => setQuarter(e.target.value)}
-                      >
-                        <option value={""} hidden>
-                          Select
-                        </option>
-                        <option value={"Q1"}>Q1</option>
-                        <option value={"Q2"}>Q2</option>
-                        <option value={"Q3"}>Q3</option>
-                        <option value={"Q4"}>Q4</option>
-                      </select>
-                      
-                    </div>
-</div>
+                      <div className="d-flex">
+                        <div className="d-flex align-items-center justify-content-end w-100">
+                          <span className="me-2">Forms: </span>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            autoComplete="off"
+                            value={formType}
+                            style={highlightStyle}
+                            onChange={(e) => setFormType(e.target.value)}
+                          >
+                            <option value={""} hidden>
+                              Select
+                            </option>
+                            <option value={"26Q"}>26Q</option>
+                            <option value={"27EQ"}>27EQ</option>
+                            <option value={"27Q"}>27Q</option>
+                            <option value={"24Q"}>24Q</option>
+                          </select>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-end w-100 ms-2">
+                          <span className="me-2">FY: </span>
+                          <select
+                            className="form-select m-100"
+                            aria-label="Default select example"
+                            value={financialYear}
+                            style={highlightStyle1}
+                            onChange={(e) => setFinancialYear(e.target.value)}
+                          >
+                            <option value={""} hidden>
+                              Select
+                            </option>
+                            {financialYears?.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-end w-100 ms-2">
+                          <span className="me-2">Quarter: </span>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            autoComplete="off"
+                            value={quarter}
+                            style={highlightStyle1}
+                            onChange={(e) => setQuarter(e.target.value)}
+                          >
+                            <option value={""} hidden>
+                              Select
+                            </option>
+                            <option value={"Q1"}>Q1</option>
+                            <option value={"Q2"}>Q2</option>
+                            <option value={"Q3"}>Q3</option>
+                            <option value={"Q4"}>Q4</option>
+                          </select>
+
+                        </div>
+                      </div>
                     </div>
                     <div className="col-md-3">
                       <div className="d-flex">
-                         <button
-                        className="btn btn-outline-primary"
-                        type="button"
-                        disabled={!formType && !financialYear && !quarter}
-                        onClick={(e) => fetchReturnFilling()}
-                      >
-                        Search
-                      </button>
-                                            <button
-                        className="btn btn-outline-primary ms-2"
-                        type="button"
-                        onClick={(e) => {
-                          setQuarter("");
-                          setFinancialYear("");
-                          setFormType("");
-                          setTimeout(() => {
-                            fetchReturnFilling()
-                          }, 500);
-                        }}
-                      >
-                        Reset
-                      </button>
-                                            <button
-                        className="btn btn-outline-primary ms-2"
-                        type="button"
-                        disabled={!selectedData}
-                        onClick={(e) => {
-                          setConfirmTitle("Bulk");
-                          setDeleteConfirm(true);
-                        }}
-                      >
-                        Delete
-                      </button>
+                        <button
+                          className="btn btn-outline-primary"
+                          type="button"
+                          disabled={!formType && !financialYear && !quarter}
+                          onClick={(e) => fetchReturnFilling()}
+                        >
+                          Search
+                        </button>
+                        <button
+                          className="btn btn-outline-primary ms-2"
+                          type="button"
+                          onClick={(e) => {
+                            setQuarter("");
+                            setFinancialYear("");
+                            setFormType("");
+                            setTimeout(() => {
+                              fetchReturnFilling()
+                            }, 500);
+                          }}
+                        >
+                          Reset
+                        </button>
+                        <button
+                          className="btn btn-outline-primary ms-2"
+                          type="button"
+                          disabled={!selectedData}
+                          onClick={(e) => {
+                            setConfirmTitle("Bulk");
+                            setDeleteConfirm(true);
+                          }}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
                     {/* <div className="col-md-4">

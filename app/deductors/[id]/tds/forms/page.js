@@ -192,6 +192,14 @@ export default function TDSForm({ params }) {
           });
           toast.success("Genrate Form Successfully!");
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setShowLoader(false);
       })
       .finally((f) => {
         setIsDownloding(false);
@@ -227,6 +235,14 @@ export default function TDSForm({ params }) {
           });
           toast.success("Genrate Form Successfully!");
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setShowLoader(false);
       })
       .finally((f) => {
         setIsDownloding(false);
@@ -262,6 +278,14 @@ export default function TDSForm({ params }) {
           });
           toast.success("Genrate Form Successfully!");
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setShowLoader(false);
       })
       .finally((f) => {
         setIsDownloding(false);

@@ -140,6 +140,13 @@ export default function TDSDashboard({ params }) {
             setFormsData(res.category);
             setDeducteeCount(res.deducteeCount);
           }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         })
         .finally((f) => {
           setTimeout(() => {

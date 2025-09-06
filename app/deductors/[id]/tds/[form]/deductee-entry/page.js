@@ -320,6 +320,14 @@ export default function Challans({ params }) {
           setDeducteeEntrys(res);
           setChallanDropdowns(res.challans);
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setDeleteConfirm(false);
       })
       .finally((f) => {
         setTimeout(() => {

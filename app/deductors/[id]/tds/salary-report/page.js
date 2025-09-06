@@ -156,6 +156,13 @@ export default function SalaryReport({ params }) {
                         setSalaryReports(res);
                     }
                 }
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);

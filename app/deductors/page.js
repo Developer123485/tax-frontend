@@ -211,6 +211,13 @@ export default function Deductors() {
           toast.success("Delete Deductors Successfully");
           fetchDeductors(1);
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
       })
       .finally((f) => {
         setDeleteConfirm(false);
@@ -232,7 +239,14 @@ export default function Deductors() {
           setTotalItems(res.totalRows);
         }
       })
-      .catch((e) => { })
+      .catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+      })
       .finally((f) => {
         setTimeout(() => {
           setShowLoader(false);
@@ -314,6 +328,13 @@ export default function Deductors() {
             saveAs(url, "DEDUCTOR-MASTER-FINAL-EXPORT.xlsx");
             toast.success("Export Data Successfully!");
           }
+        }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
         }
       })
       .finally((f) => {
