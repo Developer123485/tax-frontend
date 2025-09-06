@@ -175,6 +175,7 @@ export default function AddDdoWiseDetail({ params }) {
         if (validateDetail()) {
             ddoWiseDetail.month = searchParams.get("month");
             ddoWiseDetail.financialYear = searchParams.get("financial_year");
+            ddoWiseDetail.deductorId = deductorId;
             DdoDetailService.saveDdoWiseDetail(ddoWiseDetail)
                 .then((res) => {
                     if (res) {
