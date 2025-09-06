@@ -374,6 +374,13 @@ export default function DdoWiseDetails({ params }) {
             .then((res) => {
                 const blob = new Blob([res], { type: "text/plain" });
                 saveAs(blob, "24G" + ".txt");
+            }).catch(e => {
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setIsDownloadFormConfirmation(false);
