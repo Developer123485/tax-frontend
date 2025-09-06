@@ -77,7 +77,7 @@ export default function Deductors() {
       width: "160px",
     },
     {
-      name: "Deductor Name",
+      name: "Name",
       selector: (row) => row.deductorName || "-",
     },
     {
@@ -87,6 +87,18 @@ export default function Deductors() {
     {
       name: "Pan",
       selector: (row) => row?.deductorPan || "",
+    },
+    {
+      name: "Ain Code",
+      selector: (row) => row?.ainCode || "-",
+    },
+    {
+      name: "Traces User",
+      selector: (row) => row?.tracesLogin || "-",
+    },
+    {
+      name: "Traces Password",
+      selector: (row) => row?.tracesPassword ? "XXXXXXX" : "-",
     },
     {
       name: "Actions",
