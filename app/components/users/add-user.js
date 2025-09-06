@@ -88,7 +88,12 @@ export default function AddUser(props) {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }
@@ -240,7 +245,7 @@ export default function AddUser(props) {
                           </div>
                         </div>
                         <div className="">
-                           {isDirty && userDetails.firmTypeError && (
+                          {isDirty && userDetails.firmTypeError && (
                             <span className="text-danger">
                               {userDetails.firmTypeError}
                             </span>

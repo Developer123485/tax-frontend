@@ -154,7 +154,12 @@ export default function TDSReturn({ params }) {
                     }
                 }
             }).catch(e => {
-                toast.error(e?.message);
+                if (e?.response?.data) {
+                    toast.error(e?.response?.data);
+                }
+                else {
+                    toast.error(e?.message);
+                }
             })
             .finally((f) => {
                 setShowLoader(false);

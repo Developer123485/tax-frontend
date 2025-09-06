@@ -31,7 +31,7 @@ async function login(model) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 
@@ -47,7 +47,7 @@ async function submitOtpToEmail(email) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 
@@ -69,7 +69,7 @@ async function forgotPassword(model) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 
@@ -80,7 +80,7 @@ async function submitOtpToPhone(phone) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 
@@ -91,7 +91,7 @@ async function submitVerifyDetail(model) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err.response.data);
+      return Promise.reject(err);
     });
 }
 

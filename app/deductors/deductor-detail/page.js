@@ -296,7 +296,12 @@ export default function AddDeductor() {
         setConfirmModal(false);
       }
     }).catch(e => {
-      toast.error(e?.message);
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     })
   }
 

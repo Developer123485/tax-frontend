@@ -274,7 +274,12 @@ export default function Deductees({ params }) {
         }
       })
       .catch((e) => {
-        toast.error(e?.message);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
       });
   }
 
@@ -294,7 +299,12 @@ export default function Deductees({ params }) {
           setAllLoading(false);
         }
       }).catch(e => {
-        toast.error(e?.message);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setBulkLoading(false);
         setAllLoading(false);
       })
@@ -333,7 +343,12 @@ export default function Deductees({ params }) {
         setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
-        toast.error(e?.message);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setVerifyType("");
         setConfirmModal(false);
         setSubmitLoading(false);
@@ -354,7 +369,12 @@ export default function Deductees({ params }) {
         setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
-        toast.error(e?.message);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
         setVerifyType("");
         setConfirmModal(false);
         setToggleCleared(!toggleCleared);
@@ -712,140 +732,140 @@ export default function Deductees({ params }) {
                 </h4>
               </div>
               {type == "Deductees" &&
-<>
-                <div className="col-md-5 d-flex align-items-center justify-content-end">
-                  <button type="button"
-                    disabled={selectedDeducteeData.length == 0 || bulkLoading}
-                    className="btn btn-primary me-3"
-                    onClick={(e) => {
-                      setBulkLoading(true);
-                      setVerifyType("bulk");
-                      submitLogin(e);
-                    }}
-                  >
-                    {bulkLoading && (
-                      <div className="spinner-border me-2" role="status"></div>
-                    )}
-                    Bulk PAN Verify
-                  </button>
-                  <button type="button"
-                    disabled={deductees.length == 0 || allLoading}
-                    className="btn btn-primary me-3"
-                    onClick={(e) => {
-                      setAllLoading(true);
-                      setVerifyType("all");
-                      submitLogin(e)
-                    }}
-                  >
-                    {allLoading && (
-                      <div className="spinner-border me-2" role="status"></div>
-                    )}
-                    Verify All PANs
-                  </button>
-                  <button
-                    type="button"
-                    onClick={exportFile}
-                    className="btn btn-primary"
-                  >
-                    Export
-                  </button>
-                </div>
-                <div className="col-md-4">
-                 <div className="input-group searchbox me-3">
-                    <input
-                      type="search"
-                      placeholder={`Search ${type}`}
-                      className="form-control bg-light-gray border-end-0"
-                      id="SearchDeductees"
-                      onChange={(e) => {
-                        setTimeout(() => {
-                          fetchDeductees(e.target.value);
-                        }, 1000);
+                <>
+                  <div className="col-md-5 d-flex align-items-center justify-content-end">
+                    <button type="button"
+                      disabled={selectedDeducteeData.length == 0 || bulkLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setBulkLoading(true);
+                        setVerifyType("bulk");
+                        submitLogin(e);
                       }}
-                    />
-                    <button
-                      className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
-                      type="button"
                     >
-                      {" "}
-                      <Image
-                        className=""
-                        src="/images/dashboards/search_icon.svg"
-                        alt="search_icon"
-                        width={24}
-                        height={24}
-                      />
+                      {bulkLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Bulk PAN Verify
+                    </button>
+                    <button type="button"
+                      disabled={deductees.length == 0 || allLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("all");
+                        submitLogin(e)
+                      }}
+                    >
+                      {allLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Verify All PANs
+                    </button>
+                    <button
+                      type="button"
+                      onClick={exportFile}
+                      className="btn btn-primary"
+                    >
+                      Export
                     </button>
                   </div>
+                  <div className="col-md-4">
+                    <div className="input-group searchbox me-3">
+                      <input
+                        type="search"
+                        placeholder={`Search ${type}`}
+                        className="form-control bg-light-gray border-end-0"
+                        id="SearchDeductees"
+                        onChange={(e) => {
+                          setTimeout(() => {
+                            fetchDeductees(e.target.value);
+                          }, 1000);
+                        }}
+                      />
+                      <button
+                        className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
+                        type="button"
+                      >
+                        {" "}
+                        <Image
+                          className=""
+                          src="/images/dashboards/search_icon.svg"
+                          alt="search_icon"
+                          width={24}
+                          height={24}
+                        />
+                      </button>
+                    </div>
                   </div>
-                  </>
+                </>
               }
               {type == "Employees" &&
-             <>
-                               <div className="col-md-5 d-flex align-items-center justify-content-end">
-                  <button type="button"
-                    disabled={selectedEmployeeData.length == 0 || bulkLoading}
-                    className="btn btn-primary me-3"
-                    onClick={(e) => {
-                      setAllLoading(true);
-                      setVerifyType("bulk");
-                      submitLogin(e)
-                    }}
-                  >
-                    {bulkLoading && (
-                      <div className="spinner-border me-2" role="status"></div>
-                    )}
-                    Bulk PAN Verify
-                  </button>
-                  <button type="button" className="btn btn-primary me-3"
-                    disabled={employees.length == 0 || allLoading}
-                    onClick={(e) => {
-                      setAllLoading(true);
-                      setVerifyType("all");
-                      submitLogin(e)
-                    }}
-                  >
-                    {allLoading && (
-                      <div className="spinner-border me-2" role="status"></div>
-                    )}
-                    Verify All PANs
-                  </button>
-                  <button
-                    type="button"
-                    onClick={exportFile}
-                    className="btn btn-primary"
-                  >
-                    Export
-                  </button>
-                    </div>
-                  <div className="col-md-4">
-                  <div className="input-group searchbox me-3">
-                    <input
-                      type="search"
-                      placeholder={`Search ${type}`}
-                      className="form-control bg-light-gray border-end-0"
-                      id="SearchEmployee"
-                      onChange={(e) => {
-                        setTimeout(() => {
-                          fetchEmployees(e.target.value);
-                        }, 1000);
+                <>
+                  <div className="col-md-5 d-flex align-items-center justify-content-end">
+                    <button type="button"
+                      disabled={selectedEmployeeData.length == 0 || bulkLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("bulk");
+                        submitLogin(e)
                       }}
-                    />
-                    <button
-                      className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
-                      type="button"
                     >
-                      {" "}
-                      <Image
-                        className=""
-                        src="/images/dashboards/search_icon.svg"
-                        alt="search_icon"
-                        width={24}
-                        height={24}
-                      />
+                      {bulkLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Bulk PAN Verify
+                    </button>
+                    <button type="button" className="btn btn-primary me-3"
+                      disabled={employees.length == 0 || allLoading}
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("all");
+                        submitLogin(e)
+                      }}
+                    >
+                      {allLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Verify All PANs
+                    </button>
+                    <button
+                      type="button"
+                      onClick={exportFile}
+                      className="btn btn-primary"
+                    >
+                      Export
                     </button>
                   </div>
+                  <div className="col-md-4">
+                    <div className="input-group searchbox me-3">
+                      <input
+                        type="search"
+                        placeholder={`Search ${type}`}
+                        className="form-control bg-light-gray border-end-0"
+                        id="SearchEmployee"
+                        onChange={(e) => {
+                          setTimeout(() => {
+                            fetchEmployees(e.target.value);
+                          }, 1000);
+                        }}
+                      />
+                      <button
+                        className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
+                        type="button"
+                      >
+                        {" "}
+                        <Image
+                          className=""
+                          src="/images/dashboards/search_icon.svg"
+                          alt="search_icon"
+                          width={24}
+                          height={24}
+                        />
+                      </button>
                     </div>
+                  </div>
 
                   {/* <button
                   type="button"

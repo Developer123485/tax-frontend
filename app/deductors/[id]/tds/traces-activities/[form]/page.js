@@ -28,7 +28,7 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
-  
+
   const [requestResponseModal, setRequestResponseModal] = useState(false);
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
@@ -165,7 +165,12 @@ export default function TracesActivities({ params }) {
         toast.error("Auto-fill data not retrieved")
       }
     }).catch((e) => {
-      toast.error(e?.message);
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
     });;
   }
 
@@ -178,7 +183,12 @@ export default function TracesActivities({ params }) {
         }
       })
       .catch((e) => {
-        toast.error(e?.message);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
       });
   }
 
@@ -202,7 +212,12 @@ export default function TracesActivities({ params }) {
         setRequestResponseValue(res);
       }
     }).catch(e => {
-      toast.error(e?.message);
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
       setConfirmModal(false);
     })
   }

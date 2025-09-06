@@ -66,7 +66,12 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }
@@ -91,7 +96,12 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }

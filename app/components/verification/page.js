@@ -64,7 +64,12 @@ export default function VerificationForm() {
         })
         .catch((e) => {
           setEmailOtpLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }
@@ -82,7 +87,12 @@ export default function VerificationForm() {
         })
         .catch((e) => {
           setPhoneOtpLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }
@@ -108,7 +118,12 @@ export default function VerificationForm() {
         })
         .catch((e) => {
           setLoading(false);
-          toast.error(e?.message);
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
         });
     }
   }
