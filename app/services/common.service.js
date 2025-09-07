@@ -86,7 +86,7 @@ function dateAndTimeFormat(date) {
     if (seconds < 10) seconds = "0" + seconds;
 
     // Return date + time
-    return `${dd}/${mm}/${yyyy} ${hours}:${minutes}:${seconds}`;
+    return `${dd}/${mm}/${yyyy} ${hours}:${minutes}`;
   } catch (error) {
     console.error("Date formatting error:", error);
     return "";

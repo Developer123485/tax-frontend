@@ -127,12 +127,12 @@ export default function TDSReturn({ params }) {
     {
       name: "Created Date",
       selector: (row) => row.createdDate ? CommonService.dateAndTimeFormat(row.createdDate) : "-",
-      grow: 1.5,
+      grow: 1.6,
     },
     {
       name: "Updated Date",
       selector: (row) => row.updatedDate ? CommonService.dateAndTimeFormat(row.updatedDate) : "-",
-      grow: 1.5,
+      grow: 1.6,
     },
   ];
   const searchParams = useSearchParams(null);
