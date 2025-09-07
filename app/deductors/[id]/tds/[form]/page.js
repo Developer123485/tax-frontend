@@ -408,11 +408,18 @@ export default function TDSForm({ params }) {
       categoryId: parseInt(searchParams.get("categoryId")),
     }
     TracesActivitiesService.getSaveLowerDeductions(model).then(res => {
-      toast.success("Data fetched and saved successfully!");
-      setConfirmModal(false);
-      setSubmitLoading(false);
-      setCaptchaBase64("");
-      setCaptcha("");
+      if (res) {
+        toast.success("Data fetched and saved successfully!");
+        setConfirmModal(false);
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+        setCaptcha("");
+        setTimeout(() => {
+          router.push(
+            pathname + "/generate-fvu" + window.location.search
+          );
+        }, 1000);
+      }
     }).catch(e => {
       if (e?.response?.data) {
         toast.error(e?.response?.data);
@@ -819,6 +826,7 @@ export default function TDSForm({ params }) {
             variant="secondary"
             className="px-4 py-2 rounded-3 fw-semibold"
             onClick={() => {
+              setOpenLowerDeduction(false)
               router.push(
                 pathname + "/generate-fvu" + window.location.search
               );
@@ -850,6 +858,7 @@ export default function TDSForm({ params }) {
           setCaptchaBase64("");
           setCaptcha("");
           setConfirmModal(false)
+          setSubmitLoading(false);
         }}
       >
         <Modal.Header className="border-0" closeButton></Modal.Header>
