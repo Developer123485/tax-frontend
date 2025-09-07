@@ -12,6 +12,7 @@ import { TracesLowerDeductionService } from "@/app/services/tracesLowerDeduction
 import { saveAs } from "file-saver";
 import DataTable from "react-data-table-component";
 import "react-toastify/dist/ReactToastify.css";
+import { CommonService } from "@/app/services/common.service";
 
 export default function TDSReturn({ params }) {
   const resolvedParams = use(params);
@@ -58,54 +59,75 @@ export default function TDSReturn({ params }) {
       grow: 0.5,
     },
     {
-      name: "Tan/Pan",
-      selector: (row) => row.tan ?? "-",
+      name: "Certificate No",
+      selector: (row) => row.certificateNo ?? "-",
       grow: 1.5,
     },
     {
-      name: "Tan/Pan Name",
-      selector: (row) => row?.name ?? "-",
+      name: "Financial Year",
+      selector: (row) => row?.financialYear ?? "-",
       grow: 2,
     },
     {
-      name: "Nature",
-      selector: (row) => row?.nature ?? "-",
+      name: "Pan/Tan",
+      selector: (row) => row?.tan ?? "-",
       grow: 2.5,
     },
     {
-      name: "Amount",
-      selector: (row) => row?.amount ?? "-",
+      name: "Name",
+      selector: (row) => row?.name ?? "-",
       grow: 1,
     },
+
     {
-      name: "Certificate Rate",
-      selector: (row) => row?.certificateRate?.toFixed(2) || "-",
-      grow: 2.5,
-    },
-    {
-      name: "Valid From Date",
+      name: "Valid From",
       selector: (row) => row?.validFromDate ?? "-",
       grow: 2.5,
     },
     {
-      name: "Valid Till Date",
-      selector: (row) => row?.validTillDate ?? "-",
-      grow: 2.5,
-    },
-    {
-      name: "Valid Till Cancel Date",
+      name: "Cancel Date",
       selector: (row) => row?.validTillCancelDate ?? "-",
       grow: 3,
     },
     {
-      name: "Remarks",
-      selector: (row) => row?.remarks ?? "-",
+      name: "Valid To",
+      selector: (row) => row?.validTillDate ?? "-",
+      grow: 2.5,
+    },
+    {
+      name: "Section Code",
+      selector: (row) => row?.sectionCode || "-",
+      grow: 2.5,
+    },
+    {
+      name: "Nature",
+      selector: (row) => row?.nature ?? "-",
+      grow: 2,
+    },
+    {
+      name: "Rate",
+      selector: (row) => row?.certificateRate?.toFixed(2) ?? "-",
+      grow: 1.5,
+    },
+    {
+      name: "Certificate Limit",
+      selector: (row) => row?.certificateLimit?.toFixed(2) ?? "-",
+      grow: 1.5,
+    },
+    {
+      name: "Amount Consumed",
+      selector: (row) => row?.amountConsumed?.toFixed(2) ?? "-",
+      grow: 1.5,
+    },
+    {
+      name: "Date Of Issue",
+      selector: (row) => row?.dateOfIssue ?? "-",
       grow: 2,
     },
     {
       name: "Created Date",
-      selector: (row) => row?.createdDate ?? "-",
-      grow: 1.5,
+      selector: (row) => row.createdDate ? CommonService.dateFormat(row.createdDate) : "-",
+      grow: 2,
     },
   ];
   const searchParams = useSearchParams(null);
