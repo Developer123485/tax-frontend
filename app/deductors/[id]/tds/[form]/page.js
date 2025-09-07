@@ -14,36 +14,34 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-bootstrap/Modal";
 import ProcessPopup from "@/app/components/modals/processing";
 import FormConfirmation from "@/app/components/modals/form-confimation";
-import htmlDocx from "html-docx-js/dist/html-docx";
 import ValidationConfirmation from "@/app/components/modals/validation-confirm";
 import HeaderList from "@/app/components/header/header-list";
-import Select from "react-select";
-import CheckboxSelect from "@/app/components/form/select";
 import ImportTdsTXTPopup from "@/app/components/modals/import-tds-txt-popup";
 import { CommonService } from "@/app/services/common.service";
+import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 export default function TDSForm({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
   const pathname = usePathname();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedTxtFile, setSelectedTxtFile] = useState(null);
-  const [selectedSalaryFile, setSelectedSalaryFile] = useState(null);
   const [financialYear, setFinancialYear] = useState("");
   const [fileName, setFileName] = useState("");
   const [txtFileName, setTxtFileName] = useState("");
-  const [fileSalaryName, setFileSalaryName] = useState("");
-  const [citAddress, setCitAddress] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [deductorInfo, setDeductorInfo] = useState(null);
   const [uploadTxtProgress, setUploadTxtProgress] = useState(0);
-  const [employeePannumbers, setEmployeePannumbers] = useState([]);
-  const [uploadSalaryProgress, setSalaryUploadProgress] = useState(0);
   const [exportProgress, setExportProgress] = useState(100);
   const [isUploading, setIsUploading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isTxtUploading, setIsTxtUploading] = useState(false);
   const [isLoading, setIsloading] = useState(false);
-  const [isSalaryUploading, setIsSalaryUploading] = useState(false);
-  const [openGeneratePopup, setOpenGeneratePopup] = useState(false);
+  const [submitLoginLoading, setSubmitLoginLoading] = useState(false);
+  const [openLowerDeduction, setOpenLowerDeduction] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [captchaBase64, setCaptchaBase64] = useState('');
+  const [captcha, setCaptcha] = useState("");
+  const [confirmModal, setConfirmModal] = useState(false);
   const [isExportFormConfirmation, setIsExportFormConfirmation] =
     useState(false);
   const [isGenerateFormConfirmation, setIsGenerateFormConfirmation] =
@@ -53,9 +51,6 @@ export default function TDSForm({ params }) {
   const [isFormValidationConfirmation, setIsFormValidationConfirmation] =
     useState(false);
   const [isDownloading, setIsDownloding] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [partType, setPartType] = useState("B");
-  const [downloadType, setDownloadType] = useState("Combined");
   const [quarter, setQuarter] = useState("");
   const form = resolvedParams?.form;
   const [showLoader, setShowLoader] = useState(false);
@@ -164,68 +159,11 @@ export default function TDSForm({ params }) {
     }
   }
 
-  function openGenerate16Form() {
-    FormsService.getUniquePannumbers(deductorId).then((res) => {
-      if (res) {
-        // const newItems = [...res]; // create a copy first
-        // newItems.unshift({ value: "*", label: "Select All" }); // modify the copy
-        setEmployeePannumbers(res);
-        setOpenGeneratePopup(true);
-      }
-    });
-  }
-
   const fileSelectHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
     setUploadProgress(0); // Reset progress on file change
   };
-
-  const salaryFileSelectHandler = (event) => {
-    setSelectedSalaryFile(event.target.files[0]);
-    setFileSalaryName(event.target.files[0].name);
-    setSalaryUploadProgress(0); // Reset progress on file change
-  };
-
-  function generateForm16() {
-    setIsloading(true);
-    const model = {
-      financialYear: searchParams.get("financial_year"),
-      quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
-      categoryId: parseInt(searchParams.get("categoryId")),
-      pannumbers: selectedOptions.map((p) => p.label),
-      partType: partType,
-      downloadType: downloadType,
-      citAddress: citAddress,
-    };
-    const startYear = parseInt(model.financialYear.split("-")[0]);
-    const endYear = startYear + 1;
-    model.assesmentYear =
-      `${endYear}` + "-" + "" + `${endYear + 1}`.toString().slice(-2);
-    FormsService.generateForm12BA(model)
-      .then((res) => {
-        if (res) {
-          res.forEach((element) => {
-            const blob = htmlDocx.asBlob(element);
-            saveAs(blob, "document.docx");
-          });
-          toast.success("Genrate Form Successfully!");
-        }
-      }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
-        }
-        else {
-          toast.error(e?.message);
-        }
-      })
-      .finally((f) => {
-        setIsDownloding(false);
-        setIsGenerateFormConfirmation(false);
-        setIsloading(false);
-      });
-  }
 
   function exportFormData() {
     if (
@@ -366,54 +304,6 @@ export default function TDSForm({ params }) {
     }
   }
 
-  async function handleSalaryFileChange(e) {
-    let formData = new FormData();
-    formData.append("file", selectedSalaryFile);
-    const model = {
-      financialYear: searchParams.get("financial_year"),
-      quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
-      categoryId: parseInt(searchParams.get("categoryId")),
-      file: formData,
-    };
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress: (progressEvent) => {
-        if (progressEvent.lengthComputable) {
-          const percent = (progressEvent.loaded / progressEvent.total) * 100;
-          setSalaryUploadProgress(Math.round(percent));
-        }
-      },
-    };
-    try {
-      setIsSalaryUploading(true);
-      const result = await api.post(
-        `salaryDetail/uploadExcelFile/${model.categoryId}/${model.deductorId}/${model.financialYear}/${model.quarter}`,
-        model.file,
-        config
-      );
-      if (result) {
-        getFormsDetails();
-        toast.success("File upload successfully");
-      } else {
-        toast.error("File upload failed");
-      }
-    } catch (error) {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
-      }
-      else {
-        toast.error(e?.message);
-      }
-    } finally {
-      setIsSalaryUploading(false);
-      setFileSalaryName("");
-      setSelectedSalaryFile("");
-    }
-  }
-
   function download() {
     let urlPath = "";
     if (searchParams.get("categoryId") == "1") {
@@ -455,6 +345,7 @@ export default function TDSForm({ params }) {
             deducteeDetailCount: res.deducteeDetailCount,
             salaryDetailCount: res.salaryDetailCount,
           }));
+          setDeductorInfo(res.deductor);
         }
       }).catch(e => {
         if (e?.response?.data) {
@@ -469,6 +360,71 @@ export default function TDSForm({ params }) {
           setShowLoader(false);
         }, 100);
       });
+  }
+  function submitLogin(e) {
+    e.preventDefault();
+    setCaptcha("");
+    if (deductorInfo.tracesLogin && deductorInfo.tracesPassword) {
+      setSubmitLoginLoading(true);
+      const model = {
+        userName: deductorInfo.tracesLogin,
+        password: deductorInfo.tracesPassword,
+        tanNumber: deductorInfo?.deductorTan
+      }
+      TracesActivitiesService.startLogin(model).then(res => {
+        if (res) {
+          setSubmitLoginLoading(false);
+          setCaptchaBase64(res.captcha);
+          setConfirmModal(true);
+          setOpenLowerDeduction(false);
+        }
+      }).catch(e => {
+        setSubmitLoginLoading(false);
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+      })
+    } else {
+      setCaptchaBase64("");
+      setCaptcha("");
+      toast.error("TRACES username and password do not exist for the deductor");
+    }
+  }
+
+  function handleSubmit() {
+    setSubmitLoading(true);
+    if (!captcha) {
+      toast.error("Input Captcha is required");
+      return false;
+    }
+    const model = {
+      captcha: captcha,
+      financialYear: searchParams.get("financial_year"),
+      quarter: searchParams.get("quarter"),
+      deductorId: deductorId,
+      categoryId: parseInt(searchParams.get("categoryId")),
+    }
+    TracesActivitiesService.getSaveLowerDeductions(model).then(res => {
+      toast.success("Data fetched and saved successfully!");
+      setConfirmModal(false);
+      setSubmitLoading(false);
+      setCaptchaBase64("");
+      setCaptcha("");
+    }).catch(e => {
+      if (e?.response?.data) {
+        toast.error(e?.response?.data);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setConfirmModal(false);
+      setSubmitLoading(false);
+      setCaptchaBase64("");
+      setCaptcha("");
+    })
   }
 
   return (
@@ -694,60 +650,6 @@ export default function TDSForm({ params }) {
                     )}
                   </div>
                 </div>
-                {/* {searchParams.get("quarter") == "Q4" && form === "form-24Q" && (
-                  <div className="row g-3 gy-md-0 my-4 my-md-4 bg-white rounded-4 px-3 py-3 px-md-3 py-md-2 align-items-center justify-content-center text-center text-md-start">
-                    <div className="col-12 col-md-2">
-                      <Image
-                        className="mb-2 bg-light-orange py-4 px-4"
-                        src="/images/dashboards/excel-import.png"
-                        alt="excel-import-icon"
-                        width={100}
-                        height={100}
-                      />
-                    </div>
-                    <div className="col-12 col-md-7">
-                      <h6>Import from Excel</h6>
-                      <span>
-                        Auto-import of deductions, Salary details from excel
-                        sheets.
-                      </span>
-                    </div>
-                    <div className="col-12 col-md-3">
-                      {fileSalaryName && (
-                        <span className="text-danger">{fileSalaryName}</span>
-                      )}
-                      {!selectedSalaryFile && (
-                        <label className="btn btn-primary w-100">
-                          <span className="fw-bold"> </span>
-                          <input
-                            type="file"
-                            onChange={salaryFileSelectHandler}
-                            className="visually-hidden"
-                            accept=""
-                          />
-                          Import from Excel
-                        </label>
-                      )}
-                      {selectedSalaryFile && (
-                        <>
-                          <button
-                            type="button"
-                            className="btn btn-primary w-100"
-                            onClick={handleSalaryFileChange}
-                            disabled={isSalaryUploading}
-                          >
-                            {isSalaryUploading ? "Uploading...." : "Upload"}
-                          </button>
-                        </>
-                      )}
-                    </div>
-                    <div className="mt-3">
-                      {isSalaryUploading && (
-                        <ProgressBar animated now={uploadSalaryProgress} />
-                      )}
-                    </div>
-                  </div>
-                )} */}
                 <div className="row g-3 gy-md-0 my-4 my-md-4 bg-white rounded-4 px-3 py-3 px-md-3 py-md-2 align-items-center justify-content-center text-center text-md-start">
                   <div className="col-12 col-md-2 mt-3">
                     <Image
@@ -782,58 +684,18 @@ export default function TDSForm({ params }) {
                     )}
                   </div>
                 </div>
-                {/* <div className="row g-3 gy-md-0 my-4 my-md-4 bg-white rounded-4 px-3 py-3 px-md-3 py-md-2 align-items-center justify-content-center text-center text-md-start">
-                  <div className="col-12 col-md-2 mt-3">
-                    <Image
-                      className=""
-                      src="/images/dashboards/download_excel_file_icon.svg"
-                      alt="download_excel_file_icon"
-                      width={100}
-                      height={100}
-                    />
-                  </div>
-                  <div className="col-12 col-md-7">
-                    <h4 className="fw-bold">Download Excel</h4>
-                    <span>
-                      Download and fill data in the latest Excel templates
-                      below. Do not change the column order or names.
-                    </span>
-                  </div>
-                  <div className="col-12 col-md-3">
-                    <button type="button" onClick={download} className="btn btn-primary w-100">
-                      Download
-                    </button>
-                  </div>
-                  <div className="mt-3"></div>
-                </div> */}
               </div>
               <div className="col-md-4">
-                {/* <div className="">
-                  <button
-                    type="button"
-                    className="btn bg-white border border-1 rounded-4 text-dark ps-md-3 pe-md-2 d-flex align-items-center justify-content-between w-100"
-
-                  >
-                    <span className="fw-bold">Generate FVU</span>
-                    <Image
-                      className=""
-                      src="/images/dashboards/blue_arrow.svg"
-                      alt="blue_arrow"
-                      width={36}
-                      height={36}
-
-                    />
-                  </button>
-                </div> */}
                 <div className="deductees-master-sidebar mt-3">
                   <div className="row g-3">
                     <div className="col-md-12">
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div className="row align-items-center"
                           onClick={(e) => {
-                            router.push(
-                              pathname + "/generate-fvu" + window.location.search
-                            );
+                            setOpenLowerDeduction(true)
+                            // router.push(
+                            //   pathname + "/generate-fvu" + window.location.search
+                            // );
                           }}
                         >
                           <div className="col-md-4" >
@@ -926,49 +788,6 @@ export default function TDSForm({ params }) {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="col-md-12">
-                      <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
-                        <div className="row align-items-center">
-                          <div className="col-md-4">
-                            <Image
-                              className="img-fluid"
-                              src="/images/dashboards/mark_filed_icon.svg"
-                              alt="mark_filed_icon"
-                              width={80}
-                              height={80}
-                            />
-                          </div>
-                          <div className="col-md-8">
-                            <h5 className="fw-bold text-uppercase mb-0">
-                              Mark return as filed
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                    {/* <div className="col-md-12">
-                      <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
-                        <div
-                          className="row align-items-center"
-                          onClick={(e) => openGenerate16Form()}
-                        >
-                          <div className="col-md-4">
-                            <Image
-                              className="img-fluid"
-                              src="/images/dashboards/generate_form_icon.svg"
-                              alt="generate_form_icon"
-                              width={80}
-                              height={80}
-                            />
-                          </div>
-                          <div className="col-md-8">
-                            <h5 className="fw-bold text-uppercase mb-0">
-                              Generate Form-16
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </div>
@@ -977,80 +796,90 @@ export default function TDSForm({ params }) {
         )}
       </section>
       <Modal
-        className=""
+        show={openLowerDeduction}
+        onHide={() => setOpenLowerDeduction(false)}
+        centered
+        backdrop="static"
+        keyboard={false}
         size="md"
+        className="confirm-modal"
+      >
+        <Modal.Header closeButton className="border-0 pb-0">
+          <Modal.Title className="fw-bold fs-5">Confirm Action</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body className="text-center">
+          <p className="fs-6 text-muted">
+            Do you want to fetch and save data from the <strong>Validate Lower Deduction Certificate</strong> u/s 197/195(3)/195(2) tables before validating the return and generating FVU?
+          </p>
+        </Modal.Body>
+
+        <Modal.Footer className="border-0 justify-content-center gap-3">
+          <Button
+            variant="secondary"
+            className="px-4 py-2 rounded-3 fw-semibold"
+            onClick={() => {
+              router.push(
+                pathname + "/generate-fvu" + window.location.search
+              );
+            }}
+          >
+            No, Continue Without Fetching
+          </Button>
+          <Button
+            variant="primary"
+            className="px-4 py-2 rounded-3 fw-semibold"
+            disabled={submitLoginLoading}
+            onClick={submitLogin}
+          >
+            {submitLoginLoading && (
+              <div className="spinner-border me-2" role="status"></div>
+            )}
+            Yes, Fetch & Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        className=""
+        size="sm"
         centered
         keyboard={false}
         backdrop="static"
-        show={openGeneratePopup}
-        onHide={() => setOpenGeneratePopup(false)}
+        show={confirmModal}
+        onHide={() => {
+          setCaptchaBase64("");
+          setToggleCleared(false);
+          setVerifyType("");
+          setCaptcha("");
+          setConfirmModal(false)
+        }}
       >
-        <Modal.Header className="border-0" closeButton>
-          <h5>Generate Form-16</h5>
-        </Modal.Header>
-        <Modal.Body className="px-md-3 pb-md-5">
+        <Modal.Header className="border-0" closeButton></Modal.Header>
+        <Modal.Body>
           <div className="container">
-            <div className="row">
-              <label>Pan Numbers</label>
-              <CheckboxSelect
-                options={employeePannumbers}
-                selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
-              ></CheckboxSelect>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-12">
-                <label>Part Type</label>
-                <select
-                  className="form-control"
-                  value={partType}
-                  onChange={(e) => setPartType(e.target.value)}
-                >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="Combine">Combine</option>
-                </select>
-              </div>
-            </div>
-            <div className="row  mt-4">
-              <div className="col-md-12">
-                <label>Download Type</label>
-                <select
-                  className="form-control"
-                  value={downloadType}
-                  onChange={(e) => setDownloadType(e.target.value)}
-                >
-                  <option value="Combined">Combined</option>
-                  <option value="NonCombined">NonCombined</option>
-                </select>
-              </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-12">
-                <label htmlFor="citAddress" className="form-label">
-                  <span>CIT Address</span>
-                </label>
-                <textarea
-                  type="text"
-                  placeholder=""
-                  rows={3}
-                  className="form-control"
-                  id="citAddress"
-                  value={citAddress}
-                  onChange={(e) => setCitAddress(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="row  mt-4">
-              <div className="col-md-12">
-                <button
-                  type="button"
-                  onClick={(e) => generateForm16(e)}
-                  className="btn btn btn-primary px-md-5 w-auto"
-                >
-                  Submit
-                </button>
-              </div>
+            <div style={{ padding: 10 }}>
+              {captchaBase64 && (
+                <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
+              )}
+              <br />
+              <input
+                type="text"
+                value={captcha}
+                onChange={(e) => setCaptcha(
+                  e.target.value,
+                )}
+                style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
+              />
+              <br />
+              <button
+                className="btn btn-primary"
+                disabled={submitLoading}
+                onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                {submitLoading && (
+                  <div className="spinner-border me-2" role="status"></div>
+                )}
+                Save
+              </button>
             </div>
           </div>
         </Modal.Body>
@@ -1085,15 +914,17 @@ export default function TDSForm({ params }) {
         setIsFormValidationConfirmation={setIsFormValidationConfirmation}
         submitForm={handleFileChange}
       ></ValidationConfirmation>
-      {showModal && <ImportTdsTXTPopup selectedTxtFile={selectedTxtFile} setSelectedTxtFile={setSelectedTxtFile}
-        isTxtUploading={isTxtUploading}
-        submitTxtFile={submitTxtFile}
-        financialYear={financialYear}
-        quarter={quarter}
-        show={showModal}
-        form={CommonService.getCategory(parseInt(searchParams.get("categoryId")))}
-        setShowModal={setShowModal}
-      ></ImportTdsTXTPopup>}
+      {
+        showModal && <ImportTdsTXTPopup selectedTxtFile={selectedTxtFile} setSelectedTxtFile={setSelectedTxtFile}
+          isTxtUploading={isTxtUploading}
+          submitTxtFile={submitTxtFile}
+          financialYear={financialYear}
+          quarter={quarter}
+          show={showModal}
+          form={CommonService.getCategory(parseInt(searchParams.get("categoryId")))}
+          setShowModal={setShowModal}
+        ></ImportTdsTXTPopup>
+      }
     </>
   );
 }

@@ -5,7 +5,8 @@ export const TracesActivitiesService = {
     startLogin,
     submitFormRequest,
     verifyDeducteePans,
-    verifyEmployeePans
+    verifyEmployeePans,
+    getSaveLowerDeductions
 };
 
 async function autoFillLogin(model) {
@@ -43,6 +44,12 @@ async function submitFormRequest(model, form, formType, quarter) {
 async function verifyDeducteePans(model) {
     let result = null;
     result = await api.post("tracesActivities/verifyDeducteePans", model);
+    return result;
+}
+
+async function getSaveLowerDeductions(model) {
+    let result = null;
+    result = await api.post("tracesActivities/getSaveLowerDeductions", model);
     return result;
 }
 
