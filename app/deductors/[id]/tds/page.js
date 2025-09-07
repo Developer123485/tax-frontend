@@ -441,11 +441,15 @@ export default function TDSDashboard({ params }) {
                                 );
                               }
                               if (
-                                option.name == "24G Form" && deductorInfo.ainCode
+                                option.name == "24G Form"
                               ) {
-                                router.push(
-                                  `/deductors/${deductorId}/tds/24g-form`
-                                )
+                                if (deductorInfo.ainCode) {
+                                  router.push(
+                                    `/deductors/${deductorId}/tds/24g-form`
+                                  )
+                                } else {
+                                  toast.error("Cannot proceed without the Deductor AIN code")
+                                }
                               }
                               if (
                                 option.name == "Traces Lower Deduction"
@@ -457,7 +461,7 @@ export default function TDSDashboard({ params }) {
                             }
                             }
                           >
-                            {option.name == "24G Form" && deductorInfo.ainCode && <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
+                            <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
                               <span
                                 style={{
                                   width: 65,
@@ -475,7 +479,7 @@ export default function TDSDashboard({ params }) {
                                   </p>
                                 </div>
                               </div>
-                            </span>}
+                            </span>
                             {option.name != "24G Form" && <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
                               <span
                                 style={{
