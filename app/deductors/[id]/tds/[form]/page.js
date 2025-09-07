@@ -848,8 +848,6 @@ export default function TDSForm({ params }) {
         show={confirmModal}
         onHide={() => {
           setCaptchaBase64("");
-          setToggleCleared(false);
-          setVerifyType("");
           setCaptcha("");
           setConfirmModal(false)
         }}
