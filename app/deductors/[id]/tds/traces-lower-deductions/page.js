@@ -56,48 +56,48 @@ export default function TDSReturn({ params }) {
     {
       name: "SN",
       selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
-      grow: 0.5,
+      grow: 0.1,
     },
     {
       name: "Certificate No",
       selector: (row) => row.certificateNo ?? "-",
-      grow: 1.5,
+      grow: 2,
     },
     {
       name: "Financial Year",
       selector: (row) => row?.financialYear ?? "-",
-      grow: 2,
+      grow: 1.8,
     },
     {
       name: "Pan/Tan",
       selector: (row) => row?.tan ?? "-",
-      grow: 2.5,
+      grow: 2,
     },
     {
       name: "Name",
       selector: (row) => row?.name ?? "-",
-      grow: 1,
+      grow: 2.5,
     },
 
     {
       name: "Valid From",
       selector: (row) => row?.validFromDate ?? "-",
-      grow: 2.5,
+      grow: 1.5,
     },
     {
       name: "Cancel Date",
       selector: (row) => row?.validTillCancelDate ?? "-",
-      grow: 3,
+      grow: 1.4,
     },
     {
       name: "Valid To",
       selector: (row) => row?.validTillDate ?? "-",
-      grow: 2.5,
+      grow: 1.4,
     },
     {
       name: "Section Code",
       selector: (row) => row?.sectionCode || "-",
-      grow: 2.5,
+      grow: 1.6,
     },
     {
       name: "Nature",
@@ -107,7 +107,7 @@ export default function TDSReturn({ params }) {
     {
       name: "Rate",
       selector: (row) => row?.certificateRate?.toFixed(2) ?? "-",
-      grow: 1.5,
+      grow: 1,
     },
     {
       name: "Certificate Limit",
@@ -122,12 +122,12 @@ export default function TDSReturn({ params }) {
     {
       name: "Date Of Issue",
       selector: (row) => row?.dateOfIssue ?? "-",
-      grow: 2,
+      grow: 1.5,
     },
     {
       name: "Created Date",
       selector: (row) => row.createdDate ? CommonService.dateFormat(row.createdDate) : "-",
-      grow: 2,
+      grow: 1.5,
     },
   ];
   const searchParams = useSearchParams(null);
