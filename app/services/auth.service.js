@@ -31,7 +31,7 @@ async function login(model) {
       return result;
     })
     .catch((err) => {
-      return Promise.reject(err);
+      return Promise.reject(err?.response?.data);
     });
 }
 
