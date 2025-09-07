@@ -126,7 +126,12 @@ export default function TDSReturn({ params }) {
     },
     {
       name: "Created Date",
-      selector: (row) => row.createdDate ? CommonService.dateFormat(row.createdDate) : "-",
+      selector: (row) => row.createdDate ? CommonService.dateAndTimeFormat(row.createdDate) : "-",
+      grow: 1.5,
+    },
+    {
+      name: "Updated Date",
+      selector: (row) => row.updatedDate ? CommonService.dateAndTimeFormat(row.updatedDate) : "-",
       grow: 1.5,
     },
   ];

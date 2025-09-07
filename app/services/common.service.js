@@ -8,7 +8,8 @@ export const CommonService = {
   dateFormat,
   tdsDateFormat,
   getCategory,
-  isAlphabetSpecial
+  isAlphabetSpecial,
+  dateAndTimeFormat
 };
 
 function isUserLogin() {
@@ -62,6 +63,36 @@ function dateFormat(date) {
   } catch (error) {
   }
 }
+
+function dateAndTimeFormat(date) {
+  try {
+    const today = new Date(date);
+
+    // Date
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0
+    let dd = today.getDate();
+
+    // Time
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+
+    // Pad with leading zero if needed
+    if (dd < 10) dd = "0" + dd;
+    if (mm < 10) mm = "0" + mm;
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+
+    // Return date + time
+    return `${dd}/${mm}/${yyyy} ${hours}:${minutes}:${seconds}`;
+  } catch (error) {
+    console.error("Date formatting error:", error);
+    return "";
+  }
+}
+
 
 function userDetail() {
   if (typeof window !== "undefined") {
