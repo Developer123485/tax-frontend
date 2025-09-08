@@ -281,7 +281,7 @@ export default function VerificationForm() {
                               disabled={true}
                             />
                             <button
-                              className="btn btn-primary px-2 py-1 sendotp text-decoration-none position-absolute end-0"
+                              className="btn btn-primary px-2 py-1 mt-2 sendotp text-decoration-none position-absolute end-0"
                               disabled={emailOtpLoading}
                               onClick={(e) => {
                                 submitOtpToEmail(e)
@@ -364,7 +364,7 @@ export default function VerificationForm() {
                                   disabled={verificationDetails?.phoneNumber}
                                 />
                                 <button
-                                  className="btn btn-primary px-2 py-1 sendotp text-decoration-none position-absolute end-0"
+                                  className="btn btn-primary px-2 py-1 mt-2 sendotp text-decoration-none position-absolute end-0"
                                   disabled={phoneOtpLoading}
                                   onClick={(e) => {
                                     submitOtpToPhone(e);
