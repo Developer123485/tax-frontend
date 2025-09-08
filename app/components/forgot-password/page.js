@@ -191,7 +191,7 @@ export default function ForgotPasswordForm() {
           <div className="row">
             <HomeBanner
               subheading="Hello,"
-              heading="Don't worry,"
+              heading="Don't worry!"
               paragraph="We are here help you to recover your password."
               backgroundImage="/images/for_pass_bg.jpg"
             ></HomeBanner>
