@@ -1,15 +1,13 @@
 "use client";
 import { React, useState } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import HomeBanner from "../banner/home-banner";
 import { AuthService } from "@/app/services/auth.service";
 import { useRouter } from "next/navigation";
 import "react-notifications/lib/notifications.css";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Fontdiner_Swanky } from "next/font/google";
 
 export default function VerificationForm() {
   const [isDirty, setIsDirty] = useState(false);
@@ -270,13 +268,6 @@ export default function VerificationForm() {
                               value={verificationDetails.email}
                               autoComplete="off"
                               maxLength={"30"}
-                              // onChange={(e) => {
-                              //   e.preventDefault();
-                              //   setVerificationDetails((prevState) => ({
-                              //     ...prevState,
-                              //     email: e.target.value,
-                              //   }));
-                              // }}
                               readOnly={true}
                               disabled={true}
                             />
@@ -331,21 +322,6 @@ export default function VerificationForm() {
                           <div className="row">
                             <div className="col-12">
                               <div className="d-flex position-relative">
-                                {/* <PhoneInput
-                                  country={"in"}
-                                  value={verificationDetails.phoneCode}
-                                  onChange={(e) => {
-                                    setVerificationDetails((prevState) => ({
-                                      ...prevState,
-                                      phoneCode: e,
-                                    }));
-                                  }}
-                                  readOnly={true}
-                                  disabled={true}
-                                  onKeyDown={(e) => {
-                                    e.preventDefault();
-                                  }}
-                                /> */}
                                 <input
                                   type="text"
                                   placeholder=""
@@ -353,13 +329,6 @@ export default function VerificationForm() {
                                   maxLength={"10"}
                                   autoComplete="off"
                                   value={verificationDetails.phoneNumber}
-                                  // onChange={(e) => {
-                                  //   e.preventDefault();
-                                  //   setVerificationDetails((prevState) => ({
-                                  //     ...prevState,
-                                  //     phoneNumber: e.target.value,
-                                  //   }));
-                                  // }}
                                   readOnly={verificationDetails?.phoneNumber}
                                   disabled={verificationDetails?.phoneNumber}
                                 />
