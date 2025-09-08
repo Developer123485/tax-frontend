@@ -425,13 +425,12 @@ export default function VerificationForm() {
                           </button>
                         </div>
                         <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
-                          <span>Back to</span>
                           <button
                             type="button"
                             className="btn btn-link py-0 px-1 text-decoration-none"
                             onClick={goBack}
                           >
-                            Sign up
+                            Go Back
                           </button>
                         </div>
                       </div>
