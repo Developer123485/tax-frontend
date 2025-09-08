@@ -17,6 +17,9 @@ export default function TracesActivities({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
   const [isFocused, setIsFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [autoLoading, setAutoLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
@@ -158,13 +161,16 @@ export default function TracesActivities({ params }) {
     formData.append("quarter", quarter);
     formData.append("form", formType);
     formData.append("deductorId", deductorId);
+    setAutoLoading(true);
     TracesActivitiesService.autoFillLogin(formData).then((res) => {
       if (res && res?.challan) {
         setTracesActivity(res);
       } else {
-        toast.error("Auto-fill data not retrieved")
+        toast.error("Auto-fill data not retrieved");
       }
+      setAutoLoading(false);
     }).catch((e) => {
+      setAutoLoading(false);
       if (e?.response?.data) {
         toast.error(e?.response?.data);
       }
@@ -204,12 +210,14 @@ export default function TracesActivities({ params }) {
       toast.error("Input Captcha is required");
       return false;
     }
+    setLoading(true);
     tracesActivity.tan = deductorInfo?.deductorTan;
     TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
       if (res) {
         setConfirmModal(false);
         setRequestResponseModal(true);
         setRequestResponseValue(res);
+        setLoading(false);
       }
     }).catch(e => {
       if (e?.response?.data) {
@@ -219,6 +227,7 @@ export default function TracesActivities({ params }) {
         toast.error(e?.message);
       }
       setConfirmModal(false);
+      setLoading(false);
     })
   }
 
@@ -302,6 +311,7 @@ export default function TracesActivities({ params }) {
 
   function submitLogin(e) {
     if (validateTraces()) {
+      setSubmitLoading(true);
       const model = {
         userName: tracesActivity.userName,
         password: tracesActivity.password,
@@ -309,6 +319,7 @@ export default function TracesActivities({ params }) {
       }
       TracesActivitiesService.startLogin(model).then(res => {
         if (res) {
+          setSubmitLoading(false);
           setCaptchaBase64(res.captcha);
           setConfirmModal(true);
           setTracesActivity((prevState) => ({
@@ -319,6 +330,14 @@ export default function TracesActivities({ params }) {
             ["captcha"]: "",
           }));
         }
+      }).catch(e => {
+        if (e?.response?.data) {
+          toast.error(e?.response?.data);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setSubmitLoading(false);
       })
     }
   }
@@ -444,6 +463,13 @@ export default function TracesActivities({ params }) {
                     type="button"
                     onClick={submitAutoFill}
                   >
+                    {autoLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
                     Auto Fill
                   </button>
                 </div>
@@ -668,6 +694,13 @@ export default function TracesActivities({ params }) {
                             <button type="submit" className="btn btn-primary"
                               onClick={(e) => submitLogin(e)}
                             >
+                              {submitLoading && (
+                                <span
+                                  className="spinner-grow spinner-grow-sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                ></span>
+                              )}
                               Submit
                             </button>
                             {tracesError.passwordError && (
@@ -708,6 +741,13 @@ export default function TracesActivities({ params }) {
                       />
                       <br />
                       <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                        {loading && (
+                          <span
+                            className="spinner-grow spinner-grow-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        )}
                         Submit
                       </button>
                     </div>
