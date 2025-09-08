@@ -287,7 +287,7 @@ export default function VerificationForm() {
                                 submitOtpToEmail(e)
                               }}
                             >
-                              {isEmailSentOTP ? "Send OTP" : "Resend OTP"}
+                              {!isEmailSentOTP ? "Send OTP" : "Resend OTP"}
                             </button>
                             {isDirty && verificationDetails.emailError && (
                               <span className="text-danger">
@@ -370,7 +370,7 @@ export default function VerificationForm() {
                                     submitOtpToPhone(e);
                                   }}
                                 >
-                                  {isMobileSentOTP ? "Send OTP" : "Resend OTP"}
+                                  {!isMobileSentOTP ? "Send OTP" : "Resend OTP"}
                                 </button>
                               </div>
                             </div>

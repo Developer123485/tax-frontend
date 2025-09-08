@@ -14,6 +14,7 @@ export default function ForgotPasswordForm() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isDirtyPassword, setIsDirtyPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isEmailSentOtp, setIsEmailSentOtp] = useState(false);
   const [email, setEmail] = useState("");
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
   const [isChangePassword, setIsChangePassword] = useState(false);
@@ -59,6 +60,7 @@ export default function ForgotPasswordForm() {
       AuthService.SendOtpForForgotPassword(email)
         .then((res) => {
           if (res) {
+            setIsEmailSentOtp(true);
             toast.success("OTP sent to your email");
             setIsChangePassword(true);
             setLoading(false);
@@ -240,7 +242,7 @@ export default function ForgotPasswordForm() {
                               aria-hidden="true"
                             ></span>
                           )}
-                          Send
+                          {isEmailSentOtp ? "Resend" : "Send"}
                           <Image
                             className="position-absolute top-50 end-0 me-2 translate-middle"
                             src="/images/icons/btn_arrow.svg"
