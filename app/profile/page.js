@@ -90,8 +90,8 @@ export default function Profile() {
         .then((res) => {
           if (res) {
             setLoading(false);
-            sessionStorage.clear();
-            router.push("/login");
+            // sessionStorage.clear();
+            // router.push("/login");
             toast.success("User profile Updated!");
           }
         })
@@ -286,6 +286,7 @@ export default function Profile() {
                             placeholder=""
                             className="form-control"
                             maxLength={"30"}
+                            disabled
                             id="inputEmail"
                             autoComplete="off"
                             value={userDetails.email}
@@ -317,6 +318,7 @@ export default function Profile() {
                                   className="form-control react-phone"
                                   maxLength={"10"}
                                   autoComplete="off"
+                                  disabled
                                   value={userDetails.phoneNumber}
                                   onChange={(e) => {
                                     e.preventDefault();
