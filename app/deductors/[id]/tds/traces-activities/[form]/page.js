@@ -722,7 +722,13 @@ export default function TracesActivities({ params }) {
                 keyboard={false}
                 backdrop="static"
                 show={confirmModal}
+                onHide={() => {
+                  setCaptchaBase64("");
+                  setCaptcha("");
+                  setConfirmModal(false);
+                }}
               >
+                <Modal.Header className="border-0" closeButton></Modal.Header>
                 <Modal.Body>
                   <div className="container">
                     <div style={{ padding: 10 }}>

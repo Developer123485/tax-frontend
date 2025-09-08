@@ -92,7 +92,11 @@ export default function TracesActivities({ params }) {
             <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
               <div className="row g-3 align-items-start traces-act-wrap">
                 <div className="col-md-4 d-flex flex-column ">
-                  <button className="btn btn-primary ">Edit Details</button>
+                  <button className="btn btn-primary"
+                    onClick={(e) => {
+                      router.push(`/deductors/deductor-detail?id=${deductorId}`);
+                    }}
+                  >Edit Login Details</button>
                   <button className="btn btn-secondary"
                     onClick={(e) => {
                       if (
