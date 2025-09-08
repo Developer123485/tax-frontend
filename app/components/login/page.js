@@ -60,8 +60,8 @@ export default function LoginForm() {
           debugger
           if (e?.response?.data?.title && e?.response?.data?.email && e?.response?.data?.phoneNumber) {
             const res = {
-              email: e?.email,
-              phoneNumber: e?.phoneNumber,
+              email: e?.response?.data?.email,
+              phoneNumber: e?.response?.data?.phoneNumber,
             };
             sessionStorage.setItem(
               "token_ukwes",
