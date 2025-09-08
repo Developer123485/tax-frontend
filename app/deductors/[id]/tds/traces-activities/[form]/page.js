@@ -31,7 +31,6 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
-
   const [requestResponseModal, setRequestResponseModal] = useState(false);
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
@@ -185,6 +184,13 @@ export default function TracesActivities({ params }) {
       .then((res) => {
         if (res) {
           setDeductorInfo(res);
+          if (form == "traces-login") {
+            setTracesActivity((prevState) => ({
+              ...prevState,
+              ["userName"]: res.tracesPassword,
+              ["password"]: res.tracesPassword,
+            }));
+          }
           setShowLoader(false);
         }
       })
@@ -214,8 +220,15 @@ export default function TracesActivities({ params }) {
     tracesActivity.tan = deductorInfo?.deductorTan;
     TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
       if (res) {
+        if (res == "true" || res == true) {
+          toast.success("Login Successfully!");
+          setTimeout(() => {
+            router.push(`/deductors/${deductorId}/tds/traces-activities`);
+          }, 1000);
+        } else {
+          setRequestResponseModal(true);
+        }
         setConfirmModal(false);
-        setRequestResponseModal(true);
         setRequestResponseValue(res);
         setLoading(false);
       }
@@ -309,36 +322,38 @@ export default function TracesActivities({ params }) {
     return true;
   }
 
-  function submitLogin(e) {
-    if (validateTraces()) {
+  function submitLogin(e, value = false) {
+    if (validateTraces() || value) {
       setSubmitLoading(true);
-      const model = {
-        userName: tracesActivity.userName,
-        password: tracesActivity.password,
-        tanNumber: deductorInfo?.deductorTan
-      }
-      TracesActivitiesService.startLogin(model).then(res => {
-        if (res) {
+      if (tracesActivity.userName && tracesActivity.password && deductorInfo?.deductorTan) {
+        const model = {
+          userName: tracesActivity.userName,
+          password: tracesActivity.password,
+          tanNumber: deductorInfo?.deductorTan
+        }
+        TracesActivitiesService.startLogin(model).then(res => {
+          if (res) {
+            setSubmitLoading(false);
+            setCaptchaBase64(res.captcha);
+            setConfirmModal(true);
+            setTracesActivity((prevState) => ({
+              ...prevState,
+              ["financialYear"]: financialYear,
+              ["quarter"]: quarter,
+              ["formType"]: formType,
+              ["captcha"]: "",
+            }));
+          }
+        }).catch(e => {
+          if (e?.response?.data) {
+            toast.error(e?.response?.data);
+          }
+          else {
+            toast.error(e?.message);
+          }
           setSubmitLoading(false);
-          setCaptchaBase64(res.captcha);
-          setConfirmModal(true);
-          setTracesActivity((prevState) => ({
-            ...prevState,
-            ["financialYear"]: financialYear,
-            ["quarter"]: quarter,
-            ["formType"]: formType,
-            ["captcha"]: "",
-          }));
-        }
-      }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
-        }
-        else {
-          toast.error(e?.message);
-        }
-        setSubmitLoading(false);
-      })
+        })
+      }
     }
   }
 
@@ -394,7 +409,42 @@ export default function TracesActivities({ params }) {
               </div>
             </div>
           </div>
-          <div className="row mb-4">
+          {form == "traces-login" &&
+            <div className="row mb-4">
+              <div className="col-md-12 bg-white border border-1 px-3 py-2 rounded-3">
+                <div className="row align-items-center justify-content-end">
+                  <div className="col-md-12 d-flex align-items-center justify-content-end">
+                    <span className="me-2">User Name: </span>
+                    <input type="text" className="form-control"
+                      value={tracesActivity.userName}
+                      disabled
+                      onChange={(e) => handleInputTracesActivities("userName", e)}
+                    />
+                    <span className="ms-3 me-2">Password: </span>
+                    <input
+                      className="form-control rounded-2"
+                      type={showPassword ? "text" : "password"}
+                      disabled
+                      id="pwd"
+                      value={tracesActivity.password}
+                      onChange={(e) => handleInputTracesActivities("password", e)}
+                    />
+                    <button type="submit" className="btn btn-primary" onClick={(e) => submitLogin(e, true)}>
+                      {submitLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          {form != "traces-login" && <div className="row mb-4">
             <div className="col-md-12 bg-white border border-1 px-3 py-2 rounded-3">
               <div className="row align-items-center justify-content-end">
                 <div className="col-md-12 d-flex align-items-center justify-content-end">
@@ -475,8 +525,8 @@ export default function TracesActivities({ params }) {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row">
+          </div>}
+          {form != "traces-login" && <div className="row">
             <div className="col-md-12 bg-white border border-1 px-1  px-md-3 py-md-3 rounded-3">
               <div className="bg-light-gray border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                 <div className="row">
@@ -715,84 +765,85 @@ export default function TracesActivities({ params }) {
                   </div>
                 </div>
               </div>
-              <Modal
-                className=""
-                size="sm"
-                centered
-                keyboard={false}
-                backdrop="static"
-                show={confirmModal}
-                onHide={() => {
-                  setCaptchaBase64("");
-                  setCaptcha("");
-                  setConfirmModal(false);
-                }}
-              >
-                <Modal.Header className="border-0" closeButton></Modal.Header>
-                <Modal.Body>
-                  <div className="container">
-                    <div style={{ padding: 10 }}>
-                      {captchaBase64 && (
-                        <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
-                      )}
-                      <br />
-                      <input
-                        type="text"
-                        value={tracesActivity.captcha}
-                        onChange={(e) => setTracesActivity((prevState) => ({
-                          ...prevState,
-                          ["captcha"]: e.target.value,
-                        }))}
-                        style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
-                      />
-                      <br />
-                      <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
-                        {loading && (
-                          <span
-                            className="spinner-grow spinner-grow-sm"
-                            role="status"
-                            aria-hidden="true"
-                          ></span>
-                        )}
-                        Submit
-                      </button>
-                    </div>
-                  </div>
-                </Modal.Body>
-              </Modal>
-              <Modal
-                size="md"
-                centered
-                keyboard={false}
-                backdrop="static"
-                show={requestResponseModal}
-              >
-                <Modal.Body>
-                  <div className="container">
-                    <div className="row">
-                      <b>{requestResponseValue}</b>
-                      <br></br>
-                    </div>
-                    <div
-                      className="row"
-                      style={{ textAlign: "center" }}
-                    >
-                      <a
-                        href="Javascript:void(0)"
-                        onClick={() => {
-                          setRequestResponseModal(false);
-                          resetForm();
-                        }}
-                      >
-                        Ok
-                      </a>
-                    </div>
-                  </div>
 
-                </Modal.Body>
-              </Modal>
             </div>
-          </div>
+          </div>}
+          <Modal
+            className=""
+            size="sm"
+            centered
+            keyboard={false}
+            backdrop="static"
+            show={confirmModal}
+            onHide={() => {
+              setCaptchaBase64("");
+              setCaptcha("");
+              setConfirmModal(false);
+            }}
+          >
+            <Modal.Header className="border-0" closeButton></Modal.Header>
+            <Modal.Body>
+              <div className="container">
+                <div style={{ padding: 10 }}>
+                  {captchaBase64 && (
+                    <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
+                  )}
+                  <br />
+                  <input
+                    type="text"
+                    value={tracesActivity.captcha}
+                    onChange={(e) => setTracesActivity((prevState) => ({
+                      ...prevState,
+                      ["captcha"]: e.target.value,
+                    }))}
+                    style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
+                  />
+                  <br />
+                  <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                    {loading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal>
+          <Modal
+            size="md"
+            centered
+            keyboard={false}
+            backdrop="static"
+            show={requestResponseModal}
+          >
+            <Modal.Body>
+              <div className="container">
+                <div className="row">
+                  <b>{requestResponseValue}</b>
+                  <br></br>
+                </div>
+                <div
+                  className="row"
+                  style={{ textAlign: "center" }}
+                >
+                  <a
+                    href="Javascript:void(0)"
+                    onClick={() => {
+                      setRequestResponseModal(false);
+                      resetForm();
+                    }}
+                  >
+                    Ok
+                  </a>
+                </div>
+              </div>
+
+            </Modal.Body>
+          </Modal>
         </div>
       </section>
     </>

@@ -30,6 +30,9 @@ async function submitFormRequest(model, form, formType, quarter) {
     if (form == "request-for-online-correction") {
         result = await api.post("tracesActivities/continueRequestForOnlineCorrection", model);
     }
+    if (form == "traces-login") {
+        result = await api.post("tracesActivities/loginOnTraces", model);
+    }
     if (form == "request-form-16-16a-27d") {
         if (formType == "24Q" && quarter == "Q4") {
             result = await api.post("tracesActivities/continueRequest16", model);

@@ -144,7 +144,18 @@ export default function TracesActivities({ params }) {
                 </div>
 
                 <div className="col-md-4 d-flex flex-column ">
-                  <button className="btn btn-success ">Login</button>
+                  <button className="btn btn-success"
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/traces-login`
+                        );
+                      }
+                    }}
+                  >Login</button>
                   <button className="btn btn-secondary "
                     onClick={(e) => {
                       if (
