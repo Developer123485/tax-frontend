@@ -16,6 +16,8 @@ export default function VerificationForm() {
   const [loading, setLoading] = useState(false);
   const [phoneOtpLoading, setPhoneOtpLoading] = useState(false);
   const [emailOtpLoading, setEmailOtpLoading] = useState(false);
+  const [isEmailSentOTP, setIsEmailSentOTP] = useState(false);
+  const [isMobileSentOTP, setIsMobileSentOTP] = useState(false);
   const router = useRouter(null);
 
   const emailRegex =
@@ -59,6 +61,7 @@ export default function VerificationForm() {
         .then((res) => {
           if (res) {
             setEmailOtpLoading(false);
+            setIsEmailSentOTP(true);
             toast.success("OTP has been sent to your Email");
           }
         })
@@ -82,6 +85,7 @@ export default function VerificationForm() {
         .then((res) => {
           if (res) {
             setPhoneOtpLoading(false);
+            setIsEmailSentOTP(true);
             toast.success("OTP has been sent to your Mobile");
           }
         })
@@ -283,7 +287,7 @@ export default function VerificationForm() {
                                 submitOtpToEmail(e)
                               }}
                             >
-                              Send OTP
+                              {isEmailSentOTP ? "Send OTP" : "Resend OTP"}
                             </button>
                             {isDirty && verificationDetails.emailError && (
                               <span className="text-danger">
@@ -366,7 +370,7 @@ export default function VerificationForm() {
                                     submitOtpToPhone(e);
                                   }}
                                 >
-                                  Send OTP
+                                  {isMobileSentOTP ? "Send OTP" : "Resend OTP"}
                                 </button>
                               </div>
                             </div>
