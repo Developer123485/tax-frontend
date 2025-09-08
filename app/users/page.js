@@ -18,15 +18,16 @@ export default function Users() {
   const [openAddUser, setOpenAddUser] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [users, setUsers] = useState([]);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(30);
   const [confirmTitle, setConfirmTitle] = useState("");
   const [userId, setUserId] = useState(0);
   const searchParams = useSearchParams(null);
   const [showLoader, setShowLoader] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [userCount, setUserCount] = useState(0);
   const [deductorCount, setDeductorCount] = useState(0);
   const [deducteeCount, setDeducteeCount] = useState(0);
+  const [employeeCount, setEmployeeCount] = useState(0);
   const [challanCount, setChallanCount] = useState(0);
   const [deducteeEntryCount, setDeducteeEntryCount] = useState(0);
   const [salaryCount, setSalaryCount] = useState(0);
@@ -198,6 +199,7 @@ export default function Users() {
             setUserCount(res.userCount);
             setDeductorCount(res.deductorCount);
             setDeducteeCount(res.deducteeCount);
+            setEmployeeCount(res.employeeCount);
             setChallanCount(res.challanCount);
             setDeducteeEntryCount(res.deducteeEntry);
             setSalaryCount(res.salaryCount);
@@ -274,6 +276,21 @@ export default function Users() {
                         <h1 className="mb-0 fw-bold">{deducteeCount}</h1>
                         <p className="mb-0 fs-12">Deductee Master</p>
 
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
+                      <Image
+                        className="me-2"
+                        src="/images/dashboards/users_icon.svg"
+                        alt="users_icon_img"
+                        width={64}
+                        height={64}
+                      />
+                      <div className="d-flex align-items-start text-start flex-column">
+                        <h1 className="mb-0 fw-bold">{employeeCount}</h1>
+                        <p className="mb-0 fs-12">Employee Master</p>
                       </div>
                     </div>
                   </div>
