@@ -328,30 +328,56 @@ export default function TracesActivities({ params }) {
         const model = {
           userName: tracesActivity.userName,
           password: tracesActivity.password,
-          tanNumber: deductorInfo?.deductorTan
+          tanNumber: deductorInfo?.deductorTan,
+          token: tracesActivity.token
         }
-        TracesActivitiesService.startLogin(model).then(res => {
-          if (res) {
+        if (form != "forgot-password") {
+          TracesActivitiesService.startLogin(model).then(res => {
+            if (res) {
+              setSubmitLoading(false);
+              setCaptchaBase64(res.captcha);
+              setConfirmModal(true);
+              setTracesActivity((prevState) => ({
+                ...prevState,
+                ["financialYear"]: financialYear,
+                ["quarter"]: quarter,
+                ["formType"]: formType,
+                ["captcha"]: "",
+              }));
+            }
+          }).catch(e => {
+            if (e?.response?.data) {
+              toast.error(e?.response?.data);
+            }
+            else {
+              toast.error(e?.message);
+            }
             setSubmitLoading(false);
-            setCaptchaBase64(res.captcha);
-            setConfirmModal(true);
-            setTracesActivity((prevState) => ({
-              ...prevState,
-              ["financialYear"]: financialYear,
-              ["quarter"]: quarter,
-              ["formType"]: formType,
-              ["captcha"]: "",
-            }));
-          }
-        }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
-          }
-          else {
-            toast.error(e?.message);
-          }
-          setSubmitLoading(false);
-        })
+          })
+        } else {
+          TracesActivitiesService.startForgotLogin(model).then(res => {
+            if (res) {
+              setSubmitLoading(false);
+              setCaptchaBase64(res.captcha);
+              setConfirmModal(true);
+              setTracesActivity((prevState) => ({
+                ...prevState,
+                ["financialYear"]: financialYear,
+                ["quarter"]: quarter,
+                ["formType"]: formType,
+                ["captcha"]: "",
+              }));
+            }
+          }).catch(e => {
+            if (e?.response?.data) {
+              toast.error(e?.response?.data);
+            }
+            else {
+              toast.error(e?.message);
+            }
+            setSubmitLoading(false);
+          })
+        }
       }
     }
   }
@@ -790,9 +816,9 @@ export default function TracesActivities({ params }) {
             backdrop="static"
             show={confirmModal}
             onHide={() => {
+              setConfirmModal(false);
               setCaptchaBase64("");
               setCaptcha("");
-              setConfirmModal(false);
             }}
           >
             <Modal.Header className="border-0" closeButton></Modal.Header>

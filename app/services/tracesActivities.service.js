@@ -6,7 +6,8 @@ export const TracesActivitiesService = {
     submitFormRequest,
     verifyDeducteePans,
     verifyEmployeePans,
-    getSaveLowerDeductions
+    getSaveLowerDeductions,
+    startForgotLogin
 };
 
 async function autoFillLogin(model) {
@@ -16,6 +17,11 @@ async function autoFillLogin(model) {
 
 async function startLogin(model) {
     const result = await api.post("tracesActivities/start-login", model);
+    return result;
+}
+
+async function startForgotLogin(model) {
+    const result = await api.post("tracesActivities/start-forgot-password", model);
     return result;
 }
 
@@ -32,6 +38,9 @@ async function submitFormRequest(model, form, formType, quarter) {
     }
     if (form == "traces-login") {
         result = await api.post("tracesActivities/loginOnTraces", model);
+    }
+     if (form == "forgot-password") {
+        result = await api.post("tracesActivities/forgotPasswordRequest", model);
     }
     if (form == "request-form-16-16a-27d") {
         if (formType == "24Q" && quarter == "Q4") {
