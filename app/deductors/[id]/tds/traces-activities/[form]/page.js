@@ -145,7 +145,6 @@ export default function TracesActivities({ params }) {
       // If month is before April, it's in the previous FY
       startYear = currentDate.getFullYear() - 1;
     }
-
     const fy = sessionStorage.getItem("financialYear")
       ? sessionStorage.getItem("financialYear")
       : `${startYear}-${(startYear + 1).toString().slice(-2)}`;
