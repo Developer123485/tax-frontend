@@ -223,12 +223,12 @@ export default function TracesActivities({ params }) {
           toast.success("Login Successfully!");
           setTimeout(() => {
             router.push(`/deductors/${deductorId}/tds/traces-activities`);
-          }, 1000);
+          }, 3000);
         } else {
+          setRequestResponseValue(res);
           setRequestResponseModal(true);
         }
         setConfirmModal(false);
-        setRequestResponseValue(res);
         setLoading(false);
       }
     }).catch(e => {
