@@ -320,7 +320,6 @@ export default function TracesActivities({ params }) {
     }));
     return true;
   }
-
   function submitLogin(e, value = false) {
     e.preventDefault();
     if (validateTraces() || value) {
