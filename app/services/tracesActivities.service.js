@@ -39,7 +39,10 @@ async function submitFormRequest(model, form, formType, quarter) {
     if (form == "traces-login") {
         result = await api.post("tracesActivities/loginOnTraces", model);
     }
-     if (form == "forgot-password") {
+    if (form == "forgot-password") {
+        result = await api.post("tracesActivities/forgotPasswordRequest", model);
+    }
+    if (form == "view-edit-profile") {
         result = await api.post("tracesActivities/forgotPasswordRequest", model);
     }
     if (form == "request-form-16-16a-27d") {

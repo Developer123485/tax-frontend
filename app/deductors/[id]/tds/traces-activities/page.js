@@ -114,7 +114,7 @@ export default function TracesActivities({ params }) {
                   <button className="btn btn-info  text-dark">
                     View Requested Downloads
                   </button>
-                  <button className="btn btn-outline-primary">
+                  <button className="btn btn-outline-primary" disabled>
                     emSigner Download Link
                   </button>
                 </div>
@@ -146,10 +146,10 @@ export default function TracesActivities({ params }) {
                   >
                     Request Form 16/16A/27D
                   </button>
-                  <button className="btn btn-warning  text-white">
+                  <button className="btn btn-warning  text-white" disabled>
                     Declaration for Non-FilinG
                   </button>
-                  <button className="btn btn-dark ">
+                  <button className="btn btn-dark " disabled>
                     Request Tr. based Report (27Q)
                   </button>
                 </div>
@@ -181,7 +181,18 @@ export default function TracesActivities({ params }) {
                   >
                     Request Justification Report
                   </button>
-                  <button className="btn btn-danger ">View/Edit ProFile</button>
+                  <button className="btn btn-danger "
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/view-edit-profile`
+                        );
+                      }
+                    }}
+                  >View/Edit ProFile</button>
                   <button className="btn btn-success "
                     onClick={(e) => {
                       if (
