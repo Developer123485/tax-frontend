@@ -323,6 +323,7 @@ export default function TracesActivities({ params }) {
   }
 
   function submitLogin(e, value = false) {
+    e.preventDefault();
     if (validateTraces() || value) {
       setSubmitLoading(true);
       if (tracesActivity.userName && tracesActivity.password && deductorInfo?.deductorTan) {
