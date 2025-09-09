@@ -43,7 +43,7 @@ async function submitFormRequest(model, form, formType, quarter) {
         result = await api.post("tracesActivities/forgotPasswordRequest", model);
     }
     if (form == "view-edit-profile") {
-        result = await api.post("tracesActivities/forgotPasswordRequest", model);
+        result = await api.post("tracesActivities/view-edit-profile", model);
     }
     if (form == "request-form-16-16a-27d") {
         if (formType == "24Q" && quarter == "Q4") {
