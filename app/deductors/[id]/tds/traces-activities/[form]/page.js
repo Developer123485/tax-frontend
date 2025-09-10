@@ -174,16 +174,18 @@ export default function TracesActivities({ params }) {
         <>
           {" "}
           <div className="d-flex justify-content-center">
-            <span>
+            <span style={{fontSize: "15px"}}>
               {" "}
-              {row.status == "Available" && <a
-                onClick={(e) => {
-                  setRequestNumber(row.requestNumber)
-                  submitLogin(e, true, "download");
-                }}
-              >
-                Download
-              </a>}
+              {row.status == "Available" &&
+                <a
+                  href="Javascript:void(0)"
+                  onClick={(e) => {
+                    setRequestNumber(row.requestNumber)
+                    submitLogin(e, true, "download");
+                  }}
+                >
+                  Download
+                </a>}
             </span>
           </div>
         </>
