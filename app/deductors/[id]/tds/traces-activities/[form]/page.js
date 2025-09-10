@@ -31,6 +31,7 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [requestDownloads, settRequestDownloads] = useState(null);
   const [requestResponseModal, setRequestResponseModal] = useState(false);
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
@@ -89,6 +90,79 @@ export default function TracesActivities({ params }) {
     boxShadow: isFocused2 ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
     outline: "none",
   };
+
+  const customStyles = {
+    rows: {
+      style: {
+        backgroundColor: "#FFFFFF",
+        "&:hover": {
+          backgroundColor: "#F2F7FF!important",
+        },
+        minHeight: "45px",
+      },
+    },
+    headCells: {
+      style: {
+        justifyContent: "start",
+        outline: "1px",
+        border: "1px solid #F2F7FF",
+        fontSize: "12px",
+      },
+    },
+    cells: {
+      style: {
+        justifyContent: "start",
+        outline: "1px",
+        border: "1px solid #FFFFFF",
+        fontSize: "12px",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      },
+    },
+  };
+  const columns = [
+    {
+      name: "Request Date",
+      selector: (row) => row.requestDate ?? "-",
+      grow: 1,
+    },
+    {
+      name: "Request Number",
+      selector: (row) => row.requestNumber ?? "-",
+      grow: 1,
+    },
+    {
+      name: "Financial Year",
+      selector: (row) => row?.financialYear ?? "-",
+      grow: 1,
+    },
+    {
+      name: "Quarter",
+      selector: (row) => row?.quarter ?? "-",
+      grow: 1,
+    },
+    {
+      name: "Form Type",
+      selector: (row) => row?.formType ?? "-",
+      grow: 1,
+    },
+    {
+      name: "File Processed",
+      selector: (row) => row?.fileProcessed ?? "-",
+      grow: 2,
+    },
+    {
+      name: "Status",
+      selector: (row) => row?.status ?? "-",
+      grow: 2,
+    },
+    {
+      name: "Remarks",
+      selector: (row) => row?.remarks ?? "-",
+      grow: 1.5,
+    },
+  ];
 
   const [tracesError, setTracesError] = useState({
     userNameError: "",
@@ -183,10 +257,10 @@ export default function TracesActivities({ params }) {
       .then((res) => {
         if (res) {
           setDeductorInfo(res);
-          if (form == "traces-login") {
+          if (form == "traces-login" || form == "view-requested-downloads") {
             setTracesActivity((prevState) => ({
               ...prevState,
-              ["userName"]: res.tracesPassword,
+              ["userName"]: res.tracesLogin,
               ["password"]: res.tracesPassword,
             }));
           }
@@ -219,14 +293,18 @@ export default function TracesActivities({ params }) {
     tracesActivity.tan = deductorInfo?.deductorTan;
     TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
       if (res) {
-        if (res == "true" || res == true) {
-          toast.success("Login Successfully!");
-          setTimeout(() => {
-            router.push(`/deductors/${deductorId}/tds/traces-activities`);
-          }, 3000);
+        if (form == "view-requested-downloads") {
+          settRequestDownloads(res);
         } else {
-          setRequestResponseValue(res);
-          setRequestResponseModal(true);
+          if (res == "true" || res == true) {
+            toast.success("Login Successfully!");
+            setTimeout(() => {
+              router.push(`/deductors/${deductorId}/tds/traces-activities`);
+            }, 3000);
+          } else {
+            setRequestResponseValue(res);
+            setRequestResponseModal(true);
+          }
         }
         setConfirmModal(false);
         setLoading(false);
@@ -434,139 +512,164 @@ export default function TracesActivities({ params }) {
               </div>
             </div>
           </div>
-          {form == "traces-login" &&
-            <div class="row col-md-12 mt-3">
-              <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body">
-                  <form class="row g-3 align-items-center">
+          {form == "traces-login" || form == "view-requested-downloads" &&
+            <>
+              <div class="row col-md-12 mt-3">
+                <div class="card shadow-sm border-0 rounded-3">
+                  <div class="card-body">
+                    <form class="row g-3 align-items-center">
 
-                    <div class="col-md-5">
-                      <label for="username" class="form-label fw-semibold">User Name</label>
-                      <input
-                        type="text"
-                        id="username"
-                        class="form-control"
-                        value={tracesActivity.userName}
-                        disabled
-                        onChange={(e) => handleInputTracesActivities("userName", e)}
-                      />
-                    </div>
+                      <div class="col-md-5">
+                        <label for="username" class="form-label fw-semibold">User Name</label>
+                        <input
+                          type="text"
+                          id="username"
+                          class="form-control"
+                          value={tracesActivity.userName}
+                          disabled
+                          onChange={(e) => handleInputTracesActivities("userName", e)}
+                        />
+                      </div>
 
-                    <div class="col-md-5">
-                      <label for="pwd" class="form-label fw-semibold">Password</label>
-                      <input
-                        id="pwd"
-                        class="form-control"
-                        type={showPassword ? "text" : "password"}
-                        value={tracesActivity.password}
-                        disabled
-                        onChange={(e) => handleInputTracesActivities("password", e)}
-                      />
-                    </div>
+                      <div class="col-md-5">
+                        <label for="pwd" class="form-label fw-semibold">Password</label>
+                        <input
+                          id="pwd"
+                          class="form-control"
+                          type={showPassword ? "text" : "password"}
+                          value={tracesActivity.password}
+                          disabled
+                          onChange={(e) => handleInputTracesActivities("password", e)}
+                        />
+                      </div>
 
-                    <div class="col-md-2 d-flex align-items-end" style={{ marginTop: "43px" }}>
-                      <button
-                        type="submit"
-                        class="btn btn-primary w-100"
-                        onClick={(e) => submitLogin(e, true)}
-                      >
-                        {submitLoading && (
-                          <span
-                            class="spinner-border spinner-border-sm me-2"
-                            role="status"
-                            aria-hidden="true"
-                          ></span>
-                        )}
-                        Submit
-                      </button>
-                    </div>
-                  </form>
+                      <div class="col-md-2 d-flex align-items-end" style={{ marginTop: "43px" }}>
+                        <button
+                          type="submit"
+                          class="btn btn-primary w-100"
+                          onClick={(e) => submitLogin(e, true)}
+                        >
+                          {submitLoading && (
+                            <span
+                              class="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                          )}
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-          {form != "traces-login" && <div className="row mb-4">
-            <div className="col-md-12 bg-white border border-1 px-3 py-2 rounded-3">
-              <div className="row align-items-center justify-content-end">
-                <div className="col-md-12 d-flex align-items-center justify-content-end">
-                  <span className="me-2">FY: </span>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    autoComplete="off"
-                    value={financialYear}
-                    style={highlightStyle}
-                    onChange={(e) => {
-                      setFinancialYear(e.target.value);
-                      resetForm();
-                    }}
-                  >
-                    {financialYears?.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="ms-3 me-2">Period:</span>
-                  <select
-                    className="form-select m-100"
-                    aria-label="Default select example"
-                    value={quarter}
-                    style={highlightStyle1}
-                    disabled={formType == "24Q"}
-                    onChange={(e) => {
-                      setQuarter(e.target.value);
-                      resetForm();
-                    }}
-                  >
-                    {quarters?.map((option, index) => (
-                      <option value={option} key={index}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="ms-3 me-2">Form: </span>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    autoComplete="off"
-                    style={highlightStyle1}
-                    value={formType}
-                    onChange={(e) => {
-                      setFormType(e.target.value);
-                      resetForm();
-                      if (e.target.value == "24Q") {
-                        setQuarter("Q4");
-                      }
-                    }}
-                  >
-                    <option value={""} hidden>
-                      Select
-                    </option>
-                    <option value={"26Q"}>26Q</option>
-                    <option value={"27EQ"}>27EQ</option>
-                    <option value={"27Q"}>27Q</option>
-                    <option value={"24Q"}>24Q</option>
-                  </select>
-                  <button
-                    className="btn btn-primary ms-3 w-100"
-                    type="button"
-                    onClick={submitAutoFill}
-                  >
-                    {autoLoading && (
-                      <span
-                        className="spinner-grow spinner-grow-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
+              <div className="table-responsive">
+                <div>
+                  {requestDownloads &&
+                    requestDownloads.length > 0 && (
+                      <>
+                        <DataTable
+                          className="tax_table"
+                          fixedHeader
+                          fixedHeaderScrollHeight="340px"
+                          columns={columns}
+                          data={requestDownloads}
+                          highlightOnHover
+                          customStyles={customStyles}
+                          paginationComponentOptions={{
+                            noRowsPerPage: true,
+                          }}
+                        />
+                      </>
                     )}
-                    Auto Fill
-                  </button>
                 </div>
               </div>
-            </div>
-          </div>}
-          {form != "traces-login" && <div className="row">
+            </>
+
+          }
+          {form != "traces-login" && form != "view-requested-downloads" &&
+            <div className="row mb-4">
+              <div className="col-md-12 bg-white border border-1 px-3 py-2 rounded-3">
+                <div className="row align-items-center justify-content-end">
+                  <div className="col-md-12 d-flex align-items-center justify-content-end">
+                    <span className="me-2">FY: </span>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      autoComplete="off"
+                      value={financialYear}
+                      style={highlightStyle}
+                      onChange={(e) => {
+                        setFinancialYear(e.target.value);
+                        resetForm();
+                      }}
+                    >
+                      {financialYears?.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="ms-3 me-2">Period:</span>
+                    <select
+                      className="form-select m-100"
+                      aria-label="Default select example"
+                      value={quarter}
+                      style={highlightStyle1}
+                      disabled={formType == "24Q"}
+                      onChange={(e) => {
+                        setQuarter(e.target.value);
+                        resetForm();
+                      }}
+                    >
+                      {quarters?.map((option, index) => (
+                        <option value={option} key={index}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="ms-3 me-2">Form: </span>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      autoComplete="off"
+                      style={highlightStyle1}
+                      value={formType}
+                      onChange={(e) => {
+                        setFormType(e.target.value);
+                        resetForm();
+                        if (e.target.value == "24Q") {
+                          setQuarter("Q4");
+                        }
+                      }}
+                    >
+                      <option value={""} hidden>
+                        Select
+                      </option>
+                      <option value={"26Q"}>26Q</option>
+                      <option value={"27EQ"}>27EQ</option>
+                      <option value={"27Q"}>27Q</option>
+                      <option value={"24Q"}>24Q</option>
+                    </select>
+                    <button
+                      className="btn btn-primary ms-3 w-100"
+                      type="button"
+                      onClick={submitAutoFill}
+                    >
+                      {autoLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
+                      Auto Fill
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>}
+          {form != "traces-login" && form != "view-requested-downloads" && <div className="row">
             <div className="col-md-12 bg-white border border-1 px-1  px-md-3 py-md-3 rounded-3">
               <div className="bg-light-gray border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                 <div className="row">

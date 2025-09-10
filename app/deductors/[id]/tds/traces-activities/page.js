@@ -111,7 +111,18 @@ export default function TracesActivities({ params }) {
                   >
                     Request Conso File
                   </button>
-                  <button className="btn btn-info  text-dark">
+                  <button className="btn btn-info  text-dark"
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/view-requested-downloads`
+                        );
+                      }
+                    }}
+                  >
                     View Requested Downloads
                   </button>
                   <button className="btn btn-outline-primary" disabled>
