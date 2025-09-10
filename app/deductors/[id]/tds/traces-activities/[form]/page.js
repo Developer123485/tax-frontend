@@ -619,7 +619,7 @@ export default function TracesActivities({ params }) {
               </div>
               {form == "view-requested-downloads" &&
                 <div className="row mb-4">
-                  <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
+                  <div className="col-md-12 border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                     <div className="row g-3">
                       <div className="table-responsive">
                         <div>
