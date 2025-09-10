@@ -174,7 +174,7 @@ export default function TracesActivities({ params }) {
         <>
           {" "}
           <div className="d-flex justify-content-center">
-            <span style={{fontSize: "15px"}}>
+            <span style={{ fontSize: "15px" }}>
               {" "}
               {row.status == "Available" &&
                 <a
@@ -572,77 +572,76 @@ export default function TracesActivities({ params }) {
           </div>
           {form == "traces-login" || form == "view-requested-downloads" &&
             <>
-              <div class="row col-md-12 mt-3">
-                <div class="card shadow-sm border-0 rounded-3">
-                  <div class="card-body">
-                    <form class="row g-3 align-items-center">
-
-                      <div class="col-md-5">
-                        <label for="username" class="form-label fw-semibold">User Name</label>
-                        <input
-                          type="text"
-                          id="username"
-                          class="form-control"
-                          value={tracesActivity.userName}
-                          disabled
-                          onChange={(e) => handleInputTracesActivities("userName", e)}
-                        />
-                      </div>
-
-                      <div class="col-md-5">
-                        <label for="pwd" class="form-label fw-semibold">Password</label>
-                        <input
-                          id="pwd"
-                          class="form-control"
-                          type={showPassword ? "text" : "password"}
-                          value={tracesActivity.password}
-                          disabled
-                          onChange={(e) => handleInputTracesActivities("password", e)}
-                        />
-                      </div>
-
-                      <div class="col-md-2 d-flex align-items-end" style={{ marginTop: "43px" }}>
-                        <button
-                          type="submit"
-                          class="btn btn-primary w-100"
-                          disabled={submitLoading}
-                          onClick={(e) => submitLogin(e, true)}
-                        >
-                          {submitLoading && (
-                            <span
-                              class="spinner-border spinner-border-sm me-2"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                          )}
-                          Submit
-                        </button>
-                      </div>
-                    </form>
+              <div className="row mb-4">
+                <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
+                  <div className="row g-3">
+                    <div class="col-md-5">
+                      <label for="username" class="form-label fw-semibold">User Name</label>
+                      <input
+                        type="text"
+                        id="username"
+                        class="form-control"
+                        value={tracesActivity.userName}
+                        disabled
+                        onChange={(e) => handleInputTracesActivities("userName", e)}
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label for="pwd" class="form-label fw-semibold">Password</label>
+                      <input
+                        id="pwd"
+                        class="form-control"
+                        type={showPassword ? "text" : "password"}
+                        value={tracesActivity.password}
+                        disabled
+                        onChange={(e) => handleInputTracesActivities("password", e)}
+                      />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end" style={{ marginTop: "43px" }}>
+                      <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                        disabled={submitLoading}
+                        onClick={(e) => submitLogin(e, true)}
+                      >
+                        {submitLoading && (
+                          <span
+                            class="spinner-border spinner-border-sm me-2"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        )}
+                        Submit
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
               {form == "view-requested-downloads" &&
-                <div class="row col-md-12 mt-3">
-                  <div className="table-responsive">
-                    <div>
-                      {requestDownloads &&
-                        requestDownloads.length > 0 && (
-                          <>
-                            <DataTable
-                              className="tax_table"
-                              fixedHeader
-                              fixedHeaderScrollHeight="340px"
-                              columns={columns}
-                              data={requestDownloads}
-                              highlightOnHover
-                              customStyles={customStyles}
-                              paginationComponentOptions={{
-                                noRowsPerPage: true,
-                              }}
-                            />
-                          </>
-                        )}
+                <div className="row mb-4">
+                  <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
+                    <div className="row g-3">
+                      <div className="table-responsive">
+                        <div>
+                          {requestDownloads &&
+                            requestDownloads.length > 0 && (
+                              <>
+                                <DataTable
+                                  className="tax_table"
+                                  fixedHeader
+                                  fixedHeaderScrollHeight="340px"
+                                  columns={columns}
+                                  data={requestDownloads}
+                                  highlightOnHover
+                                  customStyles={customStyles}
+                                  paginationComponentOptions={{
+                                    noRowsPerPage: true,
+                                  }}
+                                />
+                              </>
+                            )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
