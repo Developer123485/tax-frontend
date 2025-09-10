@@ -329,22 +329,26 @@ export default function TracesActivities({ params }) {
     tracesActivity.requestNumber = requestNumber;
     TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter, downloadRow).then(res => {
       if (res) {
-        if (form == "view-requested-downloads") {
-          settRequestDownloads(res);
-        } else {
-          if (res == "true" || res == true) {
-            toast.success("Login Successfully!");
-            setTimeout(() => {
-              router.push(`/deductors/${deductorId}/tds/traces-activities`);
-            }, 3000);
+        if (downloadRow != "download") {
+          if (form == "view-requested-downloads") {
+            settRequestDownloads(res);
           } else {
-            setRequestResponseValue(res);
-            setRequestResponseModal(true);
+            if (res == "true" || res == true) {
+              toast.success("Login Successfully!");
+              setTimeout(() => {
+                router.push(`/deductors/${deductorId}/tds/traces-activities`);
+              }, 3000);
+            } else {
+              setRequestResponseValue(res);
+              setRequestResponseModal(true);
+            }
           }
+        } else {
+          toast.success("File Successfully downloaded!");
         }
         setConfirmModal(false);
-        setLoading(false);
       }
+      setLoading(false);
     }).catch(e => {
       if (e?.response?.data) {
         toast.error(e?.response?.data);
