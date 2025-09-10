@@ -12,6 +12,8 @@ import { DeductorsService } from "@/app/services/deductors.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 import Modal from "react-bootstrap/Modal";
 import Image from "next/image";
+import DataTable from "react-data-table-component";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TracesActivities({ params }) {
   const resolvedParams = use(params);
@@ -293,6 +295,7 @@ export default function TracesActivities({ params }) {
     tracesActivity.tan = deductorInfo?.deductorTan;
     TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
       if (res) {
+        debugger
         if (form == "view-requested-downloads") {
           settRequestDownloads(res);
         } else {
@@ -317,6 +320,8 @@ export default function TracesActivities({ params }) {
         toast.error(e?.message);
       }
       setConfirmModal(false);
+      setCaptchaBase64("");
+      setCaptcha("");
       setLoading(false);
     })
   }
@@ -547,6 +552,7 @@ export default function TracesActivities({ params }) {
                         <button
                           type="submit"
                           class="btn btn-primary w-100"
+                          disabled={submitLoading}
                           onClick={(e) => submitLogin(e, true)}
                         >
                           {submitLoading && (
@@ -563,29 +569,32 @@ export default function TracesActivities({ params }) {
                   </div>
                 </div>
               </div>
-              <div className="table-responsive">
-                <div>
-                  {requestDownloads &&
-                    requestDownloads.length > 0 && (
-                      <>
-                        <DataTable
-                          className="tax_table"
-                          fixedHeader
-                          fixedHeaderScrollHeight="340px"
-                          columns={columns}
-                          data={requestDownloads}
-                          highlightOnHover
-                          customStyles={customStyles}
-                          paginationComponentOptions={{
-                            noRowsPerPage: true,
-                          }}
-                        />
-                      </>
-                    )}
+              {form == "view-requested-downloads" &&
+                <div class="row col-md-12 mt-3">
+                  <div className="table-responsive">
+                    <div>
+                      {requestDownloads &&
+                        requestDownloads.length > 0 && (
+                          <>
+                            <DataTable
+                              className="tax_table"
+                              fixedHeader
+                              fixedHeaderScrollHeight="340px"
+                              columns={columns}
+                              data={requestDownloads}
+                              highlightOnHover
+                              customStyles={customStyles}
+                              paginationComponentOptions={{
+                                noRowsPerPage: true,
+                              }}
+                            />
+                          </>
+                        )}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              }
             </>
-
           }
           {form != "traces-login" && form != "view-requested-downloads" &&
             <div className="row mb-4">
@@ -884,7 +893,9 @@ export default function TracesActivities({ params }) {
                           </div>
                           <div className="me-4">
                             <label className="form-label"> &nbsp;</label>
-                            <button type="submit" className="btn btn-primary"
+                            <button type="submit"
+                              disabled={submitLoading}
+                              className="btn btn-primary"
                               onClick={(e) => submitLogin(e)}
                             >
                               {submitLoading && (
@@ -942,7 +953,7 @@ export default function TracesActivities({ params }) {
                     style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
                   />
                   <br />
-                  <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                  <button className="btn btn-primary" disabled={loading} onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
                     {loading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
