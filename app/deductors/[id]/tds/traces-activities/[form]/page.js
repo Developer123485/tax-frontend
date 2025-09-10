@@ -179,7 +179,7 @@ export default function TracesActivities({ params }) {
               {row.status == "Available" && <a
                 onClick={(e) => {
                   setRequestNumber(row.requestNumber)
-                  submitLogin("download", true);
+                  submitLogin(e, true, "download");
                 }}
               >
                 Download
@@ -351,7 +351,6 @@ export default function TracesActivities({ params }) {
         } else {
           toast.success("File Successfully downloaded!");
         }
-        setConfirmModal(false);
       }
       setLoading(false);
     }).catch(e => {
@@ -361,9 +360,13 @@ export default function TracesActivities({ params }) {
       else {
         toast.error(e?.message);
       }
+    }).finally(f => {
       setConfirmModal(false);
       setCaptchaBase64("");
       setCaptcha("");
+      setLoading(false);
+      setDownloadRow("");
+      setSubmitLoading(false);
       setLoading(false);
     })
   }
@@ -445,10 +448,11 @@ export default function TracesActivities({ params }) {
     }));
     return true;
   }
-  function submitLogin(e, value = false) {
-    e.preventDefault();
+  function submitLogin(e, value = false, downl = null) {
     if (validateTraces() || value) {
-      setSubmitLoading(true);
+      if (downl != "download") {
+        setSubmitLoading(true);
+      }
       if (tracesActivity.userName && tracesActivity.password && deductorInfo?.deductorTan) {
         const model = {
           userName: tracesActivity.userName,
@@ -458,7 +462,8 @@ export default function TracesActivities({ params }) {
         }
         if (form != "forgot-password") {
           TracesActivitiesService.startLogin(model).then(res => {
-            if (e == "download") {
+            debugger
+            if (downl == "download") {
               setDownloadRow("download")
             }
             if (res) {
@@ -484,6 +489,7 @@ export default function TracesActivities({ params }) {
           })
         } else {
           TracesActivitiesService.startForgotLogin(model).then(res => {
+
             if (res) {
               setSubmitLoading(false);
               setCaptchaBase64(res.captcha);
@@ -977,6 +983,8 @@ export default function TracesActivities({ params }) {
             onHide={() => {
               setConfirmModal(false);
               setCaptchaBase64("");
+              setLoading(false);
+              setSubmitLoading(false);
               setCaptcha("");
             }}
           >
