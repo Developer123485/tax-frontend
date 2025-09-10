@@ -25,7 +25,7 @@ async function startForgotLogin(model) {
     return result;
 }
 
-async function submitFormRequest(model, form, formType, quarter) {
+async function submitFormRequest(model, form, formType, quarter, downloadRow) {
     let result = null;
     if (form == "request-conso-file") {
         result = await api.post("tracesActivities/continueRequestConsoFile", model);
@@ -41,6 +41,9 @@ async function submitFormRequest(model, form, formType, quarter) {
     }
     if (form == "forgot-password") {
         result = await api.post("tracesActivities/forgotPasswordRequest", model);
+    }
+    if (form == "view-requested-downloads" && downloadRow == "download") {
+        result = await api.post("tracesActivities/getRequestsDownload", model);
     }
     if (form == "view-requested-downloads") {
         result = await api.post("tracesActivities/getRequestsDownload", model);

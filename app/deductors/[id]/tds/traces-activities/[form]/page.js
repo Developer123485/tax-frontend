@@ -26,6 +26,8 @@ export default function TracesActivities({ params }) {
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [financialYear, setFinancialYear] = useState("");
+  const [downloadRow, setDownloadRow] = useState("");
+  const [requestNumber, setRequestNumber] = useState("");
   const [quarter, setQuarter] = useState("Q1");
   const [formType, setFormType] = useState("27EQ");
   const [showLoader, setShowLoader] = useState(true);
@@ -69,6 +71,7 @@ export default function TracesActivities({ params }) {
     formType: "",
     quarter: "",
     captcha: "",
+    requestNumber: "",
     deduction: {
       pan1: null,
       amount1: null,
@@ -163,6 +166,36 @@ export default function TracesActivities({ params }) {
       name: "Remarks",
       selector: (row) => row?.remarks ?? "-",
       grow: 1.5,
+    },
+    {
+      name: "Actions",
+      button: true,
+      selector: (row) => (
+        <>
+          {" "}
+          <div className="d-flex justify-content-center">
+            <span>
+              {" "}
+              <a
+                onClick={(e) => {
+                  setRequestNumber(row.requestNumber)
+                  submitLogin("download", true);
+                }}
+              >
+                {row.status == "Available"}
+              </a>
+            </span>
+          </div>
+        </>
+      ),
+      style: {
+        position: "sticky",
+        right: 0,
+        zIndex: 1,
+        backgroundColor: "#fff",
+      },
+      grow: 2,
+      width: "135px",
     },
   ];
 
@@ -293,9 +326,9 @@ export default function TracesActivities({ params }) {
     }
     setLoading(true);
     tracesActivity.tan = deductorInfo?.deductorTan;
-    TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter).then(res => {
+    tracesActivity.requestNumber = requestNumber;
+    TracesActivitiesService.submitFormRequest(tracesActivity, form, formType, quarter, downloadRow).then(res => {
       if (res) {
-        debugger
         if (form == "view-requested-downloads") {
           settRequestDownloads(res);
         } else {
@@ -416,6 +449,9 @@ export default function TracesActivities({ params }) {
         }
         if (form != "forgot-password") {
           TracesActivitiesService.startLogin(model).then(res => {
+            if (e == "download") {
+              setDownloadRow("download")
+            }
             if (res) {
               setSubmitLoading(false);
               setCaptchaBase64(res.captcha);
