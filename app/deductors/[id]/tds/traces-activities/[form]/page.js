@@ -35,7 +35,7 @@ export default function TracesActivities({ params }) {
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
-  const [requestDownloads, settRequestDownloads] = useState(null);
+  const [requestDownloads, setRequestDownloads] = useState(null);
   const [requestResponseModal, setRequestResponseModal] = useState(false);
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
@@ -230,6 +230,10 @@ export default function TracesActivities({ params }) {
   useEffect(() => {
     if (deductorId > 0) {
       getDeductorDetail();
+      if (sessionStorage.getItem("requestedDownload")) {
+        const reqData = JSON.parse(sessionStorage.getItem("requestedDownload"));
+        setRequestDownloads(reqData);
+      }
     } else {
       router.push("/deductors");
     }
@@ -331,7 +335,8 @@ export default function TracesActivities({ params }) {
       if (res) {
         if (downloadRow != "download") {
           if (form == "view-requested-downloads") {
-            settRequestDownloads(res);
+            setRequestDownloads(res);
+            sessionStorage.setItem("requestedDownload", JSON.stringify(res));
           } else {
             if (res == "true" || res == true) {
               toast.success("Login Successfully!");
