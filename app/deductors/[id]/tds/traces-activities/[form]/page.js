@@ -570,7 +570,7 @@ export default function TracesActivities({ params }) {
               </div>
             </div>
           </div>
-          {form == "traces-login" || form == "view-requested-downloads" &&
+          {(form == "traces-login" || form == "view-requested-downloads") &&
             <>
               <div className="row mb-4">
                 <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
