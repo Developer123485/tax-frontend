@@ -47,6 +47,7 @@ export default function Miscellaneous34A(props) {
         {
             name: "Nature",
             selector: (row) => row.nature || "-",
+            grow: 3,
         },
         {
             name: "TDS Amount",
