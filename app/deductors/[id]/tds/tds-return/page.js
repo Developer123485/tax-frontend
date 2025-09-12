@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-bootstrap/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
 
 export default function TDSReturn({ params }) {
     const resolvedParams = use(params);
@@ -24,6 +25,7 @@ export default function TDSReturn({ params }) {
     const [isDirty, setIsDirty] = useState(false);
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
+    const [deleteId, setDeleteId] = useState(0);
     const [pageSize, setPageSize] = useState(100);
     const [showLoader, setShowLoader] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -31,6 +33,7 @@ export default function TDSReturn({ params }) {
     const [openTdsReturn, setOpenTdsReturns] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [isFocused1, setIsFocused1] = useState(false);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
     const highlightStyle = {
         padding: "8px",
         border: "1px solid",
@@ -128,10 +131,24 @@ export default function TDSReturn({ params }) {
             selector: (row) => (
                 <>
                     {" "}
-                    <div className="d-flex justify-content-center">
-                        <span style={{ fontSize: "15px" }}>
-                            {" "}
+                    <div className="d-flex">
+                           <span style={{ fontSize: "15px" }}>
+                            
+                            <a
+                                href="Javascript:void(0)"
+                                onClick={(e) => {
+                                    setDeleteId(row.id);
+                                    setDeleteConfirm(true)
+                                }}
+                            >
+                                Delete {" "}
+                            </a>
+                        </span>
+                        
+                        <span style={{ fontSize: "15px", marginLeft: "2px" }}>
                             {row.status != "Form verified" &&
+                            <>
+                            {" | "}
                                 <a
                                     href="Javascript:void(0)"
                                     onClick={(e) => {
@@ -139,8 +156,10 @@ export default function TDSReturn({ params }) {
                                     }}
                                 >
                                     Edit
-                                </a>}
+                                </a>
+                                </>}
                         </span>
+                     
                     </div>
                 </>
             ),
@@ -230,6 +249,20 @@ export default function TDSReturn({ params }) {
         setTdsReturnForm(res);
         setOpenTdsReturns(true);
     }
+
+    function deleteTdsReturn(e) {
+        e.preventDefault();
+        setShowLoader(true);
+            ReportingService.deleteTdsReturn(deleteId)
+                .then((res) => {
+                    if (res) {
+                            toast.success("Delete Successfully!");
+                            getTdsReturns();
+                            setDeleteConfirm(false);
+                            setShowLoader(false);
+                    }
+            })
+        }
 
     function validate() {
         let formNameError = "";
@@ -345,12 +378,17 @@ export default function TDSReturn({ params }) {
             ReportingService.submitTdsReturn(tdsReturnForm)
                 .then((res) => {
                     if (res) {
-                        toast.success("TDS Return Created!");
-                        getTdsReturns();
+                        if (res == 0) {
+                            toast.error("TDS Return for already exist");
+                        } else {
+                            toast.success("TDS Return Created!");
+                            getTdsReturns();
+                            setLoading(false);
+                            setOpenTdsReturns(false);
+                            resetForm();
+                        }
                     }
-                    setLoading(false);
-                    setOpenTdsReturns(false);
-                    resetForm();
+
                 }).catch(e => {
                     if (e?.response?.data) {
                         toast.error(e?.response?.data);
@@ -385,9 +423,9 @@ export default function TDSReturn({ params }) {
                             </div>
                             <>
                                 <div className="col-sm-6 col-md-6">
-                                    <div className="d-flex align-items-center">
+                                    <div className="d-flex align-items-center ml-4">
                                         <button
-                                            className="btn btn-primary border border-1 border-start-0 px-2 py-1"
+                                            className="btn btn-primary border border-1 border-start-0 px-2 py-1 "
                                             type="button"
                                             onClick={(e) => {
                                                 resetForm();
@@ -635,6 +673,12 @@ export default function TDSReturn({ params }) {
                     </div>
                 </Modal.Body>
             </Modal>
+            <DeleteConfirmation
+                show={deleteConfirm}
+                setDeleteConfirm={(e) => setDeleteConfirm(e)}
+                delete={(e) => deleteTdsReturn(e)}
+                name={"TDS Return"}
+            ></DeleteConfirmation>
         </>
     );
 }

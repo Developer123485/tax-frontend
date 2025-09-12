@@ -22,6 +22,7 @@ export const ReportingService = {
   getTDSDeductedReports,
   getSalaryReports,
   deleteBulk,
+  deleteTdsReturn,
   deleteTDSBulk,
   deleteTaxDepositBulk,
   getTdsReturns,
@@ -176,6 +177,11 @@ async function getFillingReturns(model) {
 
 async function deleteBulk(model) {
   const result = await api.post(`reporting/deleteBulk`, model);
+  return result;
+}
+
+async function deleteTdsReturn(id) {
+  const result = await api.get(`reporting/tdsReturn/delete/${id}`);
   return result;
 }
 
