@@ -280,6 +280,17 @@ export default function TDSReturn({ params }) {
         return true;
     }
 
+    function resetForm() {
+        setTdsReturnForm((prevState) => ({
+            ...prevState,
+            ["rNumber"]: null,
+            ["formName"]: null,
+            ["quarter"]: null,
+            ["uploadType"]: null,
+            ["filedOn"]: null,
+        }));
+    }
+
 
     function getTdsReturns(searchValue, value) {
         const model = {
@@ -339,6 +350,7 @@ export default function TDSReturn({ params }) {
                     }
                     setLoading(false);
                     setOpenTdsReturns(false);
+                    resetForm();
                 }).catch(e => {
                     if (e?.response?.data) {
                         toast.error(e?.response?.data);
@@ -378,6 +390,7 @@ export default function TDSReturn({ params }) {
                                             className="btn btn-primary border border-1 border-start-0 px-2 py-1"
                                             type="button"
                                             onClick={(e) => {
+                                                resetForm();
                                                 setOpenTdsReturns(true);
                                             }}
                                         >
@@ -455,7 +468,10 @@ export default function TDSReturn({ params }) {
                 keyboard={false}
                 backdrop="static"
                 show={openTdsReturn}
-                onHide={() => setOpenTdsReturns(false)}
+                onHide={() => {
+                    resetForm();
+                    setOpenTdsReturns(false)
+                }}
             >
                 <Modal.Header className="border-0" closeButton>
                     {" "}
