@@ -27,7 +27,7 @@ export default function TDSReturn({ params }) {
     const [pageSize, setPageSize] = useState(100);
     const [showLoader, setShowLoader] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [tdsReturns, settTdsReturns] = useState(null);
+    const [tdsReturns, setTdsReturns] = useState(null);
     const [openTdsReturn, setOpenTdsReturns] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [isFocused1, setIsFocused1] = useState(false);
@@ -122,6 +122,37 @@ export default function TDSReturn({ params }) {
             selector: (row) => row?.status ?? "-",
             grow: 1.5,
         },
+        {
+            name: "Actions",
+            button: true,
+            selector: (row) => (
+                <>
+                    {" "}
+                    <div className="d-flex justify-content-center">
+                        <span style={{ fontSize: "15px" }}>
+                            {" "}
+                            {row.status != "Form verified" &&
+                                <a
+                                    href="Javascript:void(0)"
+                                    onClick={(e) => {
+                                        openEditModal(row.id)
+                                    }}
+                                >
+                                    Edit
+                                </a>}
+                        </span>
+                    </div>
+                </>
+            ),
+            style: {
+                position: "sticky",
+                right: 0,
+                zIndex: 1,
+                backgroundColor: "#fff",
+            },
+            grow: 2,
+            width: "135px",
+        },
     ];
     const [tdsReturnForm, setTdsReturnForm] = useState({
         id: 0,
@@ -192,6 +223,12 @@ export default function TDSReturn({ params }) {
                 [name]: e.target.value,
             }));
         }
+    }
+
+    function openEditModal(id) {
+        const res = tdsReturns.tdsReturnList.find(p => p.id == id);
+        setTdsReturnForm(res);
+        setOpenTdsReturns(true);
     }
 
     function validate() {
@@ -265,7 +302,7 @@ export default function TDSReturn({ params }) {
                     saveAs(url, fileName);
                 } else {
                     if (res) {
-                        settTdsReturns(res);
+                        setTdsReturns(res);
                     }
                 }
             }).catch(e => {
