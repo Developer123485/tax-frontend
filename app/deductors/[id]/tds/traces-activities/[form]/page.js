@@ -825,7 +825,7 @@ export default function TracesActivities({ params }) {
                       <div className="col-md-8">
                         <input
                           type="text"
-                          length={8}
+                          length={9}
                           className="form-control "
                           value={tracesActivity?.challan?.bsr}
                           onChange={(e) => handleChallanInput("bsr", e)}
@@ -854,7 +854,7 @@ export default function TracesActivities({ params }) {
                         <input
                           type="text"
                           className="form-control"
-                          length={8}
+                          length={18}
                           value={tracesActivity?.challan?.amount}
                           onChange={(e) => handleChallanInput("amount", e)}
                         />
