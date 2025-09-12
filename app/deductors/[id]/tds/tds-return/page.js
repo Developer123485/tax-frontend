@@ -132,8 +132,8 @@ export default function TDSReturn({ params }) {
                 <>
                     {" "}
                     <div className="d-flex">
-                           <span style={{ fontSize: "15px" }}>
-                            
+                        <span style={{ fontSize: "15px" }}>
+
                             <a
                                 href="Javascript:void(0)"
                                 onClick={(e) => {
@@ -144,22 +144,22 @@ export default function TDSReturn({ params }) {
                                 Delete {" "}
                             </a>
                         </span>
-                        
+
                         <span style={{ fontSize: "15px", marginLeft: "2px" }}>
                             {row.status != "Form verified" &&
-                            <>
-                            {" | "}
-                                <a
-                                    href="Javascript:void(0)"
-                                    onClick={(e) => {
-                                        openEditModal(row.id)
-                                    }}
-                                >
-                                    Edit
-                                </a>
+                                <>
+                                    {" | "}
+                                    <a
+                                        href="Javascript:void(0)"
+                                        onClick={(e) => {
+                                            openEditModal(row.id)
+                                        }}
+                                    >
+                                        Edit
+                                    </a>
                                 </>}
                         </span>
-                     
+
                     </div>
                 </>
             ),
@@ -253,16 +253,16 @@ export default function TDSReturn({ params }) {
     function deleteTdsReturn(e) {
         e.preventDefault();
         setShowLoader(true);
-            ReportingService.deleteTdsReturn(deleteId)
-                .then((res) => {
-                    if (res) {
-                            toast.success("Delete Successfully!");
-                            getTdsReturns();
-                            setDeleteConfirm(false);
-                            setShowLoader(false);
-                    }
+        ReportingService.deleteTdsReturn(deleteId)
+            .then((res) => {
+                if (res) {
+                    toast.success("Delete Successfully!");
+                    getTdsReturns();
+                    setDeleteConfirm(false);
+                    setShowLoader(false);
+                }
             })
-        }
+    }
 
     function validate() {
         let formNameError = "";
