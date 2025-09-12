@@ -129,6 +129,7 @@ function isNumeric(value) {
   if (value === "" || re.test(value)) {
     return true;
   }
+  return false;
 }
 
 function isNumericDecimal(value) {

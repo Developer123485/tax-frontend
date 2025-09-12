@@ -12,17 +12,40 @@ import { ReportingService } from "@/app/services/reporting.service";
 import { saveAs } from "file-saver";
 import DataTable from "react-data-table-component";
 import "react-toastify/dist/ReactToastify.css";
-
+import { CommonService } from "@/app/services/common.service";
+import "react-toastify/dist/ReactToastify.css";
+import Modal from "react-bootstrap/Modal";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function TDSReturn({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
+    const [isDirty, setIsDirty] = useState(false);
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(100);
     const [showLoader, setShowLoader] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [tdsReturns, settTdsReturns] = useState(null);
-    const [category, setCategoryId] = useState(1);
+    const [openTdsReturn, setOpenTdsReturns] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused1, setIsFocused1] = useState(false);
+    const highlightStyle = {
+        padding: "8px",
+        border: "1px solid",
+        borderColor: isFocused ? "#007bff" : "#ccc",
+        boxShadow: isFocused ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
+        outline: "none",
+    };
+    const highlightStyle1 = {
+        padding: "8px",
+        border: "1px solid",
+        borderColor: isFocused1 ? "#007bff" : "#ccc",
+        boxShadow: isFocused1 ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
+        outline: "none",
+    };
+
     const customStyles = {
         rows: {
             style: {
@@ -100,6 +123,25 @@ export default function TDSReturn({ params }) {
             grow: 1.5,
         },
     ];
+    const [tdsReturnForm, setTdsReturnForm] = useState({
+        id: 0,
+        formName: null,
+        fy: null,
+        quarter: null,
+        filedOn: null,
+        uploadType: null,
+        rNumber: null,
+        status: null,
+        deductorId: null,
+    });
+
+    const [tdsReturnErrors, setTdsReturnErrors] = useState({
+        formNameError: "",
+        quarterError: "",
+        filedOnError: "",
+        uploadTypeError: "",
+        rNumberError: "",
+    });
     const searchParams = useSearchParams(null);
     const [breadcrumbs, setBreadcrumbs] = useState([
         {
@@ -128,12 +170,85 @@ export default function TDSReturn({ params }) {
         }
     }, [pageSize, currentPage]);
 
+    useEffect(() => {
+        validate();
+    }, [
+        tdsReturnForm.filedOn,
+        tdsReturnForm.formName,
+        tdsReturnForm.rNumber,
+        tdsReturnForm.uploadType,
+        tdsReturnForm.quarter,
+    ]);
+
+    function handleInput(name, e) {
+        if (name === "filedOn") {
+            setTdsReturnForm((prevState) => ({
+                ...prevState,
+                [name]: e,
+            }));
+        } else {
+            setTdsReturnForm((prevState) => ({
+                ...prevState,
+                [name]: e.target.value,
+            }));
+        }
+    }
+
+    function validate() {
+        let formNameError = "";
+        let quarterError = "";
+        let filedOnError = "";
+        let uploadTypeError = "";
+        let rNumberError = "";
+        if (!tdsReturnForm.formName) {
+            formNameError = "Form Name is required";
+        }
+        if (!tdsReturnForm.quarter) {
+            quarterError = "Quarter is required";
+        }
+        if (!tdsReturnForm.filedOn) {
+            filedOnError = "Filed on is required";
+        }
+        if (!tdsReturnForm.uploadType) {
+            uploadTypeError = "Upload Type is required";
+        }
+        if (!tdsReturnForm.rNumber) {
+            rNumberError = "RRR Number is required";
+        }
+        if (
+            rNumberError ||
+            uploadTypeError ||
+            formNameError ||
+            quarterError ||
+            filedOnError
+        ) {
+            setTdsReturnErrors((prevState) => ({
+                ...prevState,
+                rNumberError,
+                uploadTypeError,
+                formNameError,
+                quarterError,
+                filedOnError
+            }));
+            return false;
+        }
+        setTdsReturnErrors((prevState) => ({
+            ...prevState,
+            rNumberError,
+            uploadTypeError,
+            formNameError,
+            quarterError,
+            filedOnError
+        }));
+        return true;
+    }
+
 
     function getTdsReturns(searchValue, value) {
         const model = {
             pageSize: pageSize,
             pageNumber: currentPage,
-            financialYear: "",
+            financialYear: searchParams.get("financial_year"),
             quarter: "",
             deductorId: deductorId,
             categoryId: "",
@@ -166,9 +281,46 @@ export default function TDSReturn({ params }) {
             });
     }
 
+
+    function submitTdsReturn(e) {
+        e.preventDefault();
+        setIsDirty(true);
+        if (validate()) {
+            setLoading(true);
+            if (tdsReturnForm.filedOn) {
+                tdsReturnForm.filedOn = CommonService.tdsDateFormat(
+                    new Date(tdsReturnForm.filedOn)
+                );
+            }
+            tdsReturnForm.deductorId = deductorId;
+            tdsReturnForm.fy = searchParams.get("financial_year");
+            ReportingService.submitTdsReturn(tdsReturnForm)
+                .then((res) => {
+                    if (res) {
+                        toast.success("TDS Return Created!");
+                        getTdsReturns();
+                    }
+                    setLoading(false);
+                    setOpenTdsReturns(false);
+                }).catch(e => {
+                    if (e?.response?.data) {
+                        toast.error(e?.response?.data);
+                    }
+                    else {
+                        toast.error(e?.message);
+                    }
+                    setLoading(false);
+                })
+                .finally((f) => {
+                    setAddTaxModal(false);
+                    setLoading(false);
+                });
+        }
+    }
+
     return (
         <>
-            <ToastContainer />
+            <ToastContainer autoClose={4000} />
             <HeaderList></HeaderList>
             <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
             <section className="py-4 pb-md-0 bg-light-gray">
@@ -185,15 +337,15 @@ export default function TDSReturn({ params }) {
                             <>
                                 <div className="col-sm-6 col-md-6">
                                     <div className="d-flex align-items-center">
-                                        {/* <button
-                                            className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
+                                        <button
+                                            className="btn btn-primary border border-1 border-start-0 px-2 py-1"
                                             type="button"
                                             onClick={(e) => {
-                                                getSalaryReports("", true);
+                                                setOpenTdsReturns(true);
                                             }}
                                         >
-                                            Download
-                                        </button> */}
+                                            Add
+                                        </button>
                                         <div className="input-group searchbox">
                                             <input
                                                 type="search"
@@ -259,6 +411,177 @@ export default function TDSReturn({ params }) {
                 </div>
             </section>
             <ProcessPopup showLoader={showLoader}></ProcessPopup>
+            <Modal
+                className=""
+                size="lg"
+                centered
+                keyboard={false}
+                backdrop="static"
+                show={openTdsReturn}
+                onHide={() => setOpenTdsReturns(false)}
+            >
+                <Modal.Header className="border-0" closeButton>
+                    {" "}
+                    <h3 className="mb-0">TDS Return</h3>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="">
+                        <row className="row g-3 mb-3 mb-md-3">
+                            <div className="col-md-6">
+                                <label for="quarter" className="form-label">
+                                    Form Type
+                                </label>
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    autoComplete="off"
+                                    value={tdsReturnForm.formName}
+                                    style={highlightStyle}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
+                                    onChange={(e) => handleInput("formName", e)}
+                                >
+                                    <option value={""} hidden>
+                                        Select
+                                    </option>
+                                    <option value={"26Q"}>26Q</option>
+                                    <option value={"27EQ"}>27EQ</option>
+                                    <option value={"27Q"}>27Q</option>
+                                    <option value={"24Q"}>24Q</option>
+                                </select>
+                                {isDirty &&
+                                    tdsReturnErrors.formNameError && (
+                                        <span className="text-danger">
+                                            {tdsReturnErrors.formNameError}
+                                        </span>
+                                    )}
+                            </div>
+                            <div className="col-md-6">
+                                <label for="quarter" className="form-label">
+                                    Quarter
+                                </label>
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    autoComplete="off"
+                                    value={tdsReturnForm.quarter}
+                                    style={highlightStyle1}
+                                    onFocus={() => setIsFocused1(true)}
+                                    onBlur={() => setIsFocused1(false)}
+                                    onChange={(e) => handleInput("quarter", e)}
+                                >
+                                    <option value={""} hidden>
+                                        Select
+                                    </option>
+                                    <option value={"Q1"}>Q1</option>
+                                    <option value={"Q2"}>Q2</option>
+                                    <option value={"Q3"}>Q3</option>
+                                    <option value={"Q4"}>Q4</option>
+                                </select>
+                                {isDirty &&
+                                    tdsReturnErrors.quarterError && (
+                                        <span className="text-danger">
+                                            {tdsReturnErrors.quarterError}
+                                        </span>
+                                    )}
+                            </div>
+                            <div className="col-md-6">
+                                <label for="rNumber" className="form-label">
+                                    RRR Number
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="rNumber"
+                                    rows={2}
+                                    maxLength={15}
+                                    value={tdsReturnForm.rNumber}
+                                    onChange={(e) => {
+                                        if (CommonService.isNumeric(e.target.value)) {
+                                            handleInput("rNumber", e);
+                                        } else {
+                                            setTdsReturnForm((prevState) => ({
+                                                ...prevState,
+                                                ["rNumber"]: "",
+                                            }));
+                                        }
+                                    }}
+                                />
+                                {isDirty &&
+                                    tdsReturnErrors.rNumberError && (
+                                        <span className="text-danger">
+                                            {tdsReturnErrors.rNumberError}
+                                        </span>
+                                    )}
+                            </div>
+                            <div className="col-md-6">
+                                <label for="filedOn" className="form-label">
+                                    Field On
+                                </label>
+                                <DatePicker
+                                    autoComplete="off"
+                                    selected={tdsReturnForm.filedOn}
+                                    id="filedOn"
+                                    minDate={
+                                        tdsReturnForm.filedOn
+                                            ? new Date(tdsReturnForm.filedOn)
+                                            : null
+                                    }
+                                    className="form-control w-100"
+                                    onChange={(e) => handleInput("filedOn", e)}
+                                    dateFormat="dd/MM/yyyy"
+                                    placeholderText="dd/MM/yyyy"
+                                />
+                                {isDirty &&
+                                    tdsReturnErrors.filedOnError && (
+                                        <span className="text-danger">
+                                            {tdsReturnErrors.filedOnError}
+                                        </span>
+                                    )}
+                            </div>
+                            <div className="col-md-6">
+                                <label for="uploadType" className="form-label">
+                                    Upload Type
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="uploadType"
+                                    maxLength={15}
+                                    rows={2}
+                                    value={tdsReturnForm.uploadType}
+                                    onChange={(e) => handleInput("uploadType", e)}
+                                />
+                                {isDirty &&
+                                    tdsReturnErrors.uploadTypeError && (
+                                        <span className="text-danger">
+                                            {tdsReturnErrors.uploadTypeError}
+                                        </span>
+                                    )}
+                            </div>
+                        </row>
+                        <div className="row g-3 justify-content-end">
+                            <div className="col-md-2">
+                                <button
+                                    type="button"
+                                    onClick={(e) => submitTdsReturn(e)}
+                                    className="btn btn btn-primary w-100"
+                                    disabled={loading}
+                                >
+                                    {loading && (
+                                        <span
+                                            className="spinner-grow spinner-grow-sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                    )}
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </>
     );
 }

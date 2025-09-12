@@ -743,6 +743,7 @@ export default function TracesActivities({ params }) {
                     <input
                       type="text"
                       className="form-control"
+                      length={15}
                       value={tracesActivity?.token}
                       onChange={(e) => handleInputTracesActivities("token", e)}
                     />
@@ -797,7 +798,8 @@ export default function TracesActivities({ params }) {
                       <div className="col-md-8">
                         <input
                           type="text"
-                          className="form-control "
+                          className="form-control"
+                          length={8}
                           value={tracesActivity?.challan?.challanSrNo}
                           onChange={(e) => handleChallanInput("challanSrNo", e)}
                         />
@@ -823,6 +825,7 @@ export default function TracesActivities({ params }) {
                       <div className="col-md-8">
                         <input
                           type="text"
+                          length={8}
                           className="form-control "
                           value={tracesActivity?.challan?.bsr}
                           onChange={(e) => handleChallanInput("bsr", e)}
@@ -836,7 +839,7 @@ export default function TracesActivities({ params }) {
                       <div className="col-md-8">
                         <input
                           type="text"
-                          className="form-control "
+                          className="form-control"
                           value={tracesActivity?.challan?.date}
                           onChange={(e) => handleChallanInput("date", e)}
                         />
@@ -850,7 +853,8 @@ export default function TracesActivities({ params }) {
                       <div className="col-md-8">
                         <input
                           type="text"
-                          className="form-control "
+                          className="form-control"
+                          length={8}
                           value={tracesActivity?.challan?.amount}
                           onChange={(e) => handleChallanInput("amount", e)}
                         />
@@ -868,18 +872,21 @@ export default function TracesActivities({ params }) {
                         <input
                           type="text"
                           className="form-control"
+                          length={10}
                           value={tracesActivity?.deduction?.pan1}
                           onChange={(e) => handleDeductionInput("pan1", e)}
                         />
                         <input
                           type="text"
                           className="form-control my-3"
+                          length={10}
                           value={tracesActivity?.deduction?.pan2}
                           onChange={(e) => handleDeductionInput("pan2", e)}
                         />
                         <input
                           type="text"
                           className="form-control "
+                          length={10}
                           value={tracesActivity?.deduction?.pan3}
                           onChange={(e) => handleDeductionInput("pan3", e)}
                         />

@@ -24,7 +24,8 @@ export const ReportingService = {
   deleteBulk,
   deleteTDSBulk,
   deleteTaxDepositBulk,
-  getTdsReturns
+  getTdsReturns,
+  submitTdsReturn
 };
 async function getTdsRates(model, categoryId) {
   const result = await api.post(
@@ -67,6 +68,11 @@ async function uploadTdsData(file, categoryId) {
 
 async function saveTdsRate(model) {
   const result = await api.post("reporting/tdsRates/create", model);
+  return result;
+}
+
+async function submitTdsReturn(model) {
+  const result = await api.post("reporting/tdsReturn/create", model);
   return result;
 }
 

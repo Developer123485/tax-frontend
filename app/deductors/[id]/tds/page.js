@@ -363,7 +363,7 @@ export default function TDSDashboard({ params }) {
                               ) {
                                 if (option.name == "Filling Status Dashboard") {
                                   router.push(
-                                    `/deductors/${deductorId}/tds/tds-return`
+                                    `/deductors/${deductorId}/tds/tds-return?financial_year=${financialYear}`
                                   );
                                 }
                                 if (
