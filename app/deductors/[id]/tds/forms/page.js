@@ -299,127 +299,71 @@ export default function TDSForm({ params }) {
       <ToastContainer />
       <HeaderList></HeaderList>
       <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
-      <section className="py-5 py-md-4 bg-light-gray tds-importexport-sec">
-        <div className="container">
-          <div className="row mb-4">
-            <div className="col-md-12">
-              <div className="d-flex align-items-center justify-content-between">
-                <h3 className="mb-0 me-3">Generate Forms</h3>
-              </div>
+      <section class="py-5 bg-light">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-12 text-center">
+              <h3 class="fw-bold">Generate Forms</h3>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-13">
-              <div className="row g-3">
-                <div className={"col-12 col-md-3 ps-md-0"}>
-                  <div className="bg-white position-relative d-flex flex-row justify-content-center align-items-center py-3 py-md-3 px-3 ps-md-3 pe-md-4 border border-1 rounded-4 countbox">
-                    <div
-                      className="row align-items-center"
-                      onClick={(e) => {
-                        setFormType("16");
-                        openGenerateForm("16", true);
-                      }}
-                    >
-                      <div className="col-md-4">
-                        <Image
-                          className="img-fluid"
-                          src="/images/dashboards/generate_form_icon.svg"
-                          alt="generate_form_icon"
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <h5 className="fw-bold text-uppercase mb-0">
-                          Generate Form-16
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className={"col-12 col-md-3 ps-md-0"}>
-                  <div className="bg-white position-relative d-flex flex-row justify-content-center align-items-center py-3 py-md-3 px-3 ps-md-3 pe-md-4 border border-1 rounded-4 countbox">
-                    <div
-                      className="row align-items-center"
-                      onClick={(e) => {
-                        setFormType("16A");
-                        openGenerateForm("16A", false);
-                      }}
-                    >
-                      <div className="col-md-4">
-                        <Image
-                          className="img-fluid"
-                          src="/images/dashboards/generate_form_icon.svg"
-                          alt="generate_form_icon"
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <h5 className="fw-bold text-uppercase mb-0">
-                          Generate Form-16A
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className={"col-12 col-md-3 ps-md-0"}>
-                  <div className="bg-white position-relative d-flex flex-row justify-content-center align-items-center py-3 py-md-3 px-3 ps-md-3 pe-md-4 border border-1 rounded-4 countbox">
-                    <div
-                      className="row align-items-center"
-                      onClick={(e) => {
-                        setFormType("27D");
-                        openGenerateForm("27D", false);
-                      }}
-                    >
-                      <div className="col-md-4">
-                        <Image
-                          className="img-fluid"
-                          src="/images/dashboards/generate_form_icon.svg"
-                          alt="generate_form_icon"
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <h5 className="fw-bold text-uppercase mb-0">
-                          Generate Form-27D
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className={"col-12 col-md-3 ps-md-0"}>
-                  <div className="bg-white position-relative d-flex flex-row justify-content-center align-items-center py-3 py-md-3 px-3 ps-md-3 pe-md-4 border border-1 rounded-4 countbox">
-                    <div
-                      className="row align-items-center"
-                      onClick={(e) => {
-                        setFormType("12BA");
-                        openGenerateForm("12BA", false);
-                      }}
-                    >
-                      <div className="col-md-4">
-                        <Image
-                          className="img-fluid"
-                          src="/images/dashboards/generate_form_icon.svg"
-                          alt="generate_form_icon"
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <h5 className="fw-bold text-uppercase mb-0">
-                          Generate Form-12BA
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
+          <div class="row g-4 justify-content-center">
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="card h-100 text-center shadow-sm border-0"
+               onClick={(e) => {
+                setFormType("16");
+                openGenerateForm("16", true);
+              }}>
+                <div class="card-body d-flex flex-column align-items-center">
+                  <img src="/images/dashboards/generate_form_icon.svg" alt="Form 16 Icon" width="80" height="80" class="mb-3" />
+                  <h5 class="text-uppercase fw-bold mb-0">Generate Form-16</h5>
                 </div>
               </div>
             </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="card h-100 text-center shadow-sm border-0" onClick={(e) => {
+                setFormType("16A");
+                openGenerateForm("16A", false);
+              }}>
+                <div class="card-body d-flex flex-column align-items-center">
+                  <img src="/images/dashboards/generate_form_icon.svg" alt="Form 16A Icon" width="80" height="80" class="mb-3" />
+                  <h5 class="text-uppercase fw-bold mb-0">Generate Form-16A</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="card h-100 text-center shadow-sm border-0" 
+              
+              onClick={(e) => {
+                setFormType("27D");
+                openGenerateForm("27D", false);
+              }}>
+                <div class="card-body d-flex flex-column align-items-center">
+                  <img src="/images/dashboards/generate_form_icon.svg" alt="Form 27D Icon" width="80" height="80" class="mb-3" />
+                  <h5 class="text-uppercase fw-bold mb-0">Generate Form-27D</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="card h-100 text-center shadow-sm border-0" 
+              onClick={(e) => {
+                setFormType("12BA");
+                openGenerateForm("12BA", false);
+              }}
+              >
+                <div class="card-body d-flex flex-column align-items-center">
+                  <img src="/images/dashboards/generate_form_icon.svg" alt="Form 12BA Icon" width="80" height="80" class="mb-3" />
+                  <h5 class="text-uppercase fw-bold mb-0">Generate Form-12BA</h5>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
+
       <Modal
         className=""
         size="md"
