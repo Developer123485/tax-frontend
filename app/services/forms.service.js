@@ -27,7 +27,10 @@ async function exportFormData(model) {
 }
 
 async function generateForm(model) {
-  const result = await api.post(`forms/generatedocument`, model);
+  let axiosConfig = {
+    responseType: "blob",
+  };
+  const result = await api.post(`forms/generatedocument`, model, axiosConfig);
   return result;
 }
 

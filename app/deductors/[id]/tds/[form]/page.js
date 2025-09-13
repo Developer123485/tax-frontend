@@ -134,10 +134,18 @@ export default function TDSForm({ params }) {
         categoryId: parseInt(searchParams.get("categoryId")),
       };
       FormsService.generateForm(model)
-        .then((res) => {
+        .then(async (res) => {
           if (res) {
-            const blob = new Blob([res], { type: "docx" });
-            saveAs(blob, form + searchParams.get("quarter") + ".docx");
+            const url = window.URL.createObjectURL(new Blob([res]));
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = form + searchParams.get("quarter") + ".docx"; // suggested filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+            // const blob = new Blob([res], { type: "docx" });
+            // saveAs(blob, form + searchParams.get("quarter") + ".docx");
             toast.success("Genrate Form Successfully!");
           }
         }).catch(e => {
