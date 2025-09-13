@@ -302,7 +302,7 @@ export default function TDSForm({ params }) {
       <section class="py-5 bg-light">
         <div class="container">
           <div class="row mb-4">
-            <div class="col-12 text-center">
+            <div class="col-12">
               <h3 class="fw-bold">Generate Forms</h3>
             </div>
           </div>
