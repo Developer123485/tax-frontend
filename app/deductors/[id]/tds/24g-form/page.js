@@ -60,67 +60,64 @@ export default function TDSDashboard({ params }) {
             <ToastContainer />
             <HeaderList></HeaderList>
             <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
-            <section className="py-5 py-md-4 bg-light-gray tds-dash-tabs">
-                <div className="container">
-                    <div className="row pb-3 align-items-center">
-                        <div className="col-md-8">
-                            <h4 className="mb-4 mb-md-0 fw-bold text-capitalize">
-                                24G Form
-                            </h4>
+            <section class="py-5 bg-light">
+                <div class="container">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h3 class="fw-bold text-capitalize">24G Form</h3>
                         </div>
                     </div>
-                </div>
-                <div className="container">
-                    <div className="">
-                        <div className="row">
-                            <div className="col-md-8 border-end pe-md-4">
-                                <div className="row g-3">
-                                    <div
-                                        className="col-md-3"
-                                        onClick={(e) => {
-                                            router.push(
-                                                `/deductors/${deductorId}/tds/24g-form/ddo-details`
-                                            );
+
+                    <div class="row g-4">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="card h-100 shadow-sm border-0" onClick={(e) => {
+                                router.push(
+                                    `/deductors/${deductorId}/tds/24g-form/ddo-details`
+                                );
+                            }} role="button">
+                                <div class="card-body text-center">
+                                    <span
+                                        style={{
+                                            width: 65,
+                                            height: 65,
                                         }}
+                                        className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
                                     >
-                                        <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
-                                            <span
-                                                style={{
-                                                    width: 100,
-                                                    height: 100,
-                                                }}
-                                                className="fs-6 rounded-4 fw-bold bg-dark-blue d-flex align-items-center justify-content-center"
-                                            >
-                                                DDO Details
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        className="col-md-3"
-                                        onClick={(e) => {
-                                            router.push(
-                                                `/deductors/${deductorId}/tds/24g-form/ddo-wise-details`
-                                            );
+                                        DDO
+                                    </span>
+                                    <h6 class="fw-bold mb-2">DDO Details</h6>
+                                    <p class="text-muted small">Enter or manage Drawing and Disbursing Officer (DDO) information for the selected deductor.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="card h-100 shadow-sm border-0"
+                                onClick={(e) => {
+                                    router.push(
+                                        `/deductors/${deductorId}/tds/24g-form/ddo-wise-details`
+                                    );
+                                }}
+                                role="button">
+                                <div class="card-body text-center">
+                                    <span
+                                        style={{
+                                            width: 65,
+                                            height: 65,
                                         }}
+                                        className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
                                     >
-                                        <span className="d-flex flex-column justify-content-center align-items-center text-center py-2 py-md-2 px-2 px-md-2 border border-1 rounded-4 bg-light-blue countbox">
-                                            <span
-                                                style={{
-                                                    width: 100,
-                                                    height: 100,
-                                                }}
-                                                className="fs-6 rounded-4 fw-bold bg-dark-blue d-flex align-items-center justify-content-center"
-                                            >
-                                                DDO Wise Details
-                                            </span>
-                                        </span>
-                                    </div>
+                                        DDO
+                                    </span>
+                                    <h6 class="fw-bold mb-2">DDO Wise Details</h6>
+                                    <p class="text-muted small">View and manage form data based on each DDO separately. Ideal for organizations with multiple DDOs.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
+
         </>
     );
 }

@@ -23,7 +23,7 @@ export default function DdoDetails({ params }) {
     const [showLoader, setShowLoader] = useState(false);
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(30);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
     const [ddoDetails, setDdoDetails] = useState(null);
@@ -519,7 +519,6 @@ export default function DdoDetails({ params }) {
                                                     }}
                                                     onChangePage={(page) => {
                                                         setCurrentPage(page);
-                                                        fetchDdoDetails(page);
                                                     }}
                                                 />
                                             )}

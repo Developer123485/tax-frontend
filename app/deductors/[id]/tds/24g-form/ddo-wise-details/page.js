@@ -269,7 +269,7 @@ export default function DdoWiseDetails({ params }) {
 
     useEffect(() => {
         fetchDdoWiseDetails();
-    }, [financialYear, selectedMonth, currentPage, pageSize]);
+    }, [currentPage, pageSize]);
 
     function deleteEntry(e) {
         e.preventDefault();
@@ -550,6 +550,7 @@ export default function DdoWiseDetails({ params }) {
                                     aria-label="Default select example"
                                     value={financialYear}
                                     onChange={(e) => {
+                                        fetchDdoWiseDetails();
                                         setFinancialYear(e.target.value);
                                     }}
                                 >
@@ -566,6 +567,7 @@ export default function DdoWiseDetails({ params }) {
                                     aria-label="Default select example"
                                     value={selectedMonth}
                                     onChange={(e) => {
+                                        fetchDdoWiseDetails();
                                         setSelectedMonth(e.target.value);
                                     }}
                                 >
