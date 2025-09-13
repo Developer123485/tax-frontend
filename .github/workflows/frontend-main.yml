@@ -28,4 +28,4 @@ jobs:
 
       - name: Run script on Ubuntu server
         run: | 
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@139.84.144.29 '/bin/bash /root/scirpts/frontend-deploy.sh'
+          sshpass -p '2A]ppMNWbRV-gBJ_' ssh -o StrictHostKeyChecking=no root@139.84.144.29 '/bin/bash /root/scirpts/frontend-deploy.sh'
