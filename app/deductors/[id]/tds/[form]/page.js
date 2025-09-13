@@ -143,6 +143,7 @@ export default function TDSForm({ params }) {
             document.body.appendChild(a);
             a.click();
             a.remove();
+            
             window.URL.revokeObjectURL(url);
             // const blob = new Blob([res], { type: "docx" });
             // saveAs(blob, form + searchParams.get("quarter") + ".docx");
