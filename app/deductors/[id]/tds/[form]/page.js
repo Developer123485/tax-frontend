@@ -142,6 +142,7 @@ export default function TDSForm({ params }) {
   function resetGenerateInput() {
     setPlaceValue("");
     setVerificationDate("");
+    setIsDirty(false);
   }
 
   function generateForm() {
@@ -195,7 +196,6 @@ export default function TDSForm({ params }) {
   }
   
     function validateGenerateInput() {
-      debugger;
         let placeError = "";
         let dateError = "";
         if (!placeValue) {
@@ -915,6 +915,7 @@ export default function TDSForm({ params }) {
                 selected={verificationDate}
                 id="verificationDate"
                 className="form-control w-100"
+                minDate={new Date()}
                 onChange={(e) => setVerificationDate(e)}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="dd/MM/yyyy"
