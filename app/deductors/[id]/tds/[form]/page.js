@@ -198,7 +198,7 @@ export default function TDSForm({ params }) {
       debugger
         let placeError = "";
         let dateError = "";
-        if (!placeError) {
+        if (!placeValue) {
             placeError = "Place Name is required";
         }
         if (!verificationDate) {
