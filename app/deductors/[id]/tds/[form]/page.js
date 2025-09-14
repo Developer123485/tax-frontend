@@ -195,7 +195,7 @@ export default function TDSForm({ params }) {
   }
   
     function validateGenerateInput() {
-      debugger
+      debugger;
         let placeError = "";
         let dateError = "";
         if (!placeValue) {
@@ -215,7 +215,7 @@ export default function TDSForm({ params }) {
             }));
             return false;
         }
-        setTdsReturnErrors((prevState) => ({
+        setGenerateFormErrors((prevState) => ({
             ...prevState,
             dateError,
             placeError,
