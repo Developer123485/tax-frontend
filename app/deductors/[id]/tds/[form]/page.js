@@ -19,6 +19,8 @@ import HeaderList from "@/app/components/header/header-list";
 import ImportTdsTXTPopup from "@/app/components/modals/import-tds-txt-popup";
 import { CommonService } from "@/app/services/common.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 export default function TDSForm({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
@@ -37,10 +39,15 @@ export default function TDSForm({ params }) {
   const [isTxtUploading, setIsTxtUploading] = useState(false);
   const [isLoading, setIsloading] = useState(false);
   const [submitLoginLoading, setSubmitLoginLoading] = useState(false);
+  const [generateLoading, setGenerateLoading] = useState(false);
   const [openLowerDeduction, setOpenLowerDeduction] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [captchaBase64, setCaptchaBase64] = useState('');
+  const [placeValue, setPlaceValue] = useState('');
+  const [verificationDate, setVerificationDate] = useState("");
+  const [openGenerateInputPopup, setOpenGenerateInputPopup] = useState(false);
   const [captcha, setCaptcha] = useState("");
+  const [isDirty, setIsDirty] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [isExportFormConfirmation, setIsExportFormConfirmation] =
     useState(false);
@@ -61,6 +68,10 @@ export default function TDSForm({ params }) {
     challanCount: 0,
     deducteeDetailCount: 0,
     salaryDetailCount: 0,
+  });
+  const [generateFormErrors, setGenerateFormErrors] = useState({
+    placeError: "",
+    dateError: "",
   });
   const [breadcrumbs, setBreadcrumbs] = useState([
     {
@@ -90,6 +101,10 @@ export default function TDSForm({ params }) {
       getFormsDetails();
     }
   }, []);
+
+  useEffect(() => {
+    validateGenerateInput();
+  }, [placeValue, verificationDate]);
 
   const handleChange = (selected) => {
     setSelectedPANs(selected || []);
@@ -124,14 +139,23 @@ export default function TDSForm({ params }) {
     }
   }
 
+  function resetGenerateInput() {
+    setPlaceValue("");
+    setVerificationDate("");
+  }
+
   function generateForm() {
+    setIsDirty(true);
+    if(validateGenerateInput()){
     if (formsDashboardDetail.challanCount > 0) {
-      setIsloading(true);
+      setGenerateLoading(true);
       const model = {
         financialYear: searchParams.get("financial_year"),
         quarter: searchParams.get("quarter"),
         deductorId: deductorId,
         categoryId: parseInt(searchParams.get("categoryId")),
+        verificationPlace: placeValue,
+        verificationDate: CommonService.dateFormat(verificationDate)
       };
       FormsService.generateForm(model)
         .then(async (res) => {
@@ -143,7 +167,6 @@ export default function TDSForm({ params }) {
             document.body.appendChild(a);
             a.click();
             a.remove();
-            
             window.URL.revokeObjectURL(url);
             // const blob = new Blob([res], { type: "docx" });
             // saveAs(blob, form + searchParams.get("quarter") + ".docx");
@@ -160,13 +183,45 @@ export default function TDSForm({ params }) {
         .finally((f) => {
           setIsDownloding(false);
           setIsGenerateFormConfirmation(false);
-          setIsloading(false);
+          setGenerateLoading(false);
+          setOpenGenerateInputPopup(false);
+          resetGenerateInput();
         });
     } else {
       setIsGenerateFormConfirmation(false);
       toast.error("Create one challan first!");
     }
   }
+  }
+  
+    function validateGenerateInput() {
+      debugger
+        let placeError = "";
+        let dateError = "";
+        if (!placeError) {
+            placeError = "Place Name is required";
+        }
+        if (!verificationDate) {
+            dateError = "Verification Date is required";
+        }
+        if (
+            placeError ||
+            dateError
+        ) {
+            setGenerateFormErrors((prevState) => ({
+                ...prevState,
+                dateError,
+                placeError,
+            }));
+            return false;
+        }
+        setTdsReturnErrors((prevState) => ({
+            ...prevState,
+            dateError,
+            placeError,
+        }));
+        return true;
+    }
 
   const fileSelectHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -459,7 +514,7 @@ export default function TDSForm({ params }) {
                   </h3>
                   <button
                     className="btn btn-primary"
-                    onClick={(e) => generateForm()}
+                    onClick={(e) => setOpenGenerateInputPopup(true)}
                   >
                     Generate {form.toUpperCase()}
                   </button>
@@ -811,6 +866,83 @@ export default function TDSForm({ params }) {
           </div>
         )}
       </section>
+      <Modal
+        show={openGenerateInputPopup}
+        onHide={() => {
+          resetGenerateInput();
+          setOpenGenerateInputPopup(false)
+        }}
+        centered
+        backdrop="static"
+        keyboard={false}
+        size="md"
+        className="confirm-modal"
+      >
+        <Modal.Header closeButton className="border-0 pb-0">
+          <Modal.Title className="fw-bold fs-5">Generate File Input</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="col-md-12">
+            <label for="rNumber" className="form-label">
+              Place
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="place"
+              rows={2}
+              maxLength={15}
+              value={placeValue}
+              onChange={(e) => {
+                setPlaceValue(e.target.value);
+              }}
+            />
+            {isDirty &&
+              generateFormErrors.placeError && (
+                <span className="text-danger">
+                  {generateFormErrors.placeError}
+                </span>
+              )}
+          </div>
+          <div className="col-md-12">
+            <label htmlFor="verificationDate" className="form-label">
+              <span>Verification Date</span>
+            </label>
+            <div>
+              <DatePicker
+                autoComplete="off"
+                selected={verificationDate}
+                id="verificationDate"
+                className="form-control w-100"
+                onChange={(e) => setVerificationDate(e)}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/MM/yyyy"
+              />
+              {isDirty &&
+                generateFormErrors.dateError && (
+                  <span className="text-danger">
+                    {generateFormErrors.dateError}
+                  </span>
+                )}
+            </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer className="border-0 justify-content-center gap-3">
+          <Button
+            variant="primary"
+            className="px-4 py-2 rounded-3 fw-semibold"
+            disabled={generateLoading}
+            onClick={(e) => generateForm()}
+          >
+            {generateLoading && (
+              <div className="spinner-border me-2" role="status"></div>
+            )}
+            Generate Docx
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Modal
         show={openLowerDeduction}
         onHide={() => setOpenLowerDeduction(false)}
