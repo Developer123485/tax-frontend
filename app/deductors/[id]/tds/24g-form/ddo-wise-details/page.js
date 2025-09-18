@@ -269,7 +269,7 @@ export default function DdoWiseDetails({ params }) {
 
     useEffect(() => {
         fetchDdoWiseDetails();
-    }, [currentPage, pageSize]);
+    }, [currentPage, pageSize, selectedMonth, financialYear]);
 
     function deleteEntry(e) {
         e.preventDefault();
