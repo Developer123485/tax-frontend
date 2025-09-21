@@ -77,7 +77,8 @@ function FeedbackForm() {
                                     <textarea
                                         className={`form-control ${errors.feedbackText ? 'is-invalid' : ''}`}
                                         name="feedbackText"
-                                        rows="6"
+                                        rows="10" 
+                                        style={{ height: '140px' }}
                                         value={formData.feedbackText}
                                         onChange={handleChange}
                                     ></textarea>
