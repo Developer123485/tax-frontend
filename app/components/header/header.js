@@ -101,6 +101,18 @@ export default function Header() {
                           Contact Us
                         </a>
                       </li>
+                      <li className="nav-item">
+                        <a
+                          className={
+                            pathname == "/feedback"
+                              ? "active nav-link px-3"
+                              : "nav-link px-3"
+                          }
+                          onClick={(e) => router.push("/feedback")}
+                        >
+                          Feedback
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
