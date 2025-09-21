@@ -20,6 +20,7 @@ function FeedbackForm() {
 
     const validate = () => {
         const newErrors = {};
+         if (!formData.feedbackType) newErrors.feedbackType = 'Please select a feedback type.';
         if (!formData.feedbackText.trim()) newErrors.feedbackText = 'Feedback is required.';
         if (!formData.firstName.trim()) newErrors.firstName = 'First name is required.';
         if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required.';
@@ -55,29 +56,50 @@ function FeedbackForm() {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label className="form-label d-block">Feedback Type</label>
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="feedbackType" value="Comments"
-                                            checked={formData.feedbackType === 'Comments'} onChange={handleChange} />
+
+                                    <div className={`form-check form-check-inline ${errors.feedbackType ? 'is-invalid' : ''}`}>
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="feedbackType"
+                                            value="Comments"
+                                            checked={formData.feedbackType === 'Comments'}
+                                            onChange={handleChange}
+                                        />
                                         <label className="form-check-label">Comments</label>
                                     </div>
+
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="feedbackType" value="Suggestions"
-                                            checked={formData.feedbackType === 'Suggestions'} onChange={handleChange} />
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="feedbackType"
+                                            value="Suggestions"
+                                            checked={formData.feedbackType === 'Suggestions'}
+                                            onChange={handleChange}
+                                        />
                                         <label className="form-check-label">Suggestions</label>
                                     </div>
+
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="feedbackType" value="Questions"
-                                            checked={formData.feedbackType === 'Questions'} onChange={handleChange} />
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="feedbackType"
+                                            value="Questions"
+                                            checked={formData.feedbackType === 'Questions'}
+                                            onChange={handleChange}
+                                        />
                                         <label className="form-check-label">Questions</label>
                                     </div>
+                                    {errors.feedbackType && <div className="text-danger mt-1">{errors.feedbackType}</div>}
                                 </div>
-
                                 <div className="mb-3">
                                     <label className="form-label">Describe Your Feedback</label>
                                     <textarea
                                         className={`form-control ${errors.feedbackText ? 'is-invalid' : ''}`}
                                         name="feedbackText"
-                                        rows="10" 
+                                        rows="10"
                                         style={{ height: '140px' }}
                                         value={formData.feedbackText}
                                         onChange={handleChange}
