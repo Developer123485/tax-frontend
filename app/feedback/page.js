@@ -27,11 +27,10 @@ function FeedbackForm() {
             <Header></Header>
             <section className="py-5 py-md-4 bg-light-gray">
                 <div className="container">
-                    <div className="row">
+                    <div className="row col-md-12">
                         <h3>Feedback Form</h3>
                         <p>We would love to hear your thoughts, suggestions, concerns, or problems with anything so we can improve!</p>
                         <form onSubmit={handleSubmit}>
-
                             <div className="mb-3">
                                 <label className="form-label d-block">Feedback Type</label>
                                 <div className="form-check form-check-inline">
