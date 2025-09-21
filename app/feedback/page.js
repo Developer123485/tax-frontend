@@ -47,10 +47,11 @@ function FeedbackForm() {
     return (
         <>
             <Header />
-            <section className="py-5 py-md-4 bg-light-gray">
+            <section className="py-5 py-md-5 bg-light-gray">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-md-9">
+                            <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box border border-1 rounded-3">
                             <h3 className="mb-3">Feedback Form</h3>
                             <p className="">We would love to hear your thoughts, suggestions, concerns, or problems with anything so we can improve!</p>
                             <form onSubmit={handleSubmit}>
@@ -148,6 +149,7 @@ function FeedbackForm() {
                                     <button type="submit" className="btn btn-success px-4">Submit</button>
                                 </div>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>
