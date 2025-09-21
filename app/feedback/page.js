@@ -50,13 +50,11 @@ function FeedbackForm() {
                                     <label className="form-check-label">Questions</label>
                                 </div>
                             </div>
-
                             <div className="mb-3">
                                 <label className="form-label">Describe Your Feedback</label>
                                 <textarea className="form-control" name="feedbackText" rows="6"
                                     value={formData.feedbackText} onChange={handleChange}></textarea>
                             </div>
-
                             <div className="row mb-3">
                                 <div className="col">
                                     <label className="form-label">First Name</label>
@@ -69,13 +67,11 @@ function FeedbackForm() {
                                         value={formData.lastName} onChange={handleChange} />
                                 </div>
                             </div>
-
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
                                 <input type="email" className="form-control" name="email"
                                     value={formData.email} onChange={handleChange} />
                             </div>
-
                             <button type="submit" className="btn btn-success">Submit</button>
                         </form>
                     </div>
