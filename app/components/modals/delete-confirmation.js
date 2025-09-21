@@ -36,9 +36,13 @@ export default function DeleteConfirmation(props) {
               <div className="col-md-12 text-center">
                 <button
                   type="button"
+                  disabled={props.deleteLoading}
                   onClick={(e) => props.delete(e)}
                   className="btn btn btn-primary px-5"
                 >
+                  {props.deleteLoading && (
+                    <div className="spinner-border me-2" role="status"></div>
+                  )}
                   Delete
                 </button>
               </div>

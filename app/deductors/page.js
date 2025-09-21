@@ -20,6 +20,7 @@ export default function Deductors() {
   const [show, setShow] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isloading, setIsLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [fileName, setFileName] = useState("");
   const [deductors, setDeductors] = useState([]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -206,11 +207,13 @@ export default function Deductors() {
 
   function deleteDeductor(e) {
     e.preventDefault();
+    setDeleteLoading(true);
     DeductorsService.deleteDeductor(deleteId)
       .then((res) => {
         if (res) {
           toast.success("Delete Deductors Successfully");
           fetchDeductors(1);
+          setDeleteLoading(false);
         }
       }).catch(e => {
         if (e?.response?.data?.errorMessage) {
@@ -219,6 +222,7 @@ export default function Deductors() {
         else {
           toast.error(e?.message);
         }
+        setDeleteLoading(false);
       })
       .finally((f) => {
         setDeleteConfirm(false);
@@ -537,6 +541,7 @@ export default function Deductors() {
       <ProcessPopup showLoader={showLoader}></ProcessPopup>
       <DeleteConfirmation
         show={deleteConfirm}
+        deleteLoading={deleteLoading}
         setDeleteConfirm={(e) => setDeleteConfirm(e)}
         delete={(e) => deleteDeductor(e)}
       ></DeleteConfirmation>
