@@ -43,7 +43,7 @@ export default function TDSForm({ params }) {
   const [openLowerDeduction, setOpenLowerDeduction] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [captchaBase64, setCaptchaBase64] = useState('');
-  const [placeValue, setPlaceValue] = useState('sdsd');
+  const [placeValue, setPlaceValue] = useState('');
   const [verificationDate, setVerificationDate] = useState(new Date());
   const [openGenerateInputPopup, setOpenGenerateInputPopup] = useState(false);
   const [captcha, setCaptcha] = useState("");
