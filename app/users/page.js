@@ -171,8 +171,8 @@ export default function Users() {
         setOpenAddUser(true);
       }
     }).catch((e) => {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -205,8 +205,8 @@ export default function Users() {
             setSalaryCount(res.salaryCount);
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);

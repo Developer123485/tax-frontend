@@ -269,8 +269,8 @@ export default function TaxDeposit() {
             selectedData(null);
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -288,8 +288,8 @@ export default function TaxDeposit() {
             fetchTaxDeposit();
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -397,8 +397,8 @@ export default function TaxDeposit() {
         }
       })
       .catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -442,8 +442,8 @@ export default function TaxDeposit() {
           fetchTaxDeposit();
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);

@@ -362,8 +362,8 @@ export default function DdoWiseDetails({ params }) {
                 toast.error("File upload failed");
             }
         } catch (e) {
-            if (e?.response?.data) {
-                toast.error(e?.response?.data);
+            if (e?.response?.data?.errorMessage) {
+                toast.error(e?.response?.data?.errorMessage);
             }
             else {
                 toast.error(e?.message);
@@ -386,8 +386,8 @@ export default function DdoWiseDetails({ params }) {
                 const blob = new Blob([res], { type: "text/plain" });
                 saveAs(blob, "24G" + ".txt");
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);
@@ -420,8 +420,8 @@ export default function DdoWiseDetails({ params }) {
                     setDdoWiseDetails(res);
                 }
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);

@@ -43,8 +43,8 @@ export default function TDSForm({ params }) {
   const [openLowerDeduction, setOpenLowerDeduction] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [captchaBase64, setCaptchaBase64] = useState('');
-  const [placeValue, setPlaceValue] = useState('');
-  const [verificationDate, setVerificationDate] = useState("");
+  const [placeValue, setPlaceValue] = useState('sdsd');
+  const [verificationDate, setVerificationDate] = useState(new Date());
   const [openGenerateInputPopup, setOpenGenerateInputPopup] = useState(false);
   const [captcha, setCaptcha] = useState("");
   const [isDirty, setIsDirty] = useState(false);
@@ -174,8 +174,8 @@ export default function TDSForm({ params }) {
             toast.success("Genrate Form Successfully!");
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -250,8 +250,8 @@ export default function TDSForm({ params }) {
             saveAs(url, "CHALLAN-DEDUCCTEE-EXPORT-" + form + ".xlsx");
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -307,8 +307,8 @@ export default function TDSForm({ params }) {
         toast.error("File upload failed");
       }
     } catch (e) {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -352,8 +352,8 @@ export default function TDSForm({ params }) {
       );
     }
     catch (error) {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -412,8 +412,8 @@ export default function TDSForm({ params }) {
           setDeductorInfo(res.deductor);
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -444,8 +444,8 @@ export default function TDSForm({ params }) {
         }
       }).catch(e => {
         setSubmitLoginLoading(false);
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -485,8 +485,8 @@ export default function TDSForm({ params }) {
         }, 1000);
       }
     }).catch(e => {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);

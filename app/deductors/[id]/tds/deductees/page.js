@@ -274,8 +274,8 @@ export default function Deductees({ params }) {
         }
       })
       .catch((e) => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -299,8 +299,8 @@ export default function Deductees({ params }) {
           setAllLoading(false);
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -343,8 +343,8 @@ export default function Deductees({ params }) {
         setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -369,8 +369,8 @@ export default function Deductees({ params }) {
         setToggleCleared(!toggleCleared);
         setCaptchaBase64("");
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -394,8 +394,8 @@ export default function Deductees({ params }) {
             fetchDeductees("");
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -413,8 +413,8 @@ export default function Deductees({ params }) {
             fetchEmployees("");
           }
         }).catch(e => {
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -487,8 +487,8 @@ export default function Deductees({ params }) {
         setShowLoader(false);
       }
     } catch (e) {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -547,8 +547,8 @@ export default function Deductees({ params }) {
           }
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);

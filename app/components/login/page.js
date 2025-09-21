@@ -57,7 +57,6 @@ export default function LoginForm() {
           }
         })
         .catch((e) => {
-          debugger
           if (e?.response?.data?.title && e?.response?.data?.email && e?.response?.data?.phoneNumber) {
             const res = {
               email: e?.response?.data?.email,
@@ -70,8 +69,8 @@ export default function LoginForm() {
             toast.error(e?.title);
             router.push("/verification");
           }
-          else if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          else if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);

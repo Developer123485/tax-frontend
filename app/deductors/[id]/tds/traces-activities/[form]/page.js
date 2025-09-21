@@ -284,8 +284,8 @@ export default function TracesActivities({ params }) {
       setAutoLoading(false);
     }).catch((e) => {
       setAutoLoading(false);
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -309,8 +309,8 @@ export default function TracesActivities({ params }) {
         }
       })
       .catch((e) => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -356,8 +356,8 @@ export default function TracesActivities({ params }) {
       }
       setLoading(false);
     }).catch(e => {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -481,8 +481,8 @@ export default function TracesActivities({ params }) {
               }));
             }
           }).catch(e => {
-            if (e?.response?.data) {
-              toast.error(e?.response?.data);
+            if (e?.response?.data?.errorMessage) {
+              toast.error(e?.response?.data?.errorMessage);
             }
             else {
               toast.error(e?.message);
@@ -505,8 +505,8 @@ export default function TracesActivities({ params }) {
               }));
             }
           }).catch(e => {
-            if (e?.response?.data) {
-              toast.error(e?.response?.data);
+            if (e?.response?.data?.errorMessage) {
+              toast.error(e?.response?.data?.errorMessage);
             }
             else {
               toast.error(e?.message);

@@ -74,8 +74,8 @@ export default function Miscellaneous({ params }) {
                     setMiscellaneousAReport(res);
                 }
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);
@@ -104,8 +104,8 @@ export default function Miscellaneous({ params }) {
                     setMiscellaneousBReport(res);
                 }
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);
@@ -132,8 +132,8 @@ export default function Miscellaneous({ params }) {
                 setMiscellaneousCReport(res);
                 setShowLoader(false);
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);
@@ -164,8 +164,8 @@ export default function Miscellaneous({ params }) {
                 toast.success("Export Data Successfully!");
                 saveAs(url, fileName);
             }).catch(e => {
-                if (e?.response?.data) {
-                    toast.error(e?.response?.data);
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
                 }
                 else {
                     toast.error(e?.message);

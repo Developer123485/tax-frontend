@@ -68,8 +68,8 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);
@@ -100,8 +100,8 @@ export default function ForgotPasswordForm() {
         })
         .catch((e) => {
           setLoading(false);
-          if (e?.response?.data) {
-            toast.error(e?.response?.data);
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
           }
           else {
             toast.error(e?.message);

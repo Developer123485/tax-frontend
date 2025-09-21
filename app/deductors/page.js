@@ -213,8 +213,8 @@ export default function Deductors() {
           fetchDeductors(1);
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -241,8 +241,9 @@ export default function Deductors() {
         }
       })
       .catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        debugger;
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -287,8 +288,8 @@ export default function Deductors() {
         saveAs(blob, "errors.txt");
       }
     } catch (e) {
-      if (e?.response?.data) {
-        toast.error(e?.response?.data);
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
       else {
         toast.error(e?.message);
@@ -331,8 +332,8 @@ export default function Deductors() {
           }
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);

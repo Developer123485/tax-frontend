@@ -254,6 +254,9 @@ export default function Challans({ params }) {
           }
         })
         .catch((e) => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
           setDeleteConfirm(false);
         });
     } else if (confirmTitle === "Challan Entry") {
@@ -266,6 +269,9 @@ export default function Challans({ params }) {
           }
         })
         .catch((e) => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
           setDeleteConfirm(false);
         });
     } else {
@@ -282,8 +288,8 @@ export default function Challans({ params }) {
               setSelectedData([]);
             }
           }).catch(e => {
-            if (e?.response?.data) {
-              toast.error(e?.response?.data);
+            if (e?.response?.data?.errorMessage) {
+              toast.error(e?.response?.data?.errorMessage);
             }
             else {
               toast.error(e?.message);
