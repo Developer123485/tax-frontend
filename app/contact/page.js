@@ -53,7 +53,7 @@ export default function ContactUs() {
                                 <title>Contact Email</title>
                                  </head>
                                <body>
-                      <h1>Hello,</h1>
+                      <h1>Contact Email</h1>
                 <p><strong>Email:</strong> ${formData.email}</p>
                 <p><strong>Mobile:</strong> ${formData.phone}</p>
                  <p><strong>Full Name:</strong> ${formData.firstName} ${formData.lastName}</p>

@@ -41,7 +41,6 @@ function FeedbackForm() {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            debugger
             setErrors({});
             const emailBody = `<!DOCTYPE html>
                     <html>
@@ -50,7 +49,7 @@ function FeedbackForm() {
                               <title>Feedback Email</title>
                                </head>
                              <body>
-                    <h1>Hello,</h1>
+                    <h1>Feedback Email</h1>
               <p><strong>Feedback Type:</strong> ${formData.feedbackType}</p>
               <p><strong>Email:</strong> ${formData.email}</p>
                <p><strong>Full Name:</strong> ${formData.firstName} ${formData.lastName}</p>
