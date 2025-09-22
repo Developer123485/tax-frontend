@@ -245,7 +245,6 @@ export default function Deductors() {
         }
       })
       .catch(e => {
-        debugger;
         if (e?.response?.data?.errorMessage) {
           toast.error(e?.response?.data?.errorMessage);
         }

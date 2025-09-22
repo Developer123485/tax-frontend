@@ -6,12 +6,10 @@ import HeaderList from "@/app/components/header/header-list";
 import "react-toastify/dist/ReactToastify.css";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { useRouter } from "next/navigation";
-import ProcessPopup from "@/app/components/modals/processing";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { DeductorsService } from "@/app/services/deductors.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 import Modal from "react-bootstrap/Modal";
-import Image from "next/image";
 import DataTable from "react-data-table-component";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -464,7 +462,6 @@ export default function TracesActivities({ params }) {
         }
         if (form != "forgot-password") {
           TracesActivitiesService.startLogin(model).then(res => {
-            debugger
             if (downl == "download") {
               setDownloadRow("download")
             }
