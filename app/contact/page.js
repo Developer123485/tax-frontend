@@ -139,12 +139,12 @@ export default function ContactUs() {
                     width={160}
                     height={160}
                   />
-                  <p className="mb-2">Mr. Kathy Jones</p>
+                  {/* <p className="mb-2">Mr. Kathy Jones</p>
                   <h6 className="fw-bold">
                     <a className="text-black" href="tel:+91-999-888-8888;">
                       +91-999-888-8888
                     </a>
-                  </h6>
+                  </h6> */}
                 </div>
                 <div className="col-sm col-md col-lg-1">
                   <Image
@@ -158,13 +158,12 @@ export default function ContactUs() {
                 <div className="col-sm-7 col-md-7 col-lg-6 mt-4 mt-md-0 text-center text-sm-start">
                   <h5 className="fw-bold">Address</h5>
                   <p>
-                    123, Lorem epsum, Lorem epsum, Delhi - 123456, New Delhi,
-                    India
+                    Bharat
                   </p>
                   <h5 className="fw-bold mt-md-4">Email</h5>
                   <p>
                     <a className="text-black" href="mailto:info.taxvahan@gmail.com">
-                      info.taxvahan@gmail.com
+                      feedback@taxvahan.com
                     </a>
                   </p>
                 </div>
