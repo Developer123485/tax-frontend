@@ -210,7 +210,7 @@ export default function Deductors() {
       .then((res) => {
         if (res) {
           toast.success("Delete Deductors Successfully");
-          fetchDeductors(1);
+          fetchDeductors(currentPage);
           setDeleteLoading(false);
         }
       }).catch(e => {
