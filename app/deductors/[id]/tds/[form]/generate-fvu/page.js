@@ -200,6 +200,10 @@ export default function GenerateFVU({ params }) {
         toast.error("Fix Validation Errors");
         isValidation = true;
       }
+      if (!selectedData) {
+        toast.error("Please Select CSI file");
+        return false;
+      }
       if (!isValidation) {
         e.preventDefault();
         const formData = new FormData();
@@ -584,36 +588,32 @@ export default function GenerateFVU({ params }) {
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
                   <div className="col-md-7">
                     <p className="mb-0">
-                      Please upload a unzipped .csl file generated from OLTAS.
+                      Please upload an unzipped <strong>.csl</strong> file generated from OLTAS.
                     </p>
                     <p className="mt-2 mb-0">
-                      <a className="text-decoration-underline" href="">
+                      <a
+                        className="text-decoration-underline"
+                        href="/path/to/how‑to‑download‑csl‑file"     // put actual URL
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         How to download .csl file
                       </a>
                     </p>
                   </div>
                   <div className="col-md-5 d-flex justify-content-end">
                     <div className="d-flex">
-                      {/* <div className="bg-white px-3 py-2 border border-1 rounded-3 d-flex align-items-center">
-                        <span></span>
-                        <Image
-                          className="ms-3"
-                          src="/images/icons/close_icon.svg"
-                          alt="close_icon"
-                          width={24}
-                          height={24}
-                        />
-                      </div> */}
-                      <input type="file" accept=".csi" onChange={fileSelectHandler} />
-                      {/* <button
+                      <input
                         type="file"
-                        className="btn btn-primary px-3 py-2 ms-3"
-                      >
-                        Browse .csl file
-                      </button> */}
+                        accept=".csl"
+                        id="cslFileUpload"
+                        name="cslFileUpload"
+                        onChange={fileSelectHandler}
+                      />
                     </div>
                   </div>
                 </div>
+
               </div>
               <div className="my-4">
                 <div className="row">
@@ -694,12 +694,14 @@ export default function GenerateFVU({ params }) {
         show={showFvuFile}
         onHide={() => setShowFvuFile(false)}
       >
-        <Modal.Header className="border-0" closeButton></Modal.Header>
+        <Modal.Header className="border-0" closeButton>
+
+        </Modal.Header>
         <Modal.Body>
           <div className="container">
             <div className="row">
               <div>
-                <label>Folder Path:</label>
+                <label>Paste the full path of the local folder where you want to save the files:</label>
                 <div>
                   <input
                     type="text"
