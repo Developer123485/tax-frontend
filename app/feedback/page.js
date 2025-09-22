@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import Header from '../components/header/header';
+import { EmailService } from '../services/email.service';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FeedbackForm() {
     const [formData, setFormData] = useState({
@@ -20,7 +23,7 @@ function FeedbackForm() {
 
     const validate = () => {
         const newErrors = {};
-         if (!formData.feedbackType) newErrors.feedbackType = 'Please select a feedback type.';
+        if (!formData.feedbackType) newErrors.feedbackType = 'Please select a feedback type.';
         if (!formData.feedbackText.trim()) newErrors.feedbackText = 'Feedback is required.';
         if (!formData.firstName.trim()) newErrors.firstName = 'First name is required.';
         if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required.';
@@ -38,117 +41,153 @@ function FeedbackForm() {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
+            debugger
             setErrors({});
-            console.log('Submitted:', formData);
-            // TODO: Add submission logic (API call etc.)
+            const emailBody = `<!DOCTYPE html>
+                    <html>
+                       <head>
+                            <meta charset="UTF-8">
+                              <title>Feedback Email</title>
+                               </head>
+                             <body>
+                    <h1>Hello,</h1>
+              <p><strong>Feedback Type:</strong> ${formData.feedbackType}</p>
+              <p><strong>Email:</strong> ${formData.email}</p>
+               <p><strong>Full Name:</strong> ${formData.firstName} ${formData.lastName}</p>
+                <p><strong>Message:</strong> ${formData.feedbackText}</p>
+              </body>
+          </html>`;
+            const formDatas = new FormData();
+            formDatas.append("body", emailBody);
+            EmailService.sendEmail(formDatas).then(res => {
+                if (res) {
+                    toast.success("Feedback Email Sent Successfully");
+                }
+                setFormData(prev => ({
+                    ...prev,
+                    feedbackType: '',
+                    feedbackText: '',
+                    firstName: '',
+                    lastName: '',
+                    email: ''
+                }));
+            }).catch((e) => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+            });
         }
     };
 
     return (
         <>
+            <ToastContainer />
             <Header />
             <section className="py-5 py-md-5 bg-light-gray">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-md-9">
                             <div className="px-2 py-5 mx-md-4 px-md-4 py-md-4 bg-white content-box border border-1 rounded-3">
-                            <h3 className="mb-3">Feedback Form</h3>
-                            <p className="">We would love to hear your thoughts, suggestions, concerns, or problems with anything so we can improve!</p>
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label className="form-label d-block">Feedback Type</label>
+                                <h3 className="mb-3">Feedback Form</h3>
+                                <p className="">We would love to hear your thoughts, suggestions, concerns, or problems with anything so we can improve!</p>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="mb-3">
+                                        <label className="form-label d-block">Feedback Type</label>
 
-                                    <div className={`form-check form-check-inline ${errors.feedbackType ? 'is-invalid' : ''}`}>
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="feedbackType"
-                                            value="Comments"
-                                            checked={formData.feedbackType === 'Comments'}
+                                        <div className={`form-check form-check-inline ${errors.feedbackType ? 'is-invalid' : ''}`}>
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="feedbackType"
+                                                value="Comments"
+                                                checked={formData.feedbackType === 'Comments'}
+                                                onChange={handleChange}
+                                            />
+                                            <label className="form-check-label">Comments</label>
+                                        </div>
+
+                                        <div className="form-check form-check-inline">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="feedbackType"
+                                                value="Suggestions"
+                                                checked={formData.feedbackType === 'Suggestions'}
+                                                onChange={handleChange}
+                                            />
+                                            <label className="form-check-label">Suggestions</label>
+                                        </div>
+
+                                        <div className="form-check form-check-inline">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="feedbackType"
+                                                value="Questions"
+                                                checked={formData.feedbackType === 'Questions'}
+                                                onChange={handleChange}
+                                            />
+                                            <label className="form-check-label">Questions</label>
+                                        </div>
+                                        {errors.feedbackType && <div className="text-danger mt-1">{errors.feedbackType}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label className="form-label">Describe Your Feedback</label>
+                                        <textarea
+                                            className={`form-control ${errors.feedbackText ? 'is-invalid' : ''}`}
+                                            name="feedbackText"
+                                            rows="10"
+                                            style={{ height: '140px' }}
+                                            value={formData.feedbackText}
                                             onChange={handleChange}
-                                        />
-                                        <label className="form-check-label">Comments</label>
+                                        ></textarea>
+                                        {errors.feedbackText && <div className="invalid-feedback">{errors.feedbackText}</div>}
                                     </div>
 
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="feedbackType"
-                                            value="Suggestions"
-                                            checked={formData.feedbackType === 'Suggestions'}
-                                            onChange={handleChange}
-                                        />
-                                        <label className="form-check-label">Suggestions</label>
+                                    <div className="row mb-3">
+                                        <div className="col">
+                                            <label className="form-label">First Name</label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                                                name="firstName"
+                                                value={formData.firstName}
+                                                onChange={handleChange}
+                                            />
+                                            {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
+                                        </div>
+                                        <div className="col">
+                                            <label className="form-label">Last Name</label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                                                name="lastName"
+                                                value={formData.lastName}
+                                                onChange={handleChange}
+                                            />
+                                            {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                                        </div>
                                     </div>
 
-                                    <div className="form-check form-check-inline">
+                                    <div className="mb-3">
+                                        <label className="form-label">Email</label>
                                         <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="feedbackType"
-                                            value="Questions"
-                                            checked={formData.feedbackType === 'Questions'}
+                                            type="email"
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                            name="email"
+                                            value={formData.email}
                                             onChange={handleChange}
                                         />
-                                        <label className="form-check-label">Questions</label>
+                                        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                                     </div>
-                                    {errors.feedbackType && <div className="text-danger mt-1">{errors.feedbackType}</div>}
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">Describe Your Feedback</label>
-                                    <textarea
-                                        className={`form-control ${errors.feedbackText ? 'is-invalid' : ''}`}
-                                        name="feedbackText"
-                                        rows="10"
-                                        style={{ height: '140px' }}
-                                        value={formData.feedbackText}
-                                        onChange={handleChange}
-                                    ></textarea>
-                                    {errors.feedbackText && <div className="invalid-feedback">{errors.feedbackText}</div>}
-                                </div>
 
-                                <div className="row mb-3">
-                                    <div className="col">
-                                        <label className="form-label">First Name</label>
-                                        <input
-                                            type="text"
-                                            className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                                            name="firstName"
-                                            value={formData.firstName}
-                                            onChange={handleChange}
-                                        />
-                                        {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
+                                    <div className="text-center">
+                                        <button type="submit" className="btn btn-success px-4">Submit</button>
                                     </div>
-                                    <div className="col">
-                                        <label className="form-label">Last Name</label>
-                                        <input
-                                            type="text"
-                                            className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                                            name="lastName"
-                                            value={formData.lastName}
-                                            onChange={handleChange}
-                                        />
-                                        {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
-                                    </div>
-                                </div>
-
-                                <div className="mb-3">
-                                    <label className="form-label">Email</label>
-                                    <input
-                                        type="email"
-                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                    />
-                                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-                                </div>
-
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-success px-4">Submit</button>
-                                </div>
-                            </form>
+                                </form>
                             </div>
                         </div>
                     </div>
