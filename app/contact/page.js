@@ -85,8 +85,8 @@ export default function ContactUs() {
                   </p>
                   <h5 className="fw-bold mt-md-4">Email</h5>
                   <p>
-                    <a className="text-black" href="mailto:abcd@taxvahan.com">
-                      abcd@taxvahan.com
+                    <a className="text-black" href="mailto:info.taxvahan@gmail.com">
+                      info.taxvahan@gmail.com
                     </a>
                   </p>
                 </div>
