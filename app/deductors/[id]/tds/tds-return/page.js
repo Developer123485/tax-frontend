@@ -179,7 +179,7 @@ export default function TDSReturn({ params }) {
         fy: null,
         quarter: null,
         filedOn: null,
-        uploadType: null,
+        uploadType: "Regular",
         rNumber: null,
         status: null,
         deductorId: null,
@@ -319,7 +319,7 @@ export default function TDSReturn({ params }) {
             ["rNumber"]: null,
             ["formName"]: null,
             ["quarter"]: null,
-            ["uploadType"]: null,
+            ["uploadType"]: "Regular",
             ["filedOn"]: null,
         }));
     }
@@ -640,8 +640,8 @@ export default function TDSReturn({ params }) {
                                     id="uploadType"
                                     maxLength={15}
                                     rows={2}
+                                    readOnly
                                     value={tdsReturnForm.uploadType}
-                                    onChange={(e) => handleInput("uploadType", e)}
                                 />
                                 {isDirty &&
                                     tdsReturnErrors.uploadTypeError && (
@@ -655,8 +655,20 @@ export default function TDSReturn({ params }) {
                             <div className="col-md-2">
                                 <button
                                     type="button"
+                                    onClick={(e) => {
+                                        resetForm();
+                                        setOpenTdsReturns(false)
+                                    }}
+                                    className="btn btn-default w-100"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                            <div className="col-md-2">
+                                <button
+                                    type="button"
                                     onClick={(e) => submitTdsReturn(e)}
-                                    className="btn btn btn-primary w-100"
+                                    className="btn btn-primary w-100"
                                     disabled={loading}
                                 >
                                     {loading && (
