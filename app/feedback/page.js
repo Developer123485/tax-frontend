@@ -184,7 +184,7 @@ function FeedbackForm() {
                                     </div>
 
                                     <div className="text-center">
-                                        <button type="submit" className="btn btn-success px-4">Submit</button>
+                                        <button type="submit" className="btn btn-secondary px-4">Submit</button>
                                     </div>
                                 </form>
                             </div>
