@@ -613,11 +613,11 @@ export default function TDSReturn({ params }) {
                                     autoComplete="off"
                                     selected={tdsReturnForm.filedOn}
                                     id="filedOn"
-                                    minDate={
-                                        tdsReturnForm.filedOn
-                                            ? new Date(tdsReturnForm.filedOn)
-                                            : null
-                                    }
+                                    // minDate={
+                                    //     tdsReturnForm.filedOn
+                                    //         ? new Date(tdsReturnForm.filedOn)
+                                    //         : null
+                                    // }
                                     className="form-control w-100"
                                     onChange={(e) => handleInput("filedOn", e)}
                                     dateFormat="dd/MM/yyyy"
