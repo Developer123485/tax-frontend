@@ -918,7 +918,7 @@ export default function HomeSections() {
                 <p className="fs-6">
                   Consume all TDS challans, never get a tax notice again.
                 </p>
-                <button className="btn btn-primary btn-lg">
+                <button className="btn btn-primary btn-lg" onClick={(e) => window.location.href = "/signup"}>
                   Start for Free
                 </button>
               </div>
