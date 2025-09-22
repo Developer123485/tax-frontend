@@ -135,6 +135,23 @@ export default function HeaderList() {
                       </li>
                     </ul>
                   )}
+                {CommonService.isUserLogin() &&
+                  CommonService.userDetail().role == "Admin" && pathname == "/profile" && (
+                    <ul className="navbar-nav">
+                      <li className="nav-item">
+                        <a
+                          className={
+                            pathname == "/deductors"
+                              ? "active nav-link px-3"
+                              : "nav-link px-3"
+                          }
+                          onClick={(e) => router.push("/deductors")}
+                        >
+                          Deductors
+                        </a>
+                      </li>
+                    </ul>
+                  )}
               </div>
             </div>
             <div
