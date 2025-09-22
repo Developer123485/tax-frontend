@@ -257,7 +257,9 @@ export default function LoginForm() {
                         <div className="col-md-12">
                           <button
                             type="button"
-                            onClick={(e) => submitLoginDetail(e)}
+                            onClick={(e) => {
+                              submitLoginDetail(e)
+                            }}
                             className="btn btn-pri-grd text-white w-100 position-relative"
                           >
                             {loading && (
@@ -312,7 +314,6 @@ export default function LoginForm() {
                           <button
                             className="btn btn-link px-1 py-0 text-decoration-none"
                             onClick={(e) => {
-                              e.preventDefault();
                               router.push("/signup");
                             }}
                           >
