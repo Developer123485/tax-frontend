@@ -1,14 +1,92 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Accordion from "react-bootstrap/Accordion";
 import { useRouter } from "next/navigation";
 import Header from "../components/header/header";
+import { EmailService } from "../services/email.service";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ContactUs() {
   const router = useRouter(null);
+  const [formData, setFormData] = useState({
+    phone: '',
+    feedbackText: '',
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.phone) newErrors.phone = 'Mobile is required.';
+    if (!formData.feedbackText.trim()) newErrors.feedbackText = 'Phone is required.';
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required.';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required.';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format.';
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+      const emailBody = `<!DOCTYPE html>
+                      <html>
+                         <head>
+                              <meta charset="UTF-8">
+                                <title>Contact Email</title>
+                                 </head>
+                               <body>
+                      <h1>Hello,</h1>
+                <p><strong>Email:</strong> ${formData.email}</p>
+                <p><strong>Mobile:</strong> ${formData.phone}</p>
+                 <p><strong>Full Name:</strong> ${formData.firstName} ${formData.lastName}</p>
+                  <p><strong>Message:</strong> ${formData.feedbackText}</p>
+                </body>
+            </html>`;
+      const formDatas = new FormData();
+      formDatas.append("body", emailBody);
+      EmailService.sendEmail(formDatas).then(res => {
+        if (res) {
+          toast.success("Feedback Email Sent Successfully");
+        }
+        setFormData(prev => ({
+          ...prev,
+          phone: '',
+          feedbackText: '',
+          firstName: '',
+          lastName: '',
+          email: ''
+        }));
+      }).catch((e) => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+      });
+    }
+  };
   return (
     <>
+      <ToastContainer />
       <Header></Header>
       <section className="py-5 contact-hero">
         <div className="container">
@@ -95,19 +173,22 @@ export default function ContactUs() {
             <div className="col-md-6 ps-md-5">
               <div className="px-3 py-3 px-md-4 py-md-4 mt-4 mt-md-0 shadow rounded-3">
                 <h3 className="fw-bold mb-4">Send us a message</h3>
-                <form className="row g-3">
+                <form className="row g-3" onSubmit={handleSubmit}>
                   <div className="col-sm-6 col-lg-6">
                     <label
                       for="inputFistName"
                       className="form-label fs-14 opacity-50"
                     >
-                      Fist Name
+                      First Name
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
                       id="inputFistName"
-                    />
+                    /> {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
                   </div>
                   <div className="col-sm-6 col-lg-6">
                     <label
@@ -118,21 +199,34 @@ export default function ContactUs() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
-                      id="inputLastName"
+                      className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
                     />
+                    {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
                   </div>
                   <div className="col-sm-6 col-lg-6">
                     <label for="inputPhone" className="form-label fs-14 opacity-50">
                       Phone Number
                     </label>
-                    <input type="text" className="form-control" id="inputPhone" />
+                    <input type="text" className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                    {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
                   </div>
                   <div className="col-sm-6 col-lg-6">
                     <label for="inputEmail" className="form-label fs-14 opacity-50">
                       Customer Email ID
                     </label>
-                    <input type="email" className="form-control" id="inputEmail" />
+                    <input type="email" className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                   </div>
                   <div className="col-12">
                     <label
@@ -141,7 +235,14 @@ export default function ContactUs() {
                     >
                       Message
                     </label>
-                    <textarea className="form-control" id="inputMessage" rows="3" />
+                    <textarea className={`form-control ${errors.feedbackText ? 'is-invalid' : ''}`}
+                      name="feedbackText"
+                      rows="4"
+                      style={{ height: '140px' }}
+                      value={formData.feedbackText}
+                      onChange={handleChange}
+                    ></textarea>
+                    {errors.feedbackText && <div className="invalid-feedback">{errors.feedbackText}</div>}
                   </div>
                   <div className="col-12 text-center">
                     <button type="submit" className="btn btn-secondary">
