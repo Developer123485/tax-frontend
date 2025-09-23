@@ -1,27 +1,23 @@
-# Stage 1: Build the app
-FROM node:20-alpine AS builder
+# Use official Node.js LTS image as base
+FROM node:18-alpine
 
+# Set working directory inside container
 WORKDIR /app
 
-# Install dependencies
+# Copy package.json and package-lock.json (if available)
 COPY package.json package-lock.json* ./
-RUN npm install -f
 
-# Copy the rest of the source code
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the app source code
 COPY . .
 
-# Build the Vite app
+# Build the Next.js app
 RUN npm run build
 
-# Stage 2: Serve the app with Nginx
-FROM nginx:stable-alpine
+# Expose port 3000 to the outside
+EXPOSE 3000
 
-# Copy built files to Nginx's default public directory
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Optional: Custom Nginx config (uncomment to use custom config)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-RUN chmod -R 775 /usr/share/nginx/html
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start the app
+CMD ["npm", "start"]
