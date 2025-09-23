@@ -4,7 +4,7 @@
 set -e
 
 # Define the branch name
-BRANCH_NAME="main"
+BRANCH_NAME="staging"
 
 # Pull the latest changes from the specified branch
 echo "Pulling latest changes from $BRANCH_NAME..."

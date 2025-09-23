@@ -1,0 +1,10 @@
+services:
+  stg-frontend:
+    container_name: stg-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3500:3000
+    restart: always
+    pull_policy: always
