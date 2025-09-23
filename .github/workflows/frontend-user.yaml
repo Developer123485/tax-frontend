@@ -1,0 +1,16 @@
+name: Pipeline to trigger Frontend Service
+
+on:
+  push:
+    branches: [ "staging" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get update -y && sudo apt-get install sshpass -y
+
+      - name: SSH into dev env
+        run: sshpass -p n-H3uLk?zeMqHcvt ssh -o StrictHostKeyChecking=no root@65.20.78.78 "cd /root/frontend/tax-frontend && bash build.sh"
