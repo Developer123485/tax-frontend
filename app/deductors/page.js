@@ -303,10 +303,10 @@ export default function Deductors() {
   }
 
   function download() {
-    const url = "/static/pdf/DEDUCTOR-MASTER-FINAL.xlsx";
+    const url = "/static/pdf/Deductor_Master_Template.xlsx";
     const link = document.createElement("a");
     link.href = url;
-    link.download = "DEDUCTOR-MASTER-FINAL.xlsx";
+    link.download = "Deductor_Master_Template.xlsx";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

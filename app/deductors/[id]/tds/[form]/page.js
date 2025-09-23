@@ -371,16 +371,16 @@ export default function TDSForm({ params }) {
   function download() {
     let urlPath = "";
     if (searchParams.get("categoryId") == "1") {
-      urlPath = "CHALLAN-DEDUCTEE-24Q-FINAL.xlsx";
+      urlPath = "24Q_Excel_Template.xlsx";
     }
     if (searchParams.get("categoryId") == "2") {
-      urlPath = "CHALLAN-DEDUCTEE-26Q-FINAL.xlsx";
+      urlPath = "26Q_Excel_Template.xlsx";
     }
     if (searchParams.get("categoryId") == "3") {
-      urlPath = "CHALLAN-DEDUCTEE-27EQ-FINAL.xlsx";
+      urlPath = "27EQ_Excel_Template.xlsx";
     }
     if (searchParams.get("categoryId") == "4") {
-      urlPath = "CHALLAN-DEDUCTEE-27Q-FINAL.xlsx";
+      urlPath = "27Q_Excel_Template.xlsx";
     }
     const url = "/static/pdf/" + urlPath;
     const link = document.createElement("a");

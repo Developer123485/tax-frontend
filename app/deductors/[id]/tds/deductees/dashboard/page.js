@@ -73,10 +73,10 @@ export default function ImportDeductee({ params }) {
   }
 
   function download() {
-    const url = "/static/pdf/DEDUCTEE-EMPLOYEE-MASTER-FINAL.xlsx";
+    const url = "/static/pdf/Deductee_Employee_Master_Template.xlsx";
     const link = document.createElement("a");
     link.href = url;
-    link.download = "DEDUCTEE-EMPLOYEE-MASTER-FINAL.xlsx";
+    link.download = "Deductee_Employee_Master_Template.xlsx";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
