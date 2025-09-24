@@ -205,8 +205,10 @@ export default function ForgotPasswordForm() {
                     Provide the email address associated with your account to
                     recover your password.
                   </p>
-                  <form>
-                    <div className="row g-3">
+                  <div className="row g-3">
+                    <form
+                      onSubmit={(e) => submitOtpToEmail(e)}
+                    >
                       <div className="col-md-12">
                         <label htmlFor="inputEmail" className="form-label">
                           <span>Enter your Registered Email</span>
@@ -229,10 +231,10 @@ export default function ForgotPasswordForm() {
                           <span className="text-danger">{emailError}</span>
                         )}
                       </div>
+                      <br />
                       <div className="col-md-12">
                         <button
-                          type="button"
-                          onClick={(e) => submitOtpToEmail(e)}
+                          type="submit"
                           className="btn btn-pri-grd text-white w-100 position-relative"
                         >
                           {loading && (
@@ -252,18 +254,18 @@ export default function ForgotPasswordForm() {
                           />
                         </button>
                       </div>
-                      <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
-                        <span>Back to</span>
-                        <button
-                          type="button"
-                          className="btn btn-link py-0 px-1 text-decoration-none"
-                          onClick={goBack}
-                        >
-                          Sign In
-                        </button>
-                      </div>
+                    </form>
+                    <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                      <span>Back to</span>
+                      <button
+                        type="button"
+                        className="btn btn-link py-0 px-1 text-decoration-none"
+                        onClick={goBack}
+                      >
+                        Sign In
+                      </button>
                     </div>
-                  </form>
+                  </div>
                 </div>
               )}
               {!isPasswordUpdate && isChangePassword && (
