@@ -103,7 +103,7 @@ export default function TDSReturn({ params }) {
     },
     {
       name: "Filed On",
-      selector: (row) => CommonService.dateFormat(row?.filedOn) ?? "-",
+      selector: (row) => row?.filedOn ?? "-",
       grow: 1,
     },
     {
