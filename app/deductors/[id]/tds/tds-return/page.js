@@ -666,7 +666,7 @@ export default function TDSReturn({ params }) {
                     resetForm();
                     setOpenTdsReturns(false);
                   }}
-                  className="btn btn-default w-100"
+                  className="btn btn-outline-secondary"
                 >
                   Cancel
                 </button>
