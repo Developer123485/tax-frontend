@@ -1,4 +1,4 @@
 import axios from "axios";
-const baseUrl = "https://stage-api-tax.skycloudops.in/api/";
+const baseUrl = "https://api.taxvahan.site/api/";
 export const apiRequest = axios.create({ baseURL: baseUrl });
-export const apiUrl = "https://stage-api-tax.skycloudops.in/api/";
+export const apiUrl = "https://api.taxvahan.site/api/";
