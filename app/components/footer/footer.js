@@ -93,12 +93,12 @@ export default function Footer() {
                   <li>
                     <a onClick={(e) => router.push("/privacy-policy")}>Privacy Policy</a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a onClick={(e) => router.push("/terms-conditions")}>Term of service</a>
                   </li>
                   <li>
                     <a onClick={(e) => router.push("/terms-conditions")}>Terms and Conditions</a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               {/* <div className="col-md-3">
