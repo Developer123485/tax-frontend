@@ -10,7 +10,7 @@ export default function Footer() {
   const router = useRouter(null);
   return (
     <>
-      {(pathname === "/" || pathname == "/about" || pathname == "/blog" || pathname == "/blog/how-to-file-tds-returns-online-step-by-step-guide-2025" || pathname == "/features" || pathname == "/contact") &&
+      {(pathname === "/" || pathname == "/about" || pathname == "/privacy-policy" || pathname == "/terms-conditions" || pathname == "/blog" || pathname == "/blog/how-to-file-tds-returns-online-step-by-step-guide-2025" || pathname == "/features" || pathname == "/contact") &&
         pathname !== "/signup" &&
         (!CommonService.isUserLogin() ||
           CommonService.userDetail().role !== "SuperAdmin") ? (
@@ -91,13 +91,13 @@ export default function Footer() {
                 <h5>Legal</h5>
                 <ul className="">
                   <li>
-                    <a href="">Privacy Policy</a>
+                    <a onClick={(e) => router.push("/privacy-policy")}>Privacy Policy</a>
                   </li>
                   <li>
-                    <a href="">Term of service</a>
+                    <a onClick={(e) => router.push("/terms-conditions")}>Term of service</a>
                   </li>
                   <li>
-                    <a href="">Terms and Conditions</a>
+                    <a onClick={(e) => router.push("/terms-conditions")}>Terms and Conditions</a>
                   </li>
                 </ul>
               </div>
