@@ -1,4 +1,4 @@
 import axios from "axios";
-const baseUrl = "http://stage-api.taxvahan.site/api/";
+const baseUrl = "https://api.taxvahan.site/api/";
 export const apiRequest = axios.create({ baseURL: baseUrl });
-export const apiUrl = "http://stage-api.taxvahan.site/api/";
+export const apiUrl = "https://api.taxvahan.site/api/";
