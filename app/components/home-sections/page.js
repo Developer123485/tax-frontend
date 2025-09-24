@@ -453,7 +453,7 @@ export default function HomeSections() {
           </div>
         </div>
       </section>
-      <section className="home-reviews pb-5">
+      {/* <section className="home-reviews pb-5">
         <div className="container">
           <div className="row">
             <div className="col-md-2"></div>
@@ -710,7 +710,7 @@ export default function HomeSections() {
             </div>
           </Slider>
         </div>
-      </section>
+      </section> */}
       {/* <Subscription></Subscription> */}
       <section className="py-5 home-faqs">
         <div className="container">
