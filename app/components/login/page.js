@@ -137,8 +137,8 @@ export default function LoginForm() {
                 <h4 className="mb-0 mb-md-4 text-capitalize">Login</h4>
                 <div>
                   <div className="content">
-                    <form>
-                      <div className="row g-3">
+                    <div className="row g-3">
+                      <form onSubmit={submitLoginDetail}>
                         <div className="col-md-12">
                           <label htmlFor="inputemail" className="form-label">
                             <span>Email Address</span>
@@ -256,10 +256,8 @@ export default function LoginForm() {
 
                         <div className="col-md-12">
                           <button
-                            type="button"
-                            onClick={(e) => {
-                              submitLoginDetail(e)
-                            }}
+                            type="submit"
+
                             className="btn btn-pri-grd text-white w-100 position-relative"
                           >
                             {loading && (
@@ -279,7 +277,8 @@ export default function LoginForm() {
                             />
                           </button>
                         </div>
-                        {/*                   <div className="text-center d-flex flex-md-row align-items-center justify-content-center">
+                      </form>
+                      {/*                   <div className="text-center d-flex flex-md-row align-items-center justify-content-center">
                     <div className="col">
                       <hr />
                     </div>
@@ -309,19 +308,18 @@ export default function LoginForm() {
                       height={48}
                     />
                   </div> */}
-                        <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
-                          <span>Don't have an account?</span>
-                          <button
-                            className="btn btn-link px-1 py-0 text-decoration-none"
-                            onClick={(e) => {
-                              router.push("/signup");
-                            }}
-                          >
-                            Sign up
-                          </button>
-                        </div>
+                      <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                        <span>Don't have an account?</span>
+                        <button
+                          className="btn btn-link px-1 py-0 text-decoration-none"
+                          onClick={(e) => {
+                            router.push("/signup");
+                          }}
+                        >
+                          Sign up
+                        </button>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
