@@ -28,6 +28,7 @@ export default function Users() {
   const [deductorCount, setDeductorCount] = useState(0);
   const [deducteeCount, setDeducteeCount] = useState(0);
   const [employeeCount, setEmployeeCount] = useState(0);
+  const [errorCounts, setErrorCounts] = useState(0);
   const [challanCount, setChallanCount] = useState(0);
   const [deducteeEntryCount, setDeducteeEntryCount] = useState(0);
   const [salaryCount, setSalaryCount] = useState(0);
@@ -84,8 +85,8 @@ export default function Users() {
       selector: (row) => row.phoneNumber || "-",
     },
     {
-      name: "Plan",
-      selector: (row) => row.SubscriptionId || "-",
+      name: "Errors Count",
+      selector: (row) => row.errorCounts || "-",
     },
     {
       name: "Actions",
@@ -200,6 +201,7 @@ export default function Users() {
             setDeductorCount(res.deductorCount);
             setDeducteeCount(res.deducteeCount);
             setEmployeeCount(res.employeeCount);
+            setErrorCounts(res.errosCount);
             setChallanCount(res.challanCount);
             setDeducteeEntryCount(res.deducteeEntry);
             setSalaryCount(res.salaryCount);
@@ -338,6 +340,21 @@ export default function Users() {
                       <div className="d-flex align-items-start text-start flex-column">
                         <h1 className="mb-0 fw-bold">{salaryCount}</h1>
                         <p className="mb-0 fs-12">Salary Details</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className=" rounded-3 d-flex flex-row  align-items-center rounded-0 h-100 text-center px-2 py-2 border border-1">
+                      <Image
+                        className="me-2"
+                        src="/images/dashboards/salary_details_icon.svg"
+                        alt="salary_details_icon"
+                        width={64}
+                        height={64}
+                      />
+                      <div className="d-flex align-items-start text-start flex-column">
+                        <h1 className="mb-0 fw-bold">{errorCounts}</h1>
+                        <p className="mb-0 fs-12">Error Logs</p>
                       </div>
                     </div>
                   </div>
