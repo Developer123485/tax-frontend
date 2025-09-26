@@ -5,11 +5,23 @@ export const UsersService = {
   register,
   getUser,
   getProfileUser,
-  updateProfile
+  updateProfile,
+  getErrorLogAsync,
+  getErrorLogByUsersAsync,
 };
 
 async function getUsers(model) {
   const result = await api.post("users/users/fetch", model);
+  return result;
+}
+
+async function getErrorLogAsync() {
+  const result = await api.get("users/allUserErrorLogs");
+  return result;
+}
+
+async function getErrorLogByUsersAsync(userId) {
+  const result = await api.get(`users/userErrorLogs/${userId}`);
   return result;
 }
 

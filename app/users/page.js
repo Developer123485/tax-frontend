@@ -86,7 +86,11 @@ export default function Users() {
     },
     {
       name: "Errors Count",
-      selector: (row) => row.errorCounts || "-",
+      cell: (row) => (
+        <a href="Javascript:void(0)" style={{ color: row.errorCounts > 0 ? "red" : "green" }}>
+          Erros ({`${row.errorCounts}` ?? "0"})
+        </a>
+      ),
     },
     {
       name: "Actions",
