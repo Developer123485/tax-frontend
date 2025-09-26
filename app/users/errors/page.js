@@ -1,56 +1,25 @@
 "use client";
-import React, { useState, use, useEffect } from "react";
-import Image from "next/image";
+
+import React, { useState, useEffect } from "react";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
-import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import ProcessPopup from "@/app/components/modals/processing";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
-import { ReportingService } from "@/app/services/reporting.service";
-import { saveAs } from "file-saver";
 import DataTable from "react-data-table-component";
-import "react-toastify/dist/ReactToastify.css";
-import { CommonService } from "@/app/services/common.service";
-import "react-toastify/dist/ReactToastify.css";
-import Modal from "react-bootstrap/Modal";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { UsersService } from "@/app/services/users.services";
+import { CommonService } from "@/app/services/common.service";
 
-export default function Errors({ params }) {
-    const resolvedParams = use(params);
-    const deductorId = resolvedParams?.id;
-    const [isDirty, setIsDirty] = useState(false);
-    const router = useRouter();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [deleteId, setDeleteId] = useState(0);
-    const [pageSize, setPageSize] = useState(100);
+export default function Errors() {
+    // Note: For Next.js App Router, you don’t use `use(params)`; `params` is passed as prop
+    const [pageSize] = useState(100);
     const [showLoader, setShowLoader] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState(null);
-    const [openTdsReturn, setOpenTdsReturns] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
-    const [isFocused1, setIsFocused1] = useState(false);
-    const [deleteConfirm, setDeleteConfirm] = useState(false);
-    const highlightStyle = {
-        padding: "8px",
-        border: "1px solid",
-        borderColor: isFocused ? "#007bff" : "#ccc",
-        boxShadow: isFocused ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
-        outline: "none",
-    };
-    const highlightStyle1 = {
-        padding: "8px",
-        border: "1px solid",
-        borderColor: isFocused1 ? "#007bff" : "#ccc",
-        boxShadow: isFocused1 ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
-        outline: "none",
-    };
+    const [errors, setErrors] = useState([]);
 
+    const searchParams = useSearchParams();
+
+    // Custom styles so that full content displays (wrapping, no truncation)
     const customStyles = {
         rows: {
             style: {
@@ -64,7 +33,6 @@ export default function Errors({ params }) {
         headCells: {
             style: {
                 justifyContent: "start",
-                outline: "1px",
                 border: "1px solid #F2F7FF",
                 fontSize: "12px",
             },
@@ -72,107 +40,106 @@ export default function Errors({ params }) {
         cells: {
             style: {
                 justifyContent: "start",
-                outline: "1px",
                 border: "1px solid #FFFFFF",
                 fontSize: "12px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                whiteSpace: "normal",       // allow wrapping
+                wordBreak: "break-word",    // break long strings
+                overflow: "visible",
             },
         },
     };
+
     const columns = [
         {
             name: "SN",
-            selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
+            selector: (row, index) => (index + 1),
             grow: 1,
         },
         {
             name: "Message",
-            selector: (row) => row.message ?? "-",
-            grow: 1,
+            selector: row => row.message ?? "-",
+            wrap: true,
+            grow: 2.5,
         },
-        {
-            name: "Stack Trace",
-            selector: (row) => row?.stackTrace ?? "-",
-            grow: 1,
-        },
+        // {
+        //     name: "Stack Trace",
+        //     selector: row => row.stackTrace ?? "-",
+        //     wrap: true,
+        //     grow: 2.5,
+        // },
         {
             name: "Source",
-            selector: (row) => row?.source ?? "-",
-            grow: 1,
+            selector: row => row.source ?? "-",
+            wrap: true,
+            grow: 2.5,
         },
         {
             name: "Path",
-            selector: (row) => row?.path ?? "-",
-            grow: 1,
+            selector: row => row.path ?? "-",
+            wrap: true,
+            grow: 2.5,
         },
         {
             name: "Query String",
-            selector: (row) => row?.queryString ?? "-",
-            grow: 1,
+            selector: row => row.queryString ?? "-",
+            wrap: true,
+            grow: 2.5,
         },
         {
             name: "Method",
-            selector: (row) => row?.method ?? "-",
+            selector: row => row.method ?? "-",
             grow: 2,
         },
         {
             name: "StatusCode",
-            selector: (row) => row?.statusCode ?? "-",
+            selector: row => row.statusCode ?? "-",
             grow: 2,
         },
         {
             name: "Created At",
-            selector: (row) => row?.createdAt ?? "-",
+            selector: row => CommonService.dateFormat(row?.createdAt) ?? "-",
             grow: 1.5,
         },
     ];
-    const searchParams = useSearchParams(null);
-    const [breadcrumbs, setBreadcrumbs] = useState([
-        {
-            name: "Users",
-            isActive: false,
-            href: "/users",
-        },
-        {
-            name: "Erros",
-            isActive: true,
-        },
-    ]);
+
     useEffect(() => {
         const uId = searchParams.get("userId");
         if (uId) {
             setShowLoader(true);
-            getErrorsLogs(parseInt(uId));
+            getErrorsLogs(parseInt(uId, 10));
         }
-    }, []);
-
+    }, [searchParams]);
 
     function getErrorsLogs(id) {
         UsersService.getErrorLogByUsersAsync(id)
-            .then((res) => {
-                debugger
+            .then(res => {
                 if (res) {
-                    setErrors(res)
-                }
-            })
-            .catch((e) => {
-                if (e?.response?.data?.errorMessage) {
-                    toast.error(e?.response?.data?.errorMessage);
+                    setErrors(res);
                 } else {
-                    toast.error(e?.message);
+                    setErrors([]);
                 }
             })
-            .finally((f) => {
+            .catch(e => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e.response.data.errorMessage);
+                } else {
+                    toast.error(e.message);
+                }
+            })
+            .finally(() => {
                 setShowLoader(false);
             });
     }
 
     return (
         <>
-            <HeaderList></HeaderList>
-            <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
+            <HeaderList />
+            <BreadcrumbList
+                breadcrumbs={[
+                    { name: "Users", isActive: false, href: "/users?token=u85eddfes4edesw98548wswfe584478445545w5ss4d51sd55w" },
+                    { name: "Errors", isActive: true },
+                ]}
+            />
             <section className="py-4 pb-md-0 bg-light-gray"></section>
             <section className="py-5 pt-md-0 pb-md-5 bg-light-gray">
                 <div className="container">
@@ -182,27 +149,28 @@ export default function Errors({ params }) {
                                 <h4 className="fw-bold mb-0">Errors</h4>
                             </div>
                         </div>
-                        <div className="table-responsive">
-                            <div>
-                                {errors?.errors &&
-                                    errors?.errors.length > 0 && (
-                                        <>
-                                            <DataTable
-                                                fixedHeader
-                                                columns={columns}
-                                                data={errors?.errors}
-                                                highlightOnHover
-                                                customStyles={customStyles}
-                                                paginationPerPage={pageSize}
-                                            />
-                                        </>
-                                    )}
-                            </div>
+                        <div
+                            className="table-responsive"
+                            style={{ overflowX: "auto" }}
+                        >
+                            {errors && errors.length > 0 ? (
+                                <DataTable
+                                    fixedHeaderScrollHeight="340px"
+                                    columns={columns}
+                                    data={errors}
+                                    highlightOnHover
+                                    customStyles={customStyles}
+                                    paginationPerPage={pageSize}
+                                />
+                            ) : (
+                                <p className="text-center p-3">No errors found.</p>
+                            )}
                         </div>
                     </div>
                 </div>
             </section>
-            <ProcessPopup showLoader={showLoader}></ProcessPopup>
+            <ProcessPopup showLoader={showLoader} />
+            <ToastContainer />
         </>
     );
 }

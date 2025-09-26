@@ -12,9 +12,11 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import AddUser from "../components/users/add-user";
 import Modal from "react-bootstrap/Modal";
 import DeleteConfirmation from "../components/modals/delete-confirmation";
+import { useRouter } from "next/navigation";
 
 export default function Users() {
   const [show, setShow] = useState(false);
+  const router = useRouter();
   const [openAddUser, setOpenAddUser] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [users, setUsers] = useState([]);
@@ -87,7 +89,13 @@ export default function Users() {
     {
       name: "Errors Count",
       cell: (row) => (
-        <a href="Javascript:void(0)" style={{ color: row.errorCounts > 0 ? "red" : "green" }}>
+        <a href="Javascript:void(0)"
+          onClick={(e) => {
+            router.push(
+              `/users/errors?userId=${row.id}`
+            );
+          }}
+          style={{ color: row.errorCounts > 0 ? "red" : "green" }}>
           Erros ({`${row.errorCounts}` ?? "0"})
         </a>
       ),
