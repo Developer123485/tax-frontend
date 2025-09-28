@@ -147,81 +147,81 @@ export default function TDSForm({ params }) {
 
   function generateForm() {
     setIsDirty(true);
-    if(validateGenerateInput()){
-    if (formsDashboardDetail.challanCount > 0) {
-      setGenerateLoading(true);
-      const model = {
-        financialYear: searchParams.get("financial_year"),
-        quarter: searchParams.get("quarter"),
-        deductorId: deductorId,
-        categoryId: parseInt(searchParams.get("categoryId")),
-        verificationPlace: placeValue,
-        verificationDate: CommonService.dateFormat(verificationDate)
-      };
-      FormsService.generateForm(model)
-        .then(async (res) => {
-          if (res) {
-            const url = window.URL.createObjectURL(new Blob([res]));
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = form + searchParams.get("quarter") + ".docx"; // suggested filename
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-            // const blob = new Blob([res], { type: "docx" });
-            // saveAs(blob, form + searchParams.get("quarter") + ".docx");
-            toast.success("Genrate Form Successfully!");
-          }
-        }).catch(e => {
-          if (e?.response?.data?.errorMessage) {
-            toast.error(e?.response?.data?.errorMessage);
-          }
-          else {
-            toast.error(e?.message);
-          }
-        })
-        .finally((f) => {
-          setIsDownloding(false);
-          setIsGenerateFormConfirmation(false);
-          setGenerateLoading(false);
-          setOpenGenerateInputPopup(false);
-          resetGenerateInput();
-        });
-    } else {
-      setIsGenerateFormConfirmation(false);
-      toast.error("Create one challan first!");
+    if (validateGenerateInput()) {
+      if (formsDashboardDetail.challanCount > 0) {
+        setGenerateLoading(true);
+        const model = {
+          financialYear: searchParams.get("financial_year"),
+          quarter: searchParams.get("quarter"),
+          deductorId: deductorId,
+          categoryId: parseInt(searchParams.get("categoryId")),
+          verificationPlace: placeValue,
+          verificationDate: CommonService.dateFormat(verificationDate)
+        };
+        FormsService.generateForm(model)
+          .then(async (res) => {
+            if (res) {
+              const url = window.URL.createObjectURL(new Blob([res]));
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = form + searchParams.get("quarter") + ".docx"; // suggested filename
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+              // const blob = new Blob([res], { type: "docx" });
+              // saveAs(blob, form + searchParams.get("quarter") + ".docx");
+              toast.success("Genrate Form Successfully!");
+            }
+          }).catch(e => {
+            if (e?.response?.data?.errorMessage) {
+              toast.error(e?.response?.data?.errorMessage);
+            }
+            else {
+              toast.error(e?.message);
+            }
+          })
+          .finally((f) => {
+            setIsDownloding(false);
+            setIsGenerateFormConfirmation(false);
+            setGenerateLoading(false);
+            setOpenGenerateInputPopup(false);
+            resetGenerateInput();
+          });
+      } else {
+        setIsGenerateFormConfirmation(false);
+        toast.error("Create one challan first!");
+      }
     }
   }
-  }
-  
-    function validateGenerateInput() {
-        let placeError = "";
-        let dateError = "";
-        if (!placeValue) {
-            placeError = "Place Name is required";
-        }
-        if (!verificationDate) {
-            dateError = "Verification Date is required";
-        }
-        if (
-            placeError ||
-            dateError
-        ) {
-            setGenerateFormErrors((prevState) => ({
-                ...prevState,
-                dateError,
-                placeError,
-            }));
-            return false;
-        }
-        setGenerateFormErrors((prevState) => ({
-            ...prevState,
-            dateError,
-            placeError,
-        }));
-        return true;
+
+  function validateGenerateInput() {
+    let placeError = "";
+    let dateError = "";
+    if (!placeValue) {
+      placeError = "Place Name is required";
     }
+    if (!verificationDate) {
+      dateError = "Verification Date is required";
+    }
+    if (
+      placeError ||
+      dateError
+    ) {
+      setGenerateFormErrors((prevState) => ({
+        ...prevState,
+        dateError,
+        placeError,
+      }));
+      return false;
+    }
+    setGenerateFormErrors((prevState) => ({
+      ...prevState,
+      dateError,
+      placeError,
+    }));
+    return true;
+  }
 
   const fileSelectHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -853,7 +853,7 @@ export default function TDSForm({ params }) {
                           </div>
                           <div className="col-md-8">
                             <h5 className="fw-bold text-uppercase mb-0">
-                              Download Excel
+                              Download Excel Template
                             </h5>
                           </div>
                         </div>

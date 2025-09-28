@@ -186,7 +186,7 @@ export default function ImportDeductee({ params }) {
                   />
                 </div>
                 <div className="col-12 col-md-8">
-                  <h6>Download excel template</h6>
+                  <h6>Download Excel Template</h6>
                   <span>
                     Download and fill data in the latest version of our excel
                     templates below. Remember not to change

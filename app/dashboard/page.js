@@ -232,7 +232,7 @@ export default function dashboard() {
                     />
                   </div>
                   <div className="col-7 col-md-8">
-                    <h5 className="fw-bold text-capitalize">Download excel</h5>
+                    <h5 className="fw-bold text-capitalize">Download Excel Template</h5>
                     <p>
                       Download and complete data in the latest Excel templates
                       without altering column order or names.

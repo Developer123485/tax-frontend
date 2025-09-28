@@ -589,7 +589,7 @@ export default function TDSDashboard({ params }) {
                                 </div>
                                 <div className="col-md-8" onClick={download}>
                                   <h5 className="fw-bold text-uppercase mb-0">
-                                    Download Excel File
+                                    Download Excel Template
                                   </h5>
                                 </div>
                               </div>
