@@ -38,10 +38,10 @@ export default function TDSDashboard({ params }) {
   const [key, setKey] = useState("tds");
   const [reportsData, setReportsData] = useState([
     {
-      name: "Filling Status Dashboard",
+      name: "Filing Status Dashboard",
       code: "FSD",
       descrption:
-        "Track fillings status, filling history and e-filling order status",
+        "Track filings status, filing history and e-filing order status",
     },
     {
       name: "Form 3CD - Clause 34",
@@ -292,7 +292,7 @@ export default function TDSDashboard({ params }) {
                       <div className="mb-3">
                         <div className="col-md-12">
                           <h5 className="text-uppercase fw-bold mb-3">
-                            Filling
+                            Filing
                           </h5>
                         </div>
                       </div>
@@ -361,7 +361,7 @@ export default function TDSDashboard({ params }) {
                               if (
                                 financialYear
                               ) {
-                                if (option.name == "Filling Status Dashboard") {
+                                if (option.name == "Filing Status Dashboard") {
                                   router.push(
                                     `/deductors/${deductorId}/tds/tds-return?financial_year=${financialYear}`
                                   );
