@@ -915,7 +915,7 @@ export default function TDSForm({ params }) {
                 selected={verificationDate}
                 id="verificationDate"
                 className="form-control w-100"
-                minDate={new Date()}
+                minDate={new Date().setDate(new Date().getDate() + 1)}
                 onChange={(e) => setVerificationDate(e)}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="dd/MM/yyyy"
