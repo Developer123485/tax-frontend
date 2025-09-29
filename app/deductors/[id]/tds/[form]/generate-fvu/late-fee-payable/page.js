@@ -175,7 +175,7 @@ export default function LateFeePayables({ params }) {
                                             lateFeePayable &&
                                             (
                                                 <LateFeePayable
-                                                    lateFeePayables={lateFeePayable}
+                                                    response={lateFeePayable}
                                                     currentPage={currentPage}
                                                     setCurrentPage={(e) => {
                                                         setCurrentPage(e);
