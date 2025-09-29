@@ -83,17 +83,17 @@ export default function LateFeePayables({ params }) {
             searchParams.get("categoryId")
         ) {
             setShowLoader(true);
-            fetchLateFeePayable(false);
+            fetchLateFeePayable(1, false);
         } else {
             router.push("/deductors");
         }
     }, [currentPage, pageSize]);
 
-    function fetchLateFeePayable(value) {
+    function fetchLateFeePayable(pageNum, value) {
         setShowLoader(true);
         const model = {
-            pageSize: 10,
-            pageNumber: 1,
+            pageSize: pageSize,
+            pageNumber: pageNum,
             financialYear: searchParams.get("financial_year"),
             quarter: searchParams.get("quarter"),
             deductorId: deductorId,
@@ -157,7 +157,7 @@ export default function LateFeePayables({ params }) {
                                                 className="btn btn-outline-secondary px-2 py-1"
                                                 type="button"
                                                 onClick={(e) => {
-                                                    fetchLateFeePayable(true);
+                                                    fetchLateFeePayable(1, true);
                                                 }}
                                             >
                                                 Download Report
@@ -176,6 +176,12 @@ export default function LateFeePayables({ params }) {
                                             (
                                                 <LateFeePayable
                                                     lateFeePayables={lateFeePayable}
+                                                    currentPage={currentPage}
+                                                    setCurrentPage={(e) => {
+                                                        setCurrentPage(e);
+                                                        fetchLateFeePayable(e);
+                                                    }}
+                                                    pageSize={pageSize}
                                                 ></LateFeePayable>
                                             )}
                                     </div>
