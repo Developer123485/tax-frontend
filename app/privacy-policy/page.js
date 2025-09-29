@@ -332,10 +332,10 @@ export default function PrivacyPolicy() {
               </p>
               <p>
                 <strong>
-                  (keep blank for now, our application is under process)
+                  our application is under process
                 </strong>
                 <br />
-                <br /> ERI Services for filing your ITR are provided by our
+                {/* <br /> ERI Services for filing your ITR are provided by our
                 partner ClearSharp Technology Private Limited (&ldquo;&nbsp;
                 <strong>ClearSharp</strong>&rdquo;) through our Platform.
                 ClearSharp is an authorised ERI as per the Electronic Furnishing
@@ -355,7 +355,7 @@ export default function PrivacyPolicy() {
                 <a href="http://clearsharp.in/privacy.html">
                   http://clearsharp.in/privacy.html
                 </a>
-                .<br />
+                .<br /> */}
                 <br />
                 <strong>4. COOKIE POLICY</strong>
                 <br />

@@ -46,7 +46,7 @@ export default function TDSDashboard({ params }) {
     {
       name: "Form 3CD - Clause 34",
       code: "3CD",
-      descrption: "Report of TDS Rationallsation (Form 3CD) for Audit Form",
+      descrption: "Report of TDS Rationalisation (Form 3CD) for Audit Form",
     },
     {
       name: "Salary Reports",
@@ -74,7 +74,7 @@ export default function TDSDashboard({ params }) {
     {
       name: "26AS Reconcilation",
       code: "INT",
-      descrption: "Reconcile Form 26AS against your TDS recievables",
+      descrption: "Reconcile Form 26AS against your TDS receivables",
     },
     {
       name: "24G Form",
