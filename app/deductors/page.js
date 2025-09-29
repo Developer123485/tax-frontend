@@ -433,7 +433,7 @@ export default function Deductors() {
                       <div className="col-md-7">
                         <h5 className="fw-bold text-capitalize mb-0">
                           Download
-                          <br /> Excel File
+                          <br /> Excel Template
                         </h5>
                       </div>
                     </div>
