@@ -469,8 +469,8 @@ export default function DdoWiseDetails({ params }) {
                                             </div>
                                             <div className="col-md-7">
                                                 <h5 className="fw-bold text-capitalize mb-0">
-                                                    Enter data
-                                                    <br /> manually
+                                                    Add DDO Wise
+                                                    <br /> Entry
                                                 </h5>
                                             </div>
                                         </div>

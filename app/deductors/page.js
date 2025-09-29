@@ -379,8 +379,7 @@ export default function Deductors() {
                       </div>
                       <div className="col-md-7">
                         <h5 className="fw-bold text-capitalize mb-0">
-                          Enter data
-                          <br /> manually
+                          Add Deductor
                         </h5>
                       </div>
                     </div>

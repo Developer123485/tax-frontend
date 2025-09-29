@@ -547,8 +547,8 @@ export default function TDSRates() {
                             </div>
                             <div className="col-md-7">
                               <h5 className="fw-bold text-capitalize mb-0">
-                                Enter data
-                                <br /> manually
+                                Add TDS
+                                <br /> Rates
                               </h5>
                             </div>
                           </div>
