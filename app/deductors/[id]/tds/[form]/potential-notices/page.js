@@ -516,7 +516,7 @@ export default function PotentialNotices({ params }) {
                           className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
                           type="button"
                           onClick={(e) => {
-                            fetchLateFeePayable("", true);
+                            fetchLateFeePayable(true);
                           }}
                         >
                           Download Report
