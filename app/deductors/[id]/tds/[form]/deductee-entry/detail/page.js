@@ -212,6 +212,9 @@ export default function DeducteeEntryDetail({ params }) {
     deducteeEntry.fourNinteenD,
     deducteeEntry.fourNinteenE,
     deducteeEntry.fourNinteenF,
+    deducteeEntry.paymentCovered,
+    deducteeEntry.challanDate,
+    deducteeEntry.challanNumber,
   ]);
 
   function setTotalTaxDeducted() {
