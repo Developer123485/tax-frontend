@@ -262,8 +262,8 @@ export default function GenerateFVU({ params }) {
                     />
                     }
                     <p className="text-danger">
-                      Validating your return. Please wait until your return is
-                      validated. Do not refresh or press the back button.
+                      The system is validating the data. Once validation is complete, it will display either
+                      'No errors found' or 'Errors found – please download the error report.
                     </p>
                     {!isError && !showLoader && <p className="text-success fw-bold">
                       No errors. Everything looks perfectly alright.
