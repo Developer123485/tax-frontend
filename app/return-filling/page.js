@@ -159,7 +159,7 @@ export default function ReturnFilling() {
               <a
                 onClick={(e) => {
                   setDeleteId(row.id);
-                  setConfirmTitle("Return Filling");
+                  setConfirmTitle("Return Filing");
                   setDeleteConfirm(true);
                 }}
               >
@@ -263,7 +263,7 @@ export default function ReturnFilling() {
         };
         ReportingService.deleteBulk(model).then(res => {
           if (res) {
-            toast.success("Return Filling Deleted!");
+            toast.success("Return Filing Deleted!");
             fetchReturnFilling();
             selectedData(null);
           }
@@ -284,7 +284,7 @@ export default function ReturnFilling() {
       ReportingService.deleteFillingReturn(deleteId)
         .then((res) => {
           if (res) {
-            toast.success("Return Filling Deleted!");
+            toast.success("Return Filing Deleted!");
             fetchReturnFilling();
           }
         }).catch(e => {
@@ -426,7 +426,7 @@ export default function ReturnFilling() {
     ReportingService.saveFillingReturn(returnFilling)
       .then((res) => {
         if (res) {
-          toast.success("Return Filling Created!");
+          toast.success("Return Filing Created!");
           fetchReturnFilling();
         }
       }).catch(e => {
@@ -557,7 +557,7 @@ export default function ReturnFilling() {
                 <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                   <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
                     <div className="col-md-3">
-                      <h4 className="fw-bold mb-0">Return Fillings</h4>
+                      <h4 className="fw-bold mb-0">Return Filings</h4>
                     </div>
                     <div className="col-md-6">
                       <div className="d-flex">
@@ -785,7 +785,7 @@ export default function ReturnFilling() {
       >
         <Modal.Header className="border-0" closeButton>
           {" "}
-          <h3 className="mb-0">Return Filling</h3>
+          <h3 className="mb-0">Return Filing</h3>
         </Modal.Header>
         <Modal.Body>
           <div className="">
