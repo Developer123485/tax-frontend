@@ -629,7 +629,7 @@ export default function GenerateFVU({ params }) {
                   <div className="col-md-6 border-end">
                     <h6 className="fw-bold">Non Salary</h6>
                     <p>
-                      You can Download the FVU file and dile TDS return manually
+                      You can Download the FVU file and file TDS return manually
                     </p>
                     <button type="button" className="btn btn-primary px-3 py-2">
                       Download FVU file
