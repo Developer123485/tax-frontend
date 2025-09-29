@@ -424,10 +424,10 @@ export default function DeducteeFormEntryDetail(props) {
               value={deducteeEntry.optingForRegime}
               onChange={(e) => handleInput("optingForRegime", e)}
             >
-              <option selected value={"No"}>
+              <option value={"N"}>
                 No
               </option>
-              <option value={"Yes"}>Yes</option>
+              <option value={"Y"}>Yes</option>
             </select>
           </div>
         )}
@@ -444,10 +444,11 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.grossingUp}
                 onChange={(e) => handleInput("grossingUp", e)}
               >
-                <option selected value={"No"}>
+                <option selected value={null}>Select</option>
+                <option value={"N"}>
                   No
                 </option>
-                <option value={"Yes"}>Yes</option>
+                <option value={"Y"}>Yes</option>
               </select>
             </div>
 
@@ -481,10 +482,11 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.noNResident}
                 onChange={(e) => handleInput("noNResident", e)}
               >
-                <option selected value={"No"}>
+                <option selected value={null}>Select</option>
+                <option value={"N"}>
                   No
                 </option>
-                <option value={"Yes"}>Yes</option>
+                <option value={"Y"}>Yes</option>
               </select>
             </div>
             <div className="col-md-3">
@@ -499,13 +501,14 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.permanentlyEstablished}
                 onChange={(e) => handleInput("permanentlyEstablished", e)}
               >
-                <option selected value={"No"}>
+                <option selected value={null}>Select</option>
+                <option value={"No"}>
                   No
                 </option>
                 <option value={"Yes"}>Yes</option>
               </select>
             </div>
-            <div className="col-md-3">
+            {deducteeEntry.reasons === "F" || deducteeEntry.reasons === "G" && <div className="col-md-3">
               <label htmlFor="paymentCovered" className="form-label">
                 {form !== "form-27EQ" && <span>Payment Covered</span>}
                 {form === "form-27EQ" && <span>Payment covered u/s (1G)/(1H)</span>}
@@ -517,15 +520,18 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.paymentCovered}
                 onChange={(e) => handleInput("paymentCovered", e)}
               >
-                <option selected value={"No"}>
+                <option selected value={null}>Select</option>
+                <option value={"N"}>
                   No
                 </option>
-                <option value={"Yes"}>Yes</option>
+                <option value={"Y"}>Yes</option>
               </select>
             </div>
-            <div className="col-md-3">
+            }
+            {deducteeEntry.paymentCovered == "Y" && <div className="col-md-3">
               <label htmlFor="challanNumber" className="form-label">
-                <span>Challan No.</span>
+                <span>Challan No</span>
+                <span className="text-danger"> *</span>
               </label>
               <input
                 type="text"
@@ -537,10 +543,11 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.challanNumber}
                 onChange={(e) => handleInput("challanNumber", e)}
               />
-            </div>
-            <div className="col-md-3">
+            </div>}
+            {deducteeEntry.paymentCovered == "Y" && <div className="col-md-3">
               <label htmlFor="challanDate" className="form-label">
                 <span>Challan Date</span>
+                <span className="text-danger"> *</span>
               </label>
               <div>
                 <DatePicker
@@ -553,7 +560,7 @@ export default function DeducteeFormEntryDetail(props) {
                   placeholderText="dd/MM/yyyy"
                 />
               </div>
-            </div>
+            </div>}
           </>
         )}
 
