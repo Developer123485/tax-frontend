@@ -487,7 +487,7 @@ export default function TDSDashboard({ params }) {
                     <div className="col-md-4 ps-md-4">
                       <div className="mb-4">
                         <h5 className="fw-bold text-uppercase">
-                          Deductees/Employees Master
+                          Deductee/Employee Master
                         </h5>
                       </div>
                       <div className="deductees-master-sidebar">
@@ -536,7 +536,7 @@ export default function TDSDashboard({ params }) {
                                   }
                                 >
                                   <h5 className="fw-bold text-uppercase mb-0">
-                                    Enter data manually
+                                    Add Deductee/Employee
                                   </h5>
                                 </div>
                               </div>
@@ -610,9 +610,9 @@ export default function TDSDashboard({ params }) {
                                 <div className="col-md-8">
                                   <h5
                                     className="fw-bold text-uppercase mb-0"
-                                    onClick={() => router.push("tds/forms")}
+                                  // onClick={() => router.push("tds/forms")}
                                   >
-                                    Generate Forms
+                                    Generate Manual Forms (16/16A/27D)
                                   </h5>
                                 </div>
                               </div>
