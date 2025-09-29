@@ -511,6 +511,7 @@ export default function PotentialNotices({ params }) {
               )}
               {listType == "late-fee" && (
                 <>
+                  <div className="col-sm-4 col-md-4"></div>
                   <div className="col-sm-4 col-md-2">
                     <div className="d-flex align-items-center">
                       <div className="input-group searchbox">
