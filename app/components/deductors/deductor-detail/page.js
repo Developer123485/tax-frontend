@@ -820,7 +820,7 @@ export default function DeductorDetail(props) {
                 </div>
                 <div className="col-md-3">
                   <label htmlFor="officeIN" className="form-label">
-                    <span>Office Identification Number</span>
+                    <span>Account Office Identification Number</span>
                   </label>
 
                   <input
