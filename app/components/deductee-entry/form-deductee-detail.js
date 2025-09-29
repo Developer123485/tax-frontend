@@ -526,6 +526,11 @@ export default function DeducteeFormEntryDetail(props) {
                 </option>
                 <option value={"Y"}>Yes</option>
               </select>
+              {isDirty && deducteeEntryErrors.paymentCoveredError && (
+                <span className="text-danger">
+                  {deducteeEntryErrors.paymentCoveredError}
+                </span>
+              )}
             </div>
             }
             {deducteeEntry.paymentCovered == "Y" && <div className="col-md-3">
@@ -543,6 +548,11 @@ export default function DeducteeFormEntryDetail(props) {
                 value={deducteeEntry.challanNumber}
                 onChange={(e) => handleInput("challanNumber", e)}
               />
+              {isDirty && deducteeEntryErrors.challanNumberError && (
+                <span className="text-danger">
+                  {deducteeEntryErrors.challanNumberError}
+                </span>
+              )}
             </div>}
             {deducteeEntry.paymentCovered == "Y" && <div className="col-md-3">
               <label htmlFor="challanDate" className="form-label">
@@ -559,6 +569,11 @@ export default function DeducteeFormEntryDetail(props) {
                   dateFormat="dd/MM/yyyy"
                   placeholderText="dd/MM/yyyy"
                 />
+                {isDirty && deducteeEntryErrors.challanDateError && (
+                  <span className="text-danger">
+                    {deducteeEntryErrors.challanDateError}
+                  </span>
+                )}
               </div>
             </div>}
           </>

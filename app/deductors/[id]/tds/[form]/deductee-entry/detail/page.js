@@ -136,6 +136,9 @@ export default function DeducteeEntryDetail({ params }) {
     fourNinteenEError: "",
     fourNinteenFError: "",
     reasonsError: "",
+    paymentCoveredError: "",
+    challanNumberError: "",
+    challanDateError: "",
   });
   useEffect(() => {
     EnumService.getEnumStatues().then((res) => {
@@ -437,6 +440,9 @@ export default function DeducteeEntryDetail({ params }) {
     let fourNinteenDError = "";
     let fourNinteenEError = "";
     let fourNinteenFError = "";
+    let paymentCoveredError = "";
+    let challanNumberError = "";
+    let challanDateError = "";
 
     if (deducteeEntry.amountPaidCredited && deducteeEntry.fourNinteenA && parseFloat(deducteeEntry.fourNinteenA) > parseFloat(deducteeEntry.amountPaidCredited)) {
       fourNinteenAError = "Value should be less then equal to AmountPaidCredited";
@@ -461,6 +467,15 @@ export default function DeducteeEntryDetail({ params }) {
     }
     if (!deducteeEntry.dateOfDeduction && deducteeEntry.totalTaxDeducted > 0) {
       dateDeductionError = "Date Of Deduction is required";
+    }
+    if ((deducteeEntry.reasons === "F" || deducteeEntry.reasons === "G") && !deducteeEntry.paymentCovered) {
+      paymentCoveredError = "Payment Covered is required"
+    }
+    if (deducteeEntry.paymentCovered == "Y" && !deducteeEntry.challanNumber) {
+      challanNumberError = "Challan Number is required"
+    }
+    if (deducteeEntry.paymentCovered == "Y" && !deducteeEntry.challanDate) {
+      challanDateError = "Challan Date is required"
     }
     if (!deducteeEntry.challanId) {
       challanVoucherError = "Challan no is required";
@@ -518,7 +533,10 @@ export default function DeducteeEntryDetail({ params }) {
       fourNinteenCError ||
       fourNinteenDError ||
       fourNinteenEError ||
-      fourNinteenFError
+      fourNinteenFError ||
+      challanDateError ||
+      paymentCoveredError ||
+      challanNumberError
     ) {
       setDeducteeEntryErrors((prevState) => ({
         ...prevState,
@@ -535,7 +553,10 @@ export default function DeducteeEntryDetail({ params }) {
         fourNinteenDError,
         fourNinteenEError,
         fourNinteenFError,
-        reasonsError
+        reasonsError,
+        challanDateError,
+        paymentCoveredError,
+        challanNumberError
       }));
       return false;
     }
@@ -554,7 +575,10 @@ export default function DeducteeEntryDetail({ params }) {
       fourNinteenDError: "",
       fourNinteenEError: "",
       fourNinteenFError: "",
-      reasonsError: ""
+      reasonsError: "",
+      challanDateError: "",
+      paymentCoveredError: "",
+      challanNumberError: ""
     }));
     return true;
   }
