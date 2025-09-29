@@ -226,10 +226,101 @@ export default function DeducteeFormEntryDetail(props) {
             </span>
           )}
         </div>
+        <div className="col-md-3">
+          <label htmlFor="inputDateofPayment" className="form-label">
+            {form === "form-27EQ" && <span>Date of Receipt/Debit</span>}
+            {form !== "form-27EQ" && <span>Date of Payment/Credit</span>}
+            <span className="text-danger"> *</span>
+          </label>
+          <div>
+            <DatePicker
+              autoComplete="off"
+              selected={deducteeEntry.dateOfPaymentCredit}
+              id="inputDateofPayment"
+              className="form-control w-100"
+              onChange={(e) => handleInput("dateOfPaymentCredit", e)}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="dd/MM/yyyy"
+            />
+            {isDirty && deducteeEntryErrors.datePaymentError && (
+              <span className="text-danger">
+                {deducteeEntryErrors.datePaymentError}
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="inputDateofDeduction" className="form-label">
+            {form !== "form-27EQ" && <span>Date of Deduction</span>}
+            {form === "form-27EQ" && <span>Date of Collection</span>}
+          </label>
+          <div>
+            <DatePicker
+              autoComplete="off"
+              selected={deducteeEntry.dateOfDeduction}
+              id="inputDateofDeduction"
+              className="form-control w-100"
+              disabled={props.isDisable}
+              onChange={(e) => handleInput("dateOfDeduction", e)}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="dd/MM/yyyy"
+            />
+            {isDirty && deducteeEntryErrors.dateDeductionError && (
+              <span className="text-danger">
+                {deducteeEntryErrors.dateDeductionError}
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="inputAmountPaid" className="form-label">
+            {form !== "form-27EQ" && <span>Amount Paid/Credited</span>}
+            {form === "form-27EQ" && <span>Amount Receipt/ Debited</span>}
+            <span className="text-danger"> *</span>
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            id="inputAmountPaid"
+            value={deducteeEntry.amountPaidCredited}
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("amountPaidCredited", e);
+              }
+            }}
+          />
+          {isDirty && deducteeEntryErrors.amountCreditedError && (
+            <span className="text-danger">
+              {deducteeEntryErrors.amountCreditedError}
+            </span>
+          )}
+        </div>
+        {form === "form-27EQ" && (
+          <div className="col-md-3">
+            <label htmlFor="totalValueOfTheTransaction" className="form-label">
+              <span>Total Value of the tranaction</span>
+            </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="totalValueOfTheTransaction"
+              value={deducteeEntry.totalValueOfTheTransaction}
+              onChange={(e) => {
+                if (CommonService.isNumeric(e.target.value)) {
+
+                  handleInput("totalValueOfTheTransaction", e);
+                }
+              }}
+            />
+          </div>
+        )}
         {(form === "form-27Q" || form === "form-27EQ") && (
           <div className="col-md-3">
             <label htmlFor="Opting" className="form-label">
               <span>Opting for regime u/s 115BAC(1A)</span>
+              <span className="text-danger"> *</span>
             </label>
             <select
               className="form-select"
@@ -320,7 +411,8 @@ export default function DeducteeFormEntryDetail(props) {
             </div>
             <div className="col-md-3">
               <label htmlFor="paymentCovered" className="form-label">
-                <span>Payment Covered</span>
+                {form !== "form-27EQ" && <span>Payment Covered</span>}
+                {form === "form-27EQ" && <span>Payment covered u/s (1G)/(1H)</span>}
               </label>
               <select
                 className="form-select"
@@ -472,50 +564,7 @@ export default function DeducteeFormEntryDetail(props) {
             </div>
           </>
         )}
-        <div className="col-md-3">
-          <label htmlFor="inputDateofPayment" className="form-label">
-            <span>Date of Payment/Credit</span>
-            <span className="text-danger"> *</span>
-          </label>
-          <div>
-            <DatePicker
-              autoComplete="off"
-              selected={deducteeEntry.dateOfPaymentCredit}
-              id="inputDateofPayment"
-              className="form-control w-100"
-              onChange={(e) => handleInput("dateOfPaymentCredit", e)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/MM/yyyy"
-            />
-            {isDirty && deducteeEntryErrors.datePaymentError && (
-              <span className="text-danger">
-                {deducteeEntryErrors.datePaymentError}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputDateofDeduction" className="form-label">
-            <span>Date of Deduction</span>
-          </label>
-          <div>
-            <DatePicker
-              autoComplete="off"
-              selected={deducteeEntry.dateOfDeduction}
-              id="inputDateofDeduction"
-              className="form-control w-100"
-              disabled={props.isDisable}
-              onChange={(e) => handleInput("dateOfDeduction", e)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/MM/yyyy"
-            />
-            {isDirty && deducteeEntryErrors.dateDeductionError && (
-              <span className="text-danger">
-                {deducteeEntryErrors.dateDeductionError}
-              </span>
-            )}
-          </div>
-        </div>
+
 
         <div className="col-md-3">
           <label htmlFor="inputLowerDeductionCert" className="form-label">
@@ -537,52 +586,11 @@ export default function DeducteeFormEntryDetail(props) {
             </span>
           )}
         </div>
-        <div className="col-md-3">
-          <label htmlFor="inputAmountPaid" className="form-label">
-            <span>Amount Paid/Credited</span>
-            <span className="text-danger"> *</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputAmountPaid"
-            value={deducteeEntry.amountPaidCredited}
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("amountPaidCredited", e);
-              }
-            }}
-          />
-          {isDirty && deducteeEntryErrors.amountCreditedError && (
-            <span className="text-danger">
-              {deducteeEntryErrors.amountCreditedError}
-            </span>
-          )}
-        </div>
-        {form === "27EQ" && (
-          <div className="col-md-3">
-            <label htmlFor="totalValueOfTheTransaction" className="form-label">
-              <span>Total Value of the tranaction</span>
-            </label>
-            <input
-              type="text"
-              placeholder=""
-              className="form-control"
-              id="totalValueOfTheTransaction"
-              value={deducteeEntry.totalValueOfTheTransaction}
-              onChange={(e) => {
-                if (CommonService.isNumeric(e.target.value)) {
 
-                  handleInput("totalValueOfTheTransaction", e);
-                }
-              }}
-            />
-          </div>
-        )}
         <div className="col-md-3">
           <label htmlFor="tds" className="form-label">
-            <span>TDS</span>
+            {form !== "form-27EQ" && <span>TDS</span>}
+            {form === "form-27EQ" && <span>TCS</span>}
           </label>
           <input
             type="text"
@@ -637,7 +645,9 @@ export default function DeducteeFormEntryDetail(props) {
         </div>
         <div className="col-md-3">
           <label htmlFor="inputTotalTaxDeducted" className="form-label">
-            <span>Total Tax Deducted</span>
+            {form !== "form-27EQ" && <span>Total Tax Deducted</span>}
+            {form === "form-27EQ" && <span>Total Tax Collected</span>}
+            <span>Total Tax Collected</span>
           </label>
 
           <input
@@ -676,8 +686,8 @@ export default function DeducteeFormEntryDetail(props) {
         {deducteeEntry.sectionCode === "94N" && (
           <div className="col-md-3">
             <label htmlFor="fourNinteenA" className="form-label">
-              {form === "26Q" && <span>Amount Excess 1Cr - Sec194N(419A)</span>}
-              {form === "27Q" && <span>Amount Excess 1Cr - Sec194N(720A)</span>}
+              {form === "form-26Q" && <span>Amount Excess 1Cr - Sec194N(419A)</span>}
+              {form === "form-27Q" && <span>Amount Excess 1Cr - Sec194N(720A)</span>}
             </label>
             <input
               type="text"
@@ -822,7 +832,8 @@ export default function DeducteeFormEntryDetail(props) {
           <div className="row mt-3">
             <div className="col-md-3">
               <label htmlFor="tdsRate" className="form-label">
-                <span>TDS Rate</span>
+                {form !== "form-27EQ" && <span>TDS Rate</span>}
+                {form === "form-27EQ" && <span>TCS Rate</span>}
               </label>
               <input
                 type="text"
@@ -873,7 +884,8 @@ export default function DeducteeFormEntryDetail(props) {
             </div>
             <div className="col-md-3">
               <label htmlFor="rateAtWhich" className="form-label">
-                <span>Rate At which deducted</span>
+                {form !== "form-27EQ" && <span>Rate At which deducted</span>}
+                {form === "form-27EQ" && <span>Rate at which Collected</span>}
               </label>
               <input
                 type="text"

@@ -87,10 +87,10 @@ export default function Deductors() {
       name: "Pan",
       selector: (row) => row?.deductorPan || "",
     },
-    {
-      name: "Ain Code",
-      selector: (row) => row?.ainCode || "-",
-    },
+    // {
+    //   name: "Ain Code",
+    //   selector: (row) => row?.ainCode || "-",
+    // },
     // {
     //   name: "Traces User",
     //   selector: (row) => row?.tracesLogin || "-",
