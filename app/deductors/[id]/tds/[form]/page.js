@@ -578,7 +578,7 @@ export default function TDSForm({ params }) {
                       </span>
                       <div className="">
                         <h6 className="text-capitalize fw-bold">
-                          Deductee Details (plural for consistency)
+                          Deductee Details
                         </h6>
                         <p className="mb-0 fs-12">
                           List of deductees used in this return
