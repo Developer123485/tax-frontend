@@ -303,7 +303,7 @@ export default function DeducteeDetail(props) {
         </div>
         <div className="col-md-3">
           <label htmlFor="principle" className="form-label">
-            <span>Principle Place of Business</span>
+            <span>Principal Place of Business</span>
           </label>
           <input
             type="text"
@@ -348,7 +348,7 @@ export default function DeducteeDetail(props) {
 
         <div className="col-md-3">
           <label htmlFor="inputStatus" className="form-label">
-            <span>Wheather Transporter</span>
+            <span>Whether Transporter</span>
           </label>
           <select
             className="form-select"

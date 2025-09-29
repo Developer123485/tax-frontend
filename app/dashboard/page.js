@@ -148,7 +148,7 @@ export default function dashboard() {
                   </div>
                   <div className="col-7 col-md-8">
                     <h5 className="fw-bold text-capitalize">
-                      Enter data manually
+                      Add Deductor
                     </h5>
                     <p>
                       Manually enter deductor details, including deductor

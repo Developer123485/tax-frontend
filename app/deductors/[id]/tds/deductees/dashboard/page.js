@@ -106,7 +106,7 @@ export default function ImportDeductee({ params }) {
                   />
                 </div>
                 <div className="col-12 col-md-8">
-                  <h6>Enter data manually</h6>
+                  <h6>Add Deductor</h6>
                   <span>
                     Enter deductee details such as deductee information,
                     responsible person
