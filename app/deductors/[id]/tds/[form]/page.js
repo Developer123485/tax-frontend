@@ -44,7 +44,7 @@ export default function TDSForm({ params }) {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [captchaBase64, setCaptchaBase64] = useState('');
   const [placeValue, setPlaceValue] = useState('');
-  const [verificationDate, setVerificationDate] = useState(new Date());
+  const [verificationDate, setVerificationDate] = useState(new Date().setDate(new Date().getDate() + 1));
   const [openGenerateInputPopup, setOpenGenerateInputPopup] = useState(false);
   const [captcha, setCaptcha] = useState("");
   const [isDirty, setIsDirty] = useState(false);
@@ -141,7 +141,7 @@ export default function TDSForm({ params }) {
 
   function resetGenerateInput() {
     setPlaceValue("");
-    setVerificationDate("");
+    setVerificationDate(new Date().setDate(new Date().getDate() + 1));
     setIsDirty(false);
   }
 
@@ -578,7 +578,7 @@ export default function TDSForm({ params }) {
                       </span>
                       <div className="">
                         <h6 className="text-capitalize fw-bold">
-                          Deductee Details
+                          Deductee Detailsil
                         </h6>
                         <p className="mb-0 fs-12">
                           List of deductees used in this return
