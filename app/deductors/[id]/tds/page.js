@@ -64,7 +64,7 @@ export default function TDSDashboard({ params }) {
       name: "TRACES activities",
       code: "TAS",
       descrption:
-        "Track fillings status, filling history and e-filling order status",
+        "Online Traces Functions",
     },
     {
       name: "Traces Lower Deduction",
