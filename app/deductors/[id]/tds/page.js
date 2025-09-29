@@ -487,7 +487,7 @@ export default function TDSDashboard({ params }) {
                     <div className="col-md-4 ps-md-4">
                       <div className="mb-4">
                         <h5 className="fw-bold text-uppercase">
-                          Deductees Master
+                          Deductees/Employees Master
                         </h5>
                       </div>
                       <div className="deductees-master-sidebar">
@@ -509,7 +509,7 @@ export default function TDSDashboard({ params }) {
                                   onClick={() => router.push("tds/deductees")}
                                 >
                                   <h5 className="fw-bold text-uppercase mb-0">
-                                    Go to Deductees
+                                    Master List
                                   </h5>
                                 </div>
                               </div>
