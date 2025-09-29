@@ -90,17 +90,29 @@ export default function LateFeePayable(props) {
             <div className="table-responsive">
                 <div>
                     {
-                        props.lateFeePayables &&
-                        props.lateFeePayables.length > 0 && (
+                        props.response?.lateFeePayableList &&
+                        props.response.lateFeePayableList.length > 0 && (
                             <>
                                 <DataTable
                                     fixedHeader
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
-                                    data={props.lateFeePayables}
+                                    data={props.response.lateFeePayableList}
                                     highlightOnHover
                                     paginationServer
                                     customStyles={customStyles}
+                                    pagination={true}
+                                    paginationTotalRows={props.response.lateFeePayableList.totalRows}
+                                    paginationPerPage={props.pageSize}
+                                    paginationDefaultPage={props.currentPage}
+                                    paginationComponentOptions={{
+                                        noRowsPerPage: true,
+                                    }}
+                                    onChangePage={(page) => {
+                                        if (props.currentPage !== page) {
+                                            props.setCurrentPage(page);
+                                        }
+                                    }}
                                 />
                             </>
                         )}

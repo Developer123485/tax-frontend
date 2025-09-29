@@ -32,9 +32,11 @@ export default function PotentialNotices({ params }) {
   const [sdCurrentPage, setSdCurrentPage] = useState(1);
   const [tdCurrentPage, setTdCurrentPage] = useState(1);
   const [icCurrentPage, setIcCurrentPage] = useState(1);
+  const [lpCurrentPage, setLpCurrentPage] = useState(1);
   const [sdPageSize, setSdPageSize] = useState(100);
   const [tdPageSize, setTdPageSize] = useState(100);
   const [lcPageSize, setLcPageSize] = useState(100);
+  const [lpPageSize, setLpPageSize] = useState(100);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [showLoader, setShowLoader] = useState(false);
@@ -242,7 +244,7 @@ export default function PotentialNotices({ params }) {
   function fetchInterestCalculate(pageNum, searchValue, value) {
     setShowLoader(true);
     const model = {
-      pageSize: tdPageSize,
+      pageSize: lcPageSize,
       pageNumber: pageNum,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
@@ -285,11 +287,11 @@ export default function PotentialNotices({ params }) {
       });
   }
 
-  function fetchLateFeePayable(value) {
+  function fetchLateFeePayable(pageNum, value) {
     setShowLoader(true);
     const model = {
-      pageSize: 10,
-      pageNumber: 1,
+      pageSize: lpPageSize,
+      pageNumber: pageNum,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
       deductorId: deductorId,
@@ -428,7 +430,7 @@ export default function PotentialNotices({ params }) {
                     value="late-fee"
                     checked={listType === "late-fee"}
                     onChange={(e) => {
-                      fetchLateFeePayable(false);
+                      fetchLateFeePayable(1, false);
                       setShowLoader(true);
                       setListType("late-fee", e);
                     }}
@@ -516,7 +518,7 @@ export default function PotentialNotices({ params }) {
                           className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
                           type="button"
                           onClick={(e) => {
-                            fetchLateFeePayable(true);
+                            fetchLateFeePayable(1, true);
                           }}
                         >
                           Download Report
@@ -721,17 +723,23 @@ export default function PotentialNotices({ params }) {
                           response={interestCalculate}
                           currentPage={icCurrentPage}
                           setCurrentPage={(e) => {
-                            setIcCurrentPage(e);
+                            setLpCurrentPage(e);
                             fetchInterestCalculate(e);
                           }}
-                          pageSize={tdPageSize}
+                          pageSize={lcPageSize}
                         ></InterestList>
                       )}
                     {listType == "late-fee" &&
                       lateFeePayable &&
                       (
                         <LateFeePayable
-                          lateFeePayables={lateFeePayable}
+                          response={lateFeePayable}
+                          currentPage={lpCurrentPage}
+                          setCurrentPage={(e) => {
+                            setLpCurrentPage(e);
+                            fetchLateFeePayable(e);
+                          }}
+                          pageSize={lpPageSize}
                         ></LateFeePayable>
                       )}
                   </div>
