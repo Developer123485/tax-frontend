@@ -578,7 +578,7 @@ export default function TDSForm({ params }) {
                       </span>
                       <div className="">
                         <h6 className="text-capitalize fw-bold">
-                          Deductees Detail
+                          Deductee Details (plural for consistency)
                         </h6>
                         <p className="mb-0 fs-12">
                           List of deductees used in this return
@@ -631,7 +631,7 @@ export default function TDSForm({ params }) {
                   <div className="col-12 col-md-7">
                     <h4 className="fw-bold">Import from Excel</h4>
                     <span>
-                      Auto-import of deductions, challans, deductee details,
+                      Auto-import of deductions, challans, and deductee details
                       {searchParams.get("quarter") == "Q4" &&
                         form === "form-24Q"
                         ? "and Salary detail "
@@ -687,7 +687,7 @@ export default function TDSForm({ params }) {
                   <div className="col-12 col-md-7">
                     <h4 className="fw-bold">Import from TXT/TDS</h4>
                     <span>
-                      Auto-import of deductions, challans, deductee details,
+                      Auto-import of deductions, challans, and deductee details,
                       {searchParams.get("quarter") == "Q4" &&
                         form === "form-24Q"
                         ? "and Salary detail "
@@ -736,8 +736,7 @@ export default function TDSForm({ params }) {
                       Export {form.toUpperCase()} Data
                     </h4>
                     <span>
-                      Generate {form.toUpperCase()} which has a save data of the
-                      return.
+                      Generate {form.toUpperCase()} with the saved data of the return.
                     </span>
                   </div>
                   <div className="col-12 col-md-3">
