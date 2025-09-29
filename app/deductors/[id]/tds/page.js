@@ -536,7 +536,7 @@ export default function TDSDashboard({ params }) {
                                   }
                                 >
                                   <h5 className="fw-bold text-uppercase mb-0">
-                                    Add
+                                    Add Deductee/Employee
                                   </h5>
                                 </div>
                               </div>

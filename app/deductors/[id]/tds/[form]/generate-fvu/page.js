@@ -704,7 +704,7 @@ export default function GenerateFVU({ params }) {
                 <label>Paste the full path of the local folder where you want to save the files:</label>
                 <div>
                   <input
-                    type="text"
+                    type="file"
                     className="form-control"
                     placeholder="Paste Here"
                     value={folderInputPath}
