@@ -31,7 +31,7 @@ export default function GenerateFVU({ params }) {
   const [challanId, setChallanId] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
   const [folderInputPath, setFolderInputPath] = useState("");
-  const [returnErrors, setReturnErrors] = useState("");
+  const [returnErrors, setReturnErrors] = useState(null);
   const [interestAndfines, setInterestAndfines] = useState(null);
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [selectedData, setSelectedData] = useState(null);
@@ -605,7 +605,7 @@ export default function GenerateFVU({ params }) {
                     <div className="d-flex">
                       <input
                         type="file"
-                        accept=".csl"
+                        accept=".csi"
                         id="cslFileUpload"
                         name="cslFileUpload"
                         onChange={fileSelectHandler}
@@ -618,7 +618,7 @@ export default function GenerateFVU({ params }) {
               <div className="my-4">
                 <div className="row">
                   <div className="col-md-12">
-                    <button type="button" className="btn btn-primary" onClick={(e) => setShowFvuFile(true)}>
+                    <button type="button" className="btn btn-primary" disabled={returnErrors} onClick={(e) => setShowFvuFile(true)}>
                       Generate FVU
                     </button>
                   </div>
@@ -708,6 +708,8 @@ export default function GenerateFVU({ params }) {
                     className="form-control"
                     placeholder="Paste Here"
                     value={folderInputPath}
+                    webkitdirectory
+                    directory
                     onChange={(e) => setFolderInputPath(e.target.value)}
                   />
                 </div>
