@@ -395,7 +395,7 @@ export default function PotentialNotices({ params }) {
                     className="form-check-label fw-bold"
                     htmlFor="tax-deposit"
                   >
-                    Tax Deposits
+                    Late Deposit
                   </label>
                 </div>
                 <div className="form-check form-check-inline fs-18">
@@ -416,7 +416,7 @@ export default function PotentialNotices({ params }) {
                     className="form-check-label fw-bold"
                     htmlFor="interest"
                   >
-                    Interest Calculate
+                    Interest Payable
                   </label>
                 </div>
                 <div className="form-check form-check-inline fs-18">
@@ -453,8 +453,8 @@ export default function PotentialNotices({ params }) {
                 <h4 className="fw-bold mb-0">
                   {listType === "late" ? "Late Deductions" : ""}
                   {listType === "short" ? "Short Deductions" : ""}
-                  {listType === "tax-deposit" ? "Tax Deposits" : ""}
-                  {listType === "interest" ? "Interest Calculate" : ""}
+                  {listType === "tax-deposit" ? "Late Deposit " : ""}
+                  {listType === "interest" ? "Interest Payable" : ""}
                   {listType === "late-fee" ? "Late Fee Payable" : ""}
                 </h4>
               </div>
