@@ -770,7 +770,7 @@ export default function DeductorDetail(props) {
                   />
                 </div>
 
-                <div className="col-md-3">
+                {/* <div className="col-md-3">
                   <label htmlFor="inputAINCode" className="form-label">
                     <span>AIN Code</span>
                   </label>
@@ -785,7 +785,7 @@ export default function DeductorDetail(props) {
                     value={deductorDetail.ainCode}
                     onChange={(e) => handleInput("ainCode", e)}
                   />
-                </div>
+                </div> */}
                 <div className="col-md-3">
                   <label htmlFor="inputPAORegNo" className="form-label">
                     <span>PAO Reg No.</span>

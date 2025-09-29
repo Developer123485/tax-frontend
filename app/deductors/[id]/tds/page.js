@@ -443,7 +443,7 @@ export default function TDSDashboard({ params }) {
                               if (
                                 option.name == "24G Form"
                               ) {
-                                if (deductorInfo.ainCode) {
+                                if (deductorInfo.identificationNumber) {
                                   router.push(
                                     `/deductors/${deductorId}/tds/24g-form`
                                   )

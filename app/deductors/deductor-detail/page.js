@@ -182,7 +182,7 @@ export default function AddDeductor() {
         (res) => {
           if (res && res.id > 0) {
             setDeductorDetail(res);
-            if (res.ddoCode || res.ministryName || res.ministryState || res.paoCode || res.ainCode || res.paoRegistration || res.ministryNameOther || res.identificationNumber) {
+            if (res.ddoCode || res.ministryName || res.ministryState || res.paoCode || res.paoRegistration || res.ministryNameOther || res.identificationNumber) {
               setDeductorDetail((prevState) => ({
                 ...prevState,
                 governmentType: "government",
