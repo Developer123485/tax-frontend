@@ -2363,7 +2363,7 @@ export default function TermsConditions() {
                 evolve/evaluate all risks arising out of the same.
                 <br />
                 <br />
-                (c) <strong>Mistakes and Errors:</strong> The filling of
+                (c) <strong>Mistakes and Errors:</strong> The filing of
                 applicable data for transfer would require proper, accurate and
                 complete details. In the event of the Account receiving an
                 <strong>incorrect</strong> credit by reason of a mistake

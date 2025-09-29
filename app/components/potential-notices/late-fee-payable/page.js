@@ -54,7 +54,7 @@ export default function LateFeePayable(props) {
                 : "-",
         },
         {
-            name: "Date Of Filling Return",
+            name: "Date Of Filing Return",
             selector: (row) => row?.dateOfFillingReturn
                 ? CommonService.dateFormat(row?.dateOfFillingReturn)
                 : "-",

@@ -343,7 +343,7 @@ export default function GenerateFVU({ params }) {
                         width={32}
                         height={32}
                       />
-                      <h6 className="fw-bold mb-0">Late Filling</h6>
+                      <h6 className="fw-bold mb-0">Late Filing</h6>
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -640,7 +640,7 @@ export default function GenerateFVU({ params }) {
                       type="button"
                       className="btn btn-primary px-3 py-2 mb-3"
                     >
-                      Direct e-filling
+                      Direct e-filing
                     </button>
 
                     <ul className="list-group list-group-flush">
