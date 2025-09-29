@@ -260,10 +260,10 @@ export default function PotentialNotices({ params }) {
             parseInt(searchParams.get("categoryId")) == 2 ||
             parseInt(searchParams.get("categoryId")) == 3
           ) {
-            fileName = "Interest-Calculation-Export-" + form + ".xlsx";
+            fileName = "Interest-Calculation-TDS-Export-" + form + ".xlsx";
           }
           if (parseInt(searchParams.get("categoryId")) == 4) {
-            fileName = "Interest-Calculation-Export-" + form + ".xlsx";
+            fileName = "Interest-Calculation-TCS-Export-" + form + ".xlsx";
           }
           let url = window.URL.createObjectURL(new Blob([res]));
           toast.success("Export Data Successfully!");
@@ -306,10 +306,10 @@ export default function PotentialNotices({ params }) {
             parseInt(searchParams.get("categoryId")) == 2 ||
             parseInt(searchParams.get("categoryId")) == 3
           ) {
-            fileName = "Interest-Calculation-Export-" + form + ".xlsx";
+            fileName = "Late-Fee-Payable-Export-" + form + ".xlsx";
           }
           if (parseInt(searchParams.get("categoryId")) == 4) {
-            fileName = "Interest-Calculation-Export-" + form + ".xlsx";
+            fileName = "Late-Fee-Payable-Export-" + form + ".xlsx";
           }
           let url = window.URL.createObjectURL(new Blob([res]));
           toast.success("Export Data Successfully!");
