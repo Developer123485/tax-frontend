@@ -704,12 +704,10 @@ export default function GenerateFVU({ params }) {
                 <label>Paste the full path of the local folder where you want to save the files:</label>
                 <div>
                   <input
-                    type="file"
+                    type="text"
                     className="form-control"
                     placeholder="Paste Here"
                     value={folderInputPath}
-                    webkitdirectory
-                    directory
                     onChange={(e) => setFolderInputPath(e.target.value)}
                   />
                 </div>
