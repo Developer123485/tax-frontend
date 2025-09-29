@@ -299,7 +299,7 @@ export default function DeducteeFormEntryDetail(props) {
         {form === "form-27EQ" && (
           <div className="col-md-3">
             <label htmlFor="totalValueOfTheTransaction" className="form-label">
-              <span>Total Value of the tranaction</span>
+              <span>Total Value of the transaction</span>
             </label>
             <input
               type="text"
@@ -316,6 +316,101 @@ export default function DeducteeFormEntryDetail(props) {
             />
           </div>
         )}
+        <div className="col-md-3">
+          <label htmlFor="tds" className="form-label">
+            {form !== "form-27EQ" && <span>TDS</span>}
+            {form === "form-27EQ" && <span>TCS</span>}
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            id="tds"
+            disabled={props.isDisable}
+            value={deducteeEntry.tds}
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("tds", e);
+              }
+            }}
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="inputSurcharge" className="form-label">
+            <span>Surcharge</span>
+          </label>
+
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            disabled={props.isDisable}
+            id="inputSurcharge"
+            value={deducteeEntry.surcharge}
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("surcharge", e);
+              }
+            }}
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="inputHealthEducationCess" className="form-label">
+            <span>Health and Education Cess</span>
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            id="inputHealthEducationCess"
+            disabled={props.isDisable}
+            value={deducteeEntry.healthEducationCess}
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("healthEducationCess", e);
+              }
+            }}
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="inputTotalTaxDeducted" className="form-label">
+            {form !== "form-27EQ" && <span>Total Tax Deducted</span>}
+            {form === "form-27EQ" && <span>Total Tax Collected</span>}
+          </label>
+
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            id="inputTotalTaxDeducted"
+            value={deducteeEntry.totalTaxDeducted}
+            disabled
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("totalTaxDeducted", e);
+              }
+            }}
+          />
+        </div>
+
+        <div className="col-md-3">
+          <label htmlFor="inputTotalTaxDeposited" className="form-label">
+            <span>Total Tax Deposited</span>
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            id="inputTotalTaxDeposited"
+            value={deducteeEntry.totalTaxDeposited}
+            disabled
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value)) {
+                handleInput("totalTaxDeposited", e);
+              }
+            }}
+          />
+        </div>
         {(form === "form-27Q" || form === "form-27EQ") && (
           <div className="col-md-3">
             <label htmlFor="Opting" className="form-label">
@@ -394,7 +489,8 @@ export default function DeducteeFormEntryDetail(props) {
             </div>
             <div className="col-md-3">
               <label htmlFor="permanentlyEstablished" className="form-label">
-                <span>Permanently Established</span>
+                {form !== "form-27EQ" && <span>Permanently Established</span>}
+                {form === "form-27EQ" && <span>Permanent Establishment in India</span>}
               </label>
               <select
                 className="form-select"
@@ -568,7 +664,7 @@ export default function DeducteeFormEntryDetail(props) {
 
         <div className="col-md-3">
           <label htmlFor="inputLowerDeductionCert" className="form-label">
-            <span>Certification No.</span>
+            <span>Certificate No</span>
           </label>
           <input
             type="text"
@@ -587,102 +683,7 @@ export default function DeducteeFormEntryDetail(props) {
           )}
         </div>
 
-        <div className="col-md-3">
-          <label htmlFor="tds" className="form-label">
-            {form !== "form-27EQ" && <span>TDS</span>}
-            {form === "form-27EQ" && <span>TCS</span>}
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="tds"
-            disabled={props.isDisable}
-            value={deducteeEntry.tds}
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("tds", e);
-              }
-            }}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputSurcharge" className="form-label">
-            <span>Surcharge</span>
-          </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            disabled={props.isDisable}
-            id="inputSurcharge"
-            value={deducteeEntry.surcharge}
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("surcharge", e);
-              }
-            }}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputHealthEducationCess" className="form-label">
-            <span>Health and Education Cess</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputHealthEducationCess"
-            disabled={props.isDisable}
-            value={deducteeEntry.healthEducationCess}
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("healthEducationCess", e);
-              }
-            }}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputTotalTaxDeducted" className="form-label">
-            {form !== "form-27EQ" && <span>Total Tax Deducted</span>}
-            {form === "form-27EQ" && <span>Total Tax Collected</span>}
-            <span>Total Tax Collected</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputTotalTaxDeducted"
-            value={deducteeEntry.totalTaxDeducted}
-            disabled
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("totalTaxDeducted", e);
-              }
-            }}
-          />
-        </div>
-
-        <div className="col-md-3">
-          <label htmlFor="inputTotalTaxDeposited" className="form-label">
-            <span>Total Tax Deposited</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputTotalTaxDeposited"
-            value={deducteeEntry.totalTaxDeposited}
-            disabled
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value)) {
-                handleInput("totalTaxDeposited", e);
-              }
-            }}
-          />
-        </div>
         {deducteeEntry.sectionCode === "94N" && (
           <div className="col-md-3">
             <label htmlFor="fourNinteenA" className="form-label">
