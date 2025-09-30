@@ -10,6 +10,7 @@ export default function DeductorDetail(props) {
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [isFocused3, setIsFocused3] = useState(false);
+  const [isFocused4, setIsFocused4] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showTracesPassword, setShowTracesPassword] = useState(false);
   const highlightStyle = {
@@ -37,6 +38,13 @@ export default function DeductorDetail(props) {
   };
 
   const highlightStyle3 = {
+    padding: "8px",
+    border: "1px solid",
+    borderColor: isFocused3 ? "#007bff" : "#ccc",
+    boxShadow: isFocused3 ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
+    outline: "none",
+  };
+   const highlightStyle4 = {
     padding: "8px",
     border: "1px solid",
     borderColor: isFocused3 ? "#007bff" : "#ccc",
@@ -721,6 +729,30 @@ export default function DeductorDetail(props) {
                   >
                     <option value={""}>Select Ministry</option>
                     {enumList.ministries?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3">
+                  <label htmlFor="inputDepartmentName" className="form-label">
+                    <span>Department Name</span>
+                  </label>
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    autoComplete="off"
+                    maxLength={15}
+                    style={highlightStyle4}
+                    onFocus={() => setIsFocused4(true)}
+                    onBlur={() => setIsFocused4(false)}
+                    value={deductorDetail.departmentName}
+                    onChange={(e) => handleInput("departmentName", e)}
+                  >
+                    <option value={""}>Select Department</option>
+                    {enumList.departmentName?.map((option, index) => (
                       <option key={index} value={option.key}>
                         {option.value}
                       </option>

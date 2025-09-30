@@ -91,6 +91,7 @@ export default function AddDeductor() {
     deductorPan: "",
     deductorGstNo: "",
     ministryName: "",
+    departmentName: "",
     ministryValue: "",
     goodsAndServiceTax: "",
     ddoRegistration: "",
