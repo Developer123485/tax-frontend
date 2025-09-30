@@ -369,9 +369,9 @@ export default function TDSDashboard({ params }) {
                                 if (
                                   option.name == "Form 3CD - Clause 34"
                                 ) {
-                                  router.push(
-                                    `/deductors/${deductorId}/tds/miscellaneous?financial_year=${financialYear}`
-                                  );
+                                  // router.push(
+                                  //   `/deductors/${deductorId}/tds/miscellaneous?financial_year=${financialYear}`
+                                  // );
                                 }
                                 if (
                                   option.name == "TDS Deducted"
