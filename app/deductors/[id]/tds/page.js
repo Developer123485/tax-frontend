@@ -624,7 +624,7 @@ export default function TDSDashboard({ params }) {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="dashboard" title="Dashboard">
+              <Tab eventKey="dashboard" disabled title="Dashboard">
                 <div className="row g-3">
                   <div className="col-md-6">
                     <div className="border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
