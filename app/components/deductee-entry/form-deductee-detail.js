@@ -330,6 +330,7 @@ export default function DeducteeFormEntryDetail(props) {
             value={deducteeEntry.tds}
             onChange={(e) => {
               if (CommonService.isNumeric(e.target.value)) {
+                props.setChangeTcs(true);
                 handleInput("tds", e);
               }
             }}

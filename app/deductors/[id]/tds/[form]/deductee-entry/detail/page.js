@@ -22,6 +22,7 @@ export default function DeducteeEntryDetail({ params }) {
   const searchParams = useSearchParams(null);
   const [challanDropdowns, setChallans] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isChangeTcs, setChangeTcs] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
   const [deducteeDropdowns, setDeducteeDropdowns] = useState([]);
@@ -282,6 +283,16 @@ export default function DeducteeEntryDetail({ params }) {
       setDeducteeEntry((prevState) => ({
         ...prevState,
         [names]: e,
+      }));
+    } else if (names === "amountPaidCredited") {
+      let tcsRate = 0;
+      if (e.target.value && parseFloat(e.target.value) > 0 && deducteeEntry.tdsRate > 0) {
+        tcsRate = (parseFloat(e.target.value) * deducteeEntry.tdsRate / 100).toFixed();
+      }
+      setDeducteeEntry((prevState) => ({
+        ...prevState,
+        ["tds"]: !isChangeTcs ? tcsRate : deducteeEntry.tds,
+        ["amountPaidCredited"]: e.target.value ? parseFloat(e.target.value) : null,
       }));
     }
     else {
@@ -662,6 +673,7 @@ export default function DeducteeEntryDetail({ params }) {
                     deducteeEntryErrors={deducteeEntryErrors}
                     isDirty={isDirty}
                     deductorId={deductorId}
+                    setChangeTcs={setChangeTcs}
                   ></DeducteeFormEntryDetail>
                 )}
               </div>
