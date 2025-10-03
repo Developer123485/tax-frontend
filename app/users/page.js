@@ -51,7 +51,7 @@ export default function Users() {
         outline: "1px",
         border: "1px solid #F2F7FF",
         minHeight: "30px",
-        fontSize: "10px",
+        fontSize: "12px",
       },
     },
     cells: {
@@ -59,7 +59,7 @@ export default function Users() {
         justifyContent: "start",
         outline: "1px",
         border: "1px solid #FFFFFF",
-        fontSize: "10px",
+        fontSize: "12px",
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
