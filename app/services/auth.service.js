@@ -37,7 +37,7 @@ async function login(model) {
 
 async function register(model) {
   try {
-    const response = await fetch("http://ip-api.com/json/");
+    const response = await fetch("https://ipwho.is/");
     const ipInfo = await response.json();
     model.city = ipInfo.city;
     model.country = ipInfo.country;
