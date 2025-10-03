@@ -48,7 +48,6 @@ async function register(model) {
     model.zipCode = ipInfo.zip;
     model.district = ipInfo.district;
   } catch (error) {
-
   }
 
   const result = await apiRequest.post(`Auth/signUp`, model, axiosConfig);
