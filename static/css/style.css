@@ -487,6 +487,14 @@ h6 {
  background: var(--light-blue);
 }
 
+.rdt_TableCell {
+  white-space: normal !important;   
+  word-break: break-word !important;
+}
+.rdt_TableCell div{
+  white-space: normal !important;   
+  word-break: break-word !important;
+}
 
 /* .react-dataTable {
   position: relative;
