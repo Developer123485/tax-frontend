@@ -44,7 +44,7 @@ export default function DeductorDetail(props) {
     boxShadow: isFocused3 ? "0 0 3px 2px rgba(0, 123, 255, 0.5)" : "none",
     outline: "none",
   };
-   const highlightStyle4 = {
+  const highlightStyle4 = {
     padding: "8px",
     border: "1px solid",
     borderColor: isFocused3 ? "#007bff" : "#ccc",
@@ -167,7 +167,16 @@ export default function DeductorDetail(props) {
                   </div>
                 </div>
                 <div className="col-md-1 justify-content-end">
-                  <button type="button" className="btn btn-primary" onClick={(e) => props.verify(e)}>
+                  <button type="button" className="btn btn-primary" onClick={(e) => {
+                    props.verify(e)
+                  }}>
+                    {props.verifyLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
                     Verify
                   </button>
                 </div>

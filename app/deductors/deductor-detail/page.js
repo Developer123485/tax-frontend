@@ -20,6 +20,7 @@ export default function AddDeductor() {
   const [isNextDirty, setIsNextDirty] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
   const tanRegex = /^[A-Z]{4}[0-9]{5}[A-Z]{1}$/;
@@ -258,10 +259,14 @@ export default function AddDeductor() {
       toast.error("The deductor tan must be 10 digits.");
       return false;
     }
+
+
     if (
       deductorDetail.deductorTan &&
       deductorDetail.deductorTan.length === 10
     ) {
+
+
       const regx = tanRegex.test(
         deductorDetail.deductorTan.toLocaleUpperCase()
       );
@@ -270,6 +275,7 @@ export default function AddDeductor() {
         return false;
       }
     }
+    setVerifyLoading(true);
     const model = {
       userName: deductorDetail.tracesLogin,
       password: deductorDetail.tracesPassword,
@@ -280,7 +286,16 @@ export default function AddDeductor() {
         setCaptchaBase64(res.captcha);
         setConfirmModal(true);
       }
-    });
+      setVerifyLoading(true);
+    }).catch(e => {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setVerifyLoading(false);
+    })
   }
 
 
@@ -296,7 +311,7 @@ export default function AddDeductor() {
     DeductorsService.submitCaptcha(model).then(res => {
       if (res) {
         setInputCaptcha("");
-        toast.error("Logged in successfully");
+        toast.success("Logged in successfully");
         setConfirmModal(false);
       }
       setLoading(false);
@@ -657,6 +672,7 @@ export default function AddDeductor() {
                 deductorErrors={deductorErrors}
                 goToResponsibleDetail={(e) => goToResponsibleDetail(e)}
                 verify={verify}
+                verifyLoading={verifyLoading}
               ></DeductorDetail>
             )}
             {active === 1 && (
