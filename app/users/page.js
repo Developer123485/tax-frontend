@@ -273,7 +273,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{userCount}</h1>
+                        <h3 className="mb-0 fw-bold">{userCount}</h3>
                         <p className="mb-0 fs-12">Users</p>
                       </div>
                     </div>
@@ -289,7 +289,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{deductorCount}</h1>
+                        <h3 className="mb-0 fw-bold">{deductorCount}</h3>
                         <p className="mb-0 fs-12">Deductors</p>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{deducteeCount}</h1>
+                        <h3 className="mb-0 fw-bold">{deducteeCount}</h3>
                         <p className="mb-0 fs-12">Deductee Master</p>
 
                       </div>
@@ -321,7 +321,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{employeeCount}</h1>
+                        <h3 className="mb-0 fw-bold">{employeeCount}</h3>
                         <p className="mb-0 fs-12">Employee Master</p>
                       </div>
                     </div>
@@ -336,7 +336,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{challanCount}</h1>
+                        <h3 className="mb-0 fw-bold">{challanCount}</h3>
                         <p className="mb-0 fs-12">Challans</p>
                       </div>
                     </div>
@@ -352,7 +352,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{deducteeEntryCount}</h1>
+                        <h3 className="mb-0 fw-bold">{deducteeEntryCount}</h3>
                         <p className="mb-0 fs-12">Deductee Entries</p>
                       </div>
                     </div>
@@ -368,7 +368,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{salaryCount}</h1>
+                        <h3 className="mb-0 fw-bold">{salaryCount}</h3>
                         <p className="mb-0 fs-12">Salary Details</p>
                       </div>
                     </div>
@@ -383,7 +383,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h1 className="mb-0 fw-bold">{errorCounts}</h1>
+                        <h3 className="mb-0 fw-bold">{errorCounts}</h3>
                         <p className="mb-0 fs-12">Error Logs</p>
                       </div>
                     </div>
