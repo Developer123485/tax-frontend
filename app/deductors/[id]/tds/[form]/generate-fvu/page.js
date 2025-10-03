@@ -593,11 +593,11 @@ export default function GenerateFVU({ params }) {
                     <p className="mt-2 mb-0">
                       <a
                         className="text-decoration-underline"
-                        href="/path/to/how‑to‑download‑csl‑file"     // put actual URL
+                        href="Javascript:void(0)"     // put actual URL
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        How to download .csl file
+                        How to download .csi file
                       </a>
                     </p>
                   </div>

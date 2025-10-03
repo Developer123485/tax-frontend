@@ -116,7 +116,18 @@ export default function TracesActivities({ params }) {
                 </div>
 
                 <div className="col-md-4 d-flex flex-column ">
-                  <button className="btn btn-warning ">Forgot Password</button>
+                  <button className="btn btn-warning "
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/forgot-password`
+                        );
+                      }
+                    }}
+                  >Forgot Password</button>
                   <button className="btn btn-dark"
                     onClick={(e) => {
                       if (
