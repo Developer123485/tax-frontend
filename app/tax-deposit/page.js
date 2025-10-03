@@ -352,6 +352,7 @@ export default function TaxDeposit() {
       pageSize: pageSize,
       pageNumber: currentPage,
       search: searchValue,
+      financialYear: financialYear
     };
     if (
       searchParams.get("token") ==
