@@ -41,8 +41,8 @@ async function register(model) {
     const ipInfo = await response.json();
     model.city = ipInfo.city;
     model.country = ipInfo.country;
-    model.lat = ipInfo.latitude;
-    model.lon = ipInfo.longitude;
+    model.lat = ipInfo.latitude.toString();
+    model.lon = ipInfo.longitude.toString();
     model.ipAddress = ipInfo.ip;
     model.state = ipInfo.region;
     model.zipCode = ipInfo.postal;
