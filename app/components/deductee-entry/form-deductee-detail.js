@@ -455,7 +455,7 @@ export default function DeducteeFormEntryDetail(props) {
 
             <div className="col-md-3">
               <label htmlFor="acknowledgement" className="form-label">
-                <span>Acknowledgment</span>
+                <span>Acknowledgment No Form 15CA</span>
               </label>
               <input
                 type="text"
@@ -584,7 +584,7 @@ export default function DeducteeFormEntryDetail(props) {
           <>
             <div className="col-md-6">
               <label htmlFor="remittance" className="form-label">
-                <span>Remittance code</span>
+                <span>Remittance code/Nature of payment</span>
               </label>
               {enumList.natures && enumList.natures.length > 0 && <SearchableDropdown
                 setEventId={props.setNatures}
