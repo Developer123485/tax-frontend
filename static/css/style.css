@@ -487,7 +487,7 @@ h6 {
  background: var(--light-blue);
 }
 
-.rdt_TableCell {
+.rdt_TableCol div{
   white-space: normal !important;   
   word-break: break-word !important;
 }
