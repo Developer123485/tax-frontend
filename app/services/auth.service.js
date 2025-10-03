@@ -36,6 +36,21 @@ async function login(model) {
 }
 
 async function register(model) {
+  try {
+    const response = await fetch("http://ip-api.com/json/");
+    const ipInfo = await response.json();
+    model.city = ipInfo.city;
+    model.country = ipInfo.country;
+    model.lat = ipInfo.lat;
+    model.lon = ipInfo.lon;
+    model.ipAddress = ipInfo.query;
+    model.state = ipInfo.regionName;
+    model.zipCode = ipInfo.zip;
+    model.district = ipInfo.district;
+  } catch (error) {
+
+  }
+
   const result = await apiRequest.post(`Auth/signUp`, model, axiosConfig);
   return result;
 }
