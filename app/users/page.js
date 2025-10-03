@@ -87,6 +87,23 @@ export default function Users() {
       selector: (row) => row.phoneNumber || "-",
     },
     {
+      name: "Addrss",
+      selector: (row) => (
+        <>
+          <span>
+            {row.ipAddress} {","}
+            {row.city} {","}
+            {row.district} {","}
+            {row.state} {","}
+            {row.country} {","}
+            {row.zipCode} {","}
+            {row.lat} {","}
+            {row.lon}
+          </span>
+        </>
+      )
+    },
+    {
       name: "Errors Count",
       cell: (row) => (
         <a href="Javascript:void(0)"
