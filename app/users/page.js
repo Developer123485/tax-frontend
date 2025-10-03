@@ -273,7 +273,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{userCount}</h3>
+                        <h6 className="mb-0 fw-bold">{userCount}</h6>
                         <p className="mb-0 fs-12">Users</p>
                       </div>
                     </div>
@@ -289,7 +289,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{deductorCount}</h3>
+                        <h6 className="mb-0 fw-bold">{deductorCount}</h6>
                         <p className="mb-0 fs-12">Deductors</p>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{deducteeCount}</h3>
+                        <h6 className="mb-0 fw-bold">{deducteeCount}</h6>
                         <p className="mb-0 fs-12">Deductee Master</p>
 
                       </div>
@@ -321,7 +321,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{employeeCount}</h3>
+                        <h6 className="mb-0 fw-bold">{employeeCount}</h6>
                         <p className="mb-0 fs-12">Employee Master</p>
                       </div>
                     </div>
@@ -336,7 +336,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{challanCount}</h3>
+                        <h6 className="mb-0 fw-bold">{challanCount}</h6>
                         <p className="mb-0 fs-12">Challans</p>
                       </div>
                     </div>
@@ -352,7 +352,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{deducteeEntryCount}</h3>
+                        <h6 className="mb-0 fw-bold">{deducteeEntryCount}</h6>
                         <p className="mb-0 fs-12">Deductee Entries</p>
                       </div>
                     </div>
@@ -368,7 +368,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{salaryCount}</h3>
+                        <h6 className="mb-0 fw-bold">{salaryCount}</h6>
                         <p className="mb-0 fs-12">Salary Details</p>
                       </div>
                     </div>
@@ -383,7 +383,7 @@ export default function Users() {
                         height={64}
                       />
                       <div className="d-flex align-items-start text-start flex-column">
-                        <h3 className="mb-0 fw-bold">{errorCounts}</h3>
+                        <h6 className="mb-0 fw-bold">{errorCounts}</h6>
                         <p className="mb-0 fs-12">Error Logs</p>
                       </div>
                     </div>
@@ -489,7 +489,7 @@ export default function Users() {
         onHide={() => setOpenAddUser(false)}
       >
         <Modal.Header className="border-0" closeButton>
-          <h3 className="mb-0">Add User</h3>
+          <h6 className="mb-0">Add User</h6>
         </Modal.Header>
         <Modal.Body>
           <AddUser setOpenAddUser={setOpenAddUser} fetchUsers={fetchUsers} user={user}></AddUser>
