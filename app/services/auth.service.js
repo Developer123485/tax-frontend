@@ -41,12 +41,12 @@ async function register(model) {
     const ipInfo = await response.json();
     model.city = ipInfo.city;
     model.country = ipInfo.country;
-    model.lat = ipInfo.lat;
-    model.lon = ipInfo.lon;
-    model.ipAddress = ipInfo.query;
-    model.state = ipInfo.regionName;
-    model.zipCode = ipInfo.zip;
-    model.district = ipInfo.district;
+    model.lat = ipInfo.latitude;
+    model.lon = ipInfo.longitude;
+    model.ipAddress = ipInfo.ip;
+    model.state = ipInfo.region;
+    model.zipCode = ipInfo.postal;
+    model.district = ipInfo.city;
   } catch (error) {
   }
 
