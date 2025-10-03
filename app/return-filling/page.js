@@ -263,7 +263,7 @@ export default function ReturnFilling() {
         };
         ReportingService.deleteBulk(model).then(res => {
           if (res) {
-            selectedData(null);
+            setSelectedData(null);
             toast.success("Return Filing Deleted!");
             fetchReturnFilling();
           }
@@ -755,7 +755,7 @@ export default function ReturnFilling() {
                                 paginationTotalRows={returnFillings.totalRows}
                                 paginationPerPage={pageSize}
                                 selectableRows={true}
-                                selectableRowsNoSelectAll={true}
+                                selectableRowsNoSelectAll={false}
                                 onSelectedRowsChange={handleChange}
                                 paginationComponentOptions={{
                                   noRowsPerPage: true,
