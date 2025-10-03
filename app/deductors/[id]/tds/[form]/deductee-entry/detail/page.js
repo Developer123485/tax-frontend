@@ -140,6 +140,9 @@ export default function DeducteeEntryDetail({ params }) {
     paymentCoveredError: "",
     challanNumberError: "",
     challanDateError: "",
+    natureError: "",
+    countryError: "",
+    tdsError: "",
   });
   useEffect(() => {
     EnumService.getEnumStatues().then((res) => {
@@ -216,6 +219,7 @@ export default function DeducteeEntryDetail({ params }) {
     deducteeEntry.paymentCovered,
     deducteeEntry.challanDate,
     deducteeEntry.challanNumber,
+    deducteeEntry.remettanceCode
   ]);
 
   function setTotalTaxDeducted() {
@@ -457,6 +461,9 @@ export default function DeducteeEntryDetail({ params }) {
     let paymentCoveredError = "";
     let challanNumberError = "";
     let challanDateError = "";
+    let natureError = "";
+    let countryError = "";
+    let tdsError = "";
 
     if (deducteeEntry.amountPaidCredited && deducteeEntry.fourNinteenA && parseFloat(deducteeEntry.fourNinteenA) > parseFloat(deducteeEntry.amountPaidCredited)) {
       fourNinteenAError = "Value should be less then equal to AmountPaidCredited";
@@ -478,6 +485,15 @@ export default function DeducteeEntryDetail({ params }) {
     }
     if (!deducteeEntry.dateOfPaymentCredit) {
       datePaymentError = "Date Of Payment is required";
+    }
+    if (!deducteeEntry.remettanceCode && form === "form-27Q") {
+      natureError = "Nature of payment is required";
+    }
+    if (!deducteeEntry.countryCode && form === "form-27Q") {
+      countryError = "Country code is required";
+    }
+    if (!deducteeEntry.tdsRateAct) {
+      tdsError = "TdsRate Act is required";
     }
     if (!deducteeEntry.dateOfDeduction && deducteeEntry.totalTaxDeducted > 0) {
       dateDeductionError = "Date Of Deduction is required";
@@ -550,7 +566,10 @@ export default function DeducteeEntryDetail({ params }) {
       fourNinteenFError ||
       challanDateError ||
       paymentCoveredError ||
-      challanNumberError
+      challanNumberError ||
+      natureError ||
+      countryError ||
+      tdsError
     ) {
       setDeducteeEntryErrors((prevState) => ({
         ...prevState,
@@ -570,7 +589,10 @@ export default function DeducteeEntryDetail({ params }) {
         reasonsError,
         challanDateError,
         paymentCoveredError,
-        challanNumberError
+        challanNumberError,
+        natureError,
+        tdsError,
+        countryError
       }));
       return false;
     }
@@ -592,7 +614,10 @@ export default function DeducteeEntryDetail({ params }) {
       reasonsError: "",
       challanDateError: "",
       paymentCoveredError: "",
-      challanNumberError: ""
+      challanNumberError: "",
+      natureError: "",
+      tdsError: "",
+      countryError: ""
     }));
     return true;
   }

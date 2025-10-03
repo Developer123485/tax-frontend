@@ -591,6 +591,11 @@ export default function DeducteeFormEntryDetail(props) {
                 id={props.deducteeEntry.remettanceCode}
                 options={enumList.natures}
               ></SearchableDropdown>}
+              {isDirty && deducteeEntryErrors.natureError && (
+                <span className="text-danger">
+                  {deducteeEntryErrors.natureError}
+                </span>
+              )}
             </div>
             <div className="col-md-6">
               <label htmlFor="remittance" className="form-label">
@@ -601,6 +606,11 @@ export default function DeducteeFormEntryDetail(props) {
                 id={props.deducteeEntry.countryCode}
                 options={enumList.countries}
               ></SearchableDropdown>}
+              {isDirty && deducteeEntryErrors.countryError && (
+                <span className="text-danger">
+                  {deducteeEntryErrors.countryError}
+                </span>
+              )}
             </div>
             {/* <div className="col-md-3">
               <label htmlFor="email" className="form-label">
@@ -680,6 +690,11 @@ export default function DeducteeFormEntryDetail(props) {
                   </option>
                 ))}
               </select>
+              {isDirty && deducteeEntryErrors.tdsError && (
+                <span className="text-danger">
+                  {deducteeEntryErrors.tdsError}
+                </span>
+              )}
             </div>
           </>
         )}
