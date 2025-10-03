@@ -42,7 +42,7 @@ export default function Users() {
         "&:hover": {
           backgroundColor: "#F2F7FF!important",
         },
-        minHeight: "45px",
+        minHeight: "32px",
       },
     },
     headCells: {
@@ -50,7 +50,8 @@ export default function Users() {
         justifyContent: "start",
         outline: "1px",
         border: "1px solid #F2F7FF",
-        fontSize: "12px",
+        minHeight: "30px",
+        fontSize: "10px",
       },
     },
     cells: {
@@ -58,7 +59,7 @@ export default function Users() {
         justifyContent: "start",
         outline: "1px",
         border: "1px solid #FFFFFF",
-        fontSize: "12px",
+        fontSize: "10px",
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
