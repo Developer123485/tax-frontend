@@ -19,6 +19,7 @@ export default function AddDeductor() {
   const [enumList, setEnumList] = useState({});
   const [isNextDirty, setIsNextDirty] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
   const tanRegex = /^[A-Z]{4}[0-9]{5}[A-Z]{1}$/;
@@ -284,18 +285,21 @@ export default function AddDeductor() {
 
 
   function handleSubmit(params) {
-    if (!inputCaptcha) {
-      toast.error("Input Captcha is required");
+    if (!inputCaptcha && inputCaptcha?.length !== 5) {
+      toast.error("Please enter the 5-character captcha");
       return false;
     }
+    setLoading(true);
     const model = {
       captcha: inputCaptcha,
     }
     DeductorsService.submitCaptcha(model).then(res => {
       if (res) {
         setInputCaptcha("");
+        toast.error("Logged in successfully");
         setConfirmModal(false);
       }
+      setLoading(false);
     }).catch(e => {
       if (e?.response?.data?.errorMessage) {
         toast.error(e?.response?.data?.errorMessage);
@@ -303,6 +307,7 @@ export default function AddDeductor() {
       else {
         toast.error(e?.message);
       }
+      setLoading(false);
     })
   }
 
@@ -689,6 +694,13 @@ export default function AddDeductor() {
                   />
                   <br />
                   <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                    {loading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
                     Submit
                   </button>
                 </div>
