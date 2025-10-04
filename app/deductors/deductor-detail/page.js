@@ -286,7 +286,7 @@ export default function AddDeductor() {
         setCaptchaBase64(res.captcha);
         setConfirmModal(true);
       }
-      setVerifyLoading(true);
+      setVerifyLoading(false);
     }).catch(e => {
       if (e?.response?.data?.errorMessage) {
         toast.error(e?.response?.data?.errorMessage);
