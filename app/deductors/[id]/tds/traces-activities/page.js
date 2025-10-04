@@ -51,8 +51,8 @@ export default function TracesActivities({ params }) {
           setShowLoader(false);
         }
       }).catch(e => {
-        if (e?.response?.data) {
-          toast.error(e?.response?.data);
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
         }
         else {
           toast.error(e?.message);
@@ -92,7 +92,11 @@ export default function TracesActivities({ params }) {
             <div className="col-md-12 bg-white border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
               <div className="row g-3 align-items-start traces-act-wrap">
                 <div className="col-md-4 d-flex flex-column ">
-                  <button className="btn btn-primary ">Edit Details</button>
+                  <button className="btn btn-primary"
+                    onClick={(e) => {
+                      router.push(`/deductors/deductor-detail?id=${deductorId}`);
+                    }}
+                  >Edit Login Details</button>
                   <button className="btn btn-secondary"
                     onClick={(e) => {
                       if (
@@ -107,10 +111,21 @@ export default function TracesActivities({ params }) {
                   >
                     Request Conso File
                   </button>
-                  <button className="btn btn-info  text-dark">
+                  <button className="btn btn-info  text-dark"
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/view-requested-downloads`
+                        );
+                      }
+                    }}
+                  >
                     View Requested Downloads
                   </button>
-                  <button className="btn btn-outline-primary">
+                  <button className="btn btn-outline-primary" disabled>
                     emSigner Download Link
                   </button>
                 </div>
@@ -142,16 +157,27 @@ export default function TracesActivities({ params }) {
                   >
                     Request Form 16/16A/27D
                   </button>
-                  <button className="btn btn-warning  text-white">
+                  <button className="btn btn-warning  text-white" disabled>
                     Declaration for Non-FilinG
                   </button>
-                  <button className="btn btn-dark ">
+                  <button className="btn btn-dark " disabled>
                     Request Tr. based Report (27Q)
                   </button>
                 </div>
 
                 <div className="col-md-4 d-flex flex-column ">
-                  <button className="btn btn-success ">Login</button>
+                  <button className="btn btn-success"
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/traces-login`
+                        );
+                      }
+                    }}
+                  >Login</button>
                   <button className="btn btn-secondary "
                     onClick={(e) => {
                       if (
@@ -166,7 +192,18 @@ export default function TracesActivities({ params }) {
                   >
                     Request Justification Report
                   </button>
-                  <button className="btn btn-danger ">View/Edit ProFile</button>
+                  <button className="btn btn-danger "
+                    onClick={(e) => {
+                      if (
+                        deductorId &&
+                        parseInt(deductorId) > 0
+                      ) {
+                        router.push(
+                          `/deductors/${deductorId}/tds/traces-activities/view-edit-profile`
+                        );
+                      }
+                    }}
+                  >View/Edit ProFile</button>
                   <button className="btn btn-success "
                     onClick={(e) => {
                       if (
