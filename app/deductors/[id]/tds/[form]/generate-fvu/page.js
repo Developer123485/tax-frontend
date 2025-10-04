@@ -674,7 +674,7 @@ export default function GenerateFVU({ params }) {
                           aria-hidden="true"
                         ></span>
                       )}
-                      Generate FVU
+                      Choose Location & Generate FVU
                     </button>
                   </div>
                 </div>
