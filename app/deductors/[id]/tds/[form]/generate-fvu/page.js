@@ -228,8 +228,8 @@ export default function GenerateFVU({ params }) {
       const endYear = startYear + 1;
       formData.append("assesmentYear", `${endYear}-${(endYear + 1).toString().slice(-2)}`);
 
-      const res = await FuvValidateReturnService.generateFVU(formData);
-      if (!res) return;
+      // const res = await FuvValidateReturnService.generateFVU(formData);
+      // if (!res) return;
 
       const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
       if (!response.ok) {
