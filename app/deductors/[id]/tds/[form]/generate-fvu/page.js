@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FormsService } from "@/app/services/forms.service";
 import { DeductorsService } from "@/app/services/deductors.service";
 import { Modal } from "react-bootstrap";
+import JSZip from 'jszip';
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -21,6 +22,7 @@ export default function GenerateFVU({ params }) {
   const pathname = usePathname();
   const [isError, setIsError] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showFvuFile, setShowFvuFile] = useState(false);
   const [isDeductorChange, setIsDeductorChange] = useState("N");
   const [isResponsibleChange, setIsResponsibleChange] = useState("N");
@@ -184,57 +186,103 @@ export default function GenerateFVU({ params }) {
     setFileName(event.target.files[0].name);
   };
 
-  function generateFuv(e) {
-    let isValidation = false;
-    if (folderInputPath) {
-      setTokenError("");
-      if (isTdsReturn == "Y" && !tokenNo) {
-        setTokenError("token number is required");
-        isValidation = true;
+  async function generateFuv(e) {
+    e.preventDefault();
+
+    // Step 1: Ask user to pick folder RIGHT NOW inside user gesture
+    let dirHandle;
+    try {
+      dirHandle = await window.showDirectoryPicker();
+    } catch (err) {
+      toast.error("Folder access denied.");
+      return;
+    }
+
+    // Step 2: Do basic validation (no long async calls)
+    setTokenError("");
+
+    if (isTdsReturn === "Y" && !tokenNo) {
+      setTokenError("Token number is required");
+      return;
+    } else if (isTdsReturn === "Y" && tokenNo.length !== 15) {
+      setTokenError("Token number should be 15 digits");
+      return;
+    }
+
+    if (!selectedData) {
+      toast.error("Please select CSI file");
+      return;
+    }
+    setLoading(true);
+    try {
+      // Step 3: Prepare and call API
+      const formData = new FormData();
+      formData.append("csiFile", selectedData);
+      formData.append("financialYear", searchParams.get("financial_year"));
+      formData.append("quarter", searchParams.get("quarter"));
+      formData.append("deductorId", deductorId);
+      formData.append("categoryId", parseInt(searchParams.get("categoryId")));
+      formData.append("folderInputPath", folderInputPath);
+
+      const startYear = parseInt(searchParams.get("financial_year").split("-")[0]);
+      const endYear = startYear + 1;
+      formData.append("assesmentYear", `${endYear}-${(endYear + 1).toString().slice(-2)}`);
+
+      const res = await FuvValidateReturnService.generateFVU(formData);
+      if (!res) return;
+
+      const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
+      if (!response.ok) {
+        toast.error("Failed to download file");
+        return;
       }
-      if (isTdsReturn == "Y" && tokenNo && tokenNo.length != 15) {
-        setTokenError("token number should be 15 digit");
-        isValidation = true;
+
+      const zipBlob = await response.blob();
+      const zip = await JSZip.loadAsync(zipBlob);
+
+      // Step 4: Load all files into memory BEFORE calling getFileHandle
+      const filesToSave = [];
+
+      for (const [relativePath, file] of Object.entries(zip.files)) {
+        if (file.dir) continue;
+
+        const blob = await file.async("blob");
+        filesToSave.push({ relativePath, blob });
       }
-      if (isError) {
-        toast.error("Fix Validation Errors");
-        isValidation = true;
+
+      // Step 5: Save files — this is close enough to user gesture to be allowed
+      for (const { relativePath, blob } of filesToSave) {
+        const pathParts = relativePath.split("/");
+
+        let currentDir = dirHandle;
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          currentDir = await currentDir.getDirectoryHandle(pathParts[i], { create: true });
+        }
+
+        const fileName = pathParts[pathParts.length - 1];
+        const fileHandle = await currentDir.getFileHandle(fileName, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(blob);
+        await writable.close();
       }
-      if (!selectedData) {
-        toast.error("Please Select CSI file");
-        return false;
+      setLoading(false);
+      toast.success("All files saved successfully!");
+      await fetch("https://py-api.taxvahan.site/delete", {
+        method: "DELETE"
+      });
+    } catch (e) {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
       }
-      if (!isValidation) {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("csiFile", selectedData);
-        formData.append("financialYear", searchParams.get("financial_year"));
-        formData.append("quarter", searchParams.get("quarter"));
-        formData.append("deductorId", deductorId);
-        formData.append("categoryId", parseInt(searchParams.get("categoryId")));
-        formData.append("folderInputPath", folderInputPath);
-        const startYear = parseInt(searchParams.get("financial_year").split("-")[0]);
-        const endYear = startYear + 1;
-        formData.append("assesmentYear", `${endYear}` + "-" + "" + `${endYear + 1}`.toString().slice(-2));
-        FuvValidateReturnService.generateFVU(formData)
-          .then((res) => {
-            if (res) {
-              setShowFvuFile(false);
-            }
-          }).catch(e => {
-            if (e?.response?.data?.errorMessage) {
-              toast.error(e?.response?.data?.errorMessage);
-            }
-            else {
-              toast.error(e?.message);
-            }
-          })
-          .finally((f) => {
-            setShowFvuFile(false);
-          });
+      else {
+        toast.error(e?.message);
       }
+    } finally {
+      setShowFvuFile(false);
+      setLoading(false);
     }
   }
+
 
   return (
     <>
@@ -618,7 +666,14 @@ export default function GenerateFVU({ params }) {
               <div className="my-4">
                 <div className="row">
                   <div className="col-md-12">
-                    <button type="button" className="btn btn-primary" disabled={returnErrors} onClick={(e) => setShowFvuFile(true)}>
+                    <button type="button" className="btn btn-primary" disabled={returnErrors || loading} onClick={(e) => generateFuv(e)}>
+                      {loading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
                       Generate FVU
                     </button>
                   </div>
