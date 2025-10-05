@@ -21,6 +21,7 @@ export default function Deductors() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [fileName, setFileName] = useState("");
   const [deductors, setDeductors] = useState([]);
+  const [search, setSearch] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -190,6 +191,14 @@ export default function Deductors() {
     sessionStorage.removeItem("financialYear");
     sessionStorage.removeItem("requestedDownload");
   }, [currentPage]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      fetchDeductors(1, search);
+    }, 2000);
+
+    return () => clearTimeout(delayDebounce);
+  }, [search]);
 
   const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -471,11 +480,7 @@ export default function Deductors() {
                       placeholder="Search here"
                       className="form-control bg-light-gray border-end-0"
                       id="SearchDeductors"
-                      onChange={(e) => {
-                        setTimeout(() => {
-                          fetchDeductors(1, e.target.value);
-                        }, 2000);
-                      }}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
