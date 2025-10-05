@@ -167,10 +167,11 @@ export default function DeductorDetail(props) {
                   </div>
                 </div>
                 <div className="col-md-1 justify-content-end">
-                  <button type="button" className="btn btn-primary" onClick={(e) => {
-                    props.verify(e)
-                  }}>
-                    {props.verifyLoading && (
+                  <button type="button" className="btn btn-primary"
+                    onClick={(e) => {
+                      props.verify(e)
+                    }}>
+                    {props.P && (
                       <span
                         className="spinner-grow spinner-grow-sm"
                         role="status"

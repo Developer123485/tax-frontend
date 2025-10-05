@@ -23,6 +23,7 @@ export default function GenerateFVU({ params }) {
   const [isError, setIsError] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isDownloadLoading, setIsDownloadLoading] = useState(false);
   const [showFvuFile, setShowFvuFile] = useState(false);
   const [isDeductorChange, setIsDeductorChange] = useState("N");
   const [isResponsibleChange, setIsResponsibleChange] = useState("N");
@@ -40,6 +41,7 @@ export default function GenerateFVU({ params }) {
   const [confirmTitle, setConfirmTitle] = useState("");
   const [tokenNo, setTokenNo] = useState("");
   const [isDirty, setIsDirty] = useState(false);
+  const [isFileSaved, setIsFileSaved] = useState(false);
   const [tokenError, setTokenError] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const [outputPath, setOutputPath] = useState('');
@@ -188,17 +190,8 @@ export default function GenerateFVU({ params }) {
 
   async function generateFuv(e) {
     e.preventDefault();
-
+    setIsFileSaved(false);
     // Step 1: Ask user to pick folder RIGHT NOW inside user gesture
-    let dirHandle;
-    try {
-      dirHandle = await window.showDirectoryPicker();
-    } catch (err) {
-      toast.error("Folder access denied.");
-      return;
-    }
-
-    // Step 2: Do basic validation (no long async calls)
     setTokenError("");
 
     if (isTdsReturn === "Y" && !tokenNo) {
@@ -231,12 +224,39 @@ export default function GenerateFVU({ params }) {
       const res = await FuvValidateReturnService.generateFVU(formData);
       if (!res) return;
 
+
+      setLoading(false);
+      toast.success("All files saved successfully!");
+
+    } catch (e) {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+    } finally {
+      setShowFvuFile(false);
+      setLoading(false);
+    }
+  }
+
+  async function downloadFvuFiles(e) {
+    e.preventDefault();
+    try {
+      let dirHandle;
+      try {
+        dirHandle = await window.showDirectoryPicker();
+      } catch (err) {
+        toast.error("Folder access denied.");
+        return;
+      }
       const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
       if (!response.ok) {
         toast.error("Failed to download file");
         return;
       }
-
+      setIsDownloadLoading(true);
       const zipBlob = await response.blob();
       const zip = await JSZip.loadAsync(zipBlob);
 
@@ -264,12 +284,11 @@ export default function GenerateFVU({ params }) {
         const writable = await fileHandle.createWritable();
         await writable.write(blob);
         await writable.close();
+        setIsFileSaved(true);
+        await fetch("https://py-api.taxvahan.site/delete", {
+          method: "DELETE"
+        });
       }
-      setLoading(false);
-      toast.success("All files saved successfully!");
-      await fetch("https://py-api.taxvahan.site/delete", {
-        method: "DELETE"
-      });
     } catch (e) {
       if (e?.response?.data?.errorMessage) {
         toast.error(e?.response?.data?.errorMessage);
@@ -278,8 +297,7 @@ export default function GenerateFVU({ params }) {
         toast.error(e?.message);
       }
     } finally {
-      setShowFvuFile(false);
-      setLoading(false);
+      setIsDownloadLoading(false);
     }
   }
 
@@ -636,7 +654,7 @@ export default function GenerateFVU({ params }) {
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
                   <div className="col-md-7">
                     <p className="mb-0">
-                      Please upload an unzipped <strong>.csl</strong> file generated from OLTAS.
+                      Please upload an unzipped <strong>.csi</strong> file generated from OLTAS.
                     </p>
                     <p className="mt-2 mb-0">
                       <a
@@ -674,7 +692,7 @@ export default function GenerateFVU({ params }) {
                           aria-hidden="true"
                         ></span>
                       )}
-                      Choose Location & Generate FVU
+                      Generate FVU
                     </button>
                   </div>
                 </div>
@@ -686,7 +704,14 @@ export default function GenerateFVU({ params }) {
                     <p>
                       You can Download the FVU file and file TDS return manually
                     </p>
-                    <button type="button" className="btn btn-primary px-3 py-2">
+                    <button type="button" disabled={isDownloadLoading} onClick={(e) => downloadFvuFiles(e)} className="btn btn-primary px-3 py-2">
+                      {isDownloadLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
                       Download FVU file
                     </button>
                   </div>

@@ -474,7 +474,7 @@ export default function Deductors() {
                       onChange={(e) => {
                         setTimeout(() => {
                           fetchDeductors(1, e.target.value);
-                        }, 600);
+                        }, 2000);
                       }}
                     />
                     <button
