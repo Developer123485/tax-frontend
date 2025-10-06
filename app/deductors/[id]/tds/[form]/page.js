@@ -68,6 +68,7 @@ export default function TDSForm({ params }) {
     challanCount: 0,
     deducteeDetailCount: 0,
     salaryDetailCount: 0,
+    certificateCount: 0,
   });
   const [generateFormErrors, setGenerateFormErrors] = useState({
     placeError: "",
@@ -408,6 +409,7 @@ export default function TDSForm({ params }) {
             challanCount: res.challansCount,
             deducteeDetailCount: res.deducteeDetailCount,
             salaryDetailCount: res.salaryDetailCount,
+            certificateCount: res.certificateCount
           }));
           setDeductorInfo(res.deductor);
         }
@@ -762,10 +764,13 @@ export default function TDSForm({ params }) {
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div className="row align-items-center"
                           onClick={(e) => {
-                            setOpenLowerDeduction(true)
-                            // router.push(
-                            //   pathname + "/generate-fvu" + window.location.search
-                            // );
+                            if (formsDashboardDetail.certificateCount > 0) {
+                              setOpenLowerDeduction(true)
+                            } else {
+                              router.push(
+                                pathname + "/generate-fvu" + window.location.search
+                              );
+                            }
                           }}
                         >
                           <div className="col-md-4" >
