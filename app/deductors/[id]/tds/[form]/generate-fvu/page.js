@@ -243,6 +243,8 @@ export default function GenerateFVU({ params }) {
       }
     } finally {
       setIsCSIDownloadLoading(false);
+      setFromDate(null);
+      setToDate(null);
     }
   }
 
