@@ -14,6 +14,8 @@ import { FormsService } from "@/app/services/forms.service";
 import { DeductorsService } from "@/app/services/deductors.service";
 import { Modal } from "react-bootstrap";
 import JSZip from 'jszip';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -22,8 +24,11 @@ export default function GenerateFVU({ params }) {
   const pathname = usePathname();
   const [isError, setIsError] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDownloadLoading, setIsDownloadLoading] = useState(false);
+  const [isCSIDownloadLoading, setIsCSIDownloadLoading] = useState(false);
   const [showFvuFile, setShowFvuFile] = useState(false);
   const [isDeductorChange, setIsDeductorChange] = useState("N");
   const [isResponsibleChange, setIsResponsibleChange] = useState("N");
@@ -32,6 +37,7 @@ export default function GenerateFVU({ params }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [challanId, setChallanId] = useState(0);
+  const [isDirtyCSI, setIsDirtyCSI] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [folderInputPath, setFolderInputPath] = useState("");
   const [returnErrors, setReturnErrors] = useState(null);
@@ -46,6 +52,11 @@ export default function GenerateFVU({ params }) {
   const [totalItems, setTotalItems] = useState(0);
   const [outputPath, setOutputPath] = useState('');
   const searchParams = useSearchParams(null);
+  const [csiInfoError, setCsiInfoError] = useState({
+    fromError: "",
+    toError: "",
+  });
+
   const [breadcrumbs, setBreadcrumbs] = useState([
     {
       name: "Deductors",
@@ -102,6 +113,7 @@ export default function GenerateFVU({ params }) {
           setIsDeductorChange(res.isChangeDeductorAddress == "Y" ? res.isChangeDeductorAddress : "N");
           setIsTdsReturn(res.isChangeTdsReturn == "Y" ? res.isChangeTdsReturn : "N");
           setTokenNo(res.tokenNo);
+          setDeductorInfo(res);
         }
       })
   }
@@ -171,6 +183,63 @@ export default function GenerateFVU({ params }) {
       .finally((f) => {
         setShowLoader(false);
       });
+  }
+
+  function validate() {
+    let toError = "";
+    let fromError = "";
+    if (!fromDate) {
+      fromError = "From Date is required";
+    }
+    if (!toDate) {
+      toError = "To Date is required";
+    }
+    if (toError || fromError) {
+      setCsiInfoError((prevState) => ({
+        ...prevState,
+        fromError,
+        toError
+      }));
+      return false;
+    }
+    setCsiInfoError((prevState) => ({
+      ...prevState,
+      fromError,
+      toError
+    }));
+    return true;
+  }
+
+  function handleDownload(e) {
+    try {
+      e.preventDefault();
+      setIsDirtyCSI(true);
+      if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
+        if (validate()) {
+          setIsCSIDownloadLoading(true);
+          const model = {
+            password: deductorInfo.tracesPassword,
+            tan: deductorInfo.deductorTan,
+            fromDate: new Date(fromDate),
+            toDate: new Date(toDate)
+          }
+          FuvValidateReturnService.downloadCSIFile(model).then(res => {
+            setIsCSIDownloadLoading(false);
+          })
+        }
+      } else {
+        toast.error("TRACES Tan and password do not exist for the deductor");
+      }
+    } catch (e) {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+    } finally {
+      setIsCSIDownloadLoading(false);
+    }
   }
 
   async function updateDeductorFuv() {
@@ -309,8 +378,8 @@ export default function GenerateFVU({ params }) {
       <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>;
       <section className="py-5 py-md-4 bg-light-gray">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-9">
+          <div className="row ">
+            <div className="col-md-8 align-items-center">
               <div className="mb-4">
                 <h3 className="fw-bold">Generate FVU</h3>
               </div>
@@ -760,6 +829,53 @@ export default function GenerateFVU({ params }) {
                     </ul>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="col-md-4" style={{ marginTop: "56px" }}>
+              <div className="date-card bg-white rounded-4">
+                <h3>Download CSI</h3>
+                <p>Please upload an unzipped .csi file generated from OLTAS.</p>
+                <div className="date-picker-group">
+                  <label>From Date:</label>
+                  <DatePicker
+                    selected={fromDate}
+                    onChange={(date) => setFromDate(date)}
+                    dateFormat="dd-MMM-yyyy"
+                    placeholderText="Select From Date"
+                    className="datepicker-input"
+                  />
+                  {isDirtyCSI && csiInfoError.fromError && (
+                    <span className="text-danger">
+                      {csiInfoError.fromError}
+                    </span>
+                  )}
+                </div>
+
+                <div className="date-picker-group">
+                  <label>To Date:</label>
+                  <DatePicker
+                    selected={toDate}
+                    onChange={(date) => setToDate(date)}
+                    dateFormat="dd-MMM-yyyy"
+                    placeholderText="Select To Date"
+                    className="datepicker-input"
+                  />
+                  {isDirtyCSI && csiInfoError.toError && (
+                    <span className="text-danger">
+                      {csiInfoError.toError}
+                    </span>
+                  )}
+                </div>
+                <button type="button" className="btn btn-primary" disabled={isCSIDownloadLoading} onClick={(e) => handleDownload(e)}>
+                  {loading && (
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  )}
+                  Download
+                </button>
               </div>
             </div>
           </div>

@@ -6,10 +6,16 @@ export const FuvValidateReturnService = {
     generateFVU,
     getAllFiles,
     deleteAllFiles,
+    downloadCSIFile,
 };
 
 async function validateReturn(model) {
     const result = await api.post(`fuvValidateReturn/fetch/validateReturn`, model);
+    return result;
+}
+
+async function downloadCSIFile(model) {
+    const result = await api.post(`tracesActivities/auto-login-eportal`, model);
     return result;
 }
 
