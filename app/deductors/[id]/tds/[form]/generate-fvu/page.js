@@ -210,43 +210,41 @@ export default function GenerateFVU({ params }) {
   }
 
   function handleDownload(e) {
-    try {
-      e.preventDefault();
-      if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
-        if (validate()) {
-          setIsCSIDownloadLoading(true);
-          const model = {
-            password: deductorInfo.tracesPassword,
-            tan: deductorInfo.deductorTan,
-            fromDate: new Date(fromDate),
-            toDate: new Date(toDate)
-          }
-          FuvValidateReturnService.downloadCSIFile(model).then(res => {
-            if (res) {
-              setIsCSIDownloadLoading(false);
-              toast.success("Login and challan download initiated successfully");
-            }
-          })
+    e.preventDefault();
+    if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
+      if (validate()) {
+        setIsCSIDownloadLoading(true);
+        const model = {
+          password: deductorInfo.tracesPassword,
+          tan: deductorInfo.deductorTan,
+          fromDate: new Date(fromDate),
+          toDate: new Date(toDate)
         }
-      } else {
-        toast.error("TRACES Tan and password do not exist for the deductor");
+        FuvValidateReturnService.downloadCSIFile(model).then(res => {
+          if (res) {
+            setIsCSIDownloadLoading(false);
+            toast.success("Login and challan download initiated successfully");
+          }
+        }).catch(e => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
+          else {
+            toast.error(e?.message);
+          }
+        }).finally(f => {
+          setIsCSIDownloadLoading(false);
+          setFromDate(null);
+          setCsiInfoError((prevState) => ({
+            ...prevState,
+            fromError: "",
+            toError: ""
+          }));
+          setToDate(null);
+        })
       }
-    } catch (e) {
-      if (e?.response?.data?.errorMessage) {
-        toast.error(e?.response?.data?.errorMessage);
-      }
-      else {
-        toast.error(e?.message);
-      }
-    } finally {
-      setIsCSIDownloadLoading(false);
-      setFromDate(null);
-      setCsiInfoError((prevState) => ({
-        ...prevState,
-        fromError: "",
-        toError: ""
-      }));
-      setToDate(null);
+    } else {
+      toast.error("TRACES Tan and password do not exist for the deductor");
     }
   }
 
