@@ -36,7 +36,6 @@ export default function VerificationForm() {
       const data = JSON.parse(sessionStorage.getItem("token_ukwes"));
       setVerificationDetails((prevState) => ({
         ...prevState,
-        phoneNumber: data.phoneNumber,
         email: data.email,
       }));
     }
@@ -76,14 +75,15 @@ export default function VerificationForm() {
   }
 
   function submitOtpToPhone(e) {
+    setIsDirty(true);
     e.preventDefault();
     if (phoneValidate()) {
       setPhoneOtpLoading(true);
-      AuthService.submitOtpToPhone(verificationDetails.phoneNumber)
+      AuthService.submitOtpToPhone(verificationDetails.email, verificationDetails.phoneNumber)
         .then((res) => {
           if (res) {
             setPhoneOtpLoading(false);
-            setIsEmailSentOTP(true);
+            setIsMobileSentOTP(true);
             toast.success("OTP has been sent to your Mobile");
           }
         })
@@ -114,8 +114,10 @@ export default function VerificationForm() {
         .then((res) => {
           if (res) {
             toast.success("OTP verified on mobile and email");
-            router.push("/login");
-            setLoading(false);
+            setTimeout(() => {
+              router.push("/login");
+              setLoading(false);
+            }, 1000);
           }
         })
         .catch((e) => {
@@ -329,8 +331,12 @@ export default function VerificationForm() {
                                   maxLength={"10"}
                                   autoComplete="off"
                                   value={verificationDetails.phoneNumber}
-                                  readOnly={verificationDetails?.phoneNumber}
-                                  disabled={verificationDetails?.phoneNumber}
+                                  onChange={(e) => {
+                                    setVerificationDetails((prevState) => ({
+                                      ...prevState,
+                                      phoneNumber: e.target.value,
+                                    }));
+                                  }}
                                 />
                                 <button
                                   className="btn btn-primary px-2 py-1 mt-2 sendotp text-decoration-none position-absolute end-0"

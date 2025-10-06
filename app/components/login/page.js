@@ -57,16 +57,15 @@ export default function LoginForm() {
           }
         })
         .catch((e) => {
-          if (e?.response?.data?.title && e?.response?.data?.email && e?.response?.data?.phoneNumber) {
+          if (e?.response?.data?.title && e?.response?.data?.email) {
             const res = {
               email: e?.response?.data?.email,
-              phoneNumber: e?.response?.data?.phoneNumber,
             };
+            toast.error(e?.response?.data?.title);
             sessionStorage.setItem(
               "token_ukwes",
               Buffer.from(JSON.stringify(res).toString("base64"))
             );
-            toast.error(e?.title);
             router.push("/verification");
           }
           else if (e?.response?.data?.errorMessage) {

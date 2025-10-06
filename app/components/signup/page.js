@@ -54,14 +54,14 @@ export default function SignupForm() {
       const model = {
         userName: userDetails.userName,
         email: userDetails.email,
-        phoneNumber: userDetails.phoneNumber,
+        // phoneNumber: userDetails.phoneNumber,
         organization: userDetails.organization,
         firmType: userDetails.firmType,
         Password: userDetails.password,
       };
       const res = {
         email: userDetails.email,
-        phoneNumber: userDetails.phoneNumber,
+        // phoneNumber: userDetails.phoneNumber,
       };
       sessionStorage.setItem(
         "token_ukwes",
@@ -132,7 +132,6 @@ export default function SignupForm() {
       userNameError ||
       passwordError ||
       firmTypeError ||
-      phoneNumberError ||
       emailError
     ) {
       setUserDetails((prevState) => ({
@@ -140,7 +139,7 @@ export default function SignupForm() {
         userNameError: userNameError,
         passwordError: passwordError,
         firmTypeError: firmTypeError,
-        phoneNumberError: phoneNumberError,
+        // phoneNumberError: phoneNumberError,
         emailError: emailError,
       }));
       return false;
@@ -366,7 +365,7 @@ export default function SignupForm() {
                             </span>
                           )}
                         </div>
-                        <div className="col-md-6  mt-2 mt-md-1">
+                        {/* <div className="col-md-6  mt-2 mt-md-1">
                           <label className="form-label">
                             <span>Mobile Number</span>
                             <span className="text-danger"> *</span>
@@ -374,11 +373,6 @@ export default function SignupForm() {
                           <div className="row">
                             <div className="col-12">
                               <div className="d-flex">
-                                {/* <PhoneInput
-                                  country={"in"}
-                                  disabled
-                                  value={userDetails.phoneCode}
-                                /> */}
                                 <input
                                   type="text"
                                   placeholder=""
@@ -402,8 +396,8 @@ export default function SignupForm() {
                               </span>
                             )}
                           </div>
-                        </div>
-                        <div className="col-md-12  mt-2 mt-md-1">
+                        </div> */}
+                        <div className="col-md-6  mt-2 mt-md-1">
                           <label
                             htmlFor="inputOrganization"
                             className="form-label"

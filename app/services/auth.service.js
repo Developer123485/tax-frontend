@@ -87,9 +87,9 @@ async function forgotPassword(model) {
     });
 }
 
-async function submitOtpToPhone(phone) {
+async function submitOtpToPhone(email, phone) {
   return apiRequest
-    .get(`auth/sendOtpToPhone/${phone}`, axiosConfig)
+    .get(`auth/sendOtpToPhone/${email}/${phone}`, axiosConfig)
     .then((result) => {
       return result;
     })
