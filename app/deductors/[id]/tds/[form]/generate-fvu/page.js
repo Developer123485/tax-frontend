@@ -216,7 +216,11 @@ export default function GenerateFVU({ params }) {
       setIsDirtyCSI(true);
       if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
         if (validate()) {
-          setIsCSIDownloadLoading(true);
+          setCsiInfoError((prevState) => ({
+            ...prevState,
+            fromError: "",
+            toError: ""
+          }));
           const model = {
             password: deductorInfo.tracesPassword,
             tan: deductorInfo.deductorTan,
@@ -844,7 +848,7 @@ export default function GenerateFVU({ params }) {
                     placeholderText="Select From Date"
                     className="datepicker-input"
                   />
-                  {isDirtyCSI && csiInfoError.fromError && (
+                  {csiInfoError.fromError && (
                     <span className="text-danger">
                       {csiInfoError.fromError}
                     </span>
@@ -860,14 +864,14 @@ export default function GenerateFVU({ params }) {
                     placeholderText="Select To Date"
                     className="datepicker-input"
                   />
-                  {isDirtyCSI && csiInfoError.toError && (
+                  {csiInfoError.toError && (
                     <span className="text-danger">
                       {csiInfoError.toError}
                     </span>
                   )}
                 </div>
                 <button type="button" className="btn btn-primary" disabled={isCSIDownloadLoading} onClick={(e) => handleDownload(e)}>
-                  {loading && (
+                  {isCSIDownloadLoading && (
                     <span
                       className="spinner-grow spinner-grow-sm"
                       role="status"
