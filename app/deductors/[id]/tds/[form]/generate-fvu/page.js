@@ -312,6 +312,7 @@ export default function GenerateFVU({ params }) {
       }
     } finally {
       setShowFvuFile(false);
+      setSelectedData(null);
       setLoading(false);
     }
   }
@@ -387,7 +388,8 @@ export default function GenerateFVU({ params }) {
       }
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      saveAs(url, "DeductorName_files" + ".zip");
+      const fileName = deductorInfo.deductorName + "_" + searchParams.get("financial_year") + "_" + searchParams.get("quarter") + ".zip";
+      saveAs(url, fileName);
       await fetch("https://py-api.taxvahan.site/delete", { method: "DELETE" });
       setIsFileSaved(true);
     } catch (error) {
