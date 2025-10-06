@@ -37,7 +37,6 @@ export default function GenerateFVU({ params }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [challanId, setChallanId] = useState(0);
-  const [isDirtyCSI, setIsDirtyCSI] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [folderInputPath, setFolderInputPath] = useState("");
   const [returnErrors, setReturnErrors] = useState(null);
@@ -213,14 +212,9 @@ export default function GenerateFVU({ params }) {
   function handleDownload(e) {
     try {
       e.preventDefault();
-      setIsDirtyCSI(true);
       if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
         if (validate()) {
-          setCsiInfoError((prevState) => ({
-            ...prevState,
-            fromError: "",
-            toError: ""
-          }));
+          setIsCSIDownloadLoading(true);
           const model = {
             password: deductorInfo.tracesPassword,
             tan: deductorInfo.deductorTan,
@@ -228,7 +222,10 @@ export default function GenerateFVU({ params }) {
             toDate: new Date(toDate)
           }
           FuvValidateReturnService.downloadCSIFile(model).then(res => {
-            setIsCSIDownloadLoading(false);
+            if (res) {
+              setIsCSIDownloadLoading(false);
+              toast.success("Login and challan download initiated successfully");
+            }
           })
         }
       } else {
@@ -244,6 +241,11 @@ export default function GenerateFVU({ params }) {
     } finally {
       setIsCSIDownloadLoading(false);
       setFromDate(null);
+      setCsiInfoError((prevState) => ({
+        ...prevState,
+        fromError: "",
+        toError: ""
+      }));
       setToDate(null);
     }
   }
