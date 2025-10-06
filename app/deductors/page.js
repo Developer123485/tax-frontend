@@ -194,7 +194,8 @@ export default function Deductors() {
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
-      fetchDeductors(1, search);
+      if (search)
+        fetchDeductors(1, search);
     }, 2000);
 
     return () => clearTimeout(delayDebounce);
@@ -480,7 +481,14 @@ export default function Deductors() {
                       placeholder="Search here"
                       className="form-control bg-light-gray border-end-0"
                       id="SearchDeductors"
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => {
+                        setSearch(e.target.value);
+                        if (!e.target.value) {
+                          setTimeout(() => {
+                            fetchDeductors(1, e.target.value)
+                          }, 600);
+                        }
+                      }}
                     />
                     <button
                       className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"

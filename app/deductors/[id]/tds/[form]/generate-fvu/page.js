@@ -751,7 +751,7 @@ export default function GenerateFVU({ params }) {
                   <span className="text-danger"> {tokenError}</span>
                 </div>
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
-                  {/* <div className="col-md-7">
+                  <div className="col-md-7">
                     <p className="mb-0">
                       Please upload an unzipped <strong>.csi</strong> file generated from OLTAS.
                     </p>
@@ -765,7 +765,7 @@ export default function GenerateFVU({ params }) {
                         How to download .csi file
                       </a>
                     </p>
-                  </div> */}
+                  </div>
                   <div className="col-md-5 d-flex justify-content-end">
                     <div className="d-flex">
                       <input
@@ -864,7 +864,7 @@ export default function GenerateFVU({ params }) {
             <div className="col-md-4" style={{ marginTop: "56px" }}>
               <div className="date-card bg-white rounded-4">
                 <h3>Download CSI</h3>
-                <p>Please upload .csi file generated from Income Tax Portal.</p>
+                {/* <p>Please upload .csi file generated from Income Tax Portal.</p> */}
                 <div className="date-picker-group">
                   <label>From Date:</label>
                   <DatePicker
