@@ -316,65 +316,87 @@ export default function GenerateFVU({ params }) {
     }
   }
 
+  // async function downloadFvuFiles(e) {
+  //   e.preventDefault();
+  //   try {
+  //     let dirHandle;
+  //     try {
+  //       dirHandle = await window.showDirectoryPicker();
+  //     } catch (err) {
+  //       toast.error("Folder access denied.");
+  //       return;
+  //     }
+  //     const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
+  //     if (!response.ok) {
+  //       toast.error("Failed to download file");
+  //       return;
+  //     }
+  //     setIsDownloadLoading(true);
+  //     const zipBlob = await response.blob();
+  //     const zip = await JSZip.loadAsync(zipBlob);
+
+  //     // Step 4: Load all files into memory BEFORE calling getFileHandle
+  //     const filesToSave = [];
+
+  //     for (const [relativePath, file] of Object.entries(zip.files)) {
+  //       if (file.dir) continue;
+
+  //       const blob = await file.async("blob");
+  //       filesToSave.push({ relativePath, blob });
+  //     }
+
+  //     // Step 5: Save files — this is close enough to user gesture to be allowed
+  //     for (const { relativePath, blob } of filesToSave) {
+  //       const pathParts = relativePath.split("/");
+
+  //       let currentDir = dirHandle;
+  //       for (let i = 0; i < pathParts.length - 1; i++) {
+  //         currentDir = await currentDir.getDirectoryHandle(pathParts[i], { create: true });
+  //       }
+
+  //       const fileName = pathParts[pathParts.length - 1];
+  //       const fileHandle = await currentDir.getFileHandle(fileName, { create: true });
+  //       const writable = await fileHandle.createWritable();
+  //       await writable.write(blob);
+  //       await writable.close();
+  //       setIsFileSaved(true);
+  //       await fetch("https://py-api.taxvahan.site/delete", {
+  //         method: "DELETE"
+  //       });
+  //     }
+  //   } catch (e) {
+  //     if (e?.response?.data?.errorMessage) {
+  //       toast.error(e?.response?.data?.errorMessage);
+  //     }
+  //     else {
+  //       toast.error(e?.message);
+  //     }
+  //   } finally {
+  //     setIsDownloadLoading(false);
+  //   }
+  // }
+
   async function downloadFvuFiles(e) {
     e.preventDefault();
+    setIsDownloadLoading(true);
     try {
-      let dirHandle;
-      try {
-        dirHandle = await window.showDirectoryPicker();
-      } catch (err) {
-        toast.error("Folder access denied.");
-        return;
-      }
       const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
       if (!response.ok) {
-        toast.error("Failed to download file");
+        toast.error("Failed to download ZIP");
         return;
       }
-      setIsDownloadLoading(true);
-      const zipBlob = await response.blob();
-      const zip = await JSZip.loadAsync(zipBlob);
-
-      // Step 4: Load all files into memory BEFORE calling getFileHandle
-      const filesToSave = [];
-
-      for (const [relativePath, file] of Object.entries(zip.files)) {
-        if (file.dir) continue;
-
-        const blob = await file.async("blob");
-        filesToSave.push({ relativePath, blob });
-      }
-
-      // Step 5: Save files — this is close enough to user gesture to be allowed
-      for (const { relativePath, blob } of filesToSave) {
-        const pathParts = relativePath.split("/");
-
-        let currentDir = dirHandle;
-        for (let i = 0; i < pathParts.length - 1; i++) {
-          currentDir = await currentDir.getDirectoryHandle(pathParts[i], { create: true });
-        }
-
-        const fileName = pathParts[pathParts.length - 1];
-        const fileHandle = await currentDir.getFileHandle(fileName, { create: true });
-        const writable = await fileHandle.createWritable();
-        await writable.write(blob);
-        await writable.close();
-        setIsFileSaved(true);
-        await fetch("https://py-api.taxvahan.site/delete", {
-          method: "DELETE"
-        });
-      }
-    } catch (e) {
-      if (e?.response?.data?.errorMessage) {
-        toast.error(e?.response?.data?.errorMessage);
-      }
-      else {
-        toast.error(e?.message);
-      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      saveAs(url, "DeductorName_files" + ".zip");
+      await fetch("https://py-api.taxvahan.site/delete", { method: "DELETE" });
+      setIsFileSaved(true);
+    } catch (error) {
+      toast.error(error.message || "Download failed.");
     } finally {
       setIsDownloadLoading(false);
     }
   }
+
 
 
   return (
