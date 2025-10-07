@@ -896,7 +896,7 @@ export default function GenerateFVU({ params }) {
               </div>
             </div>
             <div className="col-md-4" style={{ marginTop: "56px" }}>
-              <div className="date-card bg-white rounded-4">
+              <div className="date-card bg-white rounded-4 sticky-download-box">
                 <h3>Download CSI</h3>
                 {/* <p>Please upload .csi file generated from Income Tax Portal.</p> */}
                 <div className="date-picker-group">
