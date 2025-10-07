@@ -425,7 +425,7 @@ export default function GenerateFVU({ params }) {
       const url = URL.createObjectURL(blob);
       const fileName = deductorInfo.deductorName + "_" + searchParams.get("financial_year") + "_" + searchParams.get("quarter") + ".zip";
       saveAs(url, fileName);
-      await fetch("https://py-api.taxvahan.site/delete", { method: "DELETE" });
+      // await fetch("https://py-api.taxvahan.site/delete", { method: "DELETE" });
       setIsFileSaved(true);
     } catch (error) {
       toast.error(error.message || "Download failed.");
