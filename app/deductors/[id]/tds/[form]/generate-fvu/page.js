@@ -16,6 +16,7 @@ import { Modal } from "react-bootstrap";
 import JSZip from 'jszip';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { apiUrl } from "@/app/config";
 import axios from "axios";
 
 export default function GenerateFVU({ params }) {
@@ -222,34 +223,30 @@ export default function GenerateFVU({ params }) {
           fromDate: new Date(fromDate),
           toDate: new Date(toDate)
         }
-        axios.post('https://api.taxvahan.site/api/tracesActivities/auto-login-eportal', model,
+        axios.post(apiUrl + 'tracesActivities/auto-login-eportal', model,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
             },
-            responseType: 'blob', // 👈 Important for downloading file
           }
         ).then(async (res) => {
           if (res) {
-            const disposition = res.headers.get('Content-Disposition');
-            let filename = "download.csi"; // default fallback
+            const { fileName, fileContentBase64, contentType } = res.data;
+            // Convert base64 to binary data
+            const byteCharacters = atob(fileContentBase64);
+            const byteNumbers = Array.from(byteCharacters).map(char => char.charCodeAt(0));
+            const byteArray = new Uint8Array(byteNumbers);
 
-            if (disposition && disposition.includes('filename=')) {
-              const filenameMatch = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-              if (filenameMatch != null && filenameMatch[1]) {
-                filename = filenameMatch[1].replace(/['"]/g, ''); // remove quotes
-              }
-            }
-            const url = window.URL.createObjectURL(new Blob([res.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
+            // Create a Blob
+            const blob = new Blob([byteArray], { type: contentType });
+
+            // Create download link
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             setIsCSIDownloadLoading(false);
             toast.success("CSI file downloaded successfully.");
           }
