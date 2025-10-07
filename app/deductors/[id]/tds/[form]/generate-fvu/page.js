@@ -16,6 +16,7 @@ import { Modal } from "react-bootstrap";
 import JSZip from 'jszip';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -214,16 +215,43 @@ export default function GenerateFVU({ params }) {
     if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
       if (validate()) {
         setIsCSIDownloadLoading(true);
+        const token = sessionStorage.getItem("token");
         const model = {
           password: deductorInfo.tracesPassword,
           tan: deductorInfo.deductorTan,
           fromDate: new Date(fromDate),
           toDate: new Date(toDate)
         }
-        FuvValidateReturnService.downloadCSIFile(model).then(res => {
+        axios.post('https://api.taxvahan.site/api/tracesActivities/auto-login-eportal', model,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            responseType: 'blob', // 👈 Important for downloading file
+          }
+        ).then(async (res) => {
           if (res) {
+            const disposition = res.headers.get('Content-Disposition');
+            let filename = "download.csi"; // default fallback
+
+            if (disposition && disposition.includes('filename=')) {
+              const filenameMatch = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+              if (filenameMatch != null && filenameMatch[1]) {
+                filename = filenameMatch[1].replace(/['"]/g, ''); // remove quotes
+              }
+            }
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
             setIsCSIDownloadLoading(false);
-            toast.success("Login and challan download initiated successfully");
+            toast.success("CSI file downloaded successfully.");
           }
         }).catch(e => {
           if (e?.response?.data?.errorMessage) {
@@ -389,7 +417,7 @@ export default function GenerateFVU({ params }) {
       const contentType = response.headers.get("Content-Type");
       // If response is JSON instead of ZIP, it's likely an error message
       if (contentType && contentType.includes("application/json")) {
-        toast.error("No file available to download.");
+        toast.error("No file is available for download. Please click on 'Generate FVU'.");
         return;
       }
       const blob = await response.blob();
