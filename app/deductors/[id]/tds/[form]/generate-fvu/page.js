@@ -301,7 +301,7 @@ export default function GenerateFVU({ params }) {
 
 
       setLoading(false);
-      toast.success("All files saved successfully!");
+      toast.success("FVU generated successfully");
 
     } catch (e) {
       if (e?.response?.data?.errorMessage) {
@@ -384,6 +384,13 @@ export default function GenerateFVU({ params }) {
       const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
       if (!response.ok) {
         toast.error("Failed to download ZIP");
+        return;
+      }
+      const contentType = response.headers.get("Content-Type");
+      // If response is JSON instead of ZIP, it's likely an error message
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        toast.error("No file available to download.");
         return;
       }
       const blob = await response.blob();
