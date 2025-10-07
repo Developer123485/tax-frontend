@@ -341,6 +341,7 @@ export default function GenerateFVU({ params }) {
     } finally {
       setShowFvuFile(false);
       setSelectedData(null);
+      setFileName("");
       setLoading(false);
     }
   }
