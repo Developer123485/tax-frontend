@@ -1259,7 +1259,11 @@ input.has-error {
   z-index: 999;
   font-family: "Segoe UI", sans-serif;
 }
-
+.sticky-download-box {
+  position: sticky;
+  top: 100px; /* Adjust as needed depending on your header height */
+  align-self: flex-start; /* Helps in flex layouts */
+}
 .date-card h3 {
   margin-bottom: 20px;
   font-size: 22px;
