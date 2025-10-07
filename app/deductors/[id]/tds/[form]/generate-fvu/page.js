@@ -389,7 +389,6 @@ export default function GenerateFVU({ params }) {
       const contentType = response.headers.get("Content-Type");
       // If response is JSON instead of ZIP, it's likely an error message
       if (contentType && contentType.includes("application/json")) {
-        const errorData = await response.json();
         toast.error("No file available to download.");
         return;
       }
