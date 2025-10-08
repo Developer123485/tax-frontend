@@ -223,7 +223,7 @@ export default function GenerateFVU({ params }) {
           fromDate: new Date(fromDate),
           toDate: new Date(toDate)
         }
-        axios.post(apiUrl + 'tracesActivities/auto-login-eportal', model,
+        axios.post(apiUrl + 'tracesActivities/download-csi', model,
           {
             headers: {
               Authorization: `Bearer ${token}`,
