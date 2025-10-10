@@ -407,7 +407,7 @@ export default function GenerateFVU({ params }) {
     e.preventDefault();
     setIsDownloadLoading(true);
     try {
-      const response = await fetch("https://py-api.taxvahan.site/get-fvu-all-files");
+      const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${financialYear}&param3=${quarter}`);
       if (!response.ok) {
         toast.error("Failed to download ZIP");
         return;
@@ -804,7 +804,7 @@ export default function GenerateFVU({ params }) {
                         type="file"
                         accept=".csi"
                         id="cslFileUpload"
-                        ref={fileInputRef}  
+                        ref={fileInputRef}
                         name="cslFileUpload"
                         onChange={fileSelectHandler}
                       />
