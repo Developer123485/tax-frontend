@@ -26,6 +26,7 @@ export default function GenerateFVU({ params }) {
   const pathname = usePathname();
   const [isError, setIsError] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [isDirectLoading, setIsDirectLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
@@ -402,6 +403,48 @@ export default function GenerateFVU({ params }) {
   //     setIsDownloadLoading(false);
   //   }
   // }
+
+  async function directEFiling(e) {
+    const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+    if (!response.ok) {
+      toast.error("Failed to download ZIP");
+      return;
+    }
+    const contentType = response.headers.get("Content-Type");
+    // If response is JSON instead of ZIP, it's likely an error message
+    if (contentType && contentType.includes("application/json")) {
+      toast.error("No file is available for download. Please click on 'Generate FVU'.");
+      return;
+    }
+    const model = {
+      financialYear: searchParams.get("financial_year"),
+      quarter: searchParams.get("quarter"),
+      deductorName: deductorInfo.deductorName,
+      categoryId: parseInt(searchParams.get("categoryId")),
+      password: deductorInfo.tracesPassword,
+      tan: deductorInfo.deductorTan,
+    };
+    if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
+      setIsDirectLoading(true);
+      FuvValidateReturnService.directEFiling(model)
+        .then((res) => {
+
+        }).catch(e => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
+          else {
+            toast.error(e?.message);
+          }
+          setIsDirectLoading(false);
+        })
+        .finally((f) => {
+          setIsDirectLoading(false);
+        });
+    } else {
+      toast.error("TRACES Tan and password do not exist for the deductor");
+    }
+  }
 
   async function downloadFvuFiles(e) {
     e.preventDefault();
@@ -851,7 +894,15 @@ export default function GenerateFVU({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary px-3 py-2 mb-3"
+                      disabled={isDirectLoading} onClick={(e) => directEFiling(e)}
                     >
+                      {isDirectLoading && (
+                        <span
+                          className="spinner-grow spinner-grow-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
                       Direct e-filing
                     </button>
 

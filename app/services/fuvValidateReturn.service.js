@@ -6,7 +6,7 @@ export const FuvValidateReturnService = {
     generateFVU,
     getAllFiles,
     deleteAllFiles,
-    downloadCSIFile,
+    directEFiling,
 };
 
 async function validateReturn(model) {
@@ -14,8 +14,8 @@ async function validateReturn(model) {
     return result;
 }
 
-async function downloadCSIFile(model) {
-    const result = await api.post(`tracesActivities/auto-login-eportal`, model);
+async function directEFiling(model) {
+    const result = await api.post(`tracesActivities/e-filling`, model);
     return result;
 }
 
