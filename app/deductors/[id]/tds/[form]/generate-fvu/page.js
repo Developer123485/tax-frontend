@@ -407,7 +407,7 @@ export default function GenerateFVU({ params }) {
     e.preventDefault();
     setIsDownloadLoading(true);
     try {
-      const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}`);
+      const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
       if (!response.ok) {
         toast.error("Failed to download ZIP");
         return;
@@ -420,7 +420,7 @@ export default function GenerateFVU({ params }) {
       }
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      const fileName = deductorInfo.deductorName + "_" + searchParams.get("financial_year") + "_" + searchParams.get("quarter") + ".zip";
+      const fileName = deductorInfo.deductorName + "_" + searchParams.get("financial_year") + "_" + searchParams.get("quarter") + "_" + form.replace("form-", "") + ".zip";
       saveAs(url, fileName);
       // await fetch("https://py-api.taxvahan.site/delete", { method: "DELETE" });
       setIsFileSaved(true);
