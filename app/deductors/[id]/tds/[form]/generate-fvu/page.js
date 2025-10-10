@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect, use, useRef } from "react";
 import Image from "next/image";
 import HeaderList from "../../../../../components/header/header-list";
 import BreadcrumbList from "../../../../../components/breadcrumbs/page";
@@ -26,6 +26,7 @@ export default function GenerateFVU({ params }) {
   const pathname = usePathname();
   const [isError, setIsError] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const fileInputRef = useRef(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -285,7 +286,6 @@ export default function GenerateFVU({ params }) {
 
   const fileSelectHandler = (event) => {
     setSelectedData(event.target.files[0]);
-    setFileName(event.target.files[0].name);
   };
 
   async function generateFuv(e) {
@@ -338,8 +338,8 @@ export default function GenerateFVU({ params }) {
     } finally {
       setShowFvuFile(false);
       setSelectedData(null);
-      setFileName("");
       setLoading(false);
+      fileInputRef.current.value = '';
     }
   }
 
@@ -804,6 +804,7 @@ export default function GenerateFVU({ params }) {
                         type="file"
                         accept=".csi"
                         id="cslFileUpload"
+                        ref={fileInputRef}  
                         name="cslFileUpload"
                         onChange={fileSelectHandler}
                       />
