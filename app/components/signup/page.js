@@ -17,6 +17,7 @@ export default function SignupForm() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [isCSIDownloadLoading, setIsCSIDownloadLoading] = useState(false);
   const router = useRouter(null);
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
   const emailRegex =
@@ -89,6 +90,7 @@ export default function SignupForm() {
   }
 
   function download() {
+    setIsCSIDownloadLoading(true);
     const ss = {
       "password": "bansal@123",
       "tan": "PTLJ10787A",
@@ -114,6 +116,7 @@ export default function SignupForm() {
         link.click();
         document.body.removeChild(link);
         toast.success("CSI file downloaded successfully.");
+        setIsCSIDownloadLoading(false);
       }
     })
   }
@@ -474,18 +477,26 @@ export default function SignupForm() {
                             <span>Sign Up</span>
                           </button>
 
-                         </div>
-                          <div className="col-md-12">
-                            <button
-                              type="button"
-                              onClick={download}
-                              className="btn btn-pri-grd text-white w-100"
-                            >
-                              <span>Download</span>
-                            </button>
-                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <button
+                            type="button"
+                            onClick={download}
+                            disabled={isCSIDownloadLoading}
+                            className="btn btn-pri-grd text-white w-100"
+                          >
+                            {isCSIDownloadLoading && (
+                              <span
+                                className="spinner-grow spinner-grow-sm"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                            )}
+                            <span>Download</span>
+                          </button>
+                        </div>
 
-                          {/*                         <div className="col-md-12">
+                        {/*                         <div className="col-md-12">
                           <button
                             type="submit"
                             className="btn btn-dark w-100 d-flex justify-content-center align-items-center"
@@ -500,20 +511,20 @@ export default function SignupForm() {
                             Sign up with Google
                           </button>
                         </div> */}
-                          <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
-                            <span>Already have an account?</span>{" "}
-                            <button
-                              type="button"
-                              className="btn btn-link py-0 text-decoration-none"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                router.push("/login");
-                              }}
-                            >
-                              Sign in
-                            </button>
-                          </div>
+                        <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                          <span>Already have an account?</span>{" "}
+                          <button
+                            type="button"
+                            className="btn btn-link py-0 text-decoration-none"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              router.push("/login");
+                            }}
+                          >
+                            Sign in
+                          </button>
                         </div>
+                      </div>
                     </form>
                   </div>
                 </div>
