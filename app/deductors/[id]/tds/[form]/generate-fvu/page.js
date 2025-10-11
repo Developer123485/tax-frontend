@@ -404,7 +404,7 @@ export default function GenerateFVU({ params }) {
   //   }
   // }
   async function directEFiling(e) {
-    const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+    const response = await fetch(`https://py-api.taxvahan.site/getfiles?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
     if (!response.ok) {
       toast.error("Failed to download ZIP");
       return;
@@ -449,7 +449,7 @@ export default function GenerateFVU({ params }) {
     e.preventDefault();
     setIsDownloadLoading(true);
     try {
-      const response = await fetch(`https://py-api.taxvahan.site/get-fvu-all-files?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+      const response = await fetch(`https://py-api.taxvahan.site/getfiles?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
       if (!response.ok) {
         toast.error("Failed to download ZIP");
         return;
@@ -472,8 +472,6 @@ export default function GenerateFVU({ params }) {
       setIsDownloadLoading(false);
     }
   }
-
-
 
   return (
     <>
