@@ -9,6 +9,8 @@ import "react-phone-input-2/lib/bootstrap.css";
 import { AuthService } from "@/app/services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiUrl } from "@/app/config";
+import axios from "axios";
 
 export default function SignupForm() {
   const [isDirty, setIsDirty] = useState(false);
@@ -84,6 +86,36 @@ export default function SignupForm() {
           }
         });
     }
+  }
+
+  function download() {
+    const ss = {
+      "password": "bansal@123",
+      "tan": "PTLJ10787A",
+      "fromDate": "2025-03-31T18:30:00.000Z",
+      "toDate": "2025-10-10T18:30:00.000Z"
+    }
+    axios.post(apiUrl + 'tracesActivities/download-csi', ss).then(async (res) => {
+      if (res) {
+        const { fileName, fileContentBase64, contentType } = res.data;
+        // Convert base64 to binary data
+        const byteCharacters = atob(fileContentBase64);
+        const byteNumbers = Array.from(byteCharacters).map(char => char.charCodeAt(0));
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Create a Blob
+        const blob = new Blob([byteArray], { type: contentType });
+
+        // Create download link
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success("CSI file downloaded successfully.");
+      }
+    })
   }
 
   function togglePassword() {
@@ -441,9 +473,19 @@ export default function SignupForm() {
                             )}
                             <span>Sign Up</span>
                           </button>
-                        </div>
 
-                        {/*                         <div className="col-md-12">
+                         </div>
+                          <div className="col-md-12">
+                            <button
+                              type="button"
+                              onClick={download}
+                              className="btn btn-pri-grd text-white w-100"
+                            >
+                              <span>Download</span>
+                            </button>
+                          </div>
+
+                          {/*                         <div className="col-md-12">
                           <button
                             type="submit"
                             className="btn btn-dark w-100 d-flex justify-content-center align-items-center"
@@ -458,20 +500,20 @@ export default function SignupForm() {
                             Sign up with Google
                           </button>
                         </div> */}
-                        <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
-                          <span>Already have an account?</span>{" "}
-                          <button
-                            type="button"
-                            className="btn btn-link py-0 text-decoration-none"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              router.push("/login");
-                            }}
-                          >
-                            Sign in
-                          </button>
+                          <div className="col-md-12 text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+                            <span>Already have an account?</span>{" "}
+                            <button
+                              type="button"
+                              className="btn btn-link py-0 text-decoration-none"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                router.push("/login");
+                              }}
+                            >
+                              Sign in
+                            </button>
+                          </div>
                         </div>
-                      </div>
                     </form>
                   </div>
                 </div>
