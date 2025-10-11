@@ -9,15 +9,12 @@ import "react-phone-input-2/lib/bootstrap.css";
 import { AuthService } from "@/app/services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { apiUrl } from "@/app/config";
-import axios from "axios";
 
 export default function SignupForm() {
   const [isDirty, setIsDirty] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [isCSIDownloadLoading, setIsCSIDownloadLoading] = useState(false);
   const router = useRouter(null);
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
   const emailRegex =
@@ -87,38 +84,6 @@ export default function SignupForm() {
           }
         });
     }
-  }
-
-  function download() {
-    setIsCSIDownloadLoading(true);
-    const ss = {
-      "password": "bansal@123",
-      "tan": "PTLJ10787A",
-      "fromDate": "2025-03-31T18:30:00.000Z",
-      "toDate": "2025-10-10T18:30:00.000Z"
-    }
-    axios.post(apiUrl + 'tracesActivities/download-csi', ss).then(async (res) => {
-      if (res) {
-        const { fileName, fileContentBase64, contentType } = res.data;
-        // Convert base64 to binary data
-        const byteCharacters = atob(fileContentBase64);
-        const byteNumbers = Array.from(byteCharacters).map(char => char.charCodeAt(0));
-        const byteArray = new Uint8Array(byteNumbers);
-
-        // Create a Blob
-        const blob = new Blob([byteArray], { type: contentType });
-
-        // Create download link
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        toast.success("CSI file downloaded successfully.");
-        setIsCSIDownloadLoading(false);
-      }
-    })
   }
 
   function togglePassword() {
@@ -475,24 +440,6 @@ export default function SignupForm() {
                               ></span>
                             )}
                             <span>Sign Up</span>
-                          </button>
-
-                        </div>
-                        <div className="col-md-12">
-                          <button
-                            type="button"
-                            onClick={download}
-                            disabled={isCSIDownloadLoading}
-                            className="btn btn-pri-grd text-white w-100"
-                          >
-                            {isCSIDownloadLoading && (
-                              <span
-                                className="spinner-grow spinner-grow-sm"
-                                role="status"
-                                aria-hidden="true"
-                              ></span>
-                            )}
-                            <span>Download</span>
                           </button>
                         </div>
 
