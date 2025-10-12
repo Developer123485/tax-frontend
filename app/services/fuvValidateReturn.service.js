@@ -7,6 +7,7 @@ export const FuvValidateReturnService = {
     getAllFiles,
     deleteAllFiles,
     directEFiling,
+    generate24GFVU
 };
 
 async function validateReturn(model) {
@@ -26,6 +27,11 @@ async function getInterestAndfines(model) {
 
 async function generateFVU(model) {
     const result = await api.post(`fuvValidateReturn/generatefvu`, model);
+    return result;
+}
+
+async function generate24GFVU(model) {
+    const result = await api.post(`fuvValidateReturn/generate-24g-fvu`, model);
     return result;
 }
 

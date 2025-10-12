@@ -18,35 +18,21 @@ import FormConfirmation from "@/app/components/modals/form-confimation";
 import { FormsService } from "@/app/services/forms.service";
 import api from "@/app/utils/interceptors";
 import { saveAs } from "file-saver";
+import { FuvValidateReturnService } from "@/app/services/fuvValidateReturn.service";
 
 export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
     const ddoId = resolvedParams?.ddoId;
     const pathname = usePathname();
-    const [showLoader, setShowLoader] = useState(false);
-    const [isLoading, setIsloading] = useState(false);
     const router = useRouter();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [isLoading, setIsloading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
     const [isloading, setIsLoading] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
     const [financialYear, setFinancialYear] = useState("");
-    const monthsShort = [
-        { value: '01', label: 'Jan' },
-        { value: '02', label: 'Feb' },
-        { value: '03', label: 'Mar' },
-        { value: '04', label: 'Apr' },
-        { value: '05', label: 'May' },
-        { value: '06', label: 'Jun' },
-        { value: '07', label: 'Jul' },
-        { value: '08', label: 'Aug' },
-        { value: '09', label: 'Sep' },
-        { value: '10', label: 'Oct' },
-        { value: '11', label: 'Nov' },
-        { value: '12', label: 'Dec' }
-    ];
     const [selectedMonth, setSelectedMonth] = useState("");
     const [ddoWiseDetails, setDdoWiseDetails] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
@@ -58,267 +44,107 @@ export default function DdoWiseDetails({ params }) {
     const [quarter, setQuarter] = useState("");
     const currentYear = new Date().getFullYear();
     const [financialYears, setFinancialYears] = useState([]);
-    const [breadcrumbs, setBreadcrumbs] = useState([
-        {
-            name: "Deductors",
-            isActive: false,
-            href: "/deductors",
-        },
-        {
-            name: "TDS Dashboard",
-            isActive: false,
-            href: `/deductors/${deductorId}/tds`,
-        },
-        {
-            name: "24G Details",
-            isActive: false,
-            href: `/deductors/${deductorId}/tds/24g-form`,
-        },
-        {
-            name: "DDO Wise Details",
-            isActive: true,
-        },
-    ]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+
+    const monthsShort = [
+        { value: '01', label: 'Jan' }, { value: '02', label: 'Feb' }, { value: '03', label: 'Mar' },
+        { value: '04', label: 'Apr' }, { value: '05', label: 'May' }, { value: '06', label: 'Jun' },
+        { value: '07', label: 'Jul' }, { value: '08', label: 'Aug' }, { value: '09', label: 'Sep' },
+        { value: '10', label: 'Oct' }, { value: '11', label: 'Nov' }, { value: '12', label: 'Dec' }
+    ];
+
+    const breadcrumbs = [
+        { name: "Deductors", isActive: false, href: "/deductors" },
+        { name: "TDS Dashboard", isActive: false, href: `/deductors/${deductorId}/tds` },
+        { name: "24G Details", isActive: false, href: `/deductors/${deductorId}/tds/24g-form` },
+        { name: "DDO Wise Details", isActive: true }
+    ];
+
     const customStyles = {
-        rows: {
-            style: {
-                backgroundColor: "#FFFFFF",
-                "&:hover": {
-                    backgroundColor: "#F2F7FF!important",
-                },
-                minHeight: "45px",
-            },
-        },
-        headCells: {
-            style: {
-                justifyContent: "start",
-                outline: "1px",
-                border: "1px solid #F2F7FF",
-                fontSize: "12px",
-            },
-        },
-        cells: {
-            style: {
-                justifyContent: "start",
-                outline: "1px",
-                border: "1px solid #FFFFFF",
-                fontSize: "12px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-            },
-        },
+        rows: { style: { backgroundColor: "#FFFFFF", "&:hover": { backgroundColor: "#F2F7FF!important" }, minHeight: "45px" } },
+        headCells: { style: { justifyContent: "start", border: "1px solid #F2F7FF", fontSize: "12px" } },
+        cells: { style: { justifyContent: "start", border: "1px solid #FFFFFF", fontSize: "12px", textOverflow: "ellipsis", whiteSpace: "nowrap" } },
     };
+
     const columns = [
-        {
-            name: "Serial No",
-            selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
-        },
-        {
-            name: "DDO Name",
-            selector: (row) => (row.name ? row.name : "-"),
-            grow: 3,
-        },
-        {
-            name: "DDO Tan",
-            selector: (row) => (row.tan ? row.tan : "-"),
-            grow: 2,
-        },
-        {
-            name: "Tax Amount",
-            selector: (row) => (row.taxAmount ? row.taxAmount?.toFixed(2) : "-"),
-            grow: 1.5,
-        },
-        {
-            name: "Total Tds",
-            selector: (row) => (row.totalTds ? row.totalTds?.toFixed(2) : "-"),
-            grow: 1.5,
-        },
-        {
-            name: "nature",
-            selector: (row) => (row.nature ? row.nature : "-"),
-            grow: 3,
-        },
+        { name: "Serial No", selector: (row, index) => (currentPage - 1) * pageSize + (index + 1) },
+        { name: "DDO Name", selector: (row) => row.name || "-", grow: 3 },
+        { name: "DDO Tan", selector: (row) => row.tan || "-", grow: 2 },
+        { name: "Tax Amount", selector: (row) => row.taxAmount?.toFixed(2) || "-", grow: 1.5 },
+        { name: "Total Tds", selector: (row) => row.totalTds?.toFixed(2) || "-", grow: 1.5 },
+        { name: "Nature", selector: (row) => row.nature || "-", grow: 3 },
         {
             name: "Actions",
             button: true,
             selector: (row) => (
-                <>
-                    {" "}
-                    <div className="d-flex justify-content-center">
-                        <span>
-                            {" "}
-                            <a
-                                onClick={(e) => {
-                                    router.push(
-                                        pathname + `/detail?ddoWiseId=${row.id}&financial_year=${financialYear}&month=${selectedMonth}`
-                                    );
-                                }}
-                            >
-                                <OverlayTrigger
-                                    placement="bottom"
-                                    overlay={<Tooltip>Edit</Tooltip>}
-                                >
-                                    <div>
-                                        <Image
-                                            className=""
-                                            src="/images/dashboards/table_edit_icon.svg"
-                                            alt="table_edit_icon"
-                                            width={16}
-                                            height={16}
-                                        />
-                                    </div>
-                                </OverlayTrigger>
-                            </a>
-                        </span>
-                        <span className="mx-2 opacity-50">|</span>
-                        <span>
-                            {" "}
-                            <a
-                                onClick={(e) => {
-                                    setConfirmTitle("Delete DDO Wise Detail");
-                                    setDeleteId(row.id);
-                                    setDeleteConfirm(true);
-                                }}
-                            >
-                                <OverlayTrigger
-                                    placement="bottom"
-                                    overlay={<Tooltip>Delete</Tooltip>}
-                                >
-                                    <div>
-                                        <Image
-                                            className=""
-                                            src="/images/dashboards/table_delete_icon.svg"
-                                            alt="table_delete_icon"
-                                            width={16}
-                                            height={16}
-                                        />
-                                    </div>
-                                </OverlayTrigger>
-                            </a>
-                        </span>
-                    </div>
-                </>
+                <div className="d-flex justify-content-center">
+                    <span>
+                        <a onClick={() => router.push(`${pathname}/detail?ddoWiseId=${row.id}&financial_year=${financialYear}&month=${selectedMonth}`)}>
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
+                                <Image src="/images/dashboards/table_edit_icon.svg" alt="edit" width={16} height={16} />
+                            </OverlayTrigger>
+                        </a>
+                    </span>
+                    <span className="mx-2 opacity-50">|</span>
+                    <span>
+                        <a onClick={() => {
+                            setConfirmTitle("Delete DDO Wise Detail");
+                            setDeleteId(row.id);
+                            setDeleteConfirm(true);
+                        }}>
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
+                                <Image src="/images/dashboards/table_delete_icon.svg" alt="delete" width={16} height={16} />
+                            </OverlayTrigger>
+                        </a>
+                    </span>
+                </div>
             ),
-            style: {
-                position: "sticky",
-                right: 0,
-                zIndex: 1,
-                backgroundColor: "#fff",
-            },
+            style: { position: "sticky", right: 0, zIndex: 1, backgroundColor: "#fff" },
             grow: 2,
             width: "135px",
-        },
+        }
     ];
 
-    const totalPages = Math.ceil(totalItems / pageSize);
-
     useEffect(() => {
-        let array = [];
-        const tdsQuarterMonths = {
-            Q1: [
-                { value: "04", label: "Apr" },
-                { value: "05", label: "May" },
-                { value: "06", label: "Jun" }
-            ],
-            Q2: [
-                { value: "07", label: "Jul" },
-                { value: "08", label: "Aug" },
-                { value: "09", label: "Sep" }
-            ],
-            Q3: [
-                { value: "10", label: "Oct" },
-                { value: "11", label: "Nov" },
-                { value: "12", label: "Dec" }
-            ],
-            Q4: [
-                { value: "01", label: "Jan" },
-                { value: "02", label: "Feb" },
-                { value: "03", label: "Mar" }
-            ]
-        };
-        const currentDate = new Date();
-        for (let index = 6; index >= 0; index--) {
-            const startYear = currentYear - index;
-            const endYear = startYear + 1;
-            const finYear = `${startYear}-${endYear.toString().slice(-2)}`;
-            array.push(finYear);
-        }
-        let quarter = "";
-        const now = new Date();
-        const month = now.getMonth(); // Jan=0, Dec=11
-        if (month >= 3 && month <= 5) quarter = "Q1"; // Apr–Jun
-        else if (month >= 6 && month <= 8) quarter = "Q2"; // Jul–Sep
-        else if (month >= 9 && month <= 11) quarter = "Q3"; // Oct–Dec
-        else quarter = "Q4"; // Jan–Mar
-        setFinancialYears(array);
-        let startYear = currentDate.getFullYear();
-        if (month >= 6) {
-            // If month is after March, it's in the current FY
-            startYear = currentDate.getFullYear();
-        } else {
-            // If month is before April, it's in the previous FY
-            startYear = currentDate.getFullYear() - 1;
+        const yearList = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 6; i >= 0; i--) {
+            const start = currentYear - i;
+            yearList.push(`${start}-${(start + 1).toString().slice(-2)}`);
         }
 
+        const now = new Date();
+        const currentMonth = now.getMonth(); // Jan = 0
+        let startYear = now.getFullYear();
+        if (currentMonth < 3) startYear -= 1;
         const fy = `${startYear}-${(startYear + 1).toString().slice(-2)}`;
-        const currentMonthValue = String(month).padStart(2, "0");
-        setSelectedMonth(currentMonthValue);
+
+        setFinancialYears(yearList);
         setFinancialYear(fy);
+        setSelectedMonth(String(currentMonth + 1).padStart(2, "0"));
     }, []);
 
     useEffect(() => {
         fetchDdoWiseDetails();
     }, [currentPage, pageSize, selectedMonth, financialYear]);
 
-    function deleteEntry(e) {
-        e.preventDefault();
-        setDeleteConfirm(false);
+    const fetchDdoWiseDetails = () => {
         setShowLoader(true);
-        if (confirmTitle === "All DDO Wise Details") {
-            DdoDetailService.deleteAllDdoWiseDetail(deductorId, financialYear, selectedMonth)
-                .then((res) => {
-                    if (res) {
-                        toast.success("Delete All Successfully!");
-                        setShowLoader(false);
-                        fetchDdoWiseDetails("");
-                    }
-                })
-                .catch((e) => {
-                    setDeleteConfirm(false);
-                });
-        } else if (confirmTitle === "Delete DDO Wise Detail") {
-            DdoDetailService.deleteDdoWiseDetail(deleteId)
-                .then((res) => {
-                    if (res) {
-                        toast.success("Delete Successfully!");
-                        fetchDdoWiseDetails("");
-                        setDeleteConfirm(false);
-                    }
-                })
-                .catch((e) => {
-                    setDeleteConfirm(false);
-                });
-        } else {
-            if (selectedData && selectedData.length > 0) {
-                const model = {
-                    Ids: selectedData.map((p) => p.id),
-                };
-                DdoDetailService.deleteBulkDdoWiseDetail(model)
-                    .then((res) => {
-                        if (res) {
-                            toast.success("Delete Bulk DDO Wise Detail Successfully!");
-                            fetchDdoWiseDetails("");
-                            setDeleteConfirm(false);
-                            setSelectedData([]);
-                        }
-                    })
-                    .catch((e) => {
-                        setDeleteConfirm(false);
-                    });
-            }
-        }
-    }
+        setDdoWiseDetails(null);
+        DdoDetailService.getDdoWiseDetails({
+            pageSize,
+            pageNumber: currentPage,
+            deductorId,
+            financialYear,
+            month: selectedMonth
+        })
+            .then((res) => setDdoWiseDetails(res))
+            .catch((e) => toast.error(e?.response?.data?.errorMessage || e.message))
+            .finally(() => setTimeout(() => setShowLoader(false), 100));
+    };
+
+    const handleChange = (state) => setSelectedData(state.selectedRows);
 
     function download() {
         const url = "/static/pdf/24G_Excel_Template.xlsx";
@@ -330,114 +156,64 @@ export default function DdoWiseDetails({ params }) {
         document.body.removeChild(link);
     }
 
-    const fileSelectHandler = (event) => {
-        handleFileChange(event.target.files[0]);
-    };
+    const fileSelectHandler = (e) => handleFileChange(e.target.files[0]);
 
-    async function handleFileChange(file) {
-        let formData = new FormData();
-        let isFormValidation = true;
-        let fy = financialYear;
-        let month = selectedMonth;
-        let type = "2"
+    const handleFileChange = async (file) => {
+        const formData = new FormData();
         formData.append("file", file);
-        const config = {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        };
+        const config = { headers: { "Content-Type": "multipart/form-data" } };
         try {
             setIsLoading(true);
-            const result = await api.post(
-                `ddoDetails/uploadDDODetailExcelFile/${deductorId}/${type}/${isFormValidation}/${fy}/${month}`,
+            const res = await api.post(
+                `ddoDetails/uploadDDODetailExcelFile/${deductorId}/2/true/${financialYear}/${selectedMonth}`,
                 formData,
                 config
             );
-            if (result) {
-                setIsLoading(false);
-                toast.success("File upload successfully");
+            if (res) {
+                toast.success("File uploaded successfully");
                 fetchDdoWiseDetails();
             } else {
-                setIsLoading(false);
                 toast.error("File upload failed");
             }
         } catch (e) {
-            if (e?.response?.data?.errorMessage) {
-                toast.error(e?.response?.data?.errorMessage);
-            }
-            else {
-                toast.error(e?.message);
-            }
+            toast.error(e?.response?.data?.errorMessage || e.message);
         } finally {
             setIsLoading(false);
         }
-    }
-
-    function downloadFile(e) {
-        setIsloading(true);
-        e.preventDefault();
-        const model = {
-            financialYear: financialYear,
-            deductorId: deductorId,
-            month: selectedMonth
-        };
-        FormsService.final24GReport(model)
-            .then((res) => {
-                const blob = new Blob([res], { type: "text/plain" });
-                saveAs(blob, "24G" + ".txt");
-            }).catch(e => {
-                if (e?.response?.data?.errorMessage) {
-                    toast.error(e?.response?.data?.errorMessage);
-                }
-                else {
-                    toast.error(e?.message);
-                }
-            })
-            .finally((f) => {
-                setIsDownloadFormConfirmation(false);
-                setIsloading(false);
-            });
-    }
-
-
-    const handleChange = (state) => {
-        setSelectedData(state.selectedRows);
     };
 
-    function fetchDdoWiseDetails() {
-        setShowLoader(true);
-        setDdoWiseDetails(null);
-        const model = {
-            pageSize: pageSize,
-            pageNumber: currentPage,
-            deductorId: deductorId,
-            financialYear: financialYear,
-            month: selectedMonth
-        };
-        DdoDetailService.getDdoWiseDetails(model)
-            .then((res) => {
-                if (res) {
-                    setDdoWiseDetails(res);
-                }
-            }).catch(e => {
-                if (e?.response?.data?.errorMessage) {
-                    toast.error(e?.response?.data?.errorMessage);
-                }
-                else {
-                    toast.error(e?.message);
-                }
-            })
-            .finally((f) => {
-                setTimeout(() => {
-                    setShowLoader(false);
-                }, 100);
-            });
-    }
+    const generateFuv = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await FuvValidateReturnService.generate24GFVU({ financialYear, deductorId, month: selectedMonth });
+            toast.success("FVU generated successfully");
+        } catch (e) {
+            toast.error(e?.response?.data?.errorMessage || e.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const downloadFile = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const res = await FormsService.final24GReport({ financialYear, deductorId, month: selectedMonth });
+            const blob = new Blob([res], { type: "text/plain" });
+            saveAs(blob, "24G.txt");
+        } catch (e) {
+            toast.error(e?.response?.data?.errorMessage || e.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
             <ToastContainer />
-            <HeaderList></HeaderList>
-            <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
+            <HeaderList />
+            <BreadcrumbList breadcrumbs={breadcrumbs} />
             <section className="py-5 py-md-3">
                 <div className="container">
                     <div className="row align-items-center deductors-sec">
@@ -450,10 +226,13 @@ export default function DdoWiseDetails({ params }) {
                         </div>
                         <div className="col-md-8">
                             <div className="row justify-content-between">
+                                {/* Add DDO Entry */}
                                 <div
-                                    className="col-md-4"
-                                    onClick={(e) =>
-                                        router.push(`/deductors/${deductorId}/tds/24g-form/ddo-wise-details/detail?financial_year=${financialYear}&month=${selectedMonth}`)
+                                    className="col-md-4 cursor-pointer"
+                                    onClick={() =>
+                                        router.push(
+                                            `/deductors/${deductorId}/tds/24g-form/ddo-wise-details/detail?financial_year=${financialYear}&month=${selectedMonth}`
+                                        )
                                     }
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
@@ -462,69 +241,66 @@ export default function DdoWiseDetails({ params }) {
                                                 <Image
                                                     className="img-fluid"
                                                     src="/images/dashboards/enter_data_manually_icon.svg"
-                                                    alt="enter_data_manually_icon"
+                                                    alt="enter data manually icon"
                                                     width={121}
                                                     height={121}
                                                 />
                                             </div>
                                             <div className="col-md-7">
                                                 <h5 className="fw-bold text-capitalize mb-0">
-                                                    Add DDO Wise
-                                                    <br /> Entry
+                                                    Add DDO Wise <br /> Entry
                                                 </h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <label className="col-md-4">
+
+                                {/* Import Excel */}
+                                <div className="col-md-4">
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                                         <div className="row align-items-center">
                                             <div className="col-md-5">
                                                 <Image
                                                     className="img-fluid"
                                                     src="/images/dashboards/import_excel_file_icon.svg"
-                                                    alt="import_excel_file_icon"
+                                                    alt="import excel file icon"
                                                     width={121}
                                                     height={121}
                                                 />
                                             </div>
                                             <div className="col-md-7">
-                                                <h5 className="fw-bold text-capitalize mb-0">
-                                                    {/* {fileName && <span className="text-danger">{fileName}</span>} */}
-                                                    <label className="w-100 text-capitalize cursor-pointer">
-                                                        <span className="fw-bold"> </span>
-                                                        <input
-                                                            type="file"
-                                                            onChange={fileSelectHandler}
-                                                            className="visually-hidden"
-                                                            accept=".xlsx"
-                                                        />
-                                                        <h5 className="fw-bold mb-0">
-                                                            {" "}
-                                                            {isloading ? "Uploading..." : "Import Excel File"}
-                                                        </h5>
-                                                    </label>
-                                                </h5>
+                                                <label className="w-100 text-capitalize cursor-pointer mb-0">
+                                                    <input
+                                                        type="file"
+                                                        onChange={fileSelectHandler}
+                                                        className="visually-hidden"
+                                                        accept=".xlsx"
+                                                    />
+                                                    <h5 className="fw-bold mb-0">
+                                                        {isloading ? 'Uploading...' : 'Import Excel File'}
+                                                    </h5>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                </label>
-                                <div className="col-md-4">
+                                </div>
+
+                                {/* Download Excel */}
+                                <div className="col-md-4 cursor-pointer" onClick={download}>
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
-                                        <div className="row align-items-center" onClick={download}>
+                                        <div className="row align-items-center">
                                             <div className="col-md-5">
                                                 <Image
                                                     className="img-fluid"
                                                     src="/images/dashboards/download_excel_file_icon.svg"
-                                                    alt="download_excel_file_icon"
+                                                    alt="download excel file icon"
                                                     width={121}
                                                     height={121}
                                                 />
                                             </div>
                                             <div className="col-md-7">
                                                 <h5 className="fw-bold text-capitalize mb-0">
-                                                    Download
-                                                    <br /> Excel File
+                                                    Download <br /> Excel File
                                                 </h5>
                                             </div>
                                         </div>
@@ -537,121 +313,57 @@ export default function DdoWiseDetails({ params }) {
             </section>
             <section className="py-5 py-md-4 bg-light-gray">
                 <div className="container">
-                    <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
-                        <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                            <div className="col-md-4">
-                                <h4 className="mb-0">
-                                    DDO Wise Details
-                                </h4>
+                    <div className="bg-white border border-1 rounded-3 pb-2">
+                        <div className="row px-3 py-3 align-items-center datatable-header">
+                            <div className="col-md-3">
+                                <h4 className="mb-0">DDO Wise Details</h4>
                             </div>
                             <div className="col-md-2">
-                                <select
-                                    className="form-select m-100"
-                                    aria-label="Default select example"
-                                    value={financialYear}
-                                    onChange={(e) => {
-                                        fetchDdoWiseDetails();
-                                        setFinancialYear(e.target.value);
-                                    }}
-                                >
-                                    {financialYears?.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
+                                <select className="form-select" value={financialYear} onChange={(e) => setFinancialYear(e.target.value)}>
+                                    {financialYears.map((fy, i) => <option key={i} value={fy}>{fy}</option>)}
                                 </select>
                             </div>
                             <div className="col-md-1">
-                                <select
-                                    className="form-select m-100"
-                                    aria-label="Default select example"
-                                    value={selectedMonth}
-                                    onChange={(e) => {
-                                        fetchDdoWiseDetails();
-                                        setSelectedMonth(e.target.value);
-                                    }}
-                                >
-                                    {monthsShort && monthsShort?.map((option, index) => (
-                                        <option key={index} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
+                                <select className="form-select" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                                    {monthsShort.map((m, i) => <option key={i} value={m.value}>{m.label}</option>)}
                                 </select>
                             </div>
-                            <div className="col-md-5 d-flex align-items-center">
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        setIsDownloadFormConfirmation(true);
-                                    }}
-                                    className="btn btn-outline-primary me-3"
-                                >
-                                    Download 24G
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        setConfirmTitle("Bulk DDO Wise Details");
-                                        setDeleteConfirm(true);
-                                    }}
-                                    disabled={
-                                        !selectedData || selectedData.length == 0 ? true : false
-                                    }
-                                    className="btn btn-outline-primary me-3"
-                                >
-                                    Bulk Delete
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        setConfirmTitle("All DDO Wise Details");
-                                        setDeleteConfirm(true);
-                                    }}
-                                    disabled={
-                                        ddoWiseDetails &&
-                                            ddoWiseDetails.ddoWiseDetailList?.length == 0
-                                            ? true
-                                            : false
-                                    }
-                                    className="btn btn-primary"
-                                >
-                                    Delete All
-                                </button>
+                            <div className="col-md-6 d-flex align-items-center">
+                                <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download 24G</button>
+                                <button className="btn btn-outline-primary me-3" onClick={() => {
+                                    setConfirmTitle("Bulk DDO Wise Details");
+                                    setDeleteConfirm(true);
+                                }} disabled={!selectedData?.length}>Bulk Delete</button>
+                                <button className="btn btn-primary me-3" onClick={() => {
+                                    setConfirmTitle("All DDO Wise Details");
+                                    setDeleteConfirm(true);
+                                }} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Delete All</button>
+                                <button className="btn btn-primary" onClick={generateFuv} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Generate FVU</button>
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="col-md-12">
-                                <div className="table-responsive">
-                                    <div>
-                                        {ddoWiseDetails &&
-                                            ddoWiseDetails.ddoWiseDetailList &&
-                                            ddoWiseDetails.ddoWiseDetailList.length > 0 && (
-                                                <DataTable
-                                                    fixedHeader
-                                                    fixedHeaderScrollHeight="400px"
-                                                    columns={columns}
-                                                    data={ddoWiseDetails.ddoWiseDetailList}
-                                                    highlightOnHover
-                                                    pagination={true}
-                                                    paginationServer
-                                                    selectableRows={true}
-                                                    customStyles={customStyles}
-                                                    paginationTotalRows={ddoWiseDetails.totalRows}
-                                                    paginationPerPage={pageSize}
-                                                    selectableRowsNoSelectAll={true}
-                                                    onSelectedRowsChange={handleChange}
-                                                    customInput={<CustomCheckbox />}
-                                                    paginationComponentOptions={{
-                                                        noRowsPerPage: true,
-                                                    }}
-                                                    onChangePage={(page) => {
-                                                        setCurrentPage(page);
-                                                        fetchDdoWiseDetails(page);
-                                                    }}
-                                                />
-                                            )}
-                                    </div>
-                                </div>
+                                {ddoWiseDetails?.ddoWiseDetailList?.length > 0 && (
+                                    <DataTable
+                                        fixedHeader
+                                        fixedHeaderScrollHeight="400px"
+                                        columns={columns}
+                                        data={ddoWiseDetails.ddoWiseDetailList}
+                                        highlightOnHover
+                                        pagination
+                                        paginationServer
+                                        paginationTotalRows={ddoWiseDetails.totalRows}
+                                        paginationPerPage={pageSize}
+                                        selectableRows
+                                        selectableRowsNoSelectAll
+                                        onSelectedRowsChange={handleChange}
+                                        onChangePage={(page) => setCurrentPage(page)}
+                                        customStyles={customStyles}
+                                        customInput={<CustomCheckbox />}
+                                        paginationComponentOptions={{ noRowsPerPage: true }}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
