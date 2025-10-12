@@ -1016,6 +1016,7 @@ export default function Deductees({ params }) {
               <br />
               <input
                 type="text"
+                maxLength={5}
                 value={captcha}
                 onChange={(e) => setCaptcha(
                   e.target.value,

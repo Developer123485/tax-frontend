@@ -1018,6 +1018,7 @@ export default function TDSForm({ params }) {
               <input
                 type="text"
                 value={captcha}
+                maxLength={5}
                 onChange={(e) => setCaptcha(
                   e.target.value,
                 )}

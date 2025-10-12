@@ -715,6 +715,7 @@ export default function AddDeductor() {
                   <input
                     type="text"
                     value={inputCaptcha}
+                    maxLength={5}
                     onChange={(e) => setInputCaptcha(e.target.value)}
                     style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
                   />

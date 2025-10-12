@@ -1004,6 +1004,7 @@ export default function TracesActivities({ params }) {
                   <br />
                   <input
                     type="text"
+                    maxLength={5}
                     value={tracesActivity.captcha}
                     onChange={(e) => setTracesActivity((prevState) => ({
                       ...prevState,
