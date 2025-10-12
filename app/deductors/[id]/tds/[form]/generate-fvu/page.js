@@ -804,8 +804,8 @@ export default function GenerateFVU({ params }) {
                 <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
                   <div className="col-md-9">
                     <p className="mb-0">
-                      Provide the 15-digit token number (Provisional Receipt
-                      Number) of the last return.
+                      Please provide the 15-digit Token Number (Provisional Receipt Number)
+                      of the last TDS return filed
                     </p>
                   </div>
                   <div className="col-md-3 d-flex justify-content-end">
