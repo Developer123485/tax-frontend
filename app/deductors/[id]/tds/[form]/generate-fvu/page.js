@@ -678,10 +678,12 @@ export default function GenerateFVU({ params }) {
                           name="wpinputYes1"
                           id="inputYes"
                           value={"Y"}
+                          maxLength={15}
                           checked={isDeductorChange == "Y"}
                           onChange={(e) => {
-                            setIsDeductorChange("Y")
-                            setIsDirty(true);
+                            setTimeout(() => {
+                              setIsDirty(true);
+                            }, 1000);
                           }}
                         />
                         <label className="form-check-label" for="wpinputYes">
