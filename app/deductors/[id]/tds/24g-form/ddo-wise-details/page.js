@@ -347,7 +347,7 @@ export default function DdoWiseDetails({ params }) {
                                 {ddoWiseDetails?.ddoWiseDetailList?.length > 0 && (
                                     <DataTable
                                         fixedHeader
-                                        fixedHeaderScrollHeight="400px"
+                                        fixedHeaderScrollHeight="340px"
                                         columns={columns}
                                         data={ddoWiseDetails.ddoWiseDetailList}
                                         highlightOnHover

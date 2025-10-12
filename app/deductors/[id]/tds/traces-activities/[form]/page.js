@@ -365,7 +365,6 @@ export default function TracesActivities({ params }) {
     }).finally(f => {
       setConfirmModal(false);
       setCaptchaBase64("");
-      setCaptcha("");
       setLoading(false);
       setDownloadRow("");
       setSubmitLoading(false);
@@ -993,7 +992,6 @@ export default function TracesActivities({ params }) {
               setCaptchaBase64("");
               setLoading(false);
               setSubmitLoading(false);
-              setCaptcha("");
             }}
           >
             <Modal.Header className="border-0" closeButton></Modal.Header>
