@@ -49,7 +49,7 @@ export default function GenerateFVU({ params }) {
   const [selectedData, setSelectedData] = useState(null);
   const [confirmTitle, setConfirmTitle] = useState("");
   const [tokenNo, setTokenNo] = useState("");
-  const [isDirty, setIsDirty] = useState(false);
+  const [isDirty, setIsDirty] = useState(null);
   const [isFileSaved, setIsFileSaved] = useState(false);
   const [tokenError, setTokenError] = useState("");
   const [totalItems, setTotalItems] = useState(0);
@@ -112,9 +112,9 @@ export default function GenerateFVU({ params }) {
     DeductorsService.getDeductor(deductorId).then(
       (res) => {
         if (res) {
-          setIsResponsibleChange(res.isChangeResponsibleAddress == "Y" ? res.isChangeResponsibleAddress : "N");
-          setIsDeductorChange(res.isChangeDeductorAddress == "Y" ? res.isChangeDeductorAddress : "N");
-          setIsTdsReturn(res.isChangeTdsReturn == "Y" ? res.isChangeTdsReturn : "N");
+          setIsResponsibleChange(res.isChangeResponsibleAddress == "Y" ? "Y" : "N");
+          setIsDeductorChange(res.isChangeDeductorAddress == "Y" ? "Y" : "N");
+          setIsTdsReturn(res.isChangeTdsReturn == "Y" ? "Y" : "N");
           setTokenNo(res.tokenNo);
           setDeductorInfo(res);
         }
@@ -154,7 +154,8 @@ export default function GenerateFVU({ params }) {
   }
 
   useEffect(() => {
-    updateDeductorFuv();
+    if (isDirty == true)
+      updateDeductorFuv();
   }, [isDirty])
 
   function downloadErros() {
@@ -283,6 +284,7 @@ export default function GenerateFVU({ params }) {
       tokenNo: tokenNo,
     }
     await DeductorsService.updateDeductorFvu(model, deductorId);
+    setIsDirty(null);
   }
 
   const fileSelectHandler = (event) => {
@@ -679,7 +681,7 @@ export default function GenerateFVU({ params }) {
                           checked={isDeductorChange == "Y"}
                           onChange={(e) => {
                             setIsDeductorChange("Y")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputYes">
@@ -696,7 +698,7 @@ export default function GenerateFVU({ params }) {
                           checked={isDeductorChange == "N"}
                           onChange={(e) => {
                             setIsDeductorChange("N")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputNos">
@@ -725,7 +727,7 @@ export default function GenerateFVU({ params }) {
                           checked={isResponsibleChange == "Y"}
                           onChange={(e) => {
                             setIsResponsibleChange("Y")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputYes">
@@ -742,7 +744,7 @@ export default function GenerateFVU({ params }) {
                           checked={isResponsibleChange == "N"}
                           onChange={(e) => {
                             setIsResponsibleChange("N")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputNos">
@@ -770,7 +772,7 @@ export default function GenerateFVU({ params }) {
                           checked={isTdsReturn == "Y"}
                           onChange={(e) => {
                             setIsTdsReturn("Y")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputYes">
@@ -787,7 +789,7 @@ export default function GenerateFVU({ params }) {
                           checked={isTdsReturn == "N"}
                           onChange={(e) => {
                             setIsTdsReturn("N")
-                            setIsDirty(!isDirty);
+                            setIsDirty(true);
                           }}
                         />
                         <label className="form-check-label" for="wpinputNos">
@@ -815,7 +817,7 @@ export default function GenerateFVU({ params }) {
                       onChange={(e) => {
                         setTokenNo(e.target.value);
                         if (e.target.value && e.target.value.length == 15) {
-                          setIsDirty(!isDirty);
+                          setIsDirty(true);
                         }
                       }}
                     />
