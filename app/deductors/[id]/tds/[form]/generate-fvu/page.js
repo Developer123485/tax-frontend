@@ -821,6 +821,9 @@ export default function GenerateFVU({ params }) {
                         if (e.target.value && e.target.value.length == 15) {
                           setIsDirty(true);
                         }
+                        if (tokenNo && !e.target.value) {
+                          setIsDirty(true);
+                        }
                       }}
                     />
                   </div>
