@@ -322,7 +322,11 @@ export default function AddDeductor() {
       else {
         toast.error(e?.message);
       }
+    }).finally(e => {
+      setConfirmModal(false);
+      setCaptchaBase64("");
       setLoading(false);
+      setCaptcha("");
     })
   }
 
@@ -694,6 +698,12 @@ export default function AddDeductor() {
             keyboard={false}
             backdrop="static"
             show={confirmModal}
+            onHide={() => {
+              setConfirmModal(false);
+              setCaptchaBase64("");
+              setLoading(false);
+              setCaptcha("");
+            }}
           >
             <Modal.Body>
               <div className="container">
