@@ -311,7 +311,7 @@ export default function AddDeductor() {
     DeductorsService.submitCaptcha(model).then(res => {
       if (res) {
         setInputCaptcha("");
-        toast.success("Logged in successfully");
+        toast.success("User verified successfully");
         setConfirmModal(false);
       }
       setLoading(false);
