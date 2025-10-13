@@ -216,13 +216,13 @@ export default function GenerateFVU({ params }) {
 
   function handleDownload(e) {
     e.preventDefault();
-    if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
+    if (deductorInfo.tracesLogin && deductorInfo.itdPassword) {
       if (validate()) {
         setIsCSIDownloadLoading(true);
         const token = sessionStorage.getItem("token");
         const model = {
-          password: deductorInfo.tracesPassword,
-          tan: deductorInfo.deductorTan,
+          password: deductorInfo.itdPassword,
+          tan: deductorInfo.tracesLogin,
           fromDate: new Date(fromDate),
           toDate: new Date(toDate)
         }
@@ -272,7 +272,7 @@ export default function GenerateFVU({ params }) {
         })
       }
     } else {
-      toast.error("TRACES Tan and password do not exist for the deductor");
+      toast.error("ITD Tan and password do not exist for the deductor");
     }
   }
 
