@@ -216,13 +216,13 @@ export default function GenerateFVU({ params }) {
 
   function handleDownload(e) {
     e.preventDefault();
-    if (deductorInfo.tracesLogin && deductorInfo.itdPassword) {
+    if (deductorInfo.itdLogin && deductorInfo.itdPassword) {
       if (validate()) {
         setIsCSIDownloadLoading(true);
         const token = sessionStorage.getItem("token");
         const model = {
           password: deductorInfo.itdPassword,
-          tan: deductorInfo.tracesLogin,
+          tan: deductorInfo.itdLogin,
           fromDate: new Date(fromDate),
           toDate: new Date(toDate)
         }
