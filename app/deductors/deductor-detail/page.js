@@ -705,6 +705,7 @@ export default function AddDeductor() {
               setCaptcha("");
             }}
           >
+            <Modal.Header className="border-0" closeButton></Modal.Header>
             <Modal.Body>
               <div className="container">
                 <div style={{ padding: 10 }}>
@@ -735,7 +736,7 @@ export default function AddDeductor() {
             </Modal.Body>
           </Modal>
         </div>
-      </section>
+      </section >
     </>
   );
 }
