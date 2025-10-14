@@ -484,6 +484,7 @@ h6 {
   position: sticky;
   right: 0;
   background: var(--light-blue);
+  z-index: 99;
 }
 
 .rdt_TableCol div {
@@ -1307,4 +1308,8 @@ input.has-error {
 
 .download-btn:hover {
   background-color: #0056b3;
+}
+
+.react-datepicker-popper {
+  z-index: 999;
 }
