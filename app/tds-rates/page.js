@@ -637,11 +637,11 @@ export default function TDSRates() {
               <div className="container">
                 <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                   <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <h4 className="fw-bold mb-0">TDS Rates</h4>
                     </div>
 
-                    <div className="col-md-9 d-flex align-items-center justify-content-end">
+                    <div className="col-md-10 d-flex align-items-center justify-content-end">
                       <span className="ml-2"
                         style={{ marginRight: "4px" }}
                       >From: </span>

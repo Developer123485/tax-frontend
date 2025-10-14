@@ -100,7 +100,7 @@ export default function DdoWiseDetails({ params }) {
                     </span>
                 </div>
             ),
-            style: { position: "sticky", right: 0, zIndex: 1, backgroundColor: "#fff" },
+            style: { position: "sticky", right: 0, zIndex: 0, backgroundColor: "#fff" },
             grow: 2,
             width: "135px",
         }
@@ -328,7 +328,7 @@ export default function DdoWiseDetails({ params }) {
                                     {monthsShort.map((m, i) => <option key={i} value={m.value}>{m.label}</option>)}
                                 </select>
                             </div>
-                            <div className="col-md-6 d-flex align-items-center">
+                            <div className="col-md-6 d-flex align-items-center justify-content-end">
                                 <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download 24G</button>
                                 <button className="btn btn-outline-primary me-3" onClick={() => {
                                     setConfirmTitle("Bulk DDO Wise Details");
