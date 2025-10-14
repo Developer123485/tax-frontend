@@ -21,13 +21,17 @@ export default function TDSRates() {
   const [isloading, setIsLoading] = useState(false);
   const [tdsRates, setTDSRates] = useState(null);
   const [pageSize, setPageSize] = useState(500);
-  const [category, setCategory] = useState(2);
+  const [category, setCategory] = useState(0);
+  const [isResetFilter, setIsResetFilter] = useState(false);
+  const [dateFrom, setDateFrom] = useState(null);
+  const [dateTo, setDateTo] = useState(null);
   const searchParams = useSearchParams(null);
   const [showLoader, setShowLoader] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedData, setSelectedData] = useState(null);
   const [confirmTitle, setConfirmTitle] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [addTdsModal, setAddTdsModal] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [enumList, setEnumList] = useState({});
@@ -117,10 +121,12 @@ export default function TDSRates() {
     {
       name: "Deductee Type",
       selector: (row) => row.deducteeType || "-",
+      width: "340px",
     },
     {
       name: "PAN 4th Character",
       selector: (row) => row.pan || "-",
+      width: "100px",
     },
     {
       name: "Nature",
@@ -255,12 +261,15 @@ export default function TDSRates() {
 
   useEffect(() => {
     fetchTdsRates("");
+  }, [currentPage, pageSize, isResetFilter]);
+
+  useEffect(() => {
     EnumService.getEnumStatues().then((res) => {
       if (res) {
         setEnumList(res);
       }
     });
-  }, [currentPage, pageSize, category]);
+  }, []);
 
   useEffect(() => {
     getApplicableRate();
@@ -376,18 +385,21 @@ export default function TDSRates() {
     setAddTdsModal(true);
   }
 
-  function fetchTdsRates(searchValue) {
-    if (!searchValue) setShowLoader(true);
+  function fetchTdsRates() {
+    setShowLoader(true);
     const model = {
       pageSize: pageSize,
       pageNumber: currentPage,
       search: searchValue,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      categoryId: category
     };
     if (
       searchParams.get("token") ==
       "u85eddfes4edesw98548wswfe584478445545w5ss4d51sd55w"
     ) {
-      ReportingService.getTdsRates(model, category)
+      ReportingService.getTdsRates(model)
         .then((res) => {
           if (res && res.tdsRatesList) {
             setTDSRates(res);
@@ -440,6 +452,14 @@ export default function TDSRates() {
       toast.error("Please upload a valid Excel file (.xls or .xlsx).");
     }
   };
+
+  function resetFilter() {
+    setDateFrom(null);
+    setDateTo(null);
+    setCategory(0);
+    setSearchValue("");
+    setIsResetFilter(!isResetFilter);
+  }
 
   function uploadExcel(file) {
     setIsLoading(true);
@@ -617,57 +637,77 @@ export default function TDSRates() {
               <div className="container">
                 <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                   <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                       <h4 className="fw-bold mb-0">TDS Rates</h4>
                     </div>
 
-                    <div className="col-md-8 d-flex align-items-center justify-content-end">
+                    <div className="col-md-9 d-flex align-items-center justify-content-end">
+                      <span className="ml-2"
+                        style={{ marginRight: "4px" }}
+                      >From: </span>
+                      <DatePicker
+                        autoComplete="off"
+                        selected={dateFrom}
+                        id="applicableFrom"
+                        className="form-control"
+                        onChange={(e) => setDateFrom(e)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="dd/MM/yyyy"
+                      />
+                      <span className="me-2"
+                        style={{ marginLeft: "4px" }}
+                      >To: </span>
+                      <DatePicker
+                        autoComplete="off"
+                        selected={dateTo}
+                        id="applicableTo"
+                        className="form-control w-100 me-2"
+                        onChange={(e) => setDateTo(e)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="dd/MM/yyyy"
+                      />
 
-                      <span className="me-2">Forms: </span>
                       <select
-                        className="form-select me-2 w-auto"
+                        className="form-select me-2 w-50"
                         aria-label="Default select example"
+                        style={{ marginLeft: "4px" }}
                         autoComplete="off"
                         value={category}
                         onChange={(e) => {
-                          setShowLoader(false);
-                          setCategory(e.target.value);
+                          setCategory(Number(e.target.value));
                         }}
                       >
+                        <option value={0}>All</option>
                         <option value={2}>26Q</option>
                         <option value={3}>27EQ</option>
                         <option value={4}>27Q</option>
                         <option value={1}>24Q</option>
                         <option value={5}>Surcharge TDS</option>
                       </select>
-                      <div className="d-flex">
-                        <div className="input-group searchbox">
-                          <input
-                            type="search"
-                            placeholder="Search here"
-                            className="form-control bg-light-gray border-end-0"
-                            id="SearchDeductors"
-                            onChange={(e) => {
-                              setTimeout(() => {
-                                fetchTdsRates(e.target.value);
-                              }, 800);
-                            }}
-                          />
-                          <button
-                            className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
-                            type="button"
-                          >
-                            {" "}
-                            <Image
-                              className=""
-                              src="/images/dashboards/search_icon.svg"
-                              alt="search_icon"
-                              width={24}
-                              height={24}
-                            />
-                          </button>
-                        </div>
-                      </div>
+                      <input
+                        type="search"
+                        placeholder="Search here"
+                        className="form-control bg-light-gray"
+                        id="SearchDeductors"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-primary ms-3"
+                        type="button"
+                        onClick={(e) => fetchTdsRates()}
+                      >
+                        Search
+                      </button>
+                      <button
+                        className="btn btn-outline-primary ms-3"
+                        type="button"
+                        onClick={(e) => {
+                          resetFilter()
+                        }}
+                      >
+                        Reset
+                      </button>
                       <button
                         className="btn btn-outline-primary ms-3"
                         type="button"

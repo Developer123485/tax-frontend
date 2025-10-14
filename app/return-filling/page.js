@@ -19,7 +19,7 @@ export default function ReturnFilling() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const [returnFillings, setReturnFillings] = useState(null);
-  const [pageSize, setPageSize] = useState(500);
+  const [pageSize, setPageSize] = useState(1000);
   const searchParams = useSearchParams(null);
   const [showLoader, setShowLoader] = useState(false);
   const [loading, setLoading] = useState(false);

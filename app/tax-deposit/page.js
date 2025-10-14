@@ -21,7 +21,7 @@ export default function TaxDeposit() {
   const [isloading, setIsLoading] = useState(false);
   const [fileName, setFileName] = useState("");
   const [taxDeposit, setTaxDeposit] = useState(null);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(1000);
   const searchParams = useSearchParams(null);
   const [showLoader, setShowLoader] = useState(false);
   const [loading, setLoading] = useState(false);

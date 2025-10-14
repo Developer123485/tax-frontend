@@ -30,7 +30,7 @@ export const ReportingService = {
 };
 async function getTdsRates(model, categoryId) {
   const result = await api.post(
-    `reporting/tdsRates/fetch/${categoryId}`,
+    `reporting/tdsRates/fetch`,
     model
   );
   return result;
