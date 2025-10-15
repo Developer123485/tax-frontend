@@ -1,4 +1,4 @@
 import axios from "axios";
-const baseUrl = "http://65.20.68.127:5008/api/";
+const baseUrl = "https://api.taxvahan.site/api/";
 export const apiRequest = axios.create({ baseURL: baseUrl });
-export const apiUrl = "http://65.20.68.127:5008/api/";
+export const apiUrl = "https://api.taxvahan.site/api/";
