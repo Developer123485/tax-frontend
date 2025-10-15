@@ -223,8 +223,8 @@ export default function GenerateFVU({ params }) {
         const model = {
           password: deductorInfo.itdPassword,
           tan: deductorInfo.itdLogin,
-          fromDate: new Date(fromDate),
-          toDate: new Date(toDate)
+          fromDate: fromDate,
+          toDate: toDate
         }
         axios.post(apiUrl + 'tracesActivities/download-csi', model,
           {
