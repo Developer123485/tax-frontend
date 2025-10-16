@@ -1,87 +1,45 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-import puppeteerCore from "puppeteer-core";
-import chromium from "@sparticuz/chromium-min";
+import puppeteer from "puppeteer-core";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-export async function GET(request) {
+// Keep singleton browser instance
+let browser = null;
+
+export async function GET() {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const generatedResumeID = searchParams.get("generated_resume_id");
+    const CHROME_PATH = process.env.CHROME_PATH || "/usr/bin/google-chrome";
+    const DISPLAY = process.env.DISPLAY || ":99";
 
-    if (!generatedResumeID) {
-      return NextResponse.json(
-        { error: "Invalid request: missing generated_resume_id" },
-        { status: 400 }
-      );
+    // Reuse browser if already running
+    if (browser && (await browser.process())?.pid) {
+      const page = await browser.newPage();
+      await page.goto("https://example.org", { waitUntil: "domcontentloaded" });
+      return NextResponse.json({ ok: true, reused: true });
     }
 
-    const finalHTML = `<html>
-        <body style="font-family: Arial; padding: 40px;">
-          <h1>Visible Chrome Demo</h1>
-          <p>Resume ID: <b>${generatedResumeID}</b></p>
-          <p>This Chrome window will stay open until you close it manually.</p>
-        </body>
-      </html>`;
-    const resumeTitle = `resume_${generatedResumeID}`;
-
-    let browser;
-
-    if (
-      process.env.NODE_ENV === "production" ||
-      process.env.VERCEL_ENV === "production"
-    ) {
-      // Vercel/serverless only supports headless (no window)
-      const executablePath = await chromium.executablePath(
-        "https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar"
-      );
-
-      browser = await puppeteerCore.launch({
-        executablePath,
-        args: chromium.args,
-        headless: chromium.headless,
-        defaultViewport: chromium.defaultViewport,
-      });
-    } else {
-      // ✅ LOCAL DEV: visible Chrome window that stays open
-      browser = await puppeteer.launch({
-        headless: false, // 👈 show real Chrome window
-        defaultViewport: null, // full screen
-        args: [
-          "--start-maximized",
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-        ],
-      });
-    }
+    // Launch new visible Chrome session
+    browser = await puppeteer.launch({
+      executablePath: CHROME_PATH,
+      headless: false, // Visible mode
+      defaultViewport: null,
+      args: [
+        `--display=${DISPLAY}`,
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--start-maximized",
+      ],
+    });
 
     const page = await browser.newPage();
-    await page.setContent(finalHTML, { waitUntil: "networkidle0" });
+    await page.goto("https://www.example.com", { waitUntil: "domcontentloaded" });
 
-    const pdf = await page.pdf({
-      format: "A4",
-      printBackground: true,
-      margin: { top: "10px", right: "10px", bottom: "10px", left: "10px" },
-    });
-
-    // ❌ DO NOT close the browser automatically
-    // await browser.close();
-
-    console.log("✅ Chrome is open. Close it manually when done.");
-
-    return new NextResponse(pdf, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename=${resumeTitle}.pdf`,
-      },
-    });
-  } catch (error) {
-    console.error("PDF generation error:", error);
+    return NextResponse.json({ ok: true, message: "Chrome opened visibly" });
+  } catch (err) {
     return NextResponse.json(
-      { message: "Error generating PDF", error: error.message },
+      { ok: false, error: String(err?.message || err) },
       { status: 500 }
     );
   }
