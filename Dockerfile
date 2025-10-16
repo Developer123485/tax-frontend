@@ -47,7 +47,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # Install node modules
-RUN npm install --production
+RUN npm install -f
 
 # Copy the rest of the app
 COPY . .
