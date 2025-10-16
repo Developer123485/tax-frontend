@@ -1,25 +1,53 @@
-// File: /app/api/run-fvu/route.js (for Next 13+/App Router)
+// app/api/upload/route.js
 
-import { NextResponse } from 'next/server';
-import { spawn } from 'child_process';
-import path from 'path';
+import { NextResponse } from "next/server";
+import puppeteer from "puppeteer-core";
 
-export async function GET() {
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    const { UserName, Password, TanNumber } = body;
+
+    // Launch Puppeteer / Chromium
+    const browser = await puppeteer.launch({
+      headless: false,
+      args: ["--no-sandbox"],
+      // If needed, specify path to Chrome executable
+      executablePath: process.env.CHROME_PATH || "/usr/bin/chrome", 
+    });
+
     try {
-        const jarPath = path.join(process.cwd(), 'TDS_STANDALONE_FVU_9.2', 'TDS_STANDALONE_FVU_9.2.jar');
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1920, height: 1080 });
 
-        console.log("jarPath")
-       
-        // Launch the GUI of the JAR file
-        const javaProcess = spawn('java', ['-jar', jarPath], {
-            detached: true,
-            stdio: 'ignore' // prevent backend from waiting
-        });
+      await page.goto("https://www.tdscpc.gov.in/app/login.xhtml?usr=Ded");
 
-        javaProcess.unref(); // let it run independently
+      // Fill in the login form
+      await page.type("#userId", UserName);
+      await page.type("#psw", Password);
+      await page.type("#tanpan", TanNumber);
 
-        return NextResponse.json({ success: true, message: 'FVU launched' });
-    } catch (error) {
-        return NextResponse.json({ success: false, error: error.message });
+      // Get captcha image screenshot
+      const captchaElement = await page.$("#captchaImg");
+      if (!captchaElement) {
+        throw new Error("Captcha element not found");
+      }
+      const captchaBuffer = await captchaElement.screenshot();
+
+      const base64Image = captchaBuffer.toString("base64");
+
+      // Return JSON response
+      return NextResponse.json(
+        { captcha: `data:image/png;base64,${base64Image}` },
+        { status: 200 }
+      );
+    } finally {
+      await browser.close();
     }
+  } catch (err) {
+    return NextResponse.json(
+      { error: err.toString() },
+      { status: 500 }
+    );
+  }
 }
