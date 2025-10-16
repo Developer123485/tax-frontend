@@ -32,13 +32,13 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ttf-freefont \
-    chromium \
+    google-chrome \
     dumb-init
 
 # Set environment variables for Puppeteer + Chromium
 ENV NODE_ENV=production
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-ENV CHROMIUM_PATH=/usr/bin/chromium
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
+ENV CHROMIUM_PATH=/usr/bin/google-chrome
 
 # Set working directory
 WORKDIR /app
