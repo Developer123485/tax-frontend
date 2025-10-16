@@ -5,6 +5,10 @@ const nextConfig = {
     images: {
         formats: ['image/webp'],
     },
+    experimental: {
+        serverActions: false,
+    },
+    serverExternalPackages: ['puppeteer-core', '@sparticuz/chromium'],
 };
 
 export default nextConfig;
