@@ -24,13 +24,7 @@ export async function GET() {
       executablePath: CHROME_PATH,
       headless: false, // Visible mode
       defaultViewport: null,
-      args: [
-        `--display=${DISPLAY}`,
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--start-maximized",
-      ],
+      args: [`--display=99`, '--no-sandbox']
     });
 
     const page = await browser.newPage();
