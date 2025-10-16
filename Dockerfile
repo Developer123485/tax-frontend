@@ -37,8 +37,8 @@ RUN apk add --no-cache \
 
 # Set environment variables for Puppeteer + Chromium
 ENV NODE_ENV=production
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-ENV CHROMIUM_PATH=/usr/bin/chromium-browser
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV CHROMIUM_PATH=/usr/bin/chromium
 
 # Set working directory
 WORKDIR /app
