@@ -13,7 +13,7 @@ export async function POST(request) {
       headless: false,
       args: ["--no-sandbox"],
       // If needed, specify path to Chrome executable
-      executablePath: process.env.CHROME_PATH || "/usr/bin/chromium", 
+      executablePath: process.env.CHROME_PATH || "/usr/bin/chromium-browser", 
     });
 
     try {
