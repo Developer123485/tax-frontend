@@ -2,58 +2,77 @@
 "use client";
 import { useState } from "react";
 
-export default function PdfButton() {
-  const [loading, setLoading] = useState(false);
+function LoginForm() {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [tanNumber, setTanNumber] = useState("");
+  const [captchaImage, setCaptchaImage] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleGeneratePDF = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
     try {
-      setLoading(true);
+      const resp = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserName: userName,
+          Password: password,
+          TanNumber: tanNumber,
+        }),
+      });
 
-      const generated_resume_id = "123"; // or from state/input
-
-      // 🔥 Fetch the PDF from the API route
-      const response = await fetch(
-        `/api/upload?generated_resume_id=${generated_resume_id}`,
-        { method: "GET" }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to generate PDF");
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(text || "Network error");
       }
 
-      // 🧾 Convert response to blob (PDF)
-      const blob = await response.blob();
-      const fileURL = URL.createObjectURL(blob);
-
-      // 💾 Trigger browser download
-      const link = document.createElement("a");
-      link.href = fileURL;
-      link.download = `resume_${generated_resume_id}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const data = await resp.json();
+      // data should contain { captcha: "data:image/png;base64,..." }
+      setCaptchaImage(data.captcha);
     } catch (err) {
-      console.error("PDF generation failed:", err);
-      alert("Error generating PDF");
-    } finally {
-      setLoading(false);
+      console.error("Error calling login API:", err);
+      setError(err.message);
     }
   };
 
   return (
-    <button
-      onClick={handleGeneratePDF}
-      disabled={loading}
-      style={{
-        padding: "10px 20px",
-        background: "#0070f3",
-        color: "white",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-      }}
-    >
-      {loading ? "Generating..." : "Download PDF"}
-    </button>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="TAN Number"
+          value={tanNumber}
+          onChange={(e) => setTanNumber(e.target.value)}
+        />
+        <button type="submit">Get CAPTCHA</button>
+      </form>
+
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      {captchaImage && (
+        <div>
+          <img src={captchaImage} alt="CAPTCHA" />
+        </div>
+      )}
+    </div>
   );
 }
+
+export default LoginForm;
