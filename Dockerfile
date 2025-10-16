@@ -1,44 +1,20 @@
-# # Use official Node.js LTS image as base
-# FROM node:18-alpine
+FROM node:18-bullseye
 
-# # Set working directory inside container
-# WORKDIR /app
+# Install dependencies
+RUN apt-get update && apt-get install -y wget gnupg ca-certificates
 
-# # Copy package.json and package-lock.json (if available)
-# COPY package.json package-lock.json* ./
+# Add Google Chrome’s official repository and key
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-linux.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
-# # Install dependencies
-# RUN npm install
+# Install Google Chrome Stable
+RUN apt-get update && apt-get install -y google-chrome-stable dumb-init \
+    && rm -rf /var/lib/apt/lists/*
 
-# # Copy the rest of the app source code
-# COPY . .
-
-# # Build the Next.js app
-# RUN npm run build
-
-# # Expose port 3000 to the outside
-# EXPOSE 3000
-
-# # Start the app
-# CMD ["npm", "start"]
-
-# Use official Node.js LTS Alpine image
-FROM node:18-alpine
-
-# Install system dependencies required by Chromium
-RUN apk add --no-cache \
-    ca-certificates \
-    nss \
-    freetype \
-    harfbuzz \
-    ttf-freefont \
-    google-chrome \
-    dumb-init
-
-# Set environment variables for Puppeteer + Chromium
-ENV NODE_ENV=production
+# Environment variables
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
 ENV CHROMIUM_PATH=/usr/bin/google-chrome
+ENV NODE_ENV=production
 
 # Set working directory
 WORKDIR /app
