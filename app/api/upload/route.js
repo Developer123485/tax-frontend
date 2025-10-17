@@ -73,22 +73,23 @@ export async function POST(request) {
       );
     }
 
-    // Construct the redirect URL with user credentials as query parameters
-    // Note: In production, you should encrypt these credentials or use a more secure method
-    const redirectUrl = new URL("https://www.tdscpc.gov.in/app/login.xhtml");
-    redirectUrl.searchParams.set("usr", "Ded");
-    redirectUrl.searchParams.set("userId", UserName);
-    redirectUrl.searchParams.set("psw", Password);
-    redirectUrl.searchParams.set("tanpan", TanNumber);
+    // For now, let's try the simplest approach - just redirect to the basic TRACES login
+    // We'll store the credentials in localStorage on the frontend for the user to use
+    const redirectUrl = "https://www.tdscpc.gov.in/app/login.xhtml?usr=Ded";
     
-    // Add a return URL parameter so the third-party site knows where to redirect back
-    const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/verification/callback`;
-    redirectUrl.searchParams.set("returnUrl", returnUrl);
+    // Store user credentials to be used by the user when they manually fill the form
+    const userCredentials = {
+      UserName,
+      Password,
+      TanNumber,
+      timestamp: Date.now()
+    };
 
-    // Return the redirect URL for the frontend to handle
+    // Return the redirect URL and credentials for the frontend to handle
     return NextResponse.json(
       { 
-        redirectUrl: redirectUrl.toString(),
+        redirectUrl: redirectUrl,
+        credentials: userCredentials,
         message: "Redirect to third-party verification"
       },
       { status: 200 }
@@ -97,3 +98,4 @@ export async function POST(request) {
     return NextResponse.json({ error: err.toString() }, { status: 500 });
   }
 }
+
