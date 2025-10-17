@@ -1,39 +1,52 @@
+// app/api/upload/route.js
+
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 
-export const dynamic = "force-dynamic";
-export const maxDuration = 60;
-
-// Keep singleton browser instance
-let browser = null;
-
-export async function GET() {
+export async function POST(request) {
   try {
-    const CHROME_PATH = process.env.CHROME_PATH || "/usr/bin/google-chrome";
-    const DISPLAY = process.env.DISPLAY || ":99";
+    const body = await request.json();
+    const { UserName, Password, TanNumber } = body;
 
-    // Reuse browser if already running
-    if (browser && (await browser.process())?.pid) {
-      const page = await browser.newPage();
-      await page.goto("https://example.org", { waitUntil: "domcontentloaded" });
-      return NextResponse.json({ ok: true, reused: true });
-    }
-
-    // Launch new visible Chrome session
-    browser = await puppeteer.launch({
-      executablePath: CHROME_PATH,
-      headless: false, // Visible mode
-      defaultViewport: null,
-      args: [`--display=99`, '--no-sandbox']
+    // Launch Puppeteer / Chromium
+    const browser = await puppeteer.launch({
+      headless: false,
+      args: ["--no-sandbox"],
+      // If needed, specify path to Chrome executable
+      executablePath: process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe"
     });
 
-    const page = await browser.newPage();
-    await page.goto("https://www.example.com", { waitUntil: "domcontentloaded" });
+    try {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1920, height: 1080 });
 
-    return NextResponse.json({ ok: true, message: "Chrome opened visibly" });
+      await page.goto("https://www.tdscpc.gov.in/app/login.xhtml?usr=Ded");
+
+      // Fill in the login form
+      await page.type("#userId", UserName);
+      await page.type("#psw", Password);
+      await page.type("#tanpan", TanNumber);
+
+      // Get captcha image screenshot
+      const captchaElement = await page.$("#captchaImg");
+      if (!captchaElement) {
+        throw new Error("Captcha element not found");
+      }
+      const captchaBuffer = await captchaElement.screenshot();
+
+      const base64Image = captchaBuffer.toString("base64");
+
+      // Return JSON response
+      return NextResponse.json(
+        { captcha: `data:image/png;base64,${base64Image}` },
+        { status: 200 }
+      );
+    } finally {
+      await browser.close();
+    }
   } catch (err) {
     return NextResponse.json(
-      { ok: false, error: String(err?.message || err) },
+      { error: err.toString() },
       { status: 500 }
     );
   }
