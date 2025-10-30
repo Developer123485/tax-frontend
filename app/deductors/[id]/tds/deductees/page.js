@@ -105,7 +105,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "PAN Status",
-      selector: (row) => (row.status ? row.status : "-"),
+      selector: (row) => (row.panVerificationStatus ? row.panVerificationStatus : "-"),
       grow: 2,
     },
     {
@@ -204,7 +204,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "Pan Status",
-      selector: (row) => `${row?.status || "NA"}`,
+      selector: (row) => (row.panVerificationStatus ? row.panVerificationStatus : "-"),
     },
     {
       name: "Name as per PAN",
