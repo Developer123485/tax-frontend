@@ -319,12 +319,13 @@ export default function Deductees({ params }) {
     }
   }
 
-  function handleSubmit() {
-    setSubmitLoading(true);
+  function handleSubmit(e) {
+    e.preventDefault();
     if (!captcha) {
       toast.error("Input Captcha is required");
       return false;
     }
+    setSubmitLoading(true);
     const model = {
       captcha: captcha,
       deductorId: deductorId,
