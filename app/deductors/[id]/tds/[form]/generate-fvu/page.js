@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { apiUrl } from "@/app/config";
 import axios from "axios";
+import ProcessPopup from "@/app/components/modals/processing";
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -182,10 +183,8 @@ export default function GenerateFVU({ params }) {
         else {
           toast.error(e?.message);
         }
-        setShowLoader(false);
       })
       .finally((f) => {
-        setShowLoader(false);
       });
   }
 
@@ -1123,6 +1122,7 @@ export default function GenerateFVU({ params }) {
           </div>
         </Modal.Body>
       </Modal>
+      <ProcessPopup showLoader={showLoader}></ProcessPopup>
     </>
   );
 }
