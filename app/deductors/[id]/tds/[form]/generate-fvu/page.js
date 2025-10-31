@@ -878,7 +878,7 @@ export default function GenerateFVU({ params }) {
               <div className="bg-white rounded-4 px-4 py-4 my-3">
                 <div className="row">
                   <div className="col-md-6 border-end">
-                    <h6 className="fw-bold">{form == "form-24Q" && quarter == "Q4" ? "Salary" : "Non Salary"}</h6>
+                    <h6 className="fw-bold">{form == "form-24Q" && searchParams.get("quarter") == "Q4" ? "Salary" : "Non Salary"}</h6>
                     <p>
                       You can Download the FVU file and file TDS return manually
                     </p>
