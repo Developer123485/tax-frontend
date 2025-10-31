@@ -492,7 +492,9 @@ export default function TDSDashboard({ params }) {
                       </div>
                       <div className="deductees-master-sidebar">
                         <div className="row g-3">
-                          <div className="col-md-12">
+                          <div className="col-md-12"
+                            onClick={() => router.push("tds/deductees")}
+                          >
                             <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
                               <div className="row align-items-center">
                                 <div className="col-md-4">
@@ -506,7 +508,6 @@ export default function TDSDashboard({ params }) {
                                 </div>
                                 <div
                                   className="col-md-8"
-                                  onClick={() => router.push("tds/deductees")}
                                 >
                                   <h5 className="fw-bold text-uppercase mb-0">
                                     Master List
@@ -515,7 +516,13 @@ export default function TDSDashboard({ params }) {
                               </div>
                             </div>
                           </div>
-                          <div className="col-md-12">
+                          <div className="col-md-12"
+                            onClick={(e) =>
+                              router.push(
+                                `/deductors/${deductorId}/tds/deductees/detail`
+                              )
+                            }
+                          >
                             <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
                               <div className="row align-items-center">
                                 <div className="col-md-4">
@@ -529,11 +536,7 @@ export default function TDSDashboard({ params }) {
                                 </div>
                                 <div
                                   className="col-md-8"
-                                  onClick={(e) =>
-                                    router.push(
-                                      `/deductors/${deductorId}/tds/deductees/detail`
-                                    )
-                                  }
+
                                 >
                                   <h5 className="fw-bold text-uppercase mb-0">
                                     Add Master Entry
@@ -575,7 +578,9 @@ export default function TDSDashboard({ params }) {
                               </div>
                             </div>
                           </div>
-                          <div className="col-md-12">
+                          <div className="col-md-12"
+                            onClick={download}
+                          >
                             <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-2 rounded-3">
                               <div className="row align-items-center">
                                 <div className="col-md-4">
@@ -587,7 +592,7 @@ export default function TDSDashboard({ params }) {
                                     height={80}
                                   />
                                 </div>
-                                <div className="col-md-8" onClick={download}>
+                                <div className="col-md-8" >
                                   <h5 className="fw-bold text-uppercase mb-0">
                                     Download Excel Template
                                   </h5>

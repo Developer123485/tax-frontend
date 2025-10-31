@@ -165,8 +165,10 @@ export default function PanStatus({ params }) {
                     toast.success("Export Data Successfully!");
                     saveAs(url, fileName);
                 } else {
-                    setPanStatusResponse(res);
-                    setShowLoader(false);
+                    if (panStatusResponse?.panLists && panStatusResponse?.panLists?.length > 0) {
+                        setPanStatusResponse(res);
+                        setShowLoader(false);
+                    }
                 }
             })
             .catch(e => {
@@ -207,6 +209,7 @@ export default function PanStatus({ params }) {
                                                 onClick={(e) => {
                                                     fetchPanList(1, true);
                                                 }}
+                                                disabled={!panStatusResponse}
                                             >
                                                 Download
                                             </button>
