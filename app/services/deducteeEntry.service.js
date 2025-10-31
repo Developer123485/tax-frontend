@@ -8,11 +8,17 @@ export const DeducteeEntryService = {
   deleteAllDeducteeEntry,
   deleteBulkDeducteeEntry,
   getTdsRate,
-  getDeducteeDropdowns
+  getDeducteeDropdowns,
+  getPanLists
 };
 
 async function deleteDeducteeEntry(id) {
   const result = await api.get(`deducteeEntry/delete/${id}`);
+  return result;
+}
+
+async function getPanLists(model, val) {
+  const result = await api.post(`deducteeEntry/getPanLists`, model);
   return result;
 }
 

@@ -114,6 +114,11 @@ export default function Deductees({ params }) {
       grow: 2,
     },
     {
+      name: "Last Verified On",
+      selector: (row) => (row.verifyLastDate ? row.verifyLastDate : "-"),
+      grow: 2,
+    },
+    {
       name: "Actions",
       button: true,
       selector: (row) => (
@@ -209,6 +214,11 @@ export default function Deductees({ params }) {
     {
       name: "Name as per PAN",
       selector: (row) => (row.nameAsPerPan ? row.nameAsPerPan : "-"),
+      grow: 2,
+    },
+    {
+      name: "Last Verified On",
+      selector: (row) => (row.verifyLastDate ? row.verifyLastDate : "-"),
       grow: 2,
     },
     {

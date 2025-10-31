@@ -531,34 +531,72 @@ export default function GenerateFVU({ params }) {
                 </div>
 
                 <div class="row g-3 rounded-4 align-items-center text-center">
-                  <div class="col">
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=All"
+                      );
+                    }}
+                  >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.allPanStatus || "0"}</h6>
                       <p class="mb-0 fs-12">All</p>
                     </div>
                   </div>
 
-                  <div class="col">
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=Valid and Operative"
+                      );
+                    }}
+                  >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.validStatus || "0"}</h6>
                       <p class="mb-0 fs-12">Active/Valid</p>
                     </div>
                   </div>
 
-                  <div class="col">
+                  <div class="col"
+                    onClick={() => {
+                      const queryString = window.location.search;
+                      const separator = queryString ? "&" : "?";
+                      router.push(`${pathname}/pan-status${queryString}${separator}type=Invalid`);
+                    }}
+                  >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.notValidStatus || "0"}</h6>
                       <p class="mb-0 fs-12">Invalid</p>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=InOperative"
+                      );
+                    }}
+                  >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.inOperativeStatus || "0"}</h6>
                       <p class="mb-0 fs-12">InOperative</p>
                     </div>
                   </div>
 
-                  <div class="col">
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search
+                      );
+                    }}
+                  >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.notVerifyStatus || "0"}</h6>
                       <p class="mb-0 fs-12">Not Verified</p>
