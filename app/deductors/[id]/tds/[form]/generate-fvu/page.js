@@ -303,8 +303,7 @@ export default function GenerateFVU({ params }) {
       setTokenError("Token number should be 15 digits");
       return;
     }
-
-    if (!selectedData) {
+    if (!selectedData && interestAndfines?.IsDownloadCSIAllow) {
       toast.error("Please select CSI file");
       return;
     }
