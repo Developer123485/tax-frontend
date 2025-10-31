@@ -472,7 +472,7 @@ export default function PotentialNotices({ params }) {
                             fetchLateDeductions("", true);
                           }}
                         >
-                          Download Report
+                          Download
                         </button>
                       </div>
                     </div>
@@ -522,7 +522,7 @@ export default function PotentialNotices({ params }) {
                             fetchLateFeePayable(1, true);
                           }}
                         >
-                          Download Report
+                          Download
                         </button>
                       </div>
                     </div>
@@ -541,7 +541,7 @@ export default function PotentialNotices({ params }) {
                             fetchShortDeductions(1, "", true);
                           }}
                         >
-                          Download Report
+                          Download
                         </button>
                       </div>
                     </div>
@@ -590,7 +590,7 @@ export default function PotentialNotices({ params }) {
                             fetchTaxDeposits(1, "", true);
                           }}
                         >
-                          Download Report
+                          Download
                         </button>
                       </div>
                     </div>
@@ -639,7 +639,7 @@ export default function PotentialNotices({ params }) {
                             fetchInterestCalculate(1, "", true);
                           }}
                         >
-                          Download Report
+                          Download
                         </button>
                       </div>
                     </div>

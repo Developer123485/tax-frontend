@@ -178,7 +178,7 @@ export default function PotentialNotices({ params }) {
                                                     fetchShortDeductions(1, "", true);
                                                 }}
                                             >
-                                                Download Report
+                                                Download
                                             </button>
                                         </div>
                                     </div>

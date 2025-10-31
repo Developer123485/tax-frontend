@@ -251,7 +251,7 @@ export default function Miscellaneous({ params }) {
                                             downloadReports();
                                         }}
                                     >
-                                        Download Report
+                                        Download
                                     </button>
                                 </div>
                             </div>

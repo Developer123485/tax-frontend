@@ -160,7 +160,7 @@ export default function LateFeePayables({ params }) {
                                                     fetchLateFeePayable(1, true);
                                                 }}
                                             >
-                                                Download Report
+                                                Download
                                             </button>
                                         </div>
                                     </div>

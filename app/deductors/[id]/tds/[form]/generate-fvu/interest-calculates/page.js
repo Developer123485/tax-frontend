@@ -157,7 +157,7 @@ export default function InterestCalculate({ params }) {
                                                     fetchInterestCalculate(1, "", true);
                                                 }}
                                             >
-                                                Download Report
+                                                Download
                                             </button>
                                         </div>
                                     </div>

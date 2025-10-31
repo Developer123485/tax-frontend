@@ -209,7 +209,7 @@ export default function PanStatus({ params }) {
                                                     fetchPanList(1, true);
                                                 }}
                                             >
-                                                Download Report
+                                                Download
                                             </button>
                                         </div>
                                     </div>
