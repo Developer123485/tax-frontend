@@ -4,49 +4,38 @@ import Image from "next/image";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { ChallanService } from "@/app/services/challan.service";
 import { usePathname } from "next/navigation";
 import DataTable from "react-data-table-component";
-import CustomCheckbox from "@/app/components/deductee-entry/custom-checkbox";
 import ProcessPopup from "@/app/components/modals/processing";
-import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
-import ShortDeductions from "@/app/components/potential-notices/short-deduction/page";
-import LateDeductions from "@/app/components/potential-notices/late-deduction/page";
-import { FormsService } from "@/app/services/forms.service";
-import TaxDepositList from "@/app/components/potential-notices/tax-deposit/page";
 import { saveAs } from "file-saver";
-import InterestList from "@/app/components/potential-notices/interest-calculate/page";
-import LateFeePayable from "@/app/components/potential-notices/late-fee-payable/page";
 import { DeducteeEntryService } from "@/app/services/deducteeEntry.service";
+import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
+import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { DeductorsService } from "@/app/services/deductors.service";
 
 export default function PanStatus({ params }) {
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
     const form = resolvedParams?.form;
     const pathname = usePathname();
+    const [verifyType, setVerifyType] = useState("");
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(100);
-    const [sdCurrentPage, setSdCurrentPage] = useState(1);
-    const [tdCurrentPage, setTdCurrentPage] = useState(1);
-    const [icCurrentPage, setIcCurrentPage] = useState(1);
-    const [sdPageSize, setSdPageSize] = useState(100);
-    const [tdPageSize, setTdPageSize] = useState(100);
-    const [lcPageSize, setLcPageSize] = useState(100);
-    const [deleteConfirm, setDeleteConfirm] = useState(false);
-    const [deleteId, setDeleteId] = useState(0);
     const [showLoader, setShowLoader] = useState(false);
-    const [selectedData, setSelectedData] = useState(null);
-    const [lateDeductions, setLateDeductions] = useState(null);
-    const [shortDeductions, setShortDeductions] = useState(null);
-    const [taxDeposit, setTaxDeposit] = useState(null);
+    const [selectedData, setSelectedData] = useState([]);
+    const [confirmModal, setConfirmModal] = useState(false);
+    const [submitLoading, setSubmitLoading] = useState(false);
     const [panStatusResponse, setPanStatusResponse] = useState(null);
-    const [interestCalculate, setInterestCalculate] = useState(null);
-    const [totalItems, setTotalItems] = useState(0);
     const [searchValue, setSearchValue] = useState("");
+    const [deductorInfo, setDeductorInfo] = useState(null);
+    const [bulkLoading, setBulkLoading] = useState(false);
+    const [allLoading, setAllLoading] = useState(false);
+    const [captchaBase64, setCaptchaBase64] = useState('');
+    const [captcha, setCaptcha] = useState("");
     const searchParams = useSearchParams(null);
     const [breadcrumbs, setBreadcrumbs] = useState([
         {
@@ -144,6 +133,10 @@ export default function PanStatus({ params }) {
         }
     }, [currentPage, pageSize, searchValue]);
 
+    useEffect(() => {
+        getDeductorDetail();
+    }, []);
+
     function fetchPanList(pageNum, value) {
         setShowLoader(true);
         const model = {
@@ -165,7 +158,7 @@ export default function PanStatus({ params }) {
                     toast.success("Export Data Successfully!");
                     saveAs(url, fileName);
                 } else {
-                    if (panStatusResponse?.panLists && panStatusResponse?.panLists?.length > 0) {
+                    if (res?.panLists && res?.panLists?.length > 0) {
                         setPanStatusResponse(res);
                         setShowLoader(false);
                     }
@@ -185,6 +178,124 @@ export default function PanStatus({ params }) {
             });
     }
 
+    function getDeductorDetail() {
+        DeductorsService.getDeductor(deductorId)
+            .then((res) => {
+                if (res) {
+                    setDeductorInfo(res);
+                }
+            })
+            .catch((e) => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+            });
+    }
+
+    const handleChange = (state) => {
+        setSelectedData(state.selectedRows);
+    };
+
+    function submitLogin(e) {
+        setCaptcha("");
+        if (deductorInfo.tracesLogin && deductorInfo.tracesPassword) {
+            const model = {
+                userName: deductorInfo.tracesLogin,
+                password: deductorInfo.tracesPassword,
+                tanNumber: deductorInfo?.deductorTan
+            }
+            TracesActivitiesService.startLogin(model).then(res => {
+                if (res) {
+                    setCaptchaBase64(res.captcha);
+                    setConfirmModal(true);
+                    setBulkLoading(false);
+                    setAllLoading(false);
+                }
+            }).catch(e => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+                setBulkLoading(false);
+                setAllLoading(false);
+            })
+        } else {
+            setAllLoading(false);
+            setBulkLoading(false);
+            setCaptchaBase64("");
+            setVerifyType("");
+            setCaptcha("");
+            toast.error("TRACES username and password do not exist for the deductor");
+        }
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!captcha) {
+            toast.error("Input Captcha is required");
+            return false;
+        }
+        setSubmitLoading(true);
+        const model = {
+            captcha: captcha,
+            deductorId: deductorId,
+            ids: (verifyType == "all" ? [] : selectedData.map(p => p.id))
+        }
+        if (searchParams.get("categoryId") != "1") {
+            TracesActivitiesService.verifyDeducteePans(model).then(res => {
+                if (res) {
+                    setSelectedData([]);
+                }
+                toast.success(res);
+                fetchPanList("");
+                setConfirmModal(false);
+                setVerifyType("");
+                setSubmitLoading(false);
+                setCaptchaBase64("");
+            }).catch(e => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+                setVerifyType("");
+                setConfirmModal(false);
+                setSubmitLoading(false);
+                setSelectedData([]);
+                setCaptchaBase64("");
+            })
+        } else {
+            TracesActivitiesService.verifyEmployeePans(model).then(res => {
+                if (res) {
+                    setSelectedData([]);
+                    fetchPanList("");
+                }
+                toast.success(res);
+                setConfirmModal(false);
+                setVerifyType("");
+                setSubmitLoading(false);
+                setCaptchaBase64("");
+            }).catch(e => {
+                if (e?.response?.data?.errorMessage) {
+                    toast.error(e?.response?.data?.errorMessage);
+                }
+                else {
+                    toast.error(e?.message);
+                }
+                setVerifyType("");
+                setConfirmModal(false);
+                setSubmitLoading(false);
+                setCaptchaBase64("");
+            })
+        }
+    }
+
     return (
         <>
             <ToastContainer />
@@ -200,21 +311,45 @@ export default function PanStatus({ params }) {
                                 </h5>
                             </div>
                             <>
-                                <div className="col-sm-4 col-md-2">
-                                    <div className="d-flex align-items-center">
-                                        <div className="input-group">
-                                            <button
-                                                className="btn btn-outline-secondary px-2 py-1"
-                                                type="button"
-                                                onClick={(e) => {
-                                                    fetchPanList(1, true);
-                                                }}
-                                                disabled={!panStatusResponse}
-                                            >
-                                                Download
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div className="col-md-5 d-flex align-items-center justify-content-end">
+                                    <button type="button"
+                                        disabled={selectedData.length == 0 || bulkLoading}
+                                        className="btn btn-primary me-3"
+                                        onClick={(e) => {
+                                            setBulkLoading(true);
+                                            setVerifyType("bulk");
+                                            submitLogin(e);
+                                        }}
+                                    >
+                                        {bulkLoading && (
+                                            <div className="spinner-border me-2" role="status"></div>
+                                        )}
+                                        Bulk PAN Verify
+                                    </button>
+                                    <button type="button"
+                                        disabled={panStatusResponse?.panLists.length == 0 || allLoading}
+                                        className="btn btn-primary me-3"
+                                        onClick={(e) => {
+                                            setAllLoading(true);
+                                            setVerifyType("all");
+                                            submitLogin(e)
+                                        }}
+                                    >
+                                        {allLoading && (
+                                            <div className="spinner-border me-2" role="status"></div>
+                                        )}
+                                        Verify All PANs
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-secondary px-2 py-1"
+                                        type="button"
+                                        onClick={(e) => {
+                                            fetchPanList(1, true);
+                                        }}
+                                        disabled={!panStatusResponse}
+                                    >
+                                        Export
+                                    </button>
                                 </div>
                                 <div className="col-sm-4 col-md-4">
                                     <div className="d-flex align-items-center">
@@ -267,6 +402,7 @@ export default function PanStatus({ params }) {
                                                         paginationPerPage={pageSize}
                                                         selectableRows={true}
                                                         customStyles={customStyles}
+                                                        onSelectedRowsChange={handleChange}
                                                         pagination={true}
                                                         paginationComponentOptions={{
                                                             noRowsPerPage: true,
@@ -286,6 +422,53 @@ export default function PanStatus({ params }) {
                     </div>
                 </div>
             </section>
+            <Modal
+                className=""
+                size="sm"
+                centered
+                keyboard={false}
+                backdrop="static"
+                show={confirmModal}
+                onHide={() => {
+                    setAllLoading(false);
+                    setBulkLoading(false);
+                    setCaptchaBase64("");
+                    setVerifyType("");
+                    setCaptcha("");
+                    setConfirmModal(false)
+                }}
+            >
+                <Modal.Header className="border-0" closeButton></Modal.Header>
+                <Modal.Body>
+                    <div className="container">
+                        <div style={{ padding: 10 }}>
+                            {captchaBase64 && (
+                                <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
+                            )}
+                            <br />
+                            <input
+                                type="text"
+                                maxLength={5}
+                                value={captcha}
+                                onChange={(e) => setCaptcha(
+                                    e.target.value,
+                                )}
+                                style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
+                            />
+                            <br />
+                            <button
+                                className="btn btn-primary"
+                                disabled={submitLoading}
+                                onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                                {submitLoading && (
+                                    <div className="spinner-border me-2" role="status"></div>
+                                )}
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
             <ProcessPopup showLoader={showLoader}></ProcessPopup>
         </>
     );

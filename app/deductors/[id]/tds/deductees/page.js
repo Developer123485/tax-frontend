@@ -368,6 +368,7 @@ export default function Deductees({ params }) {
         setCaptchaBase64("");
       })
     } else {
+      model.ids = (verifyType == "all" ? [] : selectedEmployeeData.map(p => p.id));
       TracesActivitiesService.verifyEmployeePans(model).then(res => {
         if (res) {
           setSelectedEmployeeData([]);
