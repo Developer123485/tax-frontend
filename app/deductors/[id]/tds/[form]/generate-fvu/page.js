@@ -523,6 +523,50 @@ export default function GenerateFVU({ params }) {
                   </div>
                 </div>
               </div>
+              <div class="bg-white rounded-4 px-4 py-4 my-3">
+                <div class="row mb-2">
+                  <div class="col-md-12">
+                    <h6 class="fw-bold">PAN Status</h6>
+                  </div>
+                </div>
+
+                <div class="row g-3 rounded-4 align-items-center text-center">
+                  <div class="col">
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.allPanStatus || "0"}</h6>
+                      <p class="mb-0 fs-12">All</p>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.validStatus || "0"}</h6>
+                      <p class="mb-0 fs-12">Active/Valid</p>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.notValidStatus || "0"}</h6>
+                      <p class="mb-0 fs-12">Invalid</p>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.inOperativeStatus || "0"}</h6>
+                      <p class="mb-0 fs-12">InOperative</p>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.notVerifyStatus || "0"}</h6>
+                      <p class="mb-0 fs-12">Not Verified</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="bg-white rounded-4 px-4 py-4 my-3">
                 <div className="row mb-2">
                   <div className="col-md-12">
