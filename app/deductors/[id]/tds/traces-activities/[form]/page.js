@@ -463,7 +463,6 @@ export default function TracesActivities({ params }) {
         }
         if (form != "forgot-password") {
           TracesActivitiesService.startLogin(model).then(res => {
-            debugger
             if (downl == "download") {
               setDownloadRow("download")
             }

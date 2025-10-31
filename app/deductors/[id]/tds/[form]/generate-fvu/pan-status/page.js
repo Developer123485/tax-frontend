@@ -250,7 +250,7 @@ export default function PanStatus({ params }) {
                 if (res) {
                     setSelectedData([]);
                     toast.success(res);
-                    fetchPanList("");
+                    fetchPanList(1, false);
                     setConfirmModal(false);
                     setVerifyType("");
                 }
@@ -273,7 +273,7 @@ export default function PanStatus({ params }) {
             TracesActivitiesService.verifyEmployeePans(model).then(res => {
                 if (res) {
                     setSelectedData([]);
-                    fetchPanList("");
+                    fetchPanList(1, false);
                 }
                 toast.success(res);
                 setConfirmModal(false);
