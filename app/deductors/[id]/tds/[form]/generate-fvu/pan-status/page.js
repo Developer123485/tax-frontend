@@ -13,7 +13,7 @@ import HeaderList from "@/app/components/header/header-list";
 import { saveAs } from "file-saver";
 import { DeducteeEntryService } from "@/app/services/deducteeEntry.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
-import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { DeductorsService } from "@/app/services/deductors.service";
 
 export default function PanStatus({ params }) {
@@ -34,6 +34,7 @@ export default function PanStatus({ params }) {
     const [deductorInfo, setDeductorInfo] = useState(null);
     const [bulkLoading, setBulkLoading] = useState(false);
     const [allLoading, setAllLoading] = useState(false);
+    const [exportLoading, setExportLoading] = useState(false);
     const [captchaBase64, setCaptchaBase64] = useState('');
     const [captcha, setCaptcha] = useState("");
     const searchParams = useSearchParams(null);
@@ -138,7 +139,6 @@ export default function PanStatus({ params }) {
     }, []);
 
     function fetchPanList(pageNum, value) {
-        setShowLoader(true);
         const model = {
             pageSize: pageSize,
             pageNumber: pageNum,
@@ -160,7 +160,6 @@ export default function PanStatus({ params }) {
                 } else {
                     if (res?.panLists && res?.panLists?.length > 0) {
                         setPanStatusResponse(res);
-                        setShowLoader(false);
                     }
                 }
             })
@@ -171,10 +170,10 @@ export default function PanStatus({ params }) {
                 else {
                     toast.error(e?.message);
                 }
-                setShowLoader(false);
             })
             .finally((f) => {
                 setShowLoader(false);
+                setExportLoading(false);
             });
     }
 
@@ -250,11 +249,11 @@ export default function PanStatus({ params }) {
             TracesActivitiesService.verifyDeducteePans(model).then(res => {
                 if (res) {
                     setSelectedData([]);
+                    toast.success(res);
+                    fetchPanList("");
+                    setConfirmModal(false);
+                    setVerifyType("");
                 }
-                toast.success(res);
-                fetchPanList("");
-                setConfirmModal(false);
-                setVerifyType("");
                 setSubmitLoading(false);
                 setCaptchaBase64("");
             }).catch(e => {
@@ -305,7 +304,7 @@ export default function PanStatus({ params }) {
                 <div className="container">
                     <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-                            <div className="col-sm-4 col-md-6">
+                            <div className="col-sm-4 col-md-4">
                                 <h5 className="mb-0">
                                     {searchParams.get("categoryId") == "1" ? "Employee " : "Dedcutee "}  Pan Status
                                 </h5>
@@ -313,7 +312,7 @@ export default function PanStatus({ params }) {
                             <>
                                 <div className="col-md-5 d-flex align-items-center justify-content-end">
                                     <button type="button"
-                                        disabled={selectedData.length == 0 || bulkLoading}
+                                        disabled={selectedData?.length == 0 || bulkLoading}
                                         className="btn btn-primary me-3"
                                         onClick={(e) => {
                                             setBulkLoading(true);
@@ -336,22 +335,26 @@ export default function PanStatus({ params }) {
                                         }}
                                     >
                                         {allLoading && (
-                                            <div className="spinner-border me-2" role="status"></div>
+                                            <span className="spinner-border me-2" role="status"></span>
                                         )}
                                         Verify All PANs
                                     </button>
                                     <button
-                                        className="btn btn-outline-secondary px-2 py-1"
+                                        className="btn btn-primary me-3"
                                         type="button"
                                         onClick={(e) => {
+                                            setExportLoading(true);
                                             fetchPanList(1, true);
                                         }}
-                                        disabled={!panStatusResponse}
+                                        disabled={!panStatusResponse || exportLoading}
                                     >
+                                        {exportLoading && (
+                                            <span className="spinner-border me-2" role="status"></span>
+                                        )}
                                         Export
                                     </button>
                                 </div>
-                                <div className="col-sm-4 col-md-4">
+                                <div className="col-sm-3 col-md-3">
                                     <div className="d-flex align-items-center">
                                         <div className="input-group searchbox">
                                             <input
@@ -401,6 +404,7 @@ export default function PanStatus({ params }) {
                                                         paginationTotalRows={panStatusResponse.totalRows}
                                                         paginationPerPage={pageSize}
                                                         selectableRows={true}
+                                                        selectableRowsNoSelectAll={true}
                                                         customStyles={customStyles}
                                                         onSelectedRowsChange={handleChange}
                                                         pagination={true}
