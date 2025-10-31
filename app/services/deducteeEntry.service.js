@@ -17,8 +17,8 @@ async function deleteDeducteeEntry(id) {
   return result;
 }
 
-async function getPanLists(model, val) {
-  const result = await api.post(`deducteeEntry/getPanLists`, model);
+async function getPanLists(model, isDownload) {
+  const result = await api.post(`deducteeEntry/getPanLists/${isDownload}`, model);
   return result;
 }
 

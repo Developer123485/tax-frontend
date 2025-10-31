@@ -145,7 +145,6 @@ export default function PanStatus({ params }) {
     }, [currentPage, pageSize, searchValue]);
 
     function fetchPanList(pageNum, value) {
-        debugger;
         setShowLoader(true);
         const model = {
             pageSize: pageSize,
