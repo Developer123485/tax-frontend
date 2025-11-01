@@ -20,6 +20,7 @@ export default function Challans({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
   const form = resolvedParams?.form;
+  const [searchValue, setSearchValue] = useState("");
   const pathname = usePathname();
   const [showLoader, setShowLoader] = useState(false);
   const router = useRouter();
@@ -96,13 +97,12 @@ export default function Challans({ params }) {
     {
       name: "Deductee Name",
       selector: (row) => (row.nameOfDeductee ? row.nameOfDeductee : "-"),
-
-      grow: 3,
+      width: "170px",
     },
     {
       name: "Pan",
       selector: (row) => (row.panOfDeductee ? row.panOfDeductee : "-"),
-      grow: 2.2,
+      width: "140px",
     },
     {
       name: "Section Code",
@@ -242,7 +242,7 @@ export default function Challans({ params }) {
     } else {
       router.push("/deductors");
     }
-  }, [currentPage, pageSize, challanId]);
+  }, [currentPage, pageSize, challanId, searchValue]);
 
   function deleteDeducteeEntry(e) {
     e.preventDefault();
@@ -312,6 +312,7 @@ export default function Challans({ params }) {
       quarter: searchParams.get("quarter"),
       deductorId: deductorId,
       challanId: challanId,
+      search: searchValue,
       categoryId: parseInt(searchParams.get("categoryId")),
     };
     DeducteeEntryService.getDeducteeEntries(model)
@@ -342,18 +343,24 @@ export default function Challans({ params }) {
       <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
       <section className="py-5 py-md-4 bg-light-gray">
         <div className="container">
+          <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
+            <div className="col-md-4">
+              <h4 className="mb-0">
+                {searchParams.get("financial_year")},{" "}
+                {searchParams.get("quarter")}, Deductee Entries
+              </h4>
+            </div>
+          </div>
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
+
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-4">
-                <h4 className="mb-0">
-                  {searchParams.get("financial_year")},{" "}
-                  {searchParams.get("quarter")}, Deductee Entries
-                </h4>
+              <div className="col-md-2">
               </div>
-              <div className="col-md-8 d-flex align-items-center justify-content-end">
+              <div className="col-md-7 d-flex align-items-center justify-content-end">
                 <span className="me-2">Challan's: </span>
                 <select
-                  className="form-select me-3 w-auto"
+                  className="form-select me-3"
+                  style={{ width: "250px" }}
                   aria-label=""
                   autoComplete="off"
                   onChange={(e) => setChallanId(e.target.value)}
@@ -408,6 +415,37 @@ export default function Challans({ params }) {
                 >
                   Delete All
                 </button>
+              </div>
+              <div className="col-sm-3 col-md-3">
+                <div className="d-flex align-items-center">
+                  <div className="input-group searchbox">
+                    <input
+                      type="search"
+                      placeholder="Search here"
+                      className="form-control bg-light-gray border-end-0"
+                      id="search"
+                      onChange={(e) => {
+                        debugger
+                        setTimeout(() => {
+                          setSearchValue(e.target.value);
+                        }, 1000);
+                      }}
+                    />
+                    <button
+                      className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
+                      type="button"
+                    >
+                      {" "}
+                      <Image
+                        className=""
+                        src="/images/dashboards/search_icon.svg"
+                        alt="search_icon"
+                        width={24}
+                        height={24}
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row">

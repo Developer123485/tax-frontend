@@ -540,7 +540,7 @@ export default function GenerateFVU({ params }) {
                   >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.allPanStatus || "0"}</h6>
-                      <p class="mb-0 fs-12">All</p>
+                      <p class="mb-0 fs-14">All</p>
                     </div>
                   </div>
 
@@ -555,7 +555,7 @@ export default function GenerateFVU({ params }) {
                   >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.validStatus || "0"}</h6>
-                      <p class="mb-0 fs-12">Active/Valid</p>
+                      <p class="mb-0 fs-14">Active/Valid</p>
                     </div>
                   </div>
 
@@ -568,7 +568,7 @@ export default function GenerateFVU({ params }) {
                   >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.notValidStatus || "0"}</h6>
-                      <p class="mb-0 fs-12">Invalid</p>
+                      <p class="mb-0 fs-14">Invalid</p>
                     </div>
                   </div>
                   <div class="col"
@@ -582,7 +582,7 @@ export default function GenerateFVU({ params }) {
                   >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.inOperativeStatus || "0"}</h6>
-                      <p class="mb-0 fs-12">InOperative</p>
+                      <p class="mb-0 fs-14">InOperative</p>
                     </div>
                   </div>
 
@@ -597,7 +597,7 @@ export default function GenerateFVU({ params }) {
                   >
                     <div class="border border-1 rounded-3 p-3 h-100">
                       <h6 class="fw-bold mb-1">{interestAndfines?.notVerifyStatus || "0"}</h6>
-                      <p class="mb-0 fs-12">Not Verified</p>
+                      <p class="mb-0 fs-14">Not Verified</p>
                     </div>
                   </div>
                 </div>
