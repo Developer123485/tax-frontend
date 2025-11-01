@@ -36,6 +36,8 @@ export default function Deductees({ params }) {
   const [employees, setEmployees] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [type, setType] = useState("Deductees");
+  const [deducteeStatus, setDeducteeStatus] = useState("All");
+  const [employeeStatus, setEmployeeStatus] = useState("All");
   const [verifyType, setVerifyType] = useState("");
   const [captchaBase64, setCaptchaBase64] = useState('');
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
@@ -270,11 +272,11 @@ export default function Deductees({ params }) {
   useEffect(() => {
     fetchDeductees("");
     getDeductorDetail()
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, deducteeStatus]);
 
   useEffect(() => {
     fetchEmployees("");
-  }, [employeePageSize, employeePageNumber]);
+  }, [employeePageSize, employeePageNumber, employeeStatus]);
 
   function getDeductorDetail() {
     DeductorsService.getDeductor(deductorId)
@@ -456,6 +458,7 @@ export default function Deductees({ params }) {
       pageSize: searchValue ? 20 : pageSize,
       pageNumber: searchValue ? 1 : currentPage,
       search: searchValue,
+      status: deducteeStatus
     };
     DeducteeService.getDeductees(model, parseInt(deductorId))
       .then((res) => {
@@ -533,6 +536,7 @@ export default function Deductees({ params }) {
       pageSize: searchValue ? 20 : employeePageSize,
       pageNumber: searchValue ? 1 : employeePageNumber,
       search: searchValue,
+      status: employeeStatus
     };
     EmployeeService.getEmployees(model, parseInt(deductorId))
       .then((res) => {
@@ -765,14 +769,29 @@ export default function Deductees({ params }) {
           </div> */}
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <h4 className="fw-bold mb-0">
                   {type === "Deductees" ? "Deductees" : "Employees"}
                 </h4>
               </div>
               {type == "Deductees" &&
                 <>
-                  <div className="col-md-5 d-flex align-items-center justify-content-end">
+                  <div className="col-md-7 d-flex align-items-center justify-content-end">
+                    <span style={{ marginRight: "2px" }}>Status:</span>
+                    <select
+                      className="form-select me-3"
+                      style={{ width: "200px" }}
+                      value={deducteeStatus}
+                      onChange={(e => setDeducteeStatus(e.target.value))}
+                      aria-label=""
+                      autoComplete="off"
+                    >
+                      <option value={"All"}>All</option>
+                      <option value={"Valid and Operative"}>Valid/Active</option>
+                      <option value={"Invalid"}>Invalid</option>
+                      <option value={"InOperative"}>InOperative</option>
+                      <option value={""}>Not Verified</option>
+                    </select>
                     <button type="button"
                       disabled={selectedDeducteeData.length == 0 || bulkLoading}
                       className="btn btn-primary me-3"
@@ -808,8 +827,9 @@ export default function Deductees({ params }) {
                     >
                       Export
                     </button>
+
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <div className="input-group searchbox me-3">
                       <input
                         type="search"
@@ -841,7 +861,23 @@ export default function Deductees({ params }) {
               }
               {type == "Employees" &&
                 <>
-                  <div className="col-md-5 d-flex align-items-center justify-content-end">
+                  <div className="col-md-7 d-flex align-items-center justify-content-end">
+                    <span style={{ marginRight: "2px" }}>Status:</span>
+                    <select
+                      className="form-select me-3"
+                      style={{ width: "200px" }}
+                      value={employeeStatus}
+                      onChange={(e => setEmployeeStatus(e.target.value))}
+                      aria-label=""
+                      autoComplete="off"
+                    >
+                      <option hidden>Select Pan Status</option>
+                      <option value={"All"}>All</option>
+                      <option value={"Valid and Operative"}>Valid/Active</option>
+                      <option value={"Invalid"}>Invalid</option>
+                      <option value={"InOperative"}>InOperative</option>
+                      <option value={""}>Not Verified</option>
+                    </select>
                     <button type="button"
                       disabled={selectedEmployeeData.length == 0 || bulkLoading}
                       className="btn btn-primary me-3"
@@ -877,7 +913,7 @@ export default function Deductees({ params }) {
                       Export
                     </button>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <div className="input-group searchbox me-3">
                       <input
                         type="search"
@@ -905,7 +941,6 @@ export default function Deductees({ params }) {
                       </button>
                     </div>
                   </div>
-
                   {/* <button
                   type="button"
                   onClick={(e) =>
