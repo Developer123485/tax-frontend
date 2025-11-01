@@ -307,7 +307,7 @@ export default function PanStatus({ params }) {
                         <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
                             <div className="col-sm-4 col-md-4">
                                 <h5 className="mb-0">
-                                    {searchParams.get("categoryId") == "1" ? "Employee " : "Dedcutee "}  Pan Status
+                                    {searchParams.get("categoryId") == "1" ? "Employee " : "Dedcutee "} {searchParams.get("type") ? searchParams.get("type") : "Not Verified"}  Pan Status
                                 </h5>
                             </div>
                             <>
