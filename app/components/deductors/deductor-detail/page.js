@@ -73,11 +73,21 @@ export default function DeductorDetail(props) {
           <div>
             <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-5 g-3">
               <div className="row mb-2">
-                <div className="col-md-6">
-                  <h5 className="text-blue fw-bold">ITD Login</h5>
+                <div className="col-md-6 d-flex align-items-center">
+                  <h5 className="text-blue fw-bold mb-0">
+                    ITD Login{" "}
+                  </h5>
+                  <span className="badge bg-success ms-2 mt-0" style={{ fontSize: "0.85rem" }}>
+                    Verified
+                  </span>
                 </div>
-                <div className="col-md-6">
-                  <h5 className="text-blue fw-bold">Traces Login</h5>
+                <div className="col-md-6 d-flex align-items-center">
+                  <h5 className="text-blue fw-bold mb-0">
+                    Traces Login{" "}
+                  </h5>
+                  <span className="badge bg-success ms-2" style={{ fontSize: "0.85rem" }}>
+                    Verified
+                  </span>
                 </div>
               </div>
               <div className="row g-3 mt-0 d-flex align-items-end">
