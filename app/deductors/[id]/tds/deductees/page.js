@@ -825,6 +825,7 @@ export default function Deductees({ params }) {
                     <button
                       type="button"
                       onClick={exportFile}
+                      disabled={deductees.length == 0}
                       className="btn btn-primary"
                     >
                       Export
@@ -910,6 +911,7 @@ export default function Deductees({ params }) {
                     <button
                       type="button"
                       onClick={exportFile}
+                      disabled={deductees.length == 0}
                       className="btn btn-primary"
                     >
                       Export
