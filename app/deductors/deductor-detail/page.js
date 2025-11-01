@@ -332,8 +332,9 @@ export default function AddDeductor() {
     setLoading(true);
     const model = {
       captcha: inputCaptcha,
+      deductorId: deductorDetail.id
     }
-    DeductorsService.submitCaptcha(model).then(res => {
+    TracesActivitiesService.submitCaptcha(model).then(res => {
       if (res) {
         setInputCaptcha("");
         toast.success("User verified successfully");
@@ -682,6 +683,7 @@ export default function AddDeductor() {
     const model = {
       password: deductorDetail.itdPassword,
       tan: deductorDetail.itdLogin,
+      deductorId: deductorDetail.id
     };
     if (deductorDetail.itdLogin && deductorDetail.itdPassword && deductorDetail.id > 0) {
       setItdLoginLoading(true);

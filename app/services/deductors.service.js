@@ -10,7 +10,6 @@ export const DeductorsService = {
   exportExcelFile,
   updateDeductorFvu,
   startLogin,
-  submitCaptcha
 };
 
 async function uploadDeductors(formData) {
@@ -42,10 +41,6 @@ async function startLogin(model) {
   return result;
 }
 
-async function submitCaptcha(model) {
-  const result = await api.post("deductor/submit-captcha", model);
-  return result;
-}
 
 async function updateDeductorFvu(model, deductorId) {
   const result = await api.post(`deductor/fuvUpdateDeductor/${deductorId}`, model);
