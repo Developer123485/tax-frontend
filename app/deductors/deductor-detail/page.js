@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { CommonService } from "@/app/services/common.service";
 import HeaderList from "@/app/components/header/header-list";
 import Modal from "react-bootstrap/Modal";
+import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 
 export default function AddDeductor() {
   const [active, setActive] = useState(0);
@@ -21,6 +22,7 @@ export default function AddDeductor() {
   const [confirmModal, setConfirmModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
   const tanRegex = /^[A-Z]{4}[0-9]{5}[A-Z]{1}$/;
@@ -281,7 +283,7 @@ export default function AddDeductor() {
       password: deductorDetail.tracesPassword,
       tanNumber: deductorDetail.deductorTan
     }
-    DeductorsService.startLogin(model).then(res => {
+    TracesActivitiesService.startLogin(model).then(res => {
       if (res) {
         setCaptchaBase64(res.captcha);
         setConfirmModal(true);
@@ -295,6 +297,25 @@ export default function AddDeductor() {
         toast.error(e?.message);
       }
       setVerifyLoading(false);
+    })
+  }
+
+  function resendCaptcha(e) {
+    setResendLoading(true);
+    TracesActivitiesService.resendCaptcha().then(res => {
+      if (res) {
+        setCaptchaBase64(res.captcha);
+        setConfirmModal(true);
+      }
+      setResendLoading(false);
+    }).catch(e => {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setResendLoading(false);
     })
   }
 
@@ -329,7 +350,6 @@ export default function AddDeductor() {
       setCaptcha("");
     })
   }
-
 
   function validateDeductorDetail() {
     let deductorStateError = "";
@@ -721,7 +741,7 @@ export default function AddDeductor() {
                     style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
                   />
                   <br />
-                  <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                  <button className="btn btn-primary" onClick={handleSubmit} style={{ padding: 8, fontSize: 14 }}>
                     {loading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
@@ -730,6 +750,16 @@ export default function AddDeductor() {
                       ></span>
                     )}
                     Submit
+                  </button>
+                  <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                    {resendLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    Resend
                   </button>
                 </div>
               </div>

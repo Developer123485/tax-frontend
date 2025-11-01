@@ -7,7 +7,8 @@ export const TracesActivitiesService = {
     verifyDeducteePans,
     verifyEmployeePans,
     getSaveLowerDeductions,
-    startForgotLogin
+    startForgotLogin,
+    resendCaptcha
 };
 
 async function autoFillLogin(model) {
@@ -81,6 +82,11 @@ async function verifyEmployeePans(model) {
     let result = null;
     result = await api.post("tracesActivities/verifyEmployeePans", model);
     return result;
+}
+
+async function resendCaptcha(model) {
+  const result = await api.post("tracesActivities/resend-captcha", model);
+  return result;
 }
 
 
