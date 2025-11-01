@@ -751,7 +751,7 @@ export default function AddDeductor() {
                     )}
                     Submit
                   </button>
-                  <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                  {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
                     {resendLoading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
@@ -760,7 +760,7 @@ export default function AddDeductor() {
                       ></span>
                     )}
                     Resend
-                  </button>
+                  </button>}
                 </div>
               </div>
             </Modal.Body>
