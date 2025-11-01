@@ -40,7 +40,7 @@ export default function TracesActivities({ params }) {
   const [requestResponseValue, setRequestResponseValue] = useState("");
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [captchaBase64, setCaptchaBase64] = useState('');
-
+  const [resendLoading, setResendLoading] = useState(false);
   const form = resolvedParams?.form;
   const router = useRouter();
   const highlightStyle = {
@@ -448,6 +448,25 @@ export default function TracesActivities({ params }) {
       tokenError
     }));
     return true;
+  }
+
+
+  function resendCaptcha(e) {
+    setResendLoading(true);
+    TracesActivitiesService.resendCaptcha().then(res => {
+      if (res) {
+        setCaptchaBase64(res.captcha);
+      }
+      setResendLoading(false);
+    }).catch(e => {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setResendLoading(false);
+    })
   }
   function submitLogin(e, value = false, downl = null) {
     if (validateTraces() || value) {
@@ -1022,6 +1041,16 @@ export default function TracesActivities({ params }) {
                     )}
                     Submit
                   </button>
+                  {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                    {resendLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    Resend
+                  </button>}
                 </div>
               </div>
             </Modal.Body>

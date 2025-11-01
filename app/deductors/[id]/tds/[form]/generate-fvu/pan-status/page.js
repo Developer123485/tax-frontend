@@ -18,6 +18,7 @@ import { DeductorsService } from "@/app/services/deductors.service";
 
 export default function PanStatus({ params }) {
     const resolvedParams = use(params);
+    const [resendLoading, setResendLoading] = useState(false);
     const deductorId = resolvedParams?.id;
     const form = resolvedParams?.form;
     const pathname = usePathname();
@@ -137,6 +138,24 @@ export default function PanStatus({ params }) {
     useEffect(() => {
         getDeductorDetail();
     }, []);
+
+    function resendCaptcha(e) {
+        setResendLoading(true);
+        TracesActivitiesService.resendCaptcha().then(res => {
+            if (res) {
+                setCaptchaBase64(res.captcha);
+            }
+            setResendLoading(false);
+        }).catch(e => {
+            if (e?.response?.data?.errorMessage) {
+                toast.error(e?.response?.data?.errorMessage);
+            }
+            else {
+                toast.error(e?.message);
+            }
+            setResendLoading(false);
+        })
+    }
 
     function fetchPanList(pageNum, value) {
         const model = {
@@ -470,6 +489,16 @@ export default function PanStatus({ params }) {
                                 )}
                                 Submit
                             </button>
+                            {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                                {resendLoading && (
+                                    <span
+                                        className="spinner-grow spinner-grow-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                )}
+                                Resend
+                            </button>}
                         </div>
                     </div>
                 </Modal.Body>

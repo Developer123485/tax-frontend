@@ -27,6 +27,7 @@ export default function TDSForm({ params }) {
   const pathname = usePathname();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedTxtFile, setSelectedTxtFile] = useState(null);
+  const [resendLoading, setResendLoading] = useState(false);
   const [financialYear, setFinancialYear] = useState("");
   const [fileName, setFileName] = useState("");
   const [txtFileName, setTxtFileName] = useState("");
@@ -458,6 +459,24 @@ export default function TDSForm({ params }) {
       setCaptcha("");
       toast.error("TRACES username and password do not exist for the deductor");
     }
+  }
+
+  function resendCaptcha(e) {
+    setResendLoading(true);
+    TracesActivitiesService.resendCaptcha().then(res => {
+      if (res) {
+        setCaptchaBase64(res.captcha);
+      }
+      setResendLoading(false);
+    }).catch(e => {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setResendLoading(false);
+    })
   }
 
   function handleSubmit() {
@@ -1034,6 +1053,16 @@ export default function TDSForm({ params }) {
                 )}
                 Save
               </button>
+              {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                {resendLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                Resend
+              </button>}
             </div>
           </div>
         </Modal.Body>

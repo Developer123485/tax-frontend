@@ -305,7 +305,6 @@ export default function AddDeductor() {
     TracesActivitiesService.resendCaptcha().then(res => {
       if (res) {
         setCaptchaBase64(res.captcha);
-        setConfirmModal(true);
       }
       setResendLoading(false);
     }).catch(e => {

@@ -24,6 +24,7 @@ export default function Deductees({ params }) {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [isloading, setIsLoading] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [employeePageSize, setEmployeePageSize] = useState(20);
@@ -577,6 +578,24 @@ export default function Deductees({ params }) {
       });
   }
 
+  function resendCaptcha(e) {
+    setResendLoading(true);
+    TracesActivitiesService.resendCaptcha().then(res => {
+      if (res) {
+        setCaptchaBase64(res.captcha);
+      }
+      setResendLoading(false);
+    }).catch(e => {
+      if (e?.response?.data?.errorMessage) {
+        toast.error(e?.response?.data?.errorMessage);
+      }
+      else {
+        toast.error(e?.message);
+      }
+      setResendLoading(false);
+    })
+  }
+
   return (
     <>
       <ToastContainer />
@@ -1084,6 +1103,16 @@ export default function Deductees({ params }) {
                 )}
                 Submit
               </button>
+              {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                {resendLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                Resend
+              </button>}
             </div>
           </div>
         </Modal.Body>
