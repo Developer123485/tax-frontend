@@ -341,9 +341,10 @@ export default function Deductees({ params }) {
     const model = {
       captcha: captcha,
       deductorId: deductorId,
-      ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id))
+      ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id)),
     }
     if (type === "Deductees") {
+      model.status = deducteeStatus;
       TracesActivitiesService.verifyDeducteePans(model).then(res => {
         if (res) {
           setSelectedDeducteeData([]);
@@ -371,6 +372,7 @@ export default function Deductees({ params }) {
       })
     } else {
       model.ids = (verifyType == "all" ? [] : selectedEmployeeData.map(p => p.id));
+      model.status = employeeStatus;
       TracesActivitiesService.verifyEmployeePans(model).then(res => {
         if (res) {
           setSelectedEmployeeData([]);

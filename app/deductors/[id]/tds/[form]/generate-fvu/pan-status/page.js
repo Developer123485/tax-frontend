@@ -243,8 +243,9 @@ export default function PanStatus({ params }) {
         const model = {
             captcha: captcha,
             deductorId: deductorId,
-            ids: (verifyType == "all" ? [] : selectedData.map(p => p.id))
+            ids: (verifyType == "all" ? [] : selectedData.map(p => p.id)),
         }
+        searchParams.get("type") ? searchParams.get("type") : null
         if (searchParams.get("categoryId") != "1") {
             TracesActivitiesService.verifyDeducteePans(model).then(res => {
                 if (res) {
