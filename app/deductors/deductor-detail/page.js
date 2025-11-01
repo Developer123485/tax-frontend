@@ -339,6 +339,7 @@ export default function AddDeductor() {
         setInputCaptcha("");
         toast.success("User verified successfully");
         setConfirmModal(false);
+        getDeductor();
       }
       setLoading(false);
     }).catch(e => {
@@ -691,7 +692,7 @@ export default function AddDeductor() {
         .then((res) => {
           if (res) {
             toast.success(res);
-
+            getDeductor();
           }
         }).catch(e => {
           if (e?.response?.data?.errorMessage) {
