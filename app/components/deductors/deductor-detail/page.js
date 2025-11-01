@@ -77,17 +77,19 @@ export default function DeductorDetail(props) {
                   <h5 className="text-blue fw-bold mb-0">
                     ITD Login{" "}
                   </h5>
-                  <span className="badge bg-success ms-2 mt-0" style={{ fontSize: "0.85rem" }}>
+                  {deductorDetail.isITDStatus && deductorDetail.itdLogin && deductorDetail.itdPassword && <span className="badge bg-success ms-2 mt-0" style={{ fontSize: "0.85rem" }}>
                     Verified
                   </span>
+                  }
                 </div>
                 <div className="col-md-6 d-flex align-items-center">
                   <h5 className="text-blue fw-bold mb-0">
                     Traces Login{" "}
                   </h5>
-                  <span className="badge bg-success ms-2" style={{ fontSize: "0.85rem" }}>
+                  {deductorDetail.isTracesStatus && deductorDetail.tracesLogin && deductorDetail.tracesPassword && <span className="badge bg-success ms-2 mt-0" style={{ fontSize: "0.85rem" }}>
                     Verified
                   </span>
+                  }
                 </div>
               </div>
               <div className="row g-3 mt-0 d-flex align-items-end">
