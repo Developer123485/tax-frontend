@@ -263,7 +263,10 @@ export default function AddDeductor() {
       toast.error("The deductor tan must be 10 digits.");
       return false;
     }
-
+    if (deductorDetail.id == 0) {
+      toast.error("TRACES Tan and password do not exist for the deductor");
+      return false;
+    }
 
     if (
       deductorDetail.deductorTan &&
@@ -680,7 +683,7 @@ export default function AddDeductor() {
       password: deductorDetail.itdPassword,
       tan: deductorDetail.itdLogin,
     };
-    if (deductorDetail.itdLogin && deductorDetail.itdPassword) {
+    if (deductorDetail.itdLogin && deductorDetail.itdPassword && deductorDetail.id > 0) {
       setItdLoginLoading(true);
       FuvValidateReturnService.autoFill(model)
         .then((res) => {
@@ -701,7 +704,7 @@ export default function AddDeductor() {
           setItdLoginLoading(false);
         });
     } else {
-      toast.error("TRACES Tan and password do not exist for the deductor");
+      toast.error("ITD Username and password do not exist for the deductor");
     }
   }
 
