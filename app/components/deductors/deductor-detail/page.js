@@ -123,8 +123,19 @@ export default function DeductorDetail(props) {
                   </div>
                 </div>
                 <div className="col-md-1 justify-content-end">
-                  <button type="button" className="btn btn-primary px-2 w-100">
-                    Auto Fill
+                  <button type="button"
+                    onClick={(e) => {
+                      props.itdLogin(e)
+                    }}
+                    className="btn btn-primary px-2 w-100">
+                    {props.itdLoginLoading && (
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    )}
+                    Auto
                   </button>
                 </div>
                 <div className="col-md-2">
@@ -171,7 +182,7 @@ export default function DeductorDetail(props) {
                     onClick={(e) => {
                       props.verify(e)
                     }}>
-                    {props.P && (
+                    {props.verifyLoading && (
                       <span
                         className="spinner-grow spinner-grow-sm"
                         role="status"

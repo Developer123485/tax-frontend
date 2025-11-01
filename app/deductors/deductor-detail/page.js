@@ -14,6 +14,7 @@ import { CommonService } from "@/app/services/common.service";
 import HeaderList from "@/app/components/header/header-list";
 import Modal from "react-bootstrap/Modal";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
+import { FuvValidateReturnService } from "@/app/services/fuvValidateReturn.service";
 
 export default function AddDeductor() {
   const [active, setActive] = useState(0);
@@ -22,6 +23,7 @@ export default function AddDeductor() {
   const [confirmModal, setConfirmModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
+  const [itdLoginLoading, setItdLoginLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -673,6 +675,36 @@ export default function AddDeductor() {
     }
   }
 
+  async function itdLogin(e) {
+    const model = {
+      password: deductorDetail.itdPassword,
+      tan: deductorDetail.itdLogin,
+    };
+    if (deductorDetail.itdLogin && deductorDetail.itdPassword) {
+      setItdLoginLoading(true);
+      FuvValidateReturnService.autoFill(model)
+        .then((res) => {
+          if (res) {
+            toast.success(res);
+
+          }
+        }).catch(e => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
+          else {
+            toast.error(e?.message);
+          }
+          setItdLoginLoading(false);
+        })
+        .finally((f) => {
+          setItdLoginLoading(false);
+        });
+    } else {
+      toast.error("TRACES Tan and password do not exist for the deductor");
+    }
+  }
+
   const steps = [
     { title: "Deductor Details" },
     { title: "Responsible Detail" },
@@ -692,6 +724,8 @@ export default function AddDeductor() {
                 handleInputDeductor={handleInputDeductor}
                 isNextDirty={isNextDirty}
                 deductorDetail={deductorDetail}
+                itdLogin={itdLogin}
+                itdLoginLoading={itdLoginLoading}
                 deductorErrors={deductorErrors}
                 goToResponsibleDetail={(e) => goToResponsibleDetail(e)}
                 verify={verify}

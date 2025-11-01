@@ -7,7 +7,8 @@ export const FuvValidateReturnService = {
     getAllFiles,
     deleteAllFiles,
     directEFiling,
-    generate24GFVU
+    generate24GFVU,
+    autoFill
 };
 
 async function validateReturn(model) {
@@ -17,6 +18,11 @@ async function validateReturn(model) {
 
 async function directEFiling(model) {
     const result = await api.post(`tracesActivities/e-filling`, model);
+    return result;
+}
+
+async function autoFill(model) {
+    const result = await api.post(`tracesActivities/auto-fill`, model);
     return result;
 }
 
