@@ -917,33 +917,45 @@ export default function GenerateFVU({ params }) {
                   <span className="text-danger"> {tokenError}</span>
                 </div>
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
-                  <div className="col-md-7">
-                    <p className="mb-0">
-                      Please upload an unzipped <strong>.csi</strong> file generated from OLTAS.
-                    </p>
-                    <p className="mt-2 mb-0">
-                      <a
-                        className="text-decoration-underline"
-                        href="Javascript:void(0)"     // put actual URL
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        How to download .csi file
-                      </a>
-                    </p>
-                  </div>
-                  <div className="col-md-5 d-flex justify-content-end">
-                    <div className="d-flex">
-                      <input
-                        type="file"
-                        accept=".csi"
-                        id="cslFileUpload"
-                        ref={fileInputRef}
-                        name="cslFileUpload"
-                        onChange={fileSelectHandler}
-                      />
+                  {interestAndfines?.isCSIDownloadLoading &&
+                    <>
+                      <div className="col-md-7">
+                        <p className="mb-0">
+                          Please upload an unzipped <strong>.csi</strong> file generated from OLTAS.
+                        </p>
+                        <p className="mt-2 mb-0">
+                          <a
+                            className="text-decoration-underline"
+                            href="Javascript:void(0)"     // put actual URL
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            How to download .csi file
+                          </a>
+                        </p>
+                      </div>
+                      <div className="col-md-5 d-flex justify-content-end">
+                        <div className="d-flex">
+                          <input
+                            type="file"
+                            accept=".csi"
+                            id="cslFileUpload"
+                            ref={fileInputRef}
+                            name="cslFileUpload"
+                            onChange={fileSelectHandler}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  }
+                  {!interestAndfines?.isCSIDownloadLoading &&
+                    <div className="col-md-10">
+                      <p className="mb-0 text-danger">
+                        Since challan verification is not required for this return, you don’t need to upload a CSI file.
+                        You can generate the FVU without the CSI filefile
+                      </p>
                     </div>
-                  </div>
+                  }
                 </div>
 
               </div>
