@@ -952,7 +952,7 @@ export default function GenerateFVU({ params }) {
                     <div className="col-md-10">
                       <p className="mb-0 text-danger">
                         Since challan verification is not required for this return, you don’t need to upload a CSI file.
-                        You can generate the FVU without the CSI filefile
+                        You can generate the FVU without the CSI file
                       </p>
                     </div>
                   }
