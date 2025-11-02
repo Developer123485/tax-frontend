@@ -309,9 +309,17 @@ export default function GenerateFVU({ params }) {
     }
     setLoading(true);
     try {
+      let csiFileRead;
+      if (!interestAndfines?.isDownloadCSIAllow) {
+        const csiFilePath = `${window.location.origin}/static/csi/PTLI10787A150725.csi`;
+        const response = await fetch(csiFilePath);
+        const blob = await response.blob();
+        // Step 2: Convert blob into File object (optional but good for backend handling)
+        csiFileRead = new File([blob], "PTLI10787A150725.csi", { type: "text/plain" });
+      }
       // Step 3: Prepare and call API
       const formData = new FormData();
-      formData.append("csiFile", selectedData);
+      formData.append("csiFile", !interestAndfines?.isDownloadCSIAllow ? csiFileRead : selectedData);
       formData.append("financialYear", searchParams.get("financial_year"));
       formData.append("quarter", searchParams.get("quarter"));
       formData.append("deductorId", deductorId);
