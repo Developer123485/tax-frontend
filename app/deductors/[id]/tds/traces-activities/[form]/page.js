@@ -716,9 +716,6 @@ export default function TracesActivities({ params }) {
                       onChange={(e) => {
                         setFormType(e.target.value);
                         resetForm();
-                        if (e.target.value == "24Q") {
-                          setQuarter("Q4");
-                        }
                       }}
                     >
                       <option value={""} hidden>
