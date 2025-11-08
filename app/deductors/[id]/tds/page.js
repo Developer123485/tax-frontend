@@ -17,6 +17,7 @@ import { FormsService } from "@/app/services/forms.service";
 import { saveAs } from "file-saver";
 import ImportDeductorTXTPopup from "@/app/components/modals/import-deductor-txt-popup";
 import { CorrectionsService } from "@/app/services/corrections.service";
+import DataTable from "react-data-table-component";
 
 export default function TDSDashboard({ params }) {
   const router = useRouter();
@@ -160,10 +161,6 @@ export default function TDSDashboard({ params }) {
     {
       name: "Pan",
       selector: (row) => row?.deductorPan || "",
-    },
-    {
-      name: "State",
-      selector: (row) => row?.deductorState || "",
     },
     {
       name: "Actions",
@@ -324,6 +321,7 @@ export default function TDSDashboard({ params }) {
       pageSize: pageSize,
       pageNumber: currentPage,
       search: searchValue,
+      deductorId: deductorId
     };
     CorrectionsService.getCorrectionsStatement(model)
       .then((res) => {
@@ -404,6 +402,10 @@ export default function TDSDashboard({ params }) {
     }
   }
 
+  const handleRowDoubleClick = (row) => {
+    router.push(`/deductors/${row.id}/tds`);
+  };
+
   const fileSelectHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
@@ -422,8 +424,6 @@ export default function TDSDashboard({ params }) {
   return (
     <>
       <ToastContainer />
-      <HeaderList></HeaderList>
-      <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
       {formsData && (
         <section className="py-5 py-md-4 bg-light-gray tds-dash-tabs">
           <div className="container">
@@ -472,7 +472,7 @@ export default function TDSDashboard({ params }) {
                 </>
               }
               {key == "corrections" &&
-                <div class="col-md-4 text-end" style={{ marginBottom: "-60px" }}>
+                <div className="col-md-4 text-end" style={{ marginBottom: "-60px" }}>
                   <button type="button" onClick={(e) => setShow(true)} className="btn btn-primary me-2">Import TDS File</button>
                 </div>
               }

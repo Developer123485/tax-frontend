@@ -282,7 +282,7 @@ export default function ImportDeductorTXTPopup(props) {
                       </label>
                     </div>
                   </div>
-                  <div className="col-md-7 mt-2">
+                  {pathname === "deductors" && <div className="col-md-7 mt-2">
                     <div className="w-100">
                       {type == "new" && (
                         <input
@@ -302,16 +302,16 @@ export default function ImportDeductorTXTPopup(props) {
                         ></SearchableDropdown>
                       )}
                     </div>
-                  </div>
+                  </div>}
                   <div className="row">
                     <div className="col-md-12 d-flex justify-content-end">
                       <button
                         type="button"
                         onClick={(e) => submitTxtFile(e)}
                         className="btn btn btn-primary"
-                        disabled={
+                        disabled={pathname === "deductors" ?
                           !selectedFile ||
-                          (!deductorCode && !deductorId)
+                          (!deductorCode && !deductorId) : !selectedFile
                         }
                       >
                         {isLoading && (
