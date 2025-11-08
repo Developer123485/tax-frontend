@@ -75,7 +75,6 @@ export default function ImportDeductorTXTPopup(props) {
     setIsloading(true);
     let formData = new FormData();
     formData.append("file", selectedFile);
-    formData.append("deductorId", deductorId ? parseInt(deductorId) : 0);
     formData.append("type", type);
     formData.append("deductorCode", deductorCode);
     const config = {
@@ -85,9 +84,20 @@ export default function ImportDeductorTXTPopup(props) {
     };
     try {
       let result;
-      result = await api.post(`forms/uploadTXTFile`, formData, {
-        timeout: 300000 // 5 minutes (in ms)
-      }, config);
+      if (pathname === "deductors") {
+        formData.append("deductorId", deductorId ? parseInt(deductorId) : 0);
+        result = await api.post(`forms/uploadTXTFile`, formData, {
+          timeout: 300000 // 5 minutes (in ms)
+        }, config);
+      }
+      if (pathname !== "deductors") {
+        formData.append("deductorId", props.deductorId);
+        formData.append("quarter", props.quarter);
+        formData.append("financialYear", props.financialYear);
+        result = await api.post(`correctionStatements/uploadTDSFile`, formData, {
+          timeout: 300000 // 5 minutes (in ms)
+        }, config);
+      }
       if (result && result.status == true) {
         toast.success("File upload successfully");
         setTimeout(() => {
@@ -163,7 +173,7 @@ export default function ImportDeductorTXTPopup(props) {
                                 className="visually-hidden"
                                 accept={pathname === "deductors" ? ".txt" : ".tds"}
                               />
-                              {pathname === "deductors" && <h5 className="fw-bold mb-0">Import from txt</h5>}
+                              {pathname === "deductors" && <h5 className="fw-bold mb-0">Import from TXT/TDS</h5>}
                               {pathname !== "deductors" && <h5 className="fw-bold mb-0">Import from tds</h5>}
                             </label>
                           </h5>

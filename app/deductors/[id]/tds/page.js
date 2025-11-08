@@ -473,7 +473,7 @@ export default function TDSDashboard({ params }) {
               }
               {key == "corrections" &&
                 <div class="col-md-4 text-end" style={{ marginBottom: "-60px" }}>
-                  <button type="button" className="btn btn-primary me-2">Import TDS File</button>
+                  <button type="button" onClick={(e) => setShow(true)} className="btn btn-primary me-2">Import TDS File</button>
                 </div>
               }
             </div>
@@ -897,7 +897,7 @@ export default function TDSDashboard({ params }) {
       )
       }
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
-      {show && <ImportDeductorTXTPopup show={show} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>}
+      {show && <ImportDeductorTXTPopup fetchDeductors={fetchCorrectionStatements} show={show} deductorId={deductorId} financialYear={financialYear} quarter={quarter} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>}
     </>
   );
 }
