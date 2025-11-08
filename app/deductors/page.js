@@ -536,7 +536,6 @@ export default function Deductors() {
                         }}
                       />
                     )}
-
                     {/* {!showLoader && deductors && deductors.length == 0 && (
                       <NotFound></NotFound>
                     )} */}

@@ -15,10 +15,16 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FormsService } from "@/app/services/forms.service";
 import { saveAs } from "file-saver";
+import ImportDeductorTXTPopup from "@/app/components/modals/import-deductor-txt-popup";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function TDSDashboard({ params }) {
   const router = useRouter();
+  const [show, setShow] = useState(false);
   const resolvedParams = use(params);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [deleteId, setDeleteId] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const deductorId = resolvedParams?.id;
@@ -31,9 +37,10 @@ export default function TDSDashboard({ params }) {
   const [deducteeCount, setDeducteeCount] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-
   const currentYear = new Date().getFullYear();
   const [financialYears, setFinancialYears] = useState([]);
+  const [correctionStatements, setCorrectionStatements] = useState([]);
+  const [totalItems, setTotalItems] = useState(null);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
   const [key, setKey] = useState("tds");
   const [reportsData, setReportsData] = useState([
@@ -93,6 +100,160 @@ export default function TDSDashboard({ params }) {
       isActive: true,
     },
   ]);
+  const customStyles = {
+    rows: {
+      style: {
+        backgroundColor: "#FFFFFF",
+        "&:hover": {
+          backgroundColor: "#F2F7FF!important",
+        },
+        minHeight: "45px",
+      },
+    },
+    headCells: {
+      style: {
+        justifyContent: "start",
+        outline: "1px",
+        border: "1px solid #F2F7FF",
+        fontSize: "12px",
+      },
+    },
+    cells: {
+      style: {
+        justifyContent: "start",
+        outline: "1px",
+        border: "1px solid #FFFFFF",
+        fontSize: "12px",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      },
+    },
+  };
+  const columns = [
+    {
+      name: "Statement No",
+      selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
+      width: "80px",
+    },
+    {
+      name: "Financial Year",
+      selector: (row) => row.financialYear || "-",
+      width: "160px",
+    },
+    {
+      name: "Quarter",
+      selector: (row) => row.quarter || "-",
+    },
+    {
+      name: "Form",
+      selector: (row) => row?.form || "",
+    },
+    {
+      name: "Deductor Name",
+      selector: (row) => row?.deductorName || "",
+    },
+    {
+      name: "Tan",
+      selector: (row) => row?.deductorTan || "",
+    },
+    {
+      name: "Pan",
+      selector: (row) => row?.deductorPan || "",
+    },
+    {
+      name: "State",
+      selector: (row) => row?.deductorState || "",
+    },
+    {
+      name: "Actions",
+      selector: (row) => (
+        <>
+          {/* {" "}
+          <div className="d-flex justify-content-center">
+            <span>
+              <a onClick={(e) => {
+                sessionStorage.setItem("deductorName", row.deductorName);
+                sessionStorage.setItem("deductorTan", row.deductorTan);
+                router.push(`/deductors/${row.id}/tds`)
+              }}>
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>View</Tooltip>}
+                >
+                  <div>
+                    <Image
+                      className=""
+                      src="/images/dashboards/table_view_icon.svg"
+                      alt="table_view_icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </a>
+            </span>
+            <span className="mx-2 opacity-50">|</span>
+            <span>
+              {" "}
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(`/deductors/deductor-detail?id=${row.id}`);
+                }}
+              >
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>Edit</Tooltip>}
+                >
+                  <div>
+                    <Image
+                      className=""
+                      src="/images/dashboards/table_edit_icon.svg"
+                      alt="table_edit_icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </a>
+            </span>
+            <span className="mx-2 opacity-50">|</span>
+            <span>
+              {" "}
+              <a
+                onClick={(e) => {
+                  setDeleteId(row.id);
+                  setDeleteConfirm(true);
+                }}
+              >
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>Delete</Tooltip>}
+                >
+                  <div>
+                    <Image
+                      className=""
+                      src="/images/dashboards/table_delete_icon.svg"
+                      alt="table_delete_icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </a>
+            </span>
+          </div> */}
+        </>
+      ),
+      width: "135px",
+    },
+  ];
+  useEffect(() => {
+    if (key == "corrections")
+      fetchCorrectionStatements(currentPage);
+  }, [currentPage, key]);
+
   useEffect(() => {
     let array = [];
     const currentDate = new Date();
@@ -155,6 +316,36 @@ export default function TDSDashboard({ params }) {
         });
     }
   }, []);
+
+  function fetchCorrectionStatements(currentPage, searchValue) {
+    setShowLoader(true);
+    setCorrectionStatements([]);
+    const model = {
+      pageSize: pageSize,
+      pageNumber: currentPage,
+      search: searchValue,
+    };
+    CorrectionsService.getCorrectionsStatement(model)
+      .then((res) => {
+        if (res && res.deductorList && res.deductorList.length > 0) {
+          setCorrectionStatements(res.deductorList);
+          setTotalItems(res.totalRows);
+        }
+      })
+      .catch(e => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+      })
+      .finally((f) => {
+        setTimeout(() => {
+          setShowLoader(false);
+        }, 500);
+      });
+  }
 
   useEffect(() => {
     getDeductorDetail();
@@ -242,40 +433,49 @@ export default function TDSDashboard({ params }) {
                   Tax Deducted at Source
                 </h4>
               </div>
-              <div className="col-md-2">
-                <select
-                  className="form-select m-100"
-                  aria-label="Default select example"
-                  value={financialYear}
-                  onChange={(e) => {
-                    setFinancialYear(e.target.value);
-                    sessionStorage.setItem("financialYear", e.target.value);
-                  }}
-                >
-                  {financialYears?.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-2">
-                <select
-                  className="form-select m-100"
-                  aria-label="Default select example"
-                  value={quarter}
-                  onChange={(e) => {
-                    setQuarter(e.target.value);
-                    sessionStorage.setItem("quart", e.target.value);
-                  }}
-                >
-                  {quarters?.map((option, index) => (
-                    <option value={option} key={index}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {key == "tds" &&
+                <>
+                  <div className="col-md-2">
+                    <select
+                      className="form-select m-100"
+                      aria-label="Default select example"
+                      value={financialYear}
+                      onChange={(e) => {
+                        setFinancialYear(e.target.value);
+                        sessionStorage.setItem("financialYear", e.target.value);
+                      }}
+                    >
+                      {financialYears?.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-2">
+                    <select
+                      className="form-select m-100"
+                      aria-label="Default select example"
+                      value={quarter}
+                      onChange={(e) => {
+                        setQuarter(e.target.value);
+                        sessionStorage.setItem("quart", e.target.value);
+                      }}
+                    >
+                      {quarters?.map((option, index) => (
+                        <option value={option} key={index}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              }
+              {key == "corrections" &&
+                <div class="col-md-4 text-end" style={{ marginBottom: "-60px" }}>
+                  <button type="button" className="btn btn-primary me-2">Import TDS File</button>
+                </div>
+              }
             </div>
           </div>
           <div className="container">
@@ -629,7 +829,7 @@ export default function TDSDashboard({ params }) {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="dashboard" disabled title="Dashboard">
+              {/* <Tab eventKey="dashboard" disabled title="Dashboard">
                 <div className="row g-3">
                   <div className="col-md-6">
                     <div className="border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
@@ -651,6 +851,45 @@ export default function TDSDashboard({ params }) {
                     </div>
                   </div>
                 </div>
+              </Tab> */}
+              <Tab eventKey="corrections" title="Corrections">
+
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="table-responsive">
+                      <div>
+                        {!showLoader && correctionStatements && correctionStatements.length > 0 && (
+                          <DataTable
+                            fixedHeader
+                            fixedHeaderScrollHeight="340px"
+                            columns={columns}
+                            data={correctionStatements}
+                            highlightOnHover
+                            pagination={true}
+                            paginationServer
+                            customStyles={customStyles}
+                            paginationTotalRows={totalItems}
+                            paginationPerPage={pageSize}
+                            selectableRowsNoSelectAll={true}
+                            paginationDefaultPage={currentPage}
+                            paginationComponentOptions={{
+                              noRowsPerPage: true,
+                            }}
+                            onRowDoubleClicked={handleRowDoubleClick}
+                            onChangePage={(page) => {
+                              if (currentPage !== page) {
+                                setCurrentPage(page);
+                              }
+                            }}
+                          />
+                        )}
+                        {/* {!showLoader && deductors && deductors.length == 0 && (
+                      <NotFound></NotFound>
+                    )} */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Tab>
             </Tabs>
           </div>
@@ -658,7 +897,7 @@ export default function TDSDashboard({ params }) {
       )
       }
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
-
+      {show && <ImportDeductorTXTPopup show={show} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>}
     </>
   );
 }

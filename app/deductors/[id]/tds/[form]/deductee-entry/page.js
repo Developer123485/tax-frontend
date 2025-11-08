@@ -425,7 +425,6 @@ export default function Challans({ params }) {
                       className="form-control bg-light-gray border-end-0"
                       id="search"
                       onChange={(e) => {
-                        debugger
                         setTimeout(() => {
                           setSearchValue(e.target.value);
                         }, 1000);

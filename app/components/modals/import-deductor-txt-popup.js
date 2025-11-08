@@ -161,9 +161,10 @@ export default function ImportDeductorTXTPopup(props) {
                               <input
                                 type="file"
                                 className="visually-hidden"
-                                accept=".txt"
+                                accept={pathname === "deductors" ? ".txt" : ".tds"}
                               />
-                              <h5 className="fw-bold mb-0">Import from TXT/TDS</h5>
+                              {pathname === "deductors" && <h5 className="fw-bold mb-0">Import from txt</h5>}
+                              {pathname !== "deductors" && <h5 className="fw-bold mb-0">Import from tds</h5>}
                             </label>
                           </h5>
                         </div>
