@@ -71,7 +71,7 @@ export default function DeductorDetail(props) {
       {enumList && (
         <form autoComplete="off">
           <div>
-            <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-5 g-3">
+            {!props.isCorrection && <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-5 g-3">
               <div className="row mb-2">
                 <div className="col-md-6 d-flex align-items-center">
                   <h5 className="text-blue fw-bold mb-0">
@@ -205,7 +205,7 @@ export default function DeductorDetail(props) {
                   </button>
                 </div>
               </div>
-            </div>
+            </div>}
             <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4 g-3">
               <div className="col-md-12 mt-0">
                 <h5 className="text-blue fw-bold">Deductor Details</h5>

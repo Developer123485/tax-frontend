@@ -15,6 +15,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FormsService } from "@/app/services/forms.service";
 import { saveAs } from "file-saver";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import ImportDeductorTXTPopup from "@/app/components/modals/import-deductor-txt-popup";
 import { CorrectionsService } from "@/app/services/corrections.service";
 import DataTable from "react-data-table-component";
@@ -43,7 +44,7 @@ export default function TDSDashboard({ params }) {
   const [correctionStatements, setCorrectionStatements] = useState([]);
   const [totalItems, setTotalItems] = useState(null);
   const [quarters, setQuarters] = useState(["Q1", "Q2", "Q3", "Q4"]);
-  const [key, setKey] = useState("tds");
+  const [key, setKey] = useState("");
   const [reportsData, setReportsData] = useState([
     {
       name: "Filing Status Dashboard",
@@ -171,81 +172,81 @@ export default function TDSDashboard({ params }) {
       name: "Actions",
       selector: (row) => (
         <>
-          {/* {" "}
-          <div className="d-flex justify-content-center">
-            <span>
-              <a onClick={(e) => {
-                sessionStorage.setItem("deductorName", row.deductorName);
-                sessionStorage.setItem("deductorTan", row.deductorTan);
-                router.push(`/deductors/${row.id}/tds`)
-              }}>
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>View</Tooltip>}
+          <>
+            {" "}
+            <div className="d-flex justify-content-center">
+              <span>
+                <a onClick={(e) => {
+                  router.push(`/deductors/${row.id}/tds`)
+                }}>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip>View</Tooltip>}
+                  >
+                    <div>
+                      <Image
+                        className=""
+                        src="/images/dashboards/table_view_icon.svg"
+                        alt="table_view_icon"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                  </OverlayTrigger>
+                </a>
+              </span>
+              <span className="mx-2 opacity-50">|</span>
+              <span>
+                {" "}
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/deductors/${deductorId}/tds/corrections/${row.id}`);
+                  }}
                 >
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/dashboards/table_view_icon.svg"
-                      alt="table_view_icon"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </a>
-            </span>
-            <span className="mx-2 opacity-50">|</span>
-            <span>
-              {" "}
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(`/deductors/deductor-detail?id=${row.id}`);
-                }}
-              >
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>Edit</Tooltip>}
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip>Edit</Tooltip>}
+                  >
+                    <div>
+                      <Image
+                        className=""
+                        src="/images/dashboards/table_edit_icon.svg"
+                        alt="table_edit_icon"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                  </OverlayTrigger>
+                </a>
+              </span>
+              <span className="mx-2 opacity-50">|</span>
+              <span>
+                {" "}
+                <a
+                  onClick={(e) => {
+                    setDeleteId(row.id);
+                    setDeleteConfirm(true);
+                  }}
                 >
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/dashboards/table_edit_icon.svg"
-                      alt="table_edit_icon"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </a>
-            </span>
-            <span className="mx-2 opacity-50">|</span>
-            <span>
-              {" "}
-              <a
-                onClick={(e) => {
-                  setDeleteId(row.id);
-                  setDeleteConfirm(true);
-                }}
-              >
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>Delete</Tooltip>}
-                >
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/dashboards/table_delete_icon.svg"
-                      alt="table_delete_icon"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </a>
-            </span>
-          </div> */}
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip>Delete</Tooltip>}
+                  >
+                    <div>
+                      <Image
+                        className=""
+                        src="/images/dashboards/table_delete_icon.svg"
+                        alt="table_delete_icon"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                  </OverlayTrigger>
+                </a>
+              </span>
+            </div>
+          </>
         </>
       ),
       width: "135px",
@@ -253,8 +254,11 @@ export default function TDSDashboard({ params }) {
   ];
   useEffect(() => {
     let keyValue = localStorage.getItem("tabKey");
-    if (keyValue == "corrections")
+    if (keyValue == "corrections") {
       fetchCorrectionStatements(currentPage);
+    } else {
+      localStorage.setItem("tabKey", "tds");
+    }
   }, [currentPage, key]);
 
   useEffect(() => {
@@ -487,7 +491,7 @@ export default function TDSDashboard({ params }) {
           <div className="container">
             <Tabs
               id=""
-              activeKey={key}
+              activeKey={localStorage.getItem("tabKey")}
               onSelect={(k) => {
                 localStorage.setItem("tabKey", k)
                 setKey(k)

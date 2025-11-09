@@ -34,10 +34,10 @@ export default function ResponsibleDetail(props) {
       {deductorDetail && (
         <>
           <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4 g-3">
-            <div className="col-md-6 mt-0">
+            <div className={!deductorDetail.id || deductorDetail.id == 0 ? "col-md-6 mt-0" : "col-md-12 mt-0"}>
               <h5 className="text-blue fw-bold">Responsible Person Details</h5>
             </div>
-            <div className="col-md-6 d-flex justify-content-end mt-0">
+            {!deductorDetail.id || deductorDetail.id == 0 && <div className="col-md-6 d-flex justify-content-end mt-0">
               <div className="form-check form-switch mb-0">
                 <input
                   className="form-check-input"
@@ -50,7 +50,7 @@ export default function ResponsibleDetail(props) {
                   Copy Deductors Address
                 </label>
               </div>
-            </div>
+            </div>}
 
             <div className="col-md-3">
               <label htmlFor="inputPersonName" className="form-label">
@@ -518,7 +518,8 @@ export default function ResponsibleDetail(props) {
             </div>
           </div>
         </>
-      )}
+      )
+      }
     </>
   );
 }
