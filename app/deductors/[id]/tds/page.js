@@ -133,34 +133,39 @@ export default function TDSDashboard({ params }) {
   };
   const columns = [
     {
-      name: "Statement No",
+      name: "S No",
       selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
-      width: "80px",
+      width: "70px",
     },
     {
       name: "Financial Year",
       selector: (row) => row.financialYear || "-",
-      width: "160px",
+      width: "140px",
     },
     {
       name: "Quarter",
       selector: (row) => row.quarter || "-",
+      width: "100px",
     },
     {
       name: "Form",
       selector: (row) => row?.form || "",
+      width: "80px",
     },
     {
       name: "Deductor Name",
       selector: (row) => row?.deductorName || "",
+      width: "400px",
     },
     {
       name: "Tan",
       selector: (row) => row?.deductorTan || "",
+      width: "120px",
     },
     {
       name: "Pan",
       selector: (row) => row?.deductorPan || "",
+      width: "120px",
     },
     {
       name: "Actions",
@@ -428,51 +433,49 @@ export default function TDSDashboard({ params }) {
         <section className="py-5 py-md-4 bg-light-gray tds-dash-tabs">
           <div className="container">
             <div className="row pb-3 align-items-center">
-              <div className="col-md-8">
+              <div className={key == "corrections" ? "col-md-6" : "col-md-8"}>
                 <h4 className="mb-4 mb-md-0 fw-bold text-capitalize">
                   Tax Deducted at Source
                 </h4>
               </div>
-              {key == "tds" &&
-                <>
-                  <div className="col-md-2">
-                    <select
-                      className="form-select m-100"
-                      aria-label="Default select example"
-                      value={financialYear}
-                      onChange={(e) => {
-                        setFinancialYear(e.target.value);
-                        sessionStorage.setItem("financialYear", e.target.value);
-                      }}
-                    >
-                      {financialYears?.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="col-md-2">
-                    <select
-                      className="form-select m-100"
-                      aria-label="Default select example"
-                      value={quarter}
-                      onChange={(e) => {
-                        setQuarter(e.target.value);
-                        sessionStorage.setItem("quart", e.target.value);
-                      }}
-                    >
-                      {quarters?.map((option, index) => (
-                        <option value={option} key={index}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </>
-              }
+              <>
+                <div style={{ marginBottom: "-10px" }} className="col-md-2">
+                  <select
+                    className="form-select m-100"
+                    aria-label="Default select example"
+                    value={financialYear}
+                    onChange={(e) => {
+                      setFinancialYear(e.target.value);
+                      sessionStorage.setItem("financialYear", e.target.value);
+                    }}
+                  >
+                    {financialYears?.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ marginBottom: "-10px" }} className="col-md-2">
+                  <select
+                    className="form-select m-100"
+                    aria-label="Default select example"
+                    value={quarter}
+                    onChange={(e) => {
+                      setQuarter(e.target.value);
+                      sessionStorage.setItem("quart", e.target.value);
+                    }}
+                  >
+                    {quarters?.map((option, index) => (
+                      <option value={option} key={index}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
               {key == "corrections" &&
-                <div className="col-md-4 text-end" style={{ marginBottom: "-60px" }}>
+                <div className="col-md-2 text-end" style={{ marginBottom: "-60px" }}>
                   <button type="button" onClick={(e) => setShow(true)} className="btn btn-primary me-2">Import TDS File</button>
                 </div>
               }
