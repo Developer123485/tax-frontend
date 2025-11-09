@@ -252,7 +252,8 @@ export default function TDSDashboard({ params }) {
     },
   ];
   useEffect(() => {
-    if (key == "corrections")
+    let keyValue = localStorage.getItem("tabKey");
+    if (keyValue == "corrections")
       fetchCorrectionStatements(currentPage);
   }, [currentPage, key]);
 
@@ -429,11 +430,13 @@ export default function TDSDashboard({ params }) {
   return (
     <>
       <ToastContainer />
+      <HeaderList></HeaderList>
+      <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
       {formsData && (
         <section className="py-5 py-md-4 bg-light-gray tds-dash-tabs">
           <div className="container">
             <div className="row pb-3 align-items-center">
-              <div className={key == "corrections" ? "col-md-6" : "col-md-8"}>
+              <div className={localStorage.getItem("tabKey") == "corrections" ? "col-md-6" : "col-md-8"}>
                 <h4 className="mb-4 mb-md-0 fw-bold text-capitalize">
                   Tax Deducted at Source
                 </h4>
@@ -474,7 +477,7 @@ export default function TDSDashboard({ params }) {
                   </select>
                 </div>
               </>
-              {key == "corrections" &&
+              {localStorage.getItem("tabKey") == "corrections" &&
                 <div className="col-md-2 text-end" style={{ marginBottom: "-60px" }}>
                   <button type="button" onClick={(e) => setShow(true)} className="btn btn-primary me-2">Import TDS File</button>
                 </div>
@@ -485,7 +488,10 @@ export default function TDSDashboard({ params }) {
             <Tabs
               id=""
               activeKey={key}
-              onSelect={(k) => setKey(k)}
+              onSelect={(k) => {
+                localStorage.setItem("tabKey", k)
+                setKey(k)
+              }}
               className=""
             >
               <Tab eventKey="tds" title="TDS Deductors">

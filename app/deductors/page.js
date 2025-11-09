@@ -189,6 +189,7 @@ export default function Deductors() {
     fetchDeductors(currentPage);
     sessionStorage.removeItem("quart");
     sessionStorage.removeItem("financialYear");
+    localStorage.removeItem("tabKey")
     sessionStorage.removeItem("requestedDownload");
   }, [currentPage]);
 
