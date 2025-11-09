@@ -503,7 +503,7 @@ export default function ResponsibleDetail(props) {
                 <button
                   type="button"
                   className="btn btn-primary me-2"
-                  onClick={(e) => router.push("/deductors")}
+                  onClick={(e) => router.back()}
                 >
                   Cancel Edit
                 </button>
