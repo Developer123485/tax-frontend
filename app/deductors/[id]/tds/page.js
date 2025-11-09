@@ -177,7 +177,8 @@ export default function TDSDashboard({ params }) {
             <div className="d-flex justify-content-center">
               <span>
                 <a onClick={(e) => {
-                  router.push(`/deductors/${row.id}/tds`)
+                  let cateObj = getCateObj(row.form);
+                  router.push(`/deductors/${deductorId}/tds/${cateObj.path}?categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
                 }}>
                   <OverlayTrigger
                     placement="bottom"
@@ -353,6 +354,11 @@ export default function TDSDashboard({ params }) {
           setShowLoader(false);
         }, 500);
       });
+  }
+
+  function getCateObj(val) {
+    let obj = formsData.find(p => p.name == val);
+    return obj;
   }
 
   useEffect(() => {
