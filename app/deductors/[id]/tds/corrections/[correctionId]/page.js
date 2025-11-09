@@ -676,11 +676,11 @@ export default function Detail({ params }) {
                     deductorDetail.responsibleDOB
                 );
             }
-            DeductorsService.saveDeductor(deductorDetail)
+            CorrectionsService.saveDeductor(deductorDetail)
                 .then((res) => {
                     if (res && res > 0) {
-                        toast.success("Deductor saved successfully");
-                        router.push("/deductors");
+                        toast.success("Deductor Updated successfully");
+                        router.push(`/deductors/${deductorId}/tds`);
                     }
                 })
                 .catch((res) => {

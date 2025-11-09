@@ -292,6 +292,7 @@ export default function DeductorDetail(props) {
                   className="form-control"
                   id="inputTANNo"
                   autoComplete="off"
+                  disabled={props.isCorrection}
                   maxLength={10}
                   value={
                     deductorDetail.deductorTan

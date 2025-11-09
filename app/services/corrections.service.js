@@ -3,7 +3,8 @@ import { CommonService } from "./common.service";
 
 export const CorrectionsService = {
     getCorrectionsStatement,
-    getCorrectionStatement
+    getCorrectionStatement,
+    saveDeductor
 };
 
 async function getCorrectionsStatement(model) {
@@ -11,6 +12,10 @@ async function getCorrectionsStatement(model) {
     return result;
 }
 
+async function saveDeductor(model) {
+    const result = await api.post("correctionStatements/saveDeductor", model);
+    return result;
+}
 
 async function getCorrectionStatement(deductorId, id) {
     const result = await api.get(`correctionStatements/correctionStatementDetail/${deductorId}/${id}`);
