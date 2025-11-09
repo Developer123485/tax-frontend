@@ -202,7 +202,7 @@ export default function TDSDashboard({ params }) {
                 <a
                   onClick={(e) => {
                     e.preventDefault();
-                    router.push(`/deductors/${deductorId}/tds/corrections/${row.id}`);
+                    router.push(`/deductors/${deductorId}/tds/detail/${row.id}`);
                   }}
                 >
                   <OverlayTrigger
