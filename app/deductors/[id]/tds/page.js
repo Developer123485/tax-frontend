@@ -136,7 +136,7 @@ export default function TDSDashboard({ params }) {
     {
       name: "S No",
       selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
-      width: "70px",
+      width: "80px",
     },
     {
       name: "Financial Year",
@@ -151,12 +151,12 @@ export default function TDSDashboard({ params }) {
     {
       name: "Form",
       selector: (row) => row?.form || "",
-      width: "80px",
+      width: "100px",
     },
     {
       name: "Deductor Name",
       selector: (row) => row?.deductorName || "",
-      width: "400px",
+      width: "425px",
     },
     {
       name: "Tan",
@@ -220,7 +220,7 @@ export default function TDSDashboard({ params }) {
                   </OverlayTrigger>
                 </a>
               </span>
-              <span className="mx-2 opacity-50">|</span>
+              {/* <span className="mx-2 opacity-50">|</span>
               <span>
                 {" "}
                 <a
@@ -244,7 +244,7 @@ export default function TDSDashboard({ params }) {
                     </div>
                   </OverlayTrigger>
                 </a>
-              </span>
+              </span> */}
             </div>
           </>
         </>
