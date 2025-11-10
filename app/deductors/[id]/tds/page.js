@@ -178,7 +178,7 @@ export default function TDSDashboard({ params }) {
               <span>
                 <a onClick={(e) => {
                   let cateObj = getCateObj(row.form);
-                  router.push(`/deductors/${deductorId}/tds/${cateObj.path}?categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
+                  router.push(`/deductors/${deductorId}/tds/corrections/${cateObj.path}?categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
                 }}>
                   <OverlayTrigger
                     placement="bottom"

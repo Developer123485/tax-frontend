@@ -4,7 +4,8 @@ import { CommonService } from "./common.service";
 export const CorrectionsService = {
     getCorrectionsStatement,
     getCorrectionStatement,
-    saveDeductor
+    saveDeductor,
+    getFormsDashboard
 };
 
 async function getCorrectionsStatement(model) {
@@ -19,5 +20,10 @@ async function saveDeductor(model) {
 
 async function getCorrectionStatement(deductorId, id) {
     const result = await api.get(`correctionStatements/correctionStatementDetail/${deductorId}/${id}`);
+    return result;
+}
+
+async function getFormsDashboard(model) {
+    const result = await api.post(`correctionStatements/formDashbooard/fetch`, model);
     return result;
 }
