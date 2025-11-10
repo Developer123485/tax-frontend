@@ -53,7 +53,9 @@ export default function ChallanDetail({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/corrections/${form}?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
@@ -62,7 +64,9 @@ export default function ChallanDetail({ params }) {
     {
       name: "Challans",
       isActive: false,
-      href: `/deductors/${deductorId}/tds/corrections/${form}/challans?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}/challans?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
@@ -174,12 +178,12 @@ export default function ChallanDetail({ params }) {
         challanDetail.minorHeadChallan = "";
       }
       model.dateOfDeposit = CommonService.dateFormat(model.dateOfDeposit);
-      ChallanService.saveChallan(model)
+      CorrectionsService.saveCorrectionChallan(model)
         .then((res) => {
           if (res) {
             toast.success("Challan Created Successfully!");
             router.push(
-              `/deductors/${deductorId}/tds/${form}/challans?categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
+              `/deductors/${deductorId}/tds/corrections/${form}/challans?categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
             );
           } else {
             setLoading(false);
