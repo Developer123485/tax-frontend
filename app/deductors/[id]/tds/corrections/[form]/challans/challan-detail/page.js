@@ -163,10 +163,11 @@ export default function ChallanDetail({ params }) {
     }
   }
 
-  function saveChallan(e) {
+  function updateCorrectionChallan(e) {
     e.preventDefault();
     setIsDirty(true);
-    if (validateChallanDetail() && model.id > 0) {
+    debugger
+    if (validateChallanDetail() && challanDetail.id > 0) {
       setLoading(true);
       challanDetail.financialYear = searchParams.get("financial_year");
       challanDetail.quarter = searchParams.get("quarter");
@@ -183,7 +184,9 @@ export default function ChallanDetail({ params }) {
           if (res) {
             toast.success("Challan Created Successfully!");
             router.push(
-              `/deductors/${deductorId}/tds/corrections/${form}/challans?categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
+              `/deductors/${deductorId}/tds/corrections/${form}/challans?correctionId=${searchParams.get(
+                "correctionId"
+              )}&categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
             );
           } else {
             setLoading(false);
@@ -581,7 +584,7 @@ export default function ChallanDetail({ params }) {
                 <div className="col-md-12 px-0 d-flex justify-content-start px-0">
                   <button
                     type="button"
-                    onClick={(e) => saveChallan(e)}
+                    onClick={(e) => updateCorrectionChallan(e)}
                     className="btn btn-primary"
                     disabled={loading}
                   >
@@ -592,7 +595,7 @@ export default function ChallanDetail({ params }) {
                         aria-hidden="true"
                       ></span>
                     )}
-                    Save Challan
+                    Update Challan
                   </button>
                 </div>
               </div>

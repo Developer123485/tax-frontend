@@ -90,6 +90,11 @@ export default function Challans({ params }) {
       selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
     },
     {
+      name: "Correction",
+      selector: (row) => (row.correction ? "Yes" : "No"),
+      width: "120px",
+    },
+    {
       name: "TDS",
       selector: (row) => (row.tdsAmount ? row.tdsAmount.toFixed(2) : "-"),
       grow: 1.4,
