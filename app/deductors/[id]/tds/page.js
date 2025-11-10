@@ -19,10 +19,12 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import ImportDeductorTXTPopup from "@/app/components/modals/import-deductor-txt-popup";
 import { CorrectionsService } from "@/app/services/corrections.service";
 import DataTable from "react-data-table-component";
+import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
 
 export default function TDSDashboard({ params }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const resolvedParams = use(params);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteId, setDeleteId] = useState(1);
@@ -36,6 +38,7 @@ export default function TDSDashboard({ params }) {
   const [quarter, setQuarter] = useState("");
   const [fileName, setFileName] = useState("");
   const [showLoader, setShowLoader] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deducteeCount, setDeducteeCount] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -178,7 +181,7 @@ export default function TDSDashboard({ params }) {
               <span>
                 <a onClick={(e) => {
                   let cateObj = getCateObj(row.form);
-                  router.push(`/deductors/${deductorId}/tds/corrections/${cateObj.path}?categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
+                  router.push(`/deductors/${deductorId}/tds/corrections/${cateObj.path}?correctionId=${row.id}&categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
                 }}>
                   <OverlayTrigger
                     placement="bottom"
@@ -221,7 +224,7 @@ export default function TDSDashboard({ params }) {
                   </OverlayTrigger>
                 </a>
               </span>
-              {/* <span className="mx-2 opacity-50">|</span>
+              <span className="mx-2 opacity-50">|</span>
               <span>
                 {" "}
                 <a
@@ -245,7 +248,7 @@ export default function TDSDashboard({ params }) {
                     </div>
                   </OverlayTrigger>
                 </a>
-              </span> */}
+              </span>
             </div>
           </>
         </>
@@ -416,6 +419,30 @@ export default function TDSDashboard({ params }) {
       setSelectedFile("");
       setFileName("");
     }
+  }
+
+  function deleteCorrectionDeductor(e) {
+    e.preventDefault();
+    setDeleteLoading(true);
+    CorrectionsService.deleteCorrectionDeductor(deleteId)
+      .then((res) => {
+        if (res) {
+          toast.success("Delete Correction Deductor Successfully");
+          fetchCorrectionStatements(currentPage);
+          setDeleteLoading(false);
+        }
+      }).catch(e => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setDeleteLoading(false);
+      })
+      .finally((f) => {
+        setDeleteConfirm(false);
+      });
   }
 
   const handleRowDoubleClick = (row) => {
@@ -915,6 +942,12 @@ export default function TDSDashboard({ params }) {
         </section >
       )
       }
+      <DeleteConfirmation
+        show={deleteConfirm}
+        deleteLoading={deleteLoading}
+        setDeleteConfirm={(e) => setDeleteConfirm(e)}
+        delete={(e) => deleteCorrectionDeductor(e)}
+      ></DeleteConfirmation>
       {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
       {show && <ImportDeductorTXTPopup fetchDeductors={fetchCorrectionStatements} show={show} deductorId={deductorId} financialYear={financialYear} quarter={quarter} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>}
     </>

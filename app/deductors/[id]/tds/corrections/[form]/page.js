@@ -397,7 +397,7 @@ export default function TDSForm({ params }) {
     const model = {
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
+      deductorId: parseInt(searchParams.get("correctionId")),
       categoryId: parseInt(searchParams.get("categoryId")),
     };
     CorrectionsService.getFormsDashboard(model)
@@ -442,46 +442,6 @@ export default function TDSForm({ params }) {
         toast.error(e?.message);
       }
       setResendLoading(false);
-    })
-  }
-
-  function handleSubmit() {
-    setSubmitLoading(true);
-    if (!captcha) {
-      toast.error("Input Captcha is required");
-      return false;
-    }
-    const model = {
-      captcha: captcha,
-      financialYear: searchParams.get("financial_year"),
-      quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
-      categoryId: parseInt(searchParams.get("categoryId")),
-    }
-    TracesActivitiesService.getSaveLowerDeductions(model).then(res => {
-      if (res) {
-        toast.success("Data fetched and saved successfully!");
-        setConfirmModal(false);
-        setSubmitLoading(false);
-        setCaptchaBase64("");
-        setCaptcha("");
-        setTimeout(() => {
-          router.push(
-            pathname + "/generate-fvu" + window.location.search
-          );
-        }, 1000);
-      }
-    }).catch(e => {
-      if (e?.response?.data?.errorMessage) {
-        toast.error(e?.response?.data?.errorMessage);
-      }
-      else {
-        toast.error(e?.message);
-      }
-      setConfirmModal(false);
-      setSubmitLoading(false);
-      setCaptchaBase64("");
-      setCaptcha("");
     })
   }
 
@@ -635,7 +595,7 @@ export default function TDSForm({ params }) {
                         <span className="fw-bold"> </span>
                         <input
                           type="file"
-                          onChange={fileSelectHandler}
+                          // onChange={fileSelectHandler}
                           className="visually-hidden"
                           accept=""
                         />
@@ -683,7 +643,7 @@ export default function TDSForm({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary w-100"
-                      onClick={(e) => setIsExportFormConfirmation(true)}
+                      // onClick={(e) => setIsExportFormConfirmation(true)}
                     >
                       Form Export
                     </button>
@@ -701,14 +661,14 @@ export default function TDSForm({ params }) {
                     <div className="col-md-12">
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div className="row align-items-center"
-                          onClick={(e) => {
-                            if (formsDashboardDetail.certificateCount > 0) {
-                            } else {
-                              router.push(
-                                pathname + "/generate-fvu" + window.location.search
-                              );
-                            }
-                          }}
+                        // onClick={(e) => {
+                        //   if (formsDashboardDetail.certificateCount > 0) {
+                        //   } else {
+                        //     router.push(
+                        //       pathname + "/generate-fvu" + window.location.search
+                        //     );
+                        //   }
+                        // }}
                         >
                           <div className="col-md-4" >
                             <Image
@@ -732,7 +692,7 @@ export default function TDSForm({ params }) {
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div
                           className="row align-items-center"
-                          onClick={(e) => setIsDownloadFormConfirmation(true)}
+                        // onClick={(e) => setIsDownloadFormConfirmation(true)}
                         >
                           <div className="col-md-4">
                             <Image
@@ -753,7 +713,9 @@ export default function TDSForm({ params }) {
                     </div>
                     <div className="col-md-12">
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
-                        <div className="row align-items-center" onClick={download}>
+                        <div className="row align-items-center"
+                        // onClick={download}
+                        >
                           <div className="col-md-4">
                             <Image
                               className="img-fluid"

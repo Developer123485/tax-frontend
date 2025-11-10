@@ -5,11 +5,17 @@ export const CorrectionsService = {
     getCorrectionsStatement,
     getCorrectionStatement,
     saveDeductor,
-    getFormsDashboard
+    getFormsDashboard,
+    deleteCorrectionDeductor
 };
 
 async function getCorrectionsStatement(model) {
     const result = await api.post(`correctionStatements/fetch`, model);
+    return result;
+}
+
+async function deleteCorrectionDeductor(id) {
+    const result = await api.get(`correctionStatements/delete/${id}`);
     return result;
 }
 

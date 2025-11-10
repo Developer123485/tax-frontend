@@ -242,7 +242,7 @@ export default function ImportDeductorTXTPopup(props) {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-12 mt-0">
+                  {pathname === "deductors" && <div className="col-md-12 mt-0">
                     <div className="form-check form-check-inline">
                       <input
                         className="form-check-input"
@@ -282,6 +282,7 @@ export default function ImportDeductorTXTPopup(props) {
                       </label>
                     </div>
                   </div>
+                  }
                   {pathname === "deductors" && <div className="col-md-7 mt-2">
                     <div className="w-100">
                       {type == "new" && (
