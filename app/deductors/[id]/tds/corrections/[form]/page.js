@@ -459,12 +459,6 @@ export default function TDSForm({ params }) {
                   <h3 className="mb-0 me-3">
                     {financialYear}, {quarter}, {form.toUpperCase()}
                   </h3>
-                  {/* <button
-                    className="btn btn-primary"
-                    onClick={(e) => setOpenGenerateInputPopup(true)}
-                  >
-                    Generate {form.toUpperCase()}
-                  </button> */}
                 </div>
               </div>
             </div>

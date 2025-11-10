@@ -6,8 +6,21 @@ export const CorrectionsService = {
     getCorrectionStatement,
     saveDeductor,
     getFormsDashboard,
-    deleteCorrectionDeductor
+    deleteCorrectionDeductor,
+    getCorrectionChallans,
+    getCorrectionChallan
 };
+
+async function getCorrectionChallans(model) {
+  const result = await api.post(`correctionStatements/challans/fetch`, model);
+  return result;
+}
+
+async function getCorrectionChallan(id) {
+  const result = await api.get(`correctionStatements/challans/${id}`);
+  return result;
+}
+
 
 async function getCorrectionsStatement(model) {
     const result = await api.post(`correctionStatements/fetch`, model);

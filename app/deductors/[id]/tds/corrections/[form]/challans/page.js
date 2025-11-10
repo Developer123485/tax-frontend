@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function Challans({ params }) {
   const resolvedParams = use(params);
@@ -45,7 +46,7 @@ export default function Challans({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}${typeof window !== "undefined" ? window.location.search : ""
+      href: `/deductors/${deductorId}/tds/corrections/${form}${typeof window !== "undefined" ? window.location.search : ""
         }`,
     },
     {
@@ -224,7 +225,7 @@ export default function Challans({ params }) {
       searchParams.get("quarter") &&
       searchParams.get("categoryId")
     ) {
-      fetchChallans();
+      fetchCorrectionChallans();
     } else {
       router.push("/deductors");
     }
@@ -250,7 +251,7 @@ export default function Challans({ params }) {
           if (res) {
             toast.success("Delete All Challan Successfully");
             setShowLoader(false);
-            fetchChallans("");
+            fetchCorrectionChallans("");
           }
         })
         .catch((e) => {
@@ -265,7 +266,7 @@ export default function Challans({ params }) {
           if (res) {
             setDeleteConfirm(false);
             toast.success("Delete Challan Successfully");
-            fetchChallans("");
+            fetchCorrectionChallans("");
           }
         })
         .catch((e) => {
@@ -283,7 +284,7 @@ export default function Challans({ params }) {
           .then((res) => {
             if (res) {
               toast.success("Delete Challan Successfully");
-              fetchChallans("");
+              fetchCorrectionChallans("");
               setDeleteConfirm(false);
               setSelectedData([]);
             }
@@ -303,17 +304,17 @@ export default function Challans({ params }) {
     }
   }
 
-  function fetchChallans() {
+  function fetchCorrectionChallans() {
     setShowLoader(true);
     const model = {
       pageSize: pageSize,
       pageNumber: currentPage,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
+      deductorId: parseInt(searchParams.get("correctionId")),
       categoryId: parseInt(searchParams.get("categoryId")),
     };
-    ChallanService.getChallans(model)
+    CorrectionsService.getCorrectionChallans(model)
       .then((res) => {
         if (res) {
           setChallans(res);
@@ -341,30 +342,6 @@ export default function Challans({ params }) {
                 </h4>
               </div>
               <div className="col-md-6 d-flex align-items-center justify-content-end">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    router.push(
-                      pathname + "/challan-detail" + window.location.search
-                    );
-                  }}
-                  className="btn btn-primary me-3"
-                >
-                  Add
-                </button>
-                {/*                 <button
-                  type="button"
-                  onClick={(e) => {
-                    setConfirmTitle("Bulk Challan Entry");
-                    setDeleteConfirm(true);
-                  }}
-                  disabled={
-                    !selectedData || selectedData.length == 0 ? true : false
-                  }
-                  className="btn btn-outline-primary me-3"
-                >
-                  Bulk Delete
-                </button> */}
                 <button
                   type="button"
                   onClick={(e) => {
@@ -408,7 +385,7 @@ export default function Challans({ params }) {
                           }}
                           onChangePage={(page) => {
                             setCurrentPage(page);
-                            fetchChallans(page);
+                            fetchCorrectionChallans(page);
                           }}
                         />
                       )}

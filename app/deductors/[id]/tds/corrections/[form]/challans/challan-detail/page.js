@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import HeaderList from "@/app/components/header/header-list";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function ChallanDetail({ params }) {
   const resolvedParams = use(params);
@@ -52,7 +53,7 @@ export default function ChallanDetail({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}?categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
@@ -61,7 +62,7 @@ export default function ChallanDetail({ params }) {
     {
       name: "Challans",
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}/challans?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}/challans?categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
@@ -148,7 +149,7 @@ export default function ChallanDetail({ params }) {
 
   function getChallan() {
     if (searchParams.get("id")) {
-      ChallanService.getChallan(parseInt(searchParams.get("id"))).then(
+      CorrectionsService.getCorrectionChallan(parseInt(searchParams.get("id"))).then(
         (res) => {
           if (res && res.id > 0) {
             setChallanDetail(res);
@@ -161,12 +162,12 @@ export default function ChallanDetail({ params }) {
   function saveChallan(e) {
     e.preventDefault();
     setIsDirty(true);
-    if (validateChallanDetail()) {
+    if (validateChallanDetail() && model.id > 0) {
       setLoading(true);
       challanDetail.financialYear = searchParams.get("financial_year");
       challanDetail.quarter = searchParams.get("quarter");
       challanDetail.categoryId = searchParams.get("categoryId");
-      challanDetail.deductorId = deductorId;
+      challanDetail.deductorId = searchParams.get("correctionId");
       challanDetail.totalTaxDeposit = getTotalTaxValue();
       let model = Object.assign({}, challanDetail);
       if (challanDetail.tdsDepositByBook == "Y") {
@@ -260,6 +261,7 @@ export default function ChallanDetail({ params }) {
                       id="inputChallanNo"
                       maxLength={5}
                       autoComplete="off"
+                      disabled
                       value={challanDetail.challanVoucherNo}
                       onChange={(e) => {
                         if (CommonService.isNumeric(e.target.value)) {
@@ -284,6 +286,7 @@ export default function ChallanDetail({ params }) {
                         autoComplete="off"
                         selected={challanDetail.dateOfDeposit}
                         id="dateOfDoposit"
+                        disabled
                         className="form-control w-100"
                         onChange={(e) => {
                           handleInput("dateOfDeposit", e);
@@ -308,6 +311,7 @@ export default function ChallanDetail({ params }) {
                       placeholder=""
                       className="form-control"
                       id="bsrCode"
+                      disabled
                       maxLength={7}
                       autoComplete="off"
                       value={challanDetail.bsrCode}
@@ -331,6 +335,7 @@ export default function ChallanDetail({ params }) {
                       className="form-select"
                       aria-label="Default select example"
                       autoComplete="off"
+                      disabled
                       value={challanDetail.tdsDepositByBook}
                       style={highlightStyle}
                       onFocus={() => setIsFocused(true)}
@@ -400,6 +405,7 @@ export default function ChallanDetail({ params }) {
                       autoComplete="off"
                       maxLength={15}
                       value={challanDetail.tdsAmount}
+                      disabled
                       onChange={(e) => {
                         if (CommonService.isNumeric(e.target.value)) {
                           handleInput("tdsAmount", e);
@@ -425,6 +431,7 @@ export default function ChallanDetail({ params }) {
                       autoComplete="off"
                       maxLength={15}
                       value={challanDetail.surchargeAmount}
+                      disabled
                       onChange={(e) => {
                         if (CommonService.isNumeric(e.target.value)) {
                           handleInput("surchargeAmount", e);
@@ -443,6 +450,7 @@ export default function ChallanDetail({ params }) {
                       className="form-control"
                       id="eduCessAmount"
                       maxLength={15}
+                      disabled
                       autoComplete="off"
                       value={challanDetail.healthAndEducationCess}
                       onChange={(e) => {
@@ -504,6 +512,7 @@ export default function ChallanDetail({ params }) {
                       placeholder=""
                       className="form-control"
                       id="penalty"
+                      disabled
                       maxLength={15}
                       autoComplete="off"
                       value={challanDetail.others}
