@@ -4,9 +4,7 @@ import Image from "next/image";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { ChallanService } from "@/app/services/challan.service";
 import { usePathname } from "next/navigation";
-import { DeducteeEntryService } from "@/app/services/deducteeEntry.service";
 import DataTable from "react-data-table-component";
 import CustomCheckbox from "@/app/components/deductee-entry/custom-checkbox";
 import ProcessPopup from "@/app/components/modals/processing";
@@ -94,7 +92,11 @@ export default function DeducteeEntry({ params }) {
       name: "Serial No",
       selector: (row, index) => (currentPage - 1) * pageSize + (index + 1),
     },
-
+    {
+      name: "Correction",
+      selector: (row) => (row.correction ? "Yes" : "No"),
+      width: "120px",
+    },
     {
       name: "Deductee Name",
       selector: (row) => (row.nameOfDeductee ? row.nameOfDeductee : "-"),
@@ -250,30 +252,13 @@ export default function DeducteeEntry({ params }) {
     }
   }, [currentPage, pageSize, challanId, searchValue]);
 
-  function deleteDeducteeEntry(e) {
+  function deleteCorrectionDeducteeEntry(e) {
     e.preventDefault();
     setDeleteConfirm(false);
     setShowLoader(true);
     if (confirmTitle === "All Deductee Entry") {
-      const model = {
-        financialYear: searchParams.get("financial_year"),
-        quarter: searchParams.get("quarter"),
-        deductorId: deductorId,
-        categoryId: parseInt(searchParams.get("categoryId")),
-      };
-      DeducteeEntryService.deleteAllDeducteeEntry(model)
-        .then((res) => {
-          if (res) {
-            toast.success("Delete All Deductee Entry Successfully!");
-            setShowLoader(false);
-            fetchDeducteeEntrys("");
-          }
-        })
-        .catch((e) => {
-          setDeleteConfirm(false);
-        });
     } else if (confirmTitle === "Deductee Entry") {
-      DeducteeEntryService.deleteDeducteeEntry(deleteId)
+      CorrectionsService.deleteCorrectionDeducteeEntry(deleteId)
         .then((res) => {
           if (res) {
             toast.success("Delete Deductee Entry Successfully!");
@@ -289,7 +274,7 @@ export default function DeducteeEntry({ params }) {
         const model = {
           Ids: selectedData.map((p) => p.id),
         };
-        DeducteeEntryService.deleteBulkDeducteeEntry(model)
+        CorrectionsService.deleteCorrectionBulkDeducteeEntry(model)
           .then((res) => {
             if (res) {
               toast.success("Delete Bulk Deductee Entry Successfully!");
@@ -458,7 +443,6 @@ export default function DeducteeEntry({ params }) {
                           paginationPerPage={pageSize}
                           selectableRowsNoSelectAll={true}
                           onSelectedRowsChange={handleChange}
-                          selectableRowDisabled={row => !row.correction}
                           conditionalRowStyles={conditionalRowStyles}
                           customInput={<CustomCheckbox />}
                           paginationComponentOptions={{
@@ -473,36 +457,6 @@ export default function DeducteeEntry({ params }) {
                   </div>
                 </div>
               </div>
-              {/* <div className="row my-3">
-              <div className="col-md-12 col-md-12 d-flex align-items-center justify-content-end">
-                <button
-                  className="btn btn-primary me-2"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Prev
-                </button>
-
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </button>
-
-                <label className="mx-2 mx-md-3">Items per page:</label>
-                <select
-                  className="form-select w-auto"
-                  value={pageSize}
-                  onChange={handlePageSizeChange}
-                >
-                  <option value={20}>20</option>
-                  <option value={50}>50</option>
-                  <option value={100}>100</option>
-                </select>
-              </div>
-            </div> */}
             </div>
           </div>
         </div>
@@ -512,7 +466,7 @@ export default function DeducteeEntry({ params }) {
         show={deleteConfirm}
         name={confirmTitle}
         setDeleteConfirm={(e) => setDeleteConfirm(e)}
-        delete={(e) => deleteDeducteeEntry(e)}
+        delete={(e) => deleteCorrectionDeducteeEntry(e)}
       ></DeleteConfirmation>
     </>
   );

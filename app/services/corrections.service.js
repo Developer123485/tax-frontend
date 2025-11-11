@@ -10,11 +10,23 @@ export const CorrectionsService = {
     getCorrectionChallans,
     getCorrectionChallan,
     saveCorrectionChallan,
-    getCorrectionDeducteeEntries
+    getCorrectionDeducteeEntries,
+    deleteCorrectionDeducteeEntry,
+    deleteCorrectionBulkDeducteeEntry
 };
 
 async function getCorrectionChallans(model) {
     const result = await api.post(`correctionStatements/challans/fetch`, model);
+    return result;
+}
+
+async function deleteCorrectionDeducteeEntry(id) {
+    const result = await api.get(`correctionStatements/deducteeEntry/delete/${id}`);
+    return result;
+}
+
+async function deleteCorrectionBulkDeducteeEntry(model) {
+    const result = await api.post(`correctionStatements/deducteeEntry/deleteBulkEntry`, model);
     return result;
 }
 

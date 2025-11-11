@@ -41,7 +41,9 @@ export default function DeducteeEntryDetail({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
@@ -50,7 +52,9 @@ export default function DeducteeEntryDetail({ params }) {
     {
       name: "Deductee Entry",
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}/deductee-entry?categoryId=${searchParams.get(
+      href: `/deductors/${deductorId}/tds/corrections/${form}/deductee-entry?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
         "categoryId"
       )}&financial_year=${searchParams.get(
         "financial_year"
