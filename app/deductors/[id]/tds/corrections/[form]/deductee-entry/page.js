@@ -231,7 +231,12 @@ export default function DeducteeEntry({ params }) {
       width: "135px",
     },
   ];
-  const totalPages = Math.ceil(totalItems / pageSize);
+
+  const conditionalRowStyles =
+    [{
+      when: (row) => row.correction, style:
+        { backgroundColor: "#E2FFE8", userSelect: "auto", },
+    },];
 
   useEffect(() => {
     if (
@@ -400,22 +405,6 @@ export default function DeducteeEntry({ params }) {
                 >
                   Bulk Delete
                 </button>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    setConfirmTitle("All Deductee Entry");
-                    setDeleteConfirm(true);
-                  }}
-                  disabled={
-                    deducteeEntrys &&
-                      deducteeEntrys.deducteeEntryList?.length == 0
-                      ? true
-                      : false
-                  }
-                  className="btn btn-primary"
-                >
-                  Delete All
-                </button>
               </div>
               <div className="col-sm-3 col-md-3">
                 <div className="d-flex align-items-center">
@@ -469,6 +458,8 @@ export default function DeducteeEntry({ params }) {
                           paginationPerPage={pageSize}
                           selectableRowsNoSelectAll={true}
                           onSelectedRowsChange={handleChange}
+                          selectableRowDisabled={row => !row.correction}
+                          conditionalRowStyles={conditionalRowStyles}
                           customInput={<CustomCheckbox />}
                           paginationComponentOptions={{
                             noRowsPerPage: true,
