@@ -224,6 +224,11 @@ export default function Challans({ params }) {
       width: "135px",
     },
   ];
+  const conditionalRowStyles =
+    [{
+      when: (row) => row.correction, style:
+        { backgroundColor: "#E2FFE8", userSelect: "auto", },
+    },];
   useEffect(() => {
     if (
       searchParams.get("financial_year") &&
@@ -383,6 +388,7 @@ export default function Challans({ params }) {
                           paginationTotalRows={challans.totalRows}
                           paginationPerPage={pageSize}
                           onSelectedRowsChange={handleChange}
+                          conditionalRowStyles={conditionalRowStyles}
                           selectableRowsNoSelectAll={true}
                           customInput={<CustomCheckbox />}
                           paginationComponentOptions={{
