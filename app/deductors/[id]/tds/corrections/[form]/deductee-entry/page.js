@@ -15,8 +15,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
-export default function Challans({ params }) {
+export default function DeducteeEntry({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
   const form = resolvedParams?.form;
@@ -49,7 +50,7 @@ export default function Challans({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/${form}${typeof window !== "undefined" ? window.location.search : ""
+      href: `/deductors/${deductorId}/tds/corrections/${form}${typeof window !== "undefined" ? window.location.search : ""
         }`,
     },
     {
@@ -310,12 +311,12 @@ export default function Challans({ params }) {
       pageNumber: currentPage,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
+      deductorId: parseInt(searchParams.get("correctionId")),
       challanId: challanId,
       search: searchValue,
       categoryId: parseInt(searchParams.get("categoryId")),
     };
-    DeducteeEntryService.getDeducteeEntries(model)
+    CorrectionsService.getCorrectionDeducteeEntries(model)
       .then((res) => {
         if (res) {
           setDeducteeEntrys(res);

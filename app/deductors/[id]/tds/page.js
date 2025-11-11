@@ -448,7 +448,8 @@ export default function TDSDashboard({ params }) {
   }
 
   const handleRowDoubleClick = (row) => {
-    router.push(`/deductors/${row.id}/tds`);
+    let cateObj = getCateObj(row.form);
+    router.push(`/deductors/${deductorId}/tds/corrections/${cateObj.path}?correctionId=${row.id}&categoryId=${cateObj.id}&financial_year=${financialYear}&quarter=${quarter}`)
   };
 
   const fileSelectHandler = (event) => {

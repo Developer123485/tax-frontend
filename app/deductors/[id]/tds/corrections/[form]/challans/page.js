@@ -185,32 +185,6 @@ export default function Challans({ params }) {
                 </OverlayTrigger>
               </a>
             </span>
-            <span className="mx-2 opacity-50">|</span>
-            <span>
-              {" "}
-              <a
-                onClick={(e) => {
-                  setConfirmTitle("Challan Entry");
-                  setDeleteId(row.id);
-                  setDeleteConfirm(true);
-                }}
-              >
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>Delete</Tooltip>}
-                >
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/dashboards/table_delete_icon.svg"
-                      alt="table_delete_icon"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </a>
-            </span>
           </div>
         </>
       ),
@@ -354,16 +328,12 @@ export default function Challans({ params }) {
               <div className="col-md-6 d-flex align-items-center justify-content-end">
                 <button
                   type="button"
-                  onClick={(e) => {
-                    setConfirmTitle("All Challan Entry");
-                    setDeleteConfirm(true);
-                  }}
                   disabled={
                     challans && challans.challanList.length == 0 ? true : false
                   }
                   className="btn btn-primary"
                 >
-                  Delete All
+                  Undo
                 </button>
               </div>
             </div>
@@ -388,6 +358,7 @@ export default function Challans({ params }) {
                           paginationTotalRows={challans.totalRows}
                           paginationPerPage={pageSize}
                           onSelectedRowsChange={handleChange}
+                          selectableRowDisabled={row => !row.correction}
                           conditionalRowStyles={conditionalRowStyles}
                           selectableRowsNoSelectAll={true}
                           customInput={<CustomCheckbox />}
