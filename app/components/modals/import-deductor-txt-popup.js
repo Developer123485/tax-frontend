@@ -84,13 +84,13 @@ export default function ImportDeductorTXTPopup(props) {
     };
     try {
       let result;
-      if (pathname === "deductors") {
+      if (pathname === "/deductors") {
         formData.append("deductorId", deductorId ? parseInt(deductorId) : 0);
         result = await api.post(`forms/uploadTXTFile`, formData, {
           timeout: 300000 // 5 minutes (in ms)
         }, config);
       }
-      if (pathname !== "deductors") {
+      if (pathname !== "/deductors") {
         formData.append("deductorId", props.deductorId);
         formData.append("quarter", props.quarter);
         formData.append("financialYear", props.financialYear);
