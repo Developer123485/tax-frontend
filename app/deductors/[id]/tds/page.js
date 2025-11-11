@@ -263,7 +263,7 @@ export default function TDSDashboard({ params }) {
     } else {
       localStorage.setItem("tabKey", "tds");
     }
-  }, [currentPage, key]);
+  }, [currentPage, key, financialYear, quarter]);
 
   useEffect(() => {
     let array = [];
@@ -335,7 +335,9 @@ export default function TDSDashboard({ params }) {
       pageSize: pageSize,
       pageNumber: currentPage,
       search: searchValue,
-      deductorId: deductorId
+      deductorId: deductorId,
+      financialYear: financialYear,
+      quarter: quarter,
     };
     CorrectionsService.getCorrectionsStatement(model)
       .then((res) => {
