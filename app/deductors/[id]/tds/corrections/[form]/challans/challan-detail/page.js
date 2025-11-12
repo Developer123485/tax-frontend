@@ -95,6 +95,8 @@ export default function ChallanDetail({ params }) {
     interestAmount: 0,
     fee: 0,
     penaltyTotal: 0,
+    tdsOther: 0,
+    tdsInterest: 0,
     deductorId: "",
     categoryId: "",
     financialYear: "",
@@ -478,6 +480,7 @@ export default function ChallanDetail({ params }) {
                       className="form-control"
                       id="interestAmount"
                       maxLength={15}
+                      disabled
                       autoComplete="off"
                       value={challanDetail.interestAmount}
                       onChange={(e) => {
@@ -500,6 +503,7 @@ export default function ChallanDetail({ params }) {
                       id="fee"
                       maxLength={15}
                       autoComplete="off"
+                      disabled
                       value={challanDetail.fee}
                       onChange={(e) => {
                         if (CommonService.isNumeric(e.target.value)) {
@@ -526,6 +530,48 @@ export default function ChallanDetail({ params }) {
                       onChange={(e) => {
                         if (CommonService.isNumeric(e.target.value)) {
                           handleInput("others", e);
+                        }
+                      }}
+                    />
+                  </div>
+
+                  <div className="col-md-3">
+                    <label htmlFor="penalty" className="form-label">
+                      <span>TDS/TCS-Interest(As Per deductee Annex.)</span>
+                    </label>
+
+                    <input
+                      type="text"
+                      placeholder=""
+                      className="form-control"
+                      id="Interest"
+                      maxLength={15}
+                      autoComplete="off"
+                      value={challanDetail.tdsInterest}
+                      onChange={(e) => {
+                        if (CommonService.isNumeric(e.target.value)) {
+                          handleInput("tdsInterest", e);
+                        }
+                      }}
+                    />
+                  </div>
+
+                  <div className="col-md-3">
+                    <label htmlFor="penalty" className="form-label">
+                      <span>TDS/TCS-Other(As Per deductee Annex.)</span>
+                    </label>
+
+                    <input
+                      type="text"
+                      placeholder=""
+                      className="form-control"
+                      id="Other"
+                      maxLength={15}
+                      autoComplete="off"
+                      value={challanDetail.tdsOther}
+                      onChange={(e) => {
+                        if (CommonService.isNumeric(e.target.value)) {
+                          handleInput("tdsOther", e);
                         }
                       }}
                     />
