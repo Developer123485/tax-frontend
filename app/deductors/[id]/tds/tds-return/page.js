@@ -348,9 +348,9 @@ export default function TDSReturn({ params }) {
       pageSize: pageSize,
       pageNumber: currentPage,
       financialYear: searchParams.get("financial_year"),
-      quarter: "",
+      quarter: null,
       deductorId: deductorId,
-      categoryId: "",
+      categoryId: 0,
       search: searchValue,
     };
     ReportingService.getTdsReturns(model, value)
