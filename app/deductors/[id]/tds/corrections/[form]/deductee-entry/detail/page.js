@@ -155,7 +155,7 @@ export default function DeducteeEntryDetail({ params }) {
         setEnumList(res);
       }
     });
-    CorrectionsService.getCorrectionDeducteeDropdowns(deductorId, searchParams.get("categoryId")).then((res) => {
+    CorrectionsService.getCorrectionDeducteeDropdowns(parseInt(searchParams.get("correctionId")), searchParams.get("categoryId")).then((res) => {
       if (res) {
         setDeducteeDropdowns(res);
       }
@@ -276,7 +276,7 @@ export default function DeducteeEntryDetail({ params }) {
       pageNumber: 1,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
-      deductorId: deductorId,
+      deductorId: parseInt(searchParams.get("correctionId")),
       categoryId: parseInt(searchParams.get("categoryId")),
     };
     CorrectionsService.getChallansDropdowns(model).then((res) => {
@@ -366,7 +366,7 @@ export default function DeducteeEntryDetail({ params }) {
       model.financialYear = searchParams.get("financial_year");
       model.quarter = searchParams.get("quarter");
       model.categoryId = searchParams.get("categoryId");
-      model.deductorId = deductorId;
+      model.deductorId = parseInt(searchParams.get("correctionId"));
       if (searchParams.get("categoryId") == "1") {
         model.employeeId = parseInt(model.deducteeId);
         model.deducteeId = null;
@@ -704,7 +704,7 @@ export default function DeducteeEntryDetail({ params }) {
                     setRateApplicable={(e) => setRateApplicable(e)}
                     deducteeEntryErrors={deducteeEntryErrors}
                     isDirty={isDirty}
-                    deductorId={deductorId}
+                    deductorId={parseInt(searchParams.get("correctionId"))}
                     setChangeTcs={setChangeTcs}
                   ></DeducteeFormEntryDetail>
                 )}
