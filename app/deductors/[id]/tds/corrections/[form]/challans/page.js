@@ -23,8 +23,10 @@ export default function Challans({ params }) {
   const pathname = usePathname();
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
+  const [toggledClearRows, setToggledClearRows] = useState(false); // 👈 control flag
   const [pageSize, setPageSize] = useState(20);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [showLoader, setShowLoader] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
@@ -123,6 +125,14 @@ export default function Challans({ params }) {
       selector: (row) => `${row?.others.toFixed(2) || "-"}`,
     },
     {
+      name: "Tds/Tcs Interest",
+      selector: (row) => `${row?.tdsInterest.toFixed(2) || "-"}`,
+    },
+    {
+      name: "Tds/Tcs Others",
+      selector: (row) => `${row?.tdsOther.toFixed(2) || "-"}`,
+    },
+    {
       name: "Total Tax",
       selector: (row) => row.totalTaxDeposit.toFixed(2) || "-",
       grow: 1.5,
@@ -135,7 +145,7 @@ export default function Challans({ params }) {
     {
       name: "Date Of Deposit",
       selector: (row) => row.dateOfDeposit || "-",
-      grow: 1.5,
+      width: "110px"
     },
     {
       name: "Voucher No",
@@ -219,72 +229,33 @@ export default function Challans({ params }) {
     setSelectedData(state.selectedRows);
   };
 
-  function deleteChallan(e) {
+  function undoChallan(e) {
     e.preventDefault();
-    setDeleteConfirm(false);
-    setShowLoader(true);
-    if (confirmTitle === "All Challan Entry") {
+    if (selectedData && selectedData.length > 0) {
+      setLoading(true);
       const model = {
-        financialYear: searchParams.get("financial_year"),
-        quarter: searchParams.get("quarter"),
+        Ids: selectedData.map((p) => p.id),
         deductorId: deductorId,
-        categoryId: parseInt(searchParams.get("categoryId")),
+        correctionId: parseInt(searchParams.get("correctionId"))
       };
-      ChallanService.deleteAllChallan(model)
+      CorrectionsService.undoChallans(model)
         .then((res) => {
           if (res) {
-            toast.success("Delete All Challan Successfully");
-            setShowLoader(false);
+            setToggledClearRows(!toggledClearRows);
+            toast.success("Undo Challan Successfully");
             fetchCorrectionChallans("");
           }
-        })
-        .catch((e) => {
+        }).catch(e => {
           if (e?.response?.data?.errorMessage) {
             toast.error(e?.response?.data?.errorMessage);
           }
-          setDeleteConfirm(false);
-        });
-    } else if (confirmTitle === "Challan Entry") {
-      ChallanService.deleteChallan(deleteId)
-        .then((res) => {
-          if (res) {
-            setDeleteConfirm(false);
-            toast.success("Delete Challan Successfully");
-            fetchCorrectionChallans("");
+          else {
+            toast.error(e?.message);
           }
         })
-        .catch((e) => {
-          if (e?.response?.data?.errorMessage) {
-            toast.error(e?.response?.data?.errorMessage);
-          }
-          setDeleteConfirm(false);
+        .finally((f) => {
+          setLoading(false);
         });
-    } else {
-      if (selectedData && selectedData.length > 0) {
-        const model = {
-          Ids: selectedData.map((p) => p.id),
-        };
-        ChallanService.deleteBulkChallan(model)
-          .then((res) => {
-            if (res) {
-              toast.success("Delete Challan Successfully");
-              fetchCorrectionChallans("");
-              setDeleteConfirm(false);
-              setSelectedData([]);
-            }
-          }).catch(e => {
-            if (e?.response?.data?.errorMessage) {
-              toast.error(e?.response?.data?.errorMessage);
-            }
-            else {
-              toast.error(e?.message);
-            }
-            setDeleteConfirm(false);
-          })
-          .finally((f) => {
-            setDeleteConfirm(false);
-          });
-      }
     }
   }
 
@@ -329,10 +300,13 @@ export default function Challans({ params }) {
                 <button
                   type="button"
                   disabled={
-                    challans && challans.challanList.length == 0 ? true : false
-                  }
+                    (challans && challans.challanList.length == 0 ? true : false) || loading}
+                  onClick={(e) => undoChallan(e)}
                   className="btn btn-primary"
                 >
+                  {loading && (
+                    <div className="spinner-border me-2" role="status"></div>
+                  )}
                   Undo
                 </button>
               </div>
@@ -361,6 +335,7 @@ export default function Challans({ params }) {
                           selectableRowDisabled={row => !row.correction}
                           conditionalRowStyles={conditionalRowStyles}
                           selectableRowsNoSelectAll={true}
+                          clearSelectedRows={toggledClearRows}
                           customInput={<CustomCheckbox />}
                           paginationComponentOptions={{
                             noRowsPerPage: true,

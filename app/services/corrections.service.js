@@ -12,7 +12,8 @@ export const CorrectionsService = {
     saveCorrectionChallan,
     getCorrectionDeducteeEntries,
     deleteCorrectionDeducteeEntry,
-    deleteCorrectionBulkDeducteeEntry
+    deleteCorrectionBulkDeducteeEntry,
+    undoChallans
 };
 
 async function getCorrectionChallans(model) {
@@ -23,6 +24,11 @@ async function getCorrectionChallans(model) {
 async function deleteCorrectionDeducteeEntry(id) {
     const result = await api.get(`correctionStatements/deducteeEntry/delete/${id}`);
     return result;
+}
+
+async function undoChallans(model) {
+  const result = await api.post(`correctionStatements/challans/undo`, model);
+  return result;
 }
 
 async function deleteCorrectionBulkDeducteeEntry(model) {
