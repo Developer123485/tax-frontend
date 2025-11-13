@@ -301,7 +301,7 @@ export default function Challans({ params }) {
                   type="button"
                   disabled={
                     (challans && challans.challanList.length == 0 ? true : false) || loading}
-                  onClick={(e) => undoChallan(e)}
+                  onClick={(e) => undoChallan(e)} 
                   className="btn btn-primary"
                 >
                   {loading && (

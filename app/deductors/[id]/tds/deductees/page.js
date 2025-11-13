@@ -747,48 +747,6 @@ export default function Deductees({ params }) {
       </section>
       <section className="py-5 py-md-4 bg-light-gray">
         <div className="container">
-          {/*           <div className="">
-            <div className="col-md-12">
-              <div className="pb-3">
-                <div className="form-check form-check-inline fs-18">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="deductees"
-                    id="deductees"
-                    value="deductees"
-                    checked={type === "Deductees"}
-                    onChange={(e) => setType("Deductees", e)}
-                  />
-                  <label
-                    className="form-check-label  fw-bold"
-                    htmlFor="deductees"
-                  >
-                    Deductees
-                  </label>
-                </div>
-                <div className="form-check form-check-inline fs-18">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="employees"
-                    id="employees"
-                    value="employees"
-                    checked={type === "Employees"}
-                    onChange={(e) => {
-                      setType("Employees", e);
-                    }}
-                  />
-                  <label
-                    className="form-check-label fw-bold"
-                    htmlFor="employees"
-                  >
-                    Employees
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
               <div className="col-md-2">

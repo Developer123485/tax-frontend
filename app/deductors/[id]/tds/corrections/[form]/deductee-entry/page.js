@@ -31,6 +31,7 @@ export default function DeducteeEntry({ params }) {
   const [deducteeEntrys, setDeducteeEntrys] = useState(null);
   const [challanDropdowns, setChallanDropdowns] = useState(null);
   const [selectedData, setSelectedData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [confirmTitle, setConfirmTitle] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const searchParams = useSearchParams(null);
@@ -327,6 +328,39 @@ export default function DeducteeEntry({ params }) {
         }, 100);
       });
   }
+
+  function undoDeducteeEntry(e) {
+    e.preventDefault();
+    if (selectedData && selectedData.length > 0) {
+      setLoading(true);
+      const model = {
+        Ids: selectedData.map((p) => p.id),
+        deductorId: deductorId,
+        correctionId: parseInt(searchParams.get("correctionId"))
+      };
+      CorrectionsService.undoDeducteeEntrys(model)
+        .then((res) => {
+          if (res) {
+            setToggledClearRows(!toggledClearRows);
+            toast.success("Undo Deductee Entry Successfully");
+            fetchCorrectionChallans("");
+          }
+        }).catch(e => {
+          if (e?.response?.data?.errorMessage) {
+            toast.error(e?.response?.data?.errorMessage);
+          }
+          else {
+            toast.error(e?.message);
+          }
+        })
+        .finally((f) => {
+          setLoading(false);
+        });
+    }
+  }
+
+
+
   return (
     <>
       <ToastContainer />
@@ -389,6 +423,19 @@ export default function DeducteeEntry({ params }) {
                   className="btn btn-outline-primary me-3"
                 >
                   Bulk Delete
+                </button>
+                <button
+                  type="button"
+                  disabled={
+                    (!selectedData || selectedData.length == 0 ? true : false)
+                  }
+                  onClick={(e) => undoDeducteeEntry(e)}
+                  className="btn btn-outline-primary me-3"
+                >
+                  {loading && (
+                    <div className="spinner-border me-2" role="status"></div>
+                  )}
+                  Undo
                 </button>
               </div>
               <div className="col-sm-3 col-md-3">
