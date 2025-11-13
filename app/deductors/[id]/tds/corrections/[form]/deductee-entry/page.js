@@ -32,6 +32,7 @@ export default function DeducteeEntry({ params }) {
   const [challanDropdowns, setChallanDropdowns] = useState(null);
   const [selectedData, setSelectedData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [toggledClearRows, setToggledClearRows] = useState(false); // 👈 control flag
   const [confirmTitle, setConfirmTitle] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const searchParams = useSearchParams(null);
@@ -343,7 +344,7 @@ export default function DeducteeEntry({ params }) {
           if (res) {
             setToggledClearRows(!toggledClearRows);
             toast.success("Undo Deductee Entry Successfully");
-            fetchCorrectionChallans("");
+            fetchDeducteeEntrys("");
           }
         }).catch(e => {
           if (e?.response?.data?.errorMessage) {
@@ -491,6 +492,7 @@ export default function DeducteeEntry({ params }) {
                           selectableRowsNoSelectAll={true}
                           onSelectedRowsChange={handleChange}
                           conditionalRowStyles={conditionalRowStyles}
+                          clearSelectedRows={toggledClearRows}
                           customInput={<CustomCheckbox />}
                           paginationComponentOptions={{
                             noRowsPerPage: true,
