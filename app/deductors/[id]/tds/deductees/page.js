@@ -803,7 +803,10 @@ export default function Deductees({ params }) {
                       className="form-select me-3"
                       style={{ width: "200px" }}
                       value={deducteeStatus}
-                      onChange={(e => setDeducteeStatus(e.target.value))}
+                      onChange={(e => {
+                        setCurrentPage(1);
+                        setDeducteeStatus(e.target.value)
+                      })}
                       aria-label=""
                       autoComplete="off"
                     >
@@ -889,7 +892,10 @@ export default function Deductees({ params }) {
                       className="form-select me-3"
                       style={{ width: "200px" }}
                       value={employeeStatus}
-                      onChange={(e => setEmployeeStatus(e.target.value))}
+                      onChange={(e => {
+                        setEmployeePageNumber(1);
+                        setEmployeeStatus(e.target.value)
+                      })}
                       aria-label=""
                       autoComplete="off"
                     >
