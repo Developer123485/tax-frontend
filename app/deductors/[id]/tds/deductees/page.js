@@ -16,6 +16,7 @@ import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import api from "@/app/utils/interceptors";
 import { DeductorsService } from "@/app/services/deductors.service";
 import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
+import { CommonService } from "@/app/services/common.service";
 export default function Deductees({ params }) {
   const resolvedParams = use(params);
   const deductorId = resolvedParams?.id;
@@ -118,7 +119,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "Last Verified On",
-      selector: (row) => (row.verifyLastDate ? row.verifyLastDate : "-"),
+      selector: (row) => (row.verifyLastDate ? CommonService.formatDate(row.verifyLastDate) : "-"),
       grow: 2,
     },
     {
@@ -221,7 +222,7 @@ export default function Deductees({ params }) {
     },
     {
       name: "Last Verified On",
-      selector: (row) => (row.verifyLastDate ? row.verifyLastDate : "-"),
+      selector: (row) => (row.verifyLastDate ? CommonService.formatDate(row.verifyLastDate) : "-"),
       grow: 2,
     },
     {
