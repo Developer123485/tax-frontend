@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DeducteeFormEntryDetail from "@/app/components/deductee-entry/form-deductee-detail";
 import { DeducteeEntryService } from "@/app/services/deducteeEntry.service";
 import HeaderList from "@/app/components/header/header-list";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function DeducteeEntryDetail({ params }) {
   const resolvedParams = use(params);
@@ -154,7 +155,7 @@ export default function DeducteeEntryDetail({ params }) {
         setEnumList(res);
       }
     });
-    DeducteeEntryService.getDeducteeDropdowns(deductorId, searchParams.get("categoryId")).then((res) => {
+    CorrectionsService.getCorrectionDeducteeDropdowns(deductorId, searchParams.get("categoryId")).then((res) => {
       if (res) {
         setDeducteeDropdowns(res);
       }
@@ -165,7 +166,7 @@ export default function DeducteeEntryDetail({ params }) {
 
   function getDeductryEntry() {
     if (searchParams.get("id")) {
-      DeducteeEntryService.getDeducteeEntry(
+      CorrectionsService.getCorrectionDeducteeEntry(
         parseInt(searchParams.get("id"))
       ).then((res) => {
         if (res && res.id > 0) {
@@ -271,14 +272,14 @@ export default function DeducteeEntryDetail({ params }) {
 
   function getChallansDropdown() {
     const model = {
-      pageSize: 50,
+      pageSize: 500,
       pageNumber: 1,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
       deductorId: deductorId,
       categoryId: parseInt(searchParams.get("categoryId")),
     };
-    ChallanService.getChallansDropdowns(model).then((res) => {
+    CorrectionsService.getChallansDropdowns(model).then((res) => {
       if (res) {
         setChallans(res);
       }
@@ -373,12 +374,14 @@ export default function DeducteeEntryDetail({ params }) {
         model.deducteeId = parseInt(model.deducteeId);
         model.employeeId = null;
       }
-      DeducteeEntryService.saveDeducteeEntry(model)
+      CorrectionsService.saveCorrectionDeducteeEntry(model)
         .then((res) => {
           if (res) {
             toast.success("Deductee Entry Created Successfully!");
             router.push(
-              `/deductors/${deductorId}/tds/${form}/deductee-entry?categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
+              `/deductors/${deductorId}/tds/corrections/${form}/deductee-entry?correctionId=${searchParams.get(
+                "correctionId"
+              )}&categoryId=${searchParams.get("categoryId")}&financial_year=${searchParams.get("financial_year")}&quarter=${searchParams.get("quarter")}`
             );
           } else {
             setLoading(false);

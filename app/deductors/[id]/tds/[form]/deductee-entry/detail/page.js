@@ -267,7 +267,7 @@ export default function DeducteeEntryDetail({ params }) {
 
   function getChallansDropdown() {
     const model = {
-      pageSize: 50,
+      pageSize: 500,
       pageNumber: 1,
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),

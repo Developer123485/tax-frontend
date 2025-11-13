@@ -14,7 +14,11 @@ export const CorrectionsService = {
     deleteCorrectionDeducteeEntry,
     deleteCorrectionBulkDeducteeEntry,
     undoChallans,
-    undoDeducteeEntrys
+    undoDeducteeEntrys,
+    getCorrectionDeducteeEntry,
+    getCorrectionDeducteeDropdowns,
+    saveCorrectionDeducteeEntry,
+    getChallansDropdowns
 };
 
 async function getCorrectionChallans(model) {
@@ -44,6 +48,27 @@ async function deleteCorrectionBulkDeducteeEntry(model) {
 
 async function getCorrectionDeducteeEntries(model) {
     const result = await api.post(`correctionStatements/deducteeEntry/fetch`, model);
+    return result;
+}
+
+async function getCorrectionDeducteeDropdowns(DeductorId, catId) {
+    const result = await api.get(`correctionStatements/deducteeDropdowns/${DeductorId}/${catId}`);
+    return result;
+}
+
+
+async function getCorrectionDeducteeEntry(id) {
+    const result = await api.get(`correctionStatements/deducteeEntry/${id}`);
+    return result;
+}
+
+async function saveCorrectionDeducteeEntry(model) {
+    const result = await api.post("correctionStatements/deductee-entry", model);
+    return result;
+}
+
+async function getChallansDropdowns(model) {
+    const result = await api.post(`correctionStatements/challanDropdowns`, model);
     return result;
 }
 
