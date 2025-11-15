@@ -739,6 +739,7 @@ export default function Detail({ params }) {
                                 enumList={enumList}
                                 handleInputDeductor={handleInputDeductor}
                                 isNextDirty={isNextDirty}
+                                type="correction"
                                 deductorDetail={deductorDetail}
                                 itdLogin={itdLogin}
                                 itdLoginLoading={itdLoginLoading}

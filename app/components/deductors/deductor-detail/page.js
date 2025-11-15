@@ -210,26 +210,27 @@ export default function DeductorDetail(props) {
               <div className="col-md-12 mt-0">
                 <h5 className="text-blue fw-bold">Deductor Details</h5>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="inputCodeNo" className="form-label">
-                  <span>Code No</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder=""
-                  className="form-control"
-                  id="inputCodeNo"
-                  maxLength={10}
-                  autoComplete="off"
-                  value={deductorDetail.deductorCodeNo}
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      e.target.value = e.target.value.trim();
-                    }
-                    handleInput("deductorCodeNo", e)
-                  }}
-                />
-              </div>
+              {props.type === "regular" &&
+                <div className="col-md-3">
+                  <label htmlFor="inputCodeNo" className="form-label">
+                    <span>Code No</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    id="inputCodeNo"
+                    maxLength={10}
+                    autoComplete="off"
+                    value={deductorDetail.deductorCodeNo}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        e.target.value = e.target.value.trim();
+                      }
+                      handleInput("deductorCodeNo", e)
+                    }}
+                  />
+                </div>}
               <div className="col-md-3">
                 <label htmlFor="inputName" className="form-label">
                   <span>Deductor Name</span>

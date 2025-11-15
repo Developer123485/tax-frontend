@@ -18,7 +18,9 @@ export const CorrectionsService = {
     getCorrectionDeducteeEntry,
     getCorrectionDeducteeDropdowns,
     saveCorrectionDeducteeEntry,
-    getChallansDropdowns
+    getChallansDropdowns,
+    getCorrectionDeductees,
+    getCorrectionEmployees
 };
 
 async function getCorrectionChallans(model) {
@@ -69,6 +71,16 @@ async function saveCorrectionDeducteeEntry(model) {
 
 async function getChallansDropdowns(model) {
     const result = await api.post(`correctionStatements/challanDropdowns`, model);
+    return result;
+}
+
+async function getCorrectionDeductees(model, deductorId) {
+    const result = await api.post(`correctionStatements/deductees/fetch/${deductorId}`, model);
+    return result;
+}
+
+async function getCorrectionEmployees(model, deductorId) {
+    const result = await api.post(`employees/fetch/${deductorId}`, model);
     return result;
 }
 

@@ -473,6 +473,35 @@ export default function TDSForm({ params }) {
                     }
                     onClick={(e) =>
                       router.push(
+                        pathname + "/deductees?correctionId=" + searchParams.get("correctionId") + "&type=Deductees"
+                      )
+                    }
+                  >
+                    <div className="bg-white position-relative d-flex flex-row justify-content-center align-items-center py-3 py-md-3 px-3 ps-md-3 pe-md-4 border border-1 rounded-4 countbox">
+                      <span
+                        style={{
+                          width: 80,
+                          height: 60,
+                        }}
+                        className="fs-3 rounded-4 fw-bold bg-light-gray me-3 d-flex align-items-center justify-content-center"
+                      >
+                      </span>
+                      <div className="">
+                        <h6 className="text-capitalize fw-bold">Correction Pan Details</h6>
+                        <p className="mb-0 fs-12">
+                          List of Pan used in this return
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      searchParams.get("quarter") == "Q4" && form === "form-24Q"
+                        ? "col-12 col-md-4 ps-md-0"
+                        : "col-12 col-md-4 ps-md-0"
+                    }
+                    onClick={(e) =>
+                      router.push(
                         pathname + "/challans" + window.location.search
                       )
                     }
@@ -488,7 +517,7 @@ export default function TDSForm({ params }) {
                         {formsDashboardDetail.challanCount}
                       </span>
                       <div className="">
-                        <h6 className="text-capitalize fw-bold">Challans</h6>
+                        <h6 className="text-capitalize fw-bold">Correction Challans</h6>
                         <p className="mb-0 fs-12">
                           List of challans used in this return
                         </p>
@@ -519,7 +548,7 @@ export default function TDSForm({ params }) {
                       </span>
                       <div className="">
                         <h6 className="text-capitalize fw-bold">
-                          Deductee Details
+                          Correction Deductee Details
                         </h6>
                         <p className="mb-0 fs-12">
                           List of deductees used in this return
@@ -549,7 +578,7 @@ export default function TDSForm({ params }) {
                           </span>
                           <div className="">
                             <h6 className="text-capitalize fw-bold">
-                              Salary Detail
+                              Correction Salary Detail
                             </h6>
                             <p className="mb-0 fs-12">
                               List of salary detail used in this return
@@ -637,7 +666,7 @@ export default function TDSForm({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary w-100"
-                      // onClick={(e) => setIsExportFormConfirmation(true)}
+                    // onClick={(e) => setIsExportFormConfirmation(true)}
                     >
                       Form Export
                     </button>

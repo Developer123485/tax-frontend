@@ -729,6 +729,7 @@ export default function AddDeductor() {
                 enumList={enumList}
                 handleInputDeductor={handleInputDeductor}
                 isNextDirty={isNextDirty}
+                type="regular"
                 deductorDetail={deductorDetail}
                 itdLogin={itdLogin}
                 itdLoginLoading={itdLoginLoading}
