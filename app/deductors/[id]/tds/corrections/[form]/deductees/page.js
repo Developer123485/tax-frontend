@@ -176,23 +176,13 @@ export default function Deductees({ params }) {
       grow: 1.5,
     },
     {
-      name: "Sex",
-      selector: (row) => row.sex || "-",
+      name: "New pan",
+      selector: (row) => row.newPannumber || "-",
       grow: 2,
     },
     {
-      name: "Pan Status",
-      selector: (row) => (row.panVerificationStatus ? row.panVerificationStatus : "-"),
-    },
-    {
-      name: "Name as per PAN",
-      selector: (row) => (row.nameAsPerPan ? row.nameAsPerPan : "-"),
-      grow: 2,
-    },
-    {
-      name: "Last Verified On",
-      selector: (row) => (row.verifyLastDate ? CommonService.formatDate(row.verifyLastDate) : "-"),
-      grow: 2,
+      name: "Employee Detail Count",
+      selector: (row) => (row.employeeDetailCount ? row.employeeDetailCount : "-"),
     },
     {
       name: "Actions",
