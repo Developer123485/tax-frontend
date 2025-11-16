@@ -473,7 +473,7 @@ export default function TDSForm({ params }) {
                     }
                     onClick={(e) =>
                       router.push(
-                        pathname + "/deductees?correctionId=" + searchParams.get("correctionId") + "&type=Deductees"
+                        pathname + "/deductees" + window.location.search
                       )
                     }
                   >
@@ -601,7 +601,7 @@ export default function TDSForm({ params }) {
                   <div className="col-12 col-md-7">
                     <h4 className="fw-bold">Import from Excel</h4>
                     <span>
-                      Auto-import of deductions, challans, and deductee details
+                      Auto-import of correction deductions, challans, and deductee details
                       {searchParams.get("quarter") == "Q4" &&
                         form === "form-24Q"
                         ? "and Salary detail "
@@ -659,7 +659,7 @@ export default function TDSForm({ params }) {
                       Export {form.toUpperCase()} Data
                     </h4>
                     <span>
-                      Generate {form.toUpperCase()} with the saved data of the return.
+                      Generate {form.toUpperCase()} with the saved data of the correction return.
                     </span>
                   </div>
                   <div className="col-12 col-md-3">

@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function BreadcrumbList(props) {
   const { breadcrumbs } = props;
+  const router = useRouter();
+
 
   return (
     <>
@@ -24,8 +27,7 @@ export default function BreadcrumbList(props) {
                     >
                       {!option.isActive ? (
                         <a className="d-flex align-items-center"
-
-                          onClick={(e) => (window.location.href = option.href)}
+                          onClick={() => option.href === "back" ? router.back() : router.push(option.href)}
                         >
                           {option.name} <Image
                             className="d-flex ms-1"

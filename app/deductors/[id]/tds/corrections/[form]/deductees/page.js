@@ -38,7 +38,6 @@ export default function Deductees({ params }) {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
-  const [type, setType] = useState("Deductees");
   const [deducteeStatus, setDeducteeStatus] = useState("All");
   const [employeeStatus, setEmployeeStatus] = useState("All");
   const [verifyType, setVerifyType] = useState("");
@@ -61,7 +60,13 @@ export default function Deductees({ params }) {
       href: `/deductors/${deductorId}/tds`,
     },
     {
-      name: form == "24q-form" ? "Employees" : "Deductees",
+      name: form,
+      isActive: false,
+      href: `/deductors/${deductorId}/tds/corrections/${form}${typeof window !== "undefined" ? window.location.search : ""
+        }`,
+    },
+    {
+      name: form == "form-24Q" ? "Employees" : "Deductees",
       isActive: true,
     },
   ]);
@@ -218,14 +223,13 @@ export default function Deductees({ params }) {
     },
   ];
   useEffect(() => {
-    if (searchParams.get("type") == "Deductees")
+    if (form != "form-24Q")
       fetchCorrectionDeductees("");
-    setType(searchParams.get("type"))
     getDeductorDetail()
   }, [currentPage, pageSize, deducteeStatus]);
 
   useEffect(() => {
-    if (searchParams.get("type") == "Employees")
+    if (form == "form-24Q")
       fetchCorrectionEmployees("");
   }, [employeePageSize, employeePageNumber, employeeStatus]);
 
@@ -304,10 +308,10 @@ export default function Deductees({ params }) {
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
               <div className="col-md-2">
                 <h4 className="fw-bold mb-0">
-                  {type === "Deductees" ? "Deductees" : "Employees"}
+                  {form != "form-24Q" ? "Deductees" : "Employees"}
                 </h4>
               </div>
-              {type == "Deductees" &&
+              {form != "form-24Q" &&
                 <>
                   <div className="col-md-7 d-flex align-items-center justify-content-end">
                     <button
@@ -325,7 +329,7 @@ export default function Deductees({ params }) {
                     <div className="input-group searchbox me-3">
                       <input
                         type="search"
-                        placeholder={`Search ${type}`}
+                        placeholder={`Search`}
                         className="form-control bg-light-gray border-end-0"
                         id="SearchDeductees"
                         onChange={(e) => {
@@ -351,7 +355,7 @@ export default function Deductees({ params }) {
                   </div>
                 </>
               }
-              {type == "Employees" &&
+              {form == "form-24Q" &&
                 <>
                   <div className="col-md-7 d-flex align-items-center justify-content-end">
                     <button
@@ -369,7 +373,7 @@ export default function Deductees({ params }) {
                     <div className="input-group searchbox me-3">
                       <input
                         type="search"
-                        placeholder={`Search ${type}`}
+                        placeholder={`Search`}
                         className="form-control bg-light-gray border-end-0"
                         id="SearchEmployee"
                         onChange={(e) => {
@@ -398,7 +402,7 @@ export default function Deductees({ params }) {
             </div>
             <div className="">
               <div className="col-md-12">
-                {type == "Deductees" && (
+                {form !== "form-24Q" && (
                   <div className="table-responsive">
                     <div>
                       {deductees && deductees && deductees.length > 0 && (
@@ -429,7 +433,7 @@ export default function Deductees({ params }) {
                     </div>
                   </div>
                 )}
-                {type == "Employees" && (
+                {form === "form-24Q" && (
                   <div className="table-responsive">
                     <div>
                       {employees && employees && employees.length > 0 && (
