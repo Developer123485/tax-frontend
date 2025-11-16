@@ -109,11 +109,11 @@ export default function Deductees({ params }) {
       selector: (row) => (row.panNumber ? row.panNumber : "-"),
       grow: 1.5,
     },
-    // {
-    //   name: "New Pan",
-    //   selector: (row) => (row.newPannumber ? row.newPannumber : "-"),
-    //   grow: 2,
-    // },
+    {
+      name: "New Pan",
+      selector: (row) => (row.newPannumber ? row.newPannumber : "-"),
+      grow: 2,
+    },
     {
       name: "Deductee Detail Count",
       selector: (row) => (row.deducteeDetailCount ? row.deducteeDetailCount : "-"),
