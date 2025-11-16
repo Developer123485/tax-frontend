@@ -134,10 +134,17 @@ export default function DeducteeFormEntryDetail(props) {
             <button
               type="button"
               className="btn btn-primary w-100 ms-3"
-              onClick={(e) =>
-                router.push(
-                  `/deductors/${props.deductorId}/tds/deductees/detail`
-                )
+              onClick={(e) => {
+                if (form !== "form-24Q") {
+                  router.push(
+                    `/deductors/${props.deductorId}/tds/corrections/${form}/deductees/detail` + window.location.search + "&token=RW1wbG95ZWU="
+                  )
+                } else {
+                  router.push(
+                    `/deductors/${props.deductorId}/tds/corrections/${form}/deductees/detail` + window.location.search + "&token=RGVkdWN0ZWU="
+                  )
+                }
+              }
               }
             >
               Add

@@ -161,6 +161,7 @@ export default function EmployeeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="email"
             value={employeeDetail.email}
             onChange={(e) => handleInput("email", e)}
