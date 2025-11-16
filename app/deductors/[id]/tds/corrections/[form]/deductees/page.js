@@ -119,53 +119,53 @@ export default function Deductees({ params }) {
       selector: (row) => (row.deducteeDetailCount ? row.deducteeDetailCount : "-"),
       grow: 2,
     },
-    // {
-    //   name: "Actions",
-    //   button: true,
-    //   selector: (row) => (
-    //     <>
-    //       {" "}
-    //       <div className="d-flex justify-content-center">
-    //         <span>
-    //           {" "}
-    //           <a
-    //             onClick={(e) => {
-    //               e.preventDefault();
-    //               debugger
-    //               router.push(
-    //                 pathname +
-    //                 `/detail${window.location.search}&id=${row.id}&token=RW1wbG95ZWU=`
-    //               );
-    //             }}
-    //           >
-    //             <OverlayTrigger
-    //               placement="bottom"
-    //               overlay={<Tooltip>Edit</Tooltip>}
-    //             >
-    //               <div>
-    //                 <Image
-    //                   className=""
-    //                   src="/images/dashboards/table_edit_icon.svg"
-    //                   alt="table_edit_icon"
-    //                   width={16}
-    //                   height={16}
-    //                 />
-    //               </div>
-    //             </OverlayTrigger>
-    //           </a>
-    //         </span>
-    //       </div>
-    //     </>
-    //   ),
-    //   style: {
-    //     position: "sticky",
-    //     right: 0,
-    //     backgroundColor: "white",
-    //     zIndex: 1, // Ensure it stays on top of other columns
-    //   },
-    //   grow: 3,
-    //   width: "135px",
-    // },
+    {
+      name: "Actions",
+      button: true,
+      selector: (row) => (
+        <>
+          {" "}
+          <div className="d-flex justify-content-center">
+            <span>
+              {" "}
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  debugger
+                  router.push(
+                    pathname +
+                    `/detail${window.location.search}&id=${row.id}&token=RW1wbG95ZWU=`
+                  );
+                }}
+              >
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>Edit</Tooltip>}
+                >
+                  <div>
+                    <Image
+                      className=""
+                      src="/images/dashboards/table_edit_icon.svg"
+                      alt="table_edit_icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </a>
+            </span>
+          </div>
+        </>
+      ),
+      style: {
+        position: "sticky",
+        right: 0,
+        backgroundColor: "white",
+        zIndex: 1, // Ensure it stays on top of other columns
+      },
+      grow: 3,
+      width: "135px",
+    },
   ];
 
   const employeeColumns = [
@@ -179,48 +179,48 @@ export default function Deductees({ params }) {
       selector: (row) => (row.panNumber ? row.panNumber : "-"),
       grow: 1.5,
     },
-    // {
-    //   name: "New pan",
-    //   selector: (row) => row.newPannumber || "-",
-    //   grow: 2,
-    // },
+    {
+      name: "New pan",
+      selector: (row) => row.newPannumber || "-",
+      grow: 2,
+    },
     {
       name: "Employee Detail Count",
       selector: (row) => (row.employeeDetailCount ? row.employeeDetailCount : "-"),
     },
-    // {
-    //   name: "Actions",
-    //   button: true,
-    //   selector: (row) => (
-    //     <>
-    //       {" "}
-    //       <div className="d-flex justify-content-center">
-    //         <span>
-    //           {" "}
-    //           <a
-    //             onClick={(e) => {
-    //               e.preventDefault();
-    //               router.push(
-    //                 pathname +
-    //                 `/detail${window.location.search}&id=${row.id}&token=RGVkdWN0ZWU=`
-    //               );
-    //             }}
-    //           >
-    //             Edit
-    //           </a>
-    //         </span>
-    //       </div>
-    //     </>
-    //   ),
-    //   style: {
-    //     position: "sticky",
-    //     right: 0,
-    //     backgroundColor: "white",
-    //     zIndex: 1, // Ensure it stays on top of other columns
-    //   },
-    //   grow: 3,
-    //   width: "135px",
-    // },
+    {
+      name: "Actions",
+      button: true,
+      selector: (row) => (
+        <>
+          {" "}
+          <div className="d-flex justify-content-center">
+            <span>
+              {" "}
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(
+                    pathname +
+                    `/detail${window.location.search}&id=${row.id}&token=RGVkdWN0ZWU=`
+                  );
+                }}
+              >
+                Edit
+              </a>
+            </span>
+          </div>
+        </>
+      ),
+      style: {
+        position: "sticky",
+        right: 0,
+        backgroundColor: "white",
+        zIndex: 1, // Ensure it stays on top of other columns
+      },
+      grow: 3,
+      width: "135px",
+    },
   ];
   useEffect(() => {
     if (form != "form-24Q")
