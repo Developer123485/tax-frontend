@@ -40,7 +40,7 @@ export default function GenerateFVU({ params }) {
   const [isTdsReturn, setIsTdsReturn] = useState("N");
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [challanId, setChallanId] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
   const [folderInputPath, setFolderInputPath] = useState("");

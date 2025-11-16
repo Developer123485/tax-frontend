@@ -28,7 +28,7 @@ export default function TDSDashboard({ params }) {
   const resolvedParams = use(params);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteId, setDeleteId] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [deductorInfo, setDeductorInfo] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const deductorId = resolvedParams?.id;

@@ -3,20 +3,16 @@ import React, { useState, use, useEffect } from "react";
 import Image from "next/image";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { useRouter } from "next/navigation";
-// import { DeducteeService } from "@/app/services/deductee.service";
 import ProcessPopup from "@/app/components/modals/processing";
-// import { saveAs } from "file-saver";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { EmployeeService } from "@/app/services/employee.service";
 import DataTable from "react-data-table-component";
 import HeaderList from "@/app/components/header/header-list";
 import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useSearchParams } from "next/navigation";
 import api from "@/app/utils/interceptors";
-// import { DeductorsService } from "@/app/services/deductors.service";
-// import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 import { CommonService } from "@/app/services/common.service";
+import { usePathname } from "next/navigation";
 import { CorrectionsService } from "@/app/services/corrections.service";
 export default function Deductees({ params }) {
   const resolvedParams = use(params);
@@ -28,8 +24,8 @@ export default function Deductees({ params }) {
   const [isloading, setIsLoading] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(20);
-  const [employeePageSize, setEmployeePageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
+  const [employeePageSize, setEmployeePageSize] = useState(50);
   const [employeePageNumber, setEmployeePageNumber] = useState(1);
   const [deductees, setDeductees] = useState([]);
   const [bulkLoading, setBulkLoading] = useState(false);
@@ -42,6 +38,7 @@ export default function Deductees({ params }) {
   const [employeeStatus, setEmployeeStatus] = useState("All");
   const [verifyType, setVerifyType] = useState("");
   const [captchaBase64, setCaptchaBase64] = useState('');
+  const pathname = usePathname();
   const [captcha, setCaptcha] = useState("");
   const [totalEmployeeItems, setTotalEmployeeItems] = useState(0);
   const [selectedDeducteeData, setSelectedDeducteeData] = useState([]);
@@ -112,61 +109,63 @@ export default function Deductees({ params }) {
       selector: (row) => (row.panNumber ? row.panNumber : "-"),
       grow: 1.5,
     },
-    {
-      name: "New Pan",
-      selector: (row) => (row.newPannumber ? row.newPannumber : "-"),
-      grow: 2,
-    },
+    // {
+    //   name: "New Pan",
+    //   selector: (row) => (row.newPannumber ? row.newPannumber : "-"),
+    //   grow: 2,
+    // },
     {
       name: "Deductee Detail Count",
       selector: (row) => (row.deducteeDetailCount ? row.deducteeDetailCount : "-"),
       grow: 2,
     },
-    {
-      name: "Actions",
-      button: true,
-      selector: (row) => (
-        <>
-          {" "}
-          <div className="d-flex justify-content-center">
-            <span>
-              {" "}
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(
-                    `/deductors/${deductorId}/tds/deductees/detail?id=${row.id}&token=RW1wbG95ZWU=`
-                  );
-                }}
-              >
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>Edit</Tooltip>}
-                >
-                  <div>
-                    <Image
-                      className=""
-                      src="/images/dashboards/table_edit_icon.svg"
-                      alt="table_edit_icon"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </a>
-            </span>
-          </div>
-        </>
-      ),
-      style: {
-        position: "sticky",
-        right: 0,
-        backgroundColor: "white",
-        zIndex: 1, // Ensure it stays on top of other columns
-      },
-      grow: 3,
-      width: "135px",
-    },
+    // {
+    //   name: "Actions",
+    //   button: true,
+    //   selector: (row) => (
+    //     <>
+    //       {" "}
+    //       <div className="d-flex justify-content-center">
+    //         <span>
+    //           {" "}
+    //           <a
+    //             onClick={(e) => {
+    //               e.preventDefault();
+    //               debugger
+    //               router.push(
+    //                 pathname +
+    //                 `/detail${window.location.search}&id=${row.id}&token=RW1wbG95ZWU=`
+    //               );
+    //             }}
+    //           >
+    //             <OverlayTrigger
+    //               placement="bottom"
+    //               overlay={<Tooltip>Edit</Tooltip>}
+    //             >
+    //               <div>
+    //                 <Image
+    //                   className=""
+    //                   src="/images/dashboards/table_edit_icon.svg"
+    //                   alt="table_edit_icon"
+    //                   width={16}
+    //                   height={16}
+    //                 />
+    //               </div>
+    //             </OverlayTrigger>
+    //           </a>
+    //         </span>
+    //       </div>
+    //     </>
+    //   ),
+    //   style: {
+    //     position: "sticky",
+    //     right: 0,
+    //     backgroundColor: "white",
+    //     zIndex: 1, // Ensure it stays on top of other columns
+    //   },
+    //   grow: 3,
+    //   width: "135px",
+    // },
   ];
 
   const employeeColumns = [
@@ -180,47 +179,48 @@ export default function Deductees({ params }) {
       selector: (row) => (row.panNumber ? row.panNumber : "-"),
       grow: 1.5,
     },
-    {
-      name: "New pan",
-      selector: (row) => row.newPannumber || "-",
-      grow: 2,
-    },
+    // {
+    //   name: "New pan",
+    //   selector: (row) => row.newPannumber || "-",
+    //   grow: 2,
+    // },
     {
       name: "Employee Detail Count",
       selector: (row) => (row.employeeDetailCount ? row.employeeDetailCount : "-"),
     },
-    {
-      name: "Actions",
-      button: true,
-      selector: (row) => (
-        <>
-          {" "}
-          <div className="d-flex justify-content-center">
-            <span>
-              {" "}
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(
-                    `/deductors/${deductorId}/tds/deductees/detail?id=${row.id}&token=RGVkdWN0ZWU=`
-                  );
-                }}
-              >
-                Edit
-              </a>
-            </span>
-          </div>
-        </>
-      ),
-      style: {
-        position: "sticky",
-        right: 0,
-        backgroundColor: "white",
-        zIndex: 1, // Ensure it stays on top of other columns
-      },
-      grow: 3,
-      width: "135px",
-    },
+    // {
+    //   name: "Actions",
+    //   button: true,
+    //   selector: (row) => (
+    //     <>
+    //       {" "}
+    //       <div className="d-flex justify-content-center">
+    //         <span>
+    //           {" "}
+    //           <a
+    //             onClick={(e) => {
+    //               e.preventDefault();
+    //               router.push(
+    //                 pathname +
+    //                 `/detail${window.location.search}&id=${row.id}&token=RGVkdWN0ZWU=`
+    //               );
+    //             }}
+    //           >
+    //             Edit
+    //           </a>
+    //         </span>
+    //       </div>
+    //     </>
+    //   ),
+    //   style: {
+    //     position: "sticky",
+    //     right: 0,
+    //     backgroundColor: "white",
+    //     zIndex: 1, // Ensure it stays on top of other columns
+    //   },
+    //   grow: 3,
+    //   width: "135px",
+    // },
   ];
   useEffect(() => {
     if (form != "form-24Q")
@@ -283,7 +283,7 @@ export default function Deductees({ params }) {
       search: searchValue,
       status: employeeStatus
     };
-    CorrectionsService.getCorrectionEmployees(model, parseInt(deductorId))
+    CorrectionsService.getCorrectionEmployees(model, parseInt(searchParams.get("correctionId")))
       .then((res) => {
         if (res) {
           setEmployees(res.employeeList);
@@ -306,20 +306,19 @@ export default function Deductees({ params }) {
         <div className="container">
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-2">
+              <div className="col-md-7">
                 <h4 className="fw-bold mb-0">
                   {form != "form-24Q" ? "Deductees" : "Employees"}
                 </h4>
               </div>
               {form != "form-24Q" &&
                 <>
-                  <div className="col-md-7 d-flex align-items-center justify-content-end">
+                  <div className="col-md-2">
                     <button
                       type="button"
-                      disabled={deductees.length == 0}
                       className="btn btn-primary"
                       onClick={(e) =>
-                        router.push(`/deductors/${deductorId}/tds/correction/${form}/deductees/detail`)
+                        router.push(pathname + `/detail${window.location.search}&token=RW1wbG95ZWU=`)
                       }
                     >
                       Add Deductee
@@ -338,6 +337,7 @@ export default function Deductees({ params }) {
                           }, 1000);
                         }}
                       />
+
                       <button
                         className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
                         type="button"
@@ -357,13 +357,12 @@ export default function Deductees({ params }) {
               }
               {form == "form-24Q" &&
                 <>
-                  <div className="col-md-7 d-flex align-items-center justify-content-end">
+                  <div className="col-md-2">
                     <button
                       type="button"
-                      disabled={deductees.length == 0}
                       className="btn btn-primary"
                       onClick={(e) =>
-                        router.push(`/deductors/${deductorId}/tds/correction/${form}/deductees/detail`)
+                        router.push(pathname + `/detail${window.location.search}&token=RGVkdWN0ZWU=`)
                       }
                     >
                       Add Employee

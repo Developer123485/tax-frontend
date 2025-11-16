@@ -45,7 +45,7 @@ export default function DdoWiseDetails({ params }) {
     const currentYear = new Date().getFullYear();
     const [financialYears, setFinancialYears] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(50);
 
     const monthsShort = [
         { value: '01', label: 'Jan' }, { value: '02', label: 'Feb' }, { value: '03', label: 'Mar' },

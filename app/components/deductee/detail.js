@@ -144,6 +144,7 @@ export default function DeducteeDetail(props) {
             placeholder=""
             className="form-control"
             id="inputPANRefNo"
+            disabled={props?.type == "correction"}
             maxLength={9}
             value={deducteeDetail.panRefNo}
             onChange={(e) => handleInput("panRefNo", e)}
@@ -157,6 +158,7 @@ export default function DeducteeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="inputIdentificationNumber"
             value={deducteeDetail.identificationNo}
             onChange={(e) => handleInput("identificationNo", e)}
@@ -198,6 +200,7 @@ export default function DeducteeDetail(props) {
             className="form-select"
             aria-label="Default select example"
             style={highlightStyle1}
+            disabled={props?.type == "correction"}
             onFocus={() => setIsFocused1(true)}
             onBlur={() => setIsFocused1(false)}
             value={deducteeDetail.surchargeApplicable}
@@ -216,6 +219,7 @@ export default function DeducteeDetail(props) {
             className="form-select"
             aria-label="Default select example"
             value={deducteeDetail.residentialStatus}
+            disabled={props?.type == "correction"}
             style={highlightStyle2}
             onFocus={() => setIsFocused2(true)}
             onBlur={() => setIsFocused2(false)}
@@ -226,24 +230,6 @@ export default function DeducteeDetail(props) {
             <option value="Non Resident">Non Resident</option>
           </select>
         </div>
-        {/* <div className="col-md-3">
-          <label htmlFor="inputStatus" className="form-label">
-            <span>Name Prefix</span>
-          </label>
-          <select
-            className="form-select"
-            aria-label="Default select example"
-            value={deducteeDetail.namePrefix}
-            style={highlightStyle3}
-            onFocus={() => setIsFocused3(true)}
-            onBlur={() => setIsFocused3(false)}
-            onChange={(e) => handleInput("namePrefix", e)}
-          >
-            <option selected>Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div> */}
         <div className="col-md-3">
           <label htmlFor="email" className="form-label">
             <span>Email</span>
@@ -251,6 +237,7 @@ export default function DeducteeDetail(props) {
           <input
             type="text"
             placeholder=""
+            disabled={props?.type == "correction"}
             className="form-control"
             id="email"
             value={deducteeDetail.email}
@@ -264,6 +251,7 @@ export default function DeducteeDetail(props) {
           <input
             type="text"
             placeholder=""
+            disabled={props?.type == "correction"}
             className="form-control"
             id="mobileNo"
             maxLength={10}
@@ -280,6 +268,7 @@ export default function DeducteeDetail(props) {
             <span>STD Code</span>
           </label>
           <input
+            disabled={props?.type == "correction"}
             type="text"
             placeholder=""
             className="form-control"
@@ -296,6 +285,7 @@ export default function DeducteeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="phoneNo"
             value={deducteeDetail.phoneNo}
             onChange={(e) => handleInput("phoneNo", e)}
@@ -309,6 +299,7 @@ export default function DeducteeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="principle"
             value={deducteeDetail.principlePlacesBusiness}
             onChange={(e) => handleInput("principlePlacesBusiness", e)}
@@ -322,6 +313,7 @@ export default function DeducteeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="firmName"
             value={deducteeDetail.firmName}
             onChange={(e) => handleInput("firmName", e)}
@@ -334,6 +326,7 @@ export default function DeducteeDetail(props) {
           <input
             type="text"
             placeholder=""
+            disabled={props?.type == "correction"}
             className="form-control"
             id="tinNo"
             value={deducteeDetail.tinNo}
@@ -356,6 +349,7 @@ export default function DeducteeDetail(props) {
             value={deducteeDetail.transporter}
             style={highlightStyle4}
             onFocus={() => setIsFocused4(true)}
+            disabled={props?.type == "correction"}
             onBlur={() => setIsFocused4(false)}
             onChange={(e) => handleInput("transporter", e)}
           >
@@ -365,156 +359,157 @@ export default function DeducteeDetail(props) {
           </select>
         </div>
       </div>
-      <div className="row align-items-start bg-light-gray px-3 py-4 px-md-2 pt-0 pb-md-3 rounded-3 mb-4 mt-0 g-3">
-        <div className="col-md-12">
-          <h5 className="text-blue fw-bold">Address</h5>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputCodeNo" className="form-label">
-            <span>Flat/Block No.</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputFlatNo"
-            value={deducteeDetail.flatNo}
-            onChange={(e) => handleInput("flatNo", e)}
-          />
-        </div>
+      {props?.type != "correction" &&
+        <div className="row align-items-start bg-light-gray px-3 py-4 px-md-2 pt-0 pb-md-3 rounded-3 mb-4 mt-0 g-3">
+          <div className="col-md-12">
+            <h5 className="text-blue fw-bold">Address</h5>
+          </div>
+          <div className="col-md-3">
+            <label htmlFor="inputCodeNo" className="form-label">
+              <span>Flat/Block No.</span>
+            </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputFlatNo"
+              value={deducteeDetail.flatNo}
+              onChange={(e) => handleInput("flatNo", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="inputName" className="form-label">
-            <span>Building Name</span>
-          </label>
+          <div className="col-md-3">
+            <label htmlFor="inputName" className="form-label">
+              <span>Building Name</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputBuildingName"
-            value={deducteeDetail.buildingName}
-            onChange={(e) => handleInput("buildingName", e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputBuildingName"
+              value={deducteeDetail.buildingName}
+              onChange={(e) => handleInput("buildingName", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="inputArea" className="form-label">
-            <span>Area/Locality</span>
-          </label>
+          <div className="col-md-3">
+            <label htmlFor="inputArea" className="form-label">
+              <span>Area/Locality</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputArea"
-            value={deducteeDetail.areaLocality}
-            onChange={(e) => handleInput("areaLocality", e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputArea"
+              value={deducteeDetail.areaLocality}
+              onChange={(e) => handleInput("areaLocality", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="inputRoad" className="form-label">
-            <span>Road/Street</span>
-          </label>
+          <div className="col-md-3">
+            <label htmlFor="inputRoad" className="form-label">
+              <span>Road/Street</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputRoad"
-            value={deducteeDetail.roadStreet}
-            onChange={(e) => handleInput("roadStreet", e)}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="postOffice" className="form-label">
-            <span>Post Office</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputRoad"
+              value={deducteeDetail.roadStreet}
+              onChange={(e) => handleInput("roadStreet", e)}
+            />
+          </div>
+          <div className="col-md-3">
+            <label htmlFor="postOffice" className="form-label">
+              <span>Post Office</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="postOffice"
-            value={deducteeDetail.postOffice}
-            onChange={(e) => handleInput("postOffice", e)}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="locality" className="form-label">
-            <span>Locality</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="postOffice"
+              value={deducteeDetail.postOffice}
+              onChange={(e) => handleInput("postOffice", e)}
+            />
+          </div>
+          <div className="col-md-3">
+            <label htmlFor="locality" className="form-label">
+              <span>Locality</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="locality"
-            value={deducteeDetail.locality}
-            onChange={(e) => handleInput("locality", e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="locality"
+              value={deducteeDetail.locality}
+              onChange={(e) => handleInput("locality", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="inputTown" className="form-label">
-            <span>Town/City/District</span>
-          </label>
+          <div className="col-md-3">
+            <label htmlFor="inputTown" className="form-label">
+              <span>Town/City/District</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputTown"
-            value={deducteeDetail.town}
-            onChange={(e) => handleInput("town", e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputTown"
+              value={deducteeDetail.town}
+              onChange={(e) => handleInput("town", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="inputPincode" className="form-label">
-            <span>Pincode</span>
-          </label>
+          <div className="col-md-3">
+            <label htmlFor="inputPincode" className="form-label">
+              <span>Pincode</span>
+            </label>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputPincode"
-            value={deducteeDetail.pincode}
-            onChange={(e) => handleInput("pincode", e)}
-          />
-        </div>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputPincode"
+              value={deducteeDetail.pincode}
+              onChange={(e) => handleInput("pincode", e)}
+            />
+          </div>
 
-        <div className="col-md-3">
-          <label htmlFor="zipCode" className="form-label">
-            <span>Zip Code</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="zipCode"
-            value={deducteeDetail.zipCodeCase}
-            onChange={(e) => handleInput("zipCodeCase", e)}
-          />
-          {isDeducteeDirty && deducteeErrors.zipError && (
-            <span className="text-danger">
-              {deducteeErrors.zipError}
-            </span>
-          )}
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="zipCode" className="form-label">
+              <span>Zip Code</span>
+            </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="zipCode"
+              value={deducteeDetail.zipCodeCase}
+              onChange={(e) => handleInput("zipCodeCase", e)}
+            />
+            {isDeducteeDirty && deducteeErrors.zipError && (
+              <span className="text-danger">
+                {deducteeErrors.zipError}
+              </span>
+            )}
+          </div>
 
-        <div className="col-md-3 autowidth-dropdown">
-          <label htmlFor="inputCountry" className="form-label">
-            <span>Country</span>
-          </label>
-          {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
-            setEventId={props.setCountry}
-            id={props.country}
-            options={enumList.countries}
-          ></SearchableDropdown>}
-          {/* <select
+          <div className="col-md-3 autowidth-dropdown">
+            <label htmlFor="inputCountry" className="form-label">
+              <span>Country</span>
+            </label>
+            {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+              setEventId={props.setCountry}
+              id={props.country}
+              options={enumList.countries}
+            ></SearchableDropdown>}
+            {/* <select
             className="form-select"
             aria-label="Default select example"
             value={deducteeDetail.country}
@@ -530,23 +525,23 @@ export default function DeducteeDetail(props) {
               </option>
             ))}
           </select> */}
-          {isDeducteeDirty && deducteeErrors.countryError && (
-            <span className="text-danger">
-              {deducteeErrors.countryError}
-            </span>
-          )}
-        </div>
+            {isDeducteeDirty && deducteeErrors.countryError && (
+              <span className="text-danger">
+                {deducteeErrors.countryError}
+              </span>
+            )}
+          </div>
 
-        <div className="col-md-3 autowidth-dropdown">
-          <label htmlFor="inputState" className="form-label">
-            <span>State</span>
-          </label>
-          {enumList.states && enumList.states.length > 0 && <SearchableDropdown
-            setEventId={props.setState}
-            id={props.state}
-            options={enumList.states}
-          ></SearchableDropdown>}
-          {/* <select
+          <div className="col-md-3 autowidth-dropdown">
+            <label htmlFor="inputState" className="form-label">
+              <span>State</span>
+            </label>
+            {enumList.states && enumList.states.length > 0 && <SearchableDropdown
+              setEventId={props.setState}
+              id={props.state}
+              options={enumList.states}
+            ></SearchableDropdown>}
+            {/* <select
             className="form-select"
             aria-label="Default select example"
             value={deducteeDetail.state}
@@ -562,8 +557,9 @@ export default function DeducteeDetail(props) {
               </option>
             ))}
           </select> */}
+          </div>
         </div>
-      </div>
+      }
       <div className="row">
         <div className="col-md-12 px-0 d-flex justify-content-start">
           <button

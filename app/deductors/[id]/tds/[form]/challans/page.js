@@ -22,7 +22,7 @@ export default function Challans({ params }) {
   const pathname = usePathname();
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [showLoader, setShowLoader] = useState(false);

@@ -24,7 +24,7 @@ export default function Challans({ params }) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [toggledClearRows, setToggledClearRows] = useState(false); // 👈 control flag
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(0);

@@ -168,7 +168,6 @@ export default function ChallanDetail({ params }) {
   function updateCorrectionChallan(e) {
     e.preventDefault();
     setIsDirty(true);
-    debugger
     if (validateChallanDetail() && challanDetail.id > 0) {
       setLoading(true);
       challanDetail.financialYear = searchParams.get("financial_year");

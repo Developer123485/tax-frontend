@@ -27,8 +27,8 @@ export default function Deductees({ params }) {
   const [showLoader, setShowLoader] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
-  const [employeePageSize, setEmployeePageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
+  const [employeePageSize, setEmployeePageSize] = useState(50);
   const [employeePageNumber, setEmployeePageNumber] = useState(1);
   const [deductees, setDeductees] = useState([]);
   const [bulkLoading, setBulkLoading] = useState(false);

@@ -70,29 +70,6 @@ export default function EmployeeDetail(props) {
           )}
         </div>
         <div className="col-md-3">
-          <label htmlFor="employeeRef" className="form-label">
-            <span>Employee Identification</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="employeeRef"
-            maxLength={9}
-            value={employeeDetail.employeeRef}
-            onChange={(e) => {
-              if (CommonService.isNumeric(e.target.value))
-                handleInput("employeeRef", e);
-            }}
-          />
-          {isEmployeeDirty && employeeErrors.refError && (
-            <span className="text-danger">
-              {employeeErrors.refError}
-            </span>
-          )}
-        </div>
-        <div className="col-md-3">
           <label htmlFor="inputPan" className="form-label">
             <span>PAN No.</span>
             <span className="text-danger"> *</span>
@@ -120,6 +97,31 @@ export default function EmployeeDetail(props) {
           )}
         </div>
         <div className="col-md-3">
+          <label htmlFor="employeeRef" className="form-label">
+            <span>Employee Identification</span>
+          </label>
+
+          <input
+            type="text"
+            placeholder=""
+            className="form-control"
+            disabled={props?.type == "correction"}
+            id="employeeRef"
+            maxLength={9}
+            value={employeeDetail.employeeRef}
+            onChange={(e) => {
+              if (CommonService.isNumeric(e.target.value))
+                handleInput("employeeRef", e);
+            }}
+          />
+          {isEmployeeDirty && employeeErrors.refError && (
+            <span className="text-danger">
+              {employeeErrors.refError}
+            </span>
+          )}
+        </div>
+
+        <div className="col-md-3">
           <label htmlFor="inputPANRefNo" className="form-label">
             <span>PAN Ref No.</span>
           </label>
@@ -128,6 +130,7 @@ export default function EmployeeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="inputPANRefNo"
             value={employeeDetail.panRefNo}
             maxLength={10}
@@ -144,6 +147,7 @@ export default function EmployeeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="fatherName"
             value={employeeDetail.fatherName}
             onChange={(e) => handleInput("fatherName", e)}
@@ -171,6 +175,7 @@ export default function EmployeeDetail(props) {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={props?.type == "correction"}
             id="mobileNo"
             maxLength={10}
             value={employeeDetail.mobileNo}
@@ -190,6 +195,7 @@ export default function EmployeeDetail(props) {
             autoComplete="off"
             selected={employeeDetail.dob}
             id="inputDOB"
+            disabled={props?.type == "correction"}
             className="form-control w-100"
             onChange={(e) => handleInput("dob", e)}
             dateFormat="dd/MM/yyyy"
@@ -205,6 +211,7 @@ export default function EmployeeDetail(props) {
             aria-label="Default select example"
             value={employeeDetail.sex}
             style={highlightStyle}
+            disabled={props?.type == "correction"}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onChange={(e) => handleInput("sex", e)}
@@ -224,6 +231,7 @@ export default function EmployeeDetail(props) {
             value={employeeDetail.seniorCitizen}
             style={highlightStyle1}
             onFocus={() => setIsFocused1(true)}
+            disabled={props?.type == "correction"}
             onBlur={() => setIsFocused1(false)}
             onChange={(e) => handleInput("seniorCitizen", e)}
           >
@@ -235,21 +243,6 @@ export default function EmployeeDetail(props) {
             ))}
           </select>
         </div>
-        {/* <div className="col-md-3">
-          <label htmlFor="inputSeniorCitizen" className="form-label">
-            <span>Senior Citizen</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputSeniorCitizen"
-            value={employeeDetail.seniorCitizen}
-            onChange={(e) => handleInput("seniorCitizen", e)}
-          />
-        </div> */}
-
         <div className="col-md-3">
           <label htmlFor="designation" className="form-label">
             <span>Designation</span>
@@ -258,151 +251,112 @@ export default function EmployeeDetail(props) {
           <input
             type="text"
             placeholder=""
+            disabled={props?.type == "correction"}
             className="form-control"
             id="designation"
             value={employeeDetail.designation}
             onChange={(e) => handleInput("designation", e)}
           />
         </div>
-        {/* <div className="col-md-3">
-          <label htmlFor="verySeniorCitizen" className="form-label">
-            <span>Very Senior Citizen</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="verySeniorCitizen"
-            value={employeeDetail.verySeniorCitizen}
-            onChange={(e) => handleInput("verySeniorCitizen", e)}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="applicableFormAY" className="form-label">
-            <span>Applicable FormAY</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="applicableFormAY"
-            value={employeeDetail.applicableFormAY}
-            onChange={(e) => handleInput("applicableFormAY", e)}
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="verySenApplicableFormAY" className="form-label">
-            <span>Very Sen Applicable FormAY</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="verySenApplicableFormAY"
-            value={employeeDetail.applicableFormAY}
-            onChange={(e) => handleInput("verySenApplicableFormAY", e)}
-          />
-        </div> */}
       </div>
+      {props?.type != "correction" &&
+        <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4 g-3">
+          <div className="col-md-12 mt-0">
+            <h5 className="text-blue fw-bold">Address</h5>
+          </div>
+          <div className="col-md-3">
+            <label htmlFor="inputCodeNo" className="form-label">
+              <span>Flat/Block No.</span>
+            </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputFlatNo"
+              value={employeeDetail.flatNo}
+              onChange={(e) => handleInput("flatNo", e)}
+            />
+          </div>
 
-      <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4 g-3">
-        <div className="col-md-12 mt-0">
-          <h5 className="text-blue fw-bold">Address</h5>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="inputCodeNo" className="form-label">
-            <span>Flat/Block No.</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputFlatNo"
-            value={employeeDetail.flatNo}
-            onChange={(e) => handleInput("flatNo", e)}
-          />
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="inputName" className="form-label">
+              <span>Building Name</span>
+            </label>
 
-        <div className="col-md-3">
-          <label htmlFor="inputName" className="form-label">
-            <span>Building Name</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputBuildingName"
+              value={employeeDetail.buildingName}
+              onChange={(e) => handleInput("buildingName", e)}
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputBuildingName"
-            value={employeeDetail.buildingName}
-            onChange={(e) => handleInput("buildingName", e)}
-          />
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="inputArea" className="form-label">
+              <span>Area/Locality</span>
+            </label>
 
-        <div className="col-md-3">
-          <label htmlFor="inputArea" className="form-label">
-            <span>Area/Locality</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputArea"
+              value={employeeDetail.areaLocality}
+              onChange={(e) => handleInput("areaLocality", e)}
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputArea"
-            value={employeeDetail.areaLocality}
-            onChange={(e) => handleInput("areaLocality", e)}
-          />
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="inputRoad" className="form-label">
+              <span>Road/Street</span>
+            </label>
 
-        <div className="col-md-3">
-          <label htmlFor="inputRoad" className="form-label">
-            <span>Road/Street</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputRoad"
+              value={employeeDetail.roadStreet}
+              onChange={(e) => handleInput("roadStreet", e)}
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputRoad"
-            value={employeeDetail.roadStreet}
-            onChange={(e) => handleInput("roadStreet", e)}
-          />
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="inputTown" className="form-label">
+              <span>Town/City/District</span>
+            </label>
 
-        <div className="col-md-3">
-          <label htmlFor="inputTown" className="form-label">
-            <span>Town/City/District</span>
-          </label>
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputTown"
+              value={employeeDetail.town}
+              onChange={(e) => handleInput("town", e)}
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputTown"
-            value={employeeDetail.town}
-            onChange={(e) => handleInput("town", e)}
-          />
-        </div>
+          <div className="col-md-3">
+            <label htmlFor="inputPincode" className="form-label">
+              <span>Pincode</span>
+            </label>
 
-        <div className="col-md-3">
-          <label htmlFor="inputPincode" className="form-label">
-            <span>Pincode</span>
-          </label>
-
-          <input
-            type="text"
-            placeholder=""
-            className="form-control"
-            id="inputPincode"
-            value={employeeDetail.pincode}
-            onChange={(e) => handleInput("pincode", e)}
-          />
-        </div>
-        <div className="col-md-3 autowidth-dropdown">
-          <label htmlFor="inputState" className="form-label">
-            <span>State</span>
-          </label>
-          {/* <select
+            <input
+              type="text"
+              placeholder=""
+              className="form-control"
+              id="inputPincode"
+              value={employeeDetail.pincode}
+              onChange={(e) => handleInput("pincode", e)}
+            />
+          </div>
+          <div className="col-md-3 autowidth-dropdown">
+            <label htmlFor="inputState" className="form-label">
+              <span>State</span>
+            </label>
+            {/* <select
             className="form-select"
             aria-label="Default select example"
             value={employeeDetail.state}
@@ -412,14 +366,15 @@ export default function EmployeeDetail(props) {
             onBlur={() => setIsFocused2(false)}
           >
             <option selected>Select</option> */}
-          {enumList.states && enumList.states.length > 0 && <SearchableDropdown
-            setEventId={props.setState}
-            id={props.state}
-            options={enumList.states}
-          ></SearchableDropdown>}
-          {/* </select> */}
+            {enumList.states && enumList.states.length > 0 && <SearchableDropdown
+              setEventId={props.setState}
+              id={props.state}
+              options={enumList.states}
+            ></SearchableDropdown>}
+            {/* </select> */}
+          </div>
         </div>
-      </div>
+      }
       <div className="row">
         <div className="col-md-12 px-0 d-flex justify-content-start">
           <button

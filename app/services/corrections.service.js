@@ -20,7 +20,11 @@ export const CorrectionsService = {
     saveCorrectionDeducteeEntry,
     getChallansDropdowns,
     getCorrectionDeductees,
-    getCorrectionEmployees
+    getCorrectionEmployees,
+    getCorrectionDeductee,
+    getCorrectionEmployee,
+    saveCorrectionEmployee,
+    saveCorrectionDeductee
 };
 
 async function getCorrectionChallans(model) {
@@ -76,6 +80,29 @@ async function getChallansDropdowns(model) {
 
 async function getCorrectionDeductees(model, deductorId) {
     const result = await api.post(`correctionStatements/deductees/fetch/${deductorId}`, model);
+    return result;
+}
+
+async function getCorrectionDeductee(deducteeId) {
+    const result = await api.get(`correctionStatements/deductee/${deducteeId}`);
+    return result;
+}
+
+async function getCorrectionEmployee(deducteeId) {
+    const result = await api.get(`correctionStatements/employee/${deducteeId}`);
+    return result;
+}
+
+async function saveCorrectionEmployee(model) {
+    let obj = Object.assign({}, model);
+    if (obj.dob)
+        obj.dob = CommonService.dateFormat(obj.dob);
+    const result = await api.post("correctionStatements/employees/create", obj);
+    return result;
+}
+
+async function saveCorrectionDeductee(model) {
+    const result = await api.post("correctionStatements/deductees/create", model);
     return result;
 }
 

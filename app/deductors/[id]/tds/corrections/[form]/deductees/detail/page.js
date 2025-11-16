@@ -13,16 +13,26 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { CommonService } from "@/app/services/common.service";
 import HeaderList from "@/app/components/header/header-list";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function AddDeductee({ params }) {
   const resolvedParams = use(params);
   const router = useRouter(null);
   const deductorId = resolvedParams?.id;
+  const form = resolvedParams?.form;
   const [enumList, setEnumList] = useState({});
+  const searchParams = useSearchParams(null);
   const [deducteeType, setDeducteeType] = useState("deductee");
   const [isEmployeeDirty, setEmployeeDirty] = useState(false);
   const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
   const [isDeducteeDirty, setDeducteeDirty] = useState(false);
+  const deducteeUrl = `/deductors/${deductorId}/tds/corrections/${form}/deductees?correctionId=${searchParams.get(
+    "correctionId"
+  )}&categoryId=${searchParams.get(
+    "categoryId"
+  )}&financial_year=${searchParams.get(
+    "financial_year"
+  )}&quarter=${searchParams.get("quarter")}`
   const [breadcrumbs, setBreadcrumbs] = useState([
     {
       name: "Deductors",
@@ -35,16 +45,26 @@ export default function AddDeductee({ params }) {
       href: `/deductors/${deductorId}/tds`,
     },
     {
+      name: form,
+      isActive: false,
+      href: `/deductors/${deductorId}/tds/corrections/${form}?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
+        "categoryId"
+      )}&financial_year=${searchParams.get(
+        "financial_year"
+      )}&quarter=${searchParams.get("quarter")}`,
+    },
+    {
       name: "Deductees",
       isActive: false,
-      href: `/deductors/${deductorId}/tds/deductees`,
+      href: deducteeUrl,
     },
     {
       name: "Detail",
       isActive: true,
     },
   ]);
-  const searchParams = useSearchParams(null);
 
   const [deducteeDetail, setDeducteeDetail] = useState({
     id: 0,
@@ -149,14 +169,12 @@ export default function AddDeductee({ params }) {
       }
     });
     if (
-      searchParams.get("id") &&
       searchParams.get("token") === "RW1wbG95ZWU="
     ) {
       getDeductee();
       setDeducteeType("deductee");
     }
     if (
-      searchParams.get("id") &&
       searchParams.get("token") === "RGVkdWN0ZWU="
     ) {
       setDeducteeType("employee");
@@ -165,7 +183,7 @@ export default function AddDeductee({ params }) {
   }, []);
 
   function getEmployee() {
-    EmployeeService.getEmployee(parseInt(searchParams.get("id"))).then(
+    CorrectionsService.getCorrectionEmployee(parseInt(searchParams.get("id"))).then(
       (res) => {
         if (res && res.id > 0) {
           if (res.dob) {
@@ -178,7 +196,7 @@ export default function AddDeductee({ params }) {
   }
 
   function getDeductee() {
-    DeducteeService.getDeductee(parseInt(searchParams.get("id"))).then(
+    CorrectionsService.getCorrectionDeductee(parseInt(searchParams.get("id"))).then(
       (res) => {
         if (res && res.id > 0) {
           setDeducteeDetail(res);
@@ -215,12 +233,14 @@ export default function AddDeductee({ params }) {
     setDeducteeDirty(true);
     if (validateDeducteeDetail()) {
       deducteeDetail.dob = CommonService.dateFormat(deducteeDetail.dob);
-      deducteeDetail.deductorId = deductorId;
-      DeducteeService.saveDeductee(deducteeDetail)
+      deducteeDetail.deductorId = parseInt(searchParams.get(
+        "correctionId"
+      ));
+      CorrectionsService.saveCorrectionDeductee(deducteeDetail)
         .then((res) => {
           if (res && res > 0) {
             toast.success("Deductee saved successfully");
-            router.push(`/deductors/${deductorId}/tds/deductees`);
+            router.push(deducteeUrl);
           }
         })
         .catch((res) => {
@@ -233,13 +253,14 @@ export default function AddDeductee({ params }) {
     e.preventDefault();
     setEmployeeDirty(true);
     if (validateEmployeeDetail()) {
-      employeeDetail.deductorId = deductorId;
-
-      EmployeeService.saveEmployee(employeeDetail)
+      employeeDetail.deductorId = parseInt(searchParams.get(
+        "correctionId"
+      ));
+      CorrectionsService.saveCorrectionEmployee(employeeDetail)
         .then((res) => {
           if (res && res > 0) {
             toast.success("Employee saved successfully");
-            router.push(`/deductors/${deductorId}/tds/deductees`);
+            router.push(deducteeUrl);
           }
         })
         .catch((res) => {
@@ -280,7 +301,6 @@ export default function AddDeductee({ params }) {
       && deducteeDetail.panNumber != "PANNOTAVBL"
       && deducteeDetail.panNumber != "PANAPPLIED" &&
       deducteeDetail.panNumber != "PANINVALID"
-
     ) {
       const regx = panRegex.test(deducteeDetail.panNumber.toLocaleUpperCase());
       if (!regx) {
@@ -366,7 +386,7 @@ export default function AddDeductee({ params }) {
           <div className="">
             <div className="col-md-12">
               <div className="pb-3">
-                {(searchParams.get("id") &&
+                {(
                   searchParams.get("token") === "RW1wbG95ZWU=") ||
                   searchParams.get("token") === "RGVkdWN0ZWU=" ? (
                   <h3>
@@ -432,6 +452,7 @@ export default function AddDeductee({ params }) {
                     ...prevState,
                     ["country"]: e,
                   }))}
+                  type="correction"
                   state={deducteeDetail.state}
                   country={deducteeDetail.country}
                   handleSaveDeductee={handleSaveDeductee}
@@ -441,6 +462,7 @@ export default function AddDeductee({ params }) {
                 <EmployeeDetail
                   employeeDetail={employeeDetail}
                   handleInputEmployee={handleInputEmployee}
+                  type="correction"
                   employeeErrors={employeeErrors}
                   setState={(e) => setEmployeeDetail((prevState) => ({
                     ...prevState,

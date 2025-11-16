@@ -26,7 +26,7 @@ export default function Deductors() {
   const [showLoader, setShowLoader] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteId, setDeleteId] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [totalItems, setTotalItems] = useState(10);
   const router = useRouter(null);
   const [breadcrumbs, setBreadcrumbs] = useState([
