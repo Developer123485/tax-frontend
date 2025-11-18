@@ -24,7 +24,8 @@ export const CorrectionsService = {
     getCorrectionDeductee,
     getCorrectionEmployee,
     saveCorrectionEmployee,
-    saveCorrectionDeductee
+    saveCorrectionDeductee,
+    finalCorrectionReport
 };
 
 async function getCorrectionChallans(model) {
@@ -99,6 +100,11 @@ async function saveCorrectionEmployee(model) {
         obj.dob = CommonService.dateFormat(obj.dob);
     const result = await api.post("correctionStatements/employees/create", obj);
     return result;
+}
+
+async function finalCorrectionReport(model) {
+  const result = await api.post(`correctionStatements/finalCorrectionReport`, model);
+  return result;
 }
 
 async function saveCorrectionDeductee(model) {
