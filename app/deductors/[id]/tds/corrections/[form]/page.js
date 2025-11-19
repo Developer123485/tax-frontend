@@ -120,12 +120,13 @@ export default function TDSForm({ params }) {
         quarter: searchParams.get("quarter"),
         deductorId: deductorId,
         categoryId: parseInt(searchParams.get("categoryId")),
+        correctionId: parseInt(searchParams.get("correctionId")),
       };
       const startYear = parseInt(model.financialYear.split("-")[0]);
       const endYear = startYear + 1;
       model.assesmentYear =
         `${endYear}` + "-" + "" + `${endYear + 1}`.toString().slice(-2);
-      FormsService.finalReport(model)
+      CorrectionsService.finalCorrectionReport(model)
         .then((res) => {
           const blob = new Blob([res], { type: "text/plain" });
           saveAs(blob, form + searchParams.get("quarter") + ".txt");
@@ -715,7 +716,7 @@ export default function TDSForm({ params }) {
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div
                           className="row align-items-center"
-                        // onClick={(e) => setIsDownloadFormConfirmation(true)}
+                          onClick={(e) => setIsDownloadFormConfirmation(true)}
                         >
                           <div className="col-md-4">
                             <Image
