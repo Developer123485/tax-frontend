@@ -96,7 +96,7 @@ export default function DeducteeEntry({ params }) {
     },
     {
       name: "Correction",
-      selector: (row) => (row.correction ? "Yes" : "No"),
+      selector: (row) => (row.correction),
       width: "120px",
     },
     {
@@ -236,11 +236,37 @@ export default function DeducteeEntry({ params }) {
     },
   ];
 
-  const conditionalRowStyles =
-    [{
-      when: (row) => row.correction, style:
-        { backgroundColor: "#E2FFE8", userSelect: "auto", },
-    },];
+  const conditionalRowStyles = [
+    {
+      when: row => row.correction === "Add",
+      style: {
+        backgroundColor: "#8bc34a",   // green
+        color: "#000",
+      },
+    },
+    {
+      when: row => row.correction === "Modify",
+      style: {
+        backgroundColor: "#ffeb3b",   // yellow
+        color: "#000",
+      },
+    },
+    {
+      when: row => row.correction === "PAN Update",
+      style: {
+        backgroundColor: "#2196f3",   // blue
+        color: "#fff",
+      },
+    },
+    {
+      when: row => row.correction === "Mark Nil",
+      style: {
+        backgroundColor: "#f44336",   // red
+        color: "#fff",
+      },
+    },
+  ];
+
 
   useEffect(() => {
     if (
@@ -263,6 +289,7 @@ export default function DeducteeEntry({ params }) {
       CorrectionsService.deleteCorrectionDeducteeEntry(deleteId)
         .then((res) => {
           if (res) {
+            setToggledClearRows(!toggledClearRows);
             toast.success("Delete Deductee Entry Successfully!");
             fetchDeducteeEntrys("");
             setDeleteConfirm(false);
@@ -279,6 +306,7 @@ export default function DeducteeEntry({ params }) {
         CorrectionsService.deleteCorrectionBulkDeducteeEntry(model)
           .then((res) => {
             if (res) {
+              setToggledClearRows(!toggledClearRows);
               toast.success("Delete Bulk Deductee Entry Successfully!");
               fetchDeducteeEntrys("");
               setDeleteConfirm(false);

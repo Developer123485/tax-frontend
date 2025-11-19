@@ -492,7 +492,7 @@ export default function DeducteeEntryDetail({ params }) {
     if (!deducteeEntry.countryCode && form === "form-27Q") {
       countryError = "Country code is required";
     }
-    if (!deducteeEntry.tdsRateAct) {
+    if (!deducteeEntry.tdsRateAct && form === "form-27Q") {
       tdsError = "TdsRate Act is required";
     }
     if (!deducteeEntry.dateOfDeduction && deducteeEntry.totalTaxDeducted > 0) {

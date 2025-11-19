@@ -338,6 +338,7 @@ export default function DeducteeEntryDetail({ params }) {
     e.preventDefault();
     setIsDirty(true);
     if (validatededucteeEntry()) {
+      debugger
       setLoading(true);
       let model = Object.assign({}, deducteeEntry);
       if (model.dateOfDeduction) {
@@ -435,6 +436,7 @@ export default function DeducteeEntryDetail({ params }) {
   }
 
   function validatededucteeEntry() {
+    debugger
     const financialYear = searchParams.get("financial_year");
     const startYear = parseInt(financialYear.split("-")[0]);
     let dateToCheck = "";
@@ -499,7 +501,7 @@ export default function DeducteeEntryDetail({ params }) {
     if (!deducteeEntry.countryCode && form === "form-27Q") {
       countryError = "Country code is required";
     }
-    if (!deducteeEntry.tdsRateAct) {
+    if (!deducteeEntry.tdsRateAct && form === "form-27Q") {
       tdsError = "TdsRate Act is required";
     }
     if (!deducteeEntry.dateOfDeduction && deducteeEntry.totalTaxDeducted > 0) {
