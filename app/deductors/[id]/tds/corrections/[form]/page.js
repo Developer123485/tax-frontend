@@ -486,6 +486,7 @@ export default function TDSForm({ params }) {
                         }}
                         className="fs-3 rounded-4 fw-bold bg-light-gray me-3 d-flex align-items-center justify-content-center"
                       >
+                        {formsDashboardDetail.deducteeCount}
                       </span>
                       <div className="">
                         <h6 className="text-capitalize fw-bold">Correction Pan Details</h6>
