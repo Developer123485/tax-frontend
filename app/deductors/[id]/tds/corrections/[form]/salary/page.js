@@ -388,7 +388,7 @@ export default function SaalryDetails({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={columns}
                           data={salaryDetails.salaryDetailList}
-                          highlightOnHover
+                          
                           pagination={true}
                           paginationServer
                           selectableRows={true}

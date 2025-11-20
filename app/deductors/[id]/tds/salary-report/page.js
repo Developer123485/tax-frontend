@@ -238,7 +238,7 @@ export default function SalaryReport({ params }) {
                                                 fixedHeaderScrollHeight="340px"
                                                 columns={columns}
                                                 data={salaryReports?.salaryReport}
-                                                highlightOnHover
+                                                
                                                 pagination={true}
                                                 paginationServer
                                                 customStyles={customStyles}

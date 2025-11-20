@@ -123,7 +123,7 @@ export default function InterestList(props) {
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
                                     data={props.response.interestCalculateReportList}
-                                    highlightOnHover
+                                    
                                     pagination={true}
                                     paginationServer
                                     customStyles={customStyles}

@@ -810,7 +810,7 @@ export default function TDSRates() {
                                 fixedHeaderScrollHeight="340px"
                                 columns={columns}
                                 data={tdsRates.tdsRatesList}
-                                highlightOnHover
+                                
                                 pagination={true}
                                 paginationServer
                                 customStyles={customStyles}

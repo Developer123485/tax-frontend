@@ -446,7 +446,6 @@ export default function Users() {
                               fixedHeaderScrollHeight="340px"
                               columns={columns}
                               data={users}
-                              highlightOnHover
                               pagination={true}
                               paginationServer
                               customStyles={customStyles}

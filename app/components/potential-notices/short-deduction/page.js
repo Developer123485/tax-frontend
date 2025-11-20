@@ -105,7 +105,7 @@ export default function ShortDeductions(props) {
                   fixedHeaderScrollHeight="340px"
                   columns={columns}
                   data={props.shortDeductionReports.shortDeductionsList}
-                  highlightOnHover
+                  
                   pagination={true}
                   paginationServer
                   customStyles={customStyles}

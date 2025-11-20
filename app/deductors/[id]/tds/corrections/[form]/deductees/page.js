@@ -421,7 +421,7 @@ export default function Deductees({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={deducteeColumns}
                           data={deductees}
-                          highlightOnHover
+                          
                           pagination={true}
                           paginationServer
                           // selectableRows={true}
@@ -452,7 +452,7 @@ export default function Deductees({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={employeeColumns}
                           data={employees}
-                          highlightOnHover
+                          
                           pagination={true}
                           paginationServer
                           clearSelectedRows={toggleCleared}  // ✅ This clears checkboxes

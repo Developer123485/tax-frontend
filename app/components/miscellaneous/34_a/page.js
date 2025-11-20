@@ -92,7 +92,7 @@ export default function Miscellaneous34A(props) {
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
                                     data={props.response.miscellaneousAReportList}
-                                    highlightOnHover
+                                    
                                     pagination={true}
                                     paginationServer
                                     customStyles={customStyles}

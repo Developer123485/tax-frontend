@@ -503,7 +503,7 @@ export default function DdoDetails({ params }) {
                                                     fixedHeaderScrollHeight="400px"
                                                     columns={columns}
                                                     data={ddoDetails.ddoDetailList}
-                                                    highlightOnHover
+                                                    
                                                     pagination={true}
                                                     paginationServer
                                                     selectableRows={true}

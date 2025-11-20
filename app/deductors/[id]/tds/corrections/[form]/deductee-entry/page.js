@@ -61,10 +61,6 @@ export default function DeducteeEntry({ params }) {
   const customStyles = {
     rows: {
       style: {
-        backgroundColor: "#FFFFFF",
-        "&:hover": {
-          backgroundColor: "#F2F7FF!important",
-        },
         minHeight: "45px",
       },
     },
@@ -72,7 +68,6 @@ export default function DeducteeEntry({ params }) {
       style: {
         justifyContent: "start",
         outline: "1px",
-        border: "1px solid #F2F7FF",
         fontSize: "12px",
       },
     },
@@ -80,7 +75,6 @@ export default function DeducteeEntry({ params }) {
       style: {
         justifyContent: "start",
         outline: "1px",
-        border: "1px solid #FFFFFF",
         fontSize: "12px",
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -240,32 +234,33 @@ export default function DeducteeEntry({ params }) {
     {
       when: row => row.correction === "Add",
       style: {
-        backgroundColor: "#8bc34a",   // green
-        color: "#000",
+        backgroundColor: "#DFF6DD",   // soft green
+        color: "#1B5E20",
       },
     },
     {
       when: row => row.correction === "Modify",
       style: {
-        backgroundColor: "#ffeb3b",   // yellow
-        color: "#000",
+        backgroundColor: "#FFF9C4",   // soft yellow
+        color: "#795548",
       },
     },
     {
       when: row => row.correction === "PAN Update",
       style: {
-        backgroundColor: "#2196f3",   // blue
-        color: "#fff",
+        backgroundColor: "#D1E8FF",   // soft blue
+        color: "#0D47A1",
       },
     },
     {
       when: row => row.correction === "Mark Nil",
       style: {
-        backgroundColor: "#f44336",   // red
-        color: "#fff",
+        backgroundColor: "#FFCDD2",   // soft red
+        color: "#B71C1C",
       },
     },
   ];
+
 
 
   useEffect(() => {
@@ -510,7 +505,6 @@ export default function DeducteeEntry({ params }) {
                           fixedHeaderScrollHeight="400px"
                           columns={columns}
                           data={deducteeEntrys.deducteeEntryList}
-                          highlightOnHover
                           pagination={true}
                           paginationServer
                           selectableRows={true}

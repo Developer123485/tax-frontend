@@ -716,7 +716,7 @@ export default function TaxDeposit() {
                                 fixedHeaderScrollHeight="340px"
                                 columns={columns}
                                 data={taxDeposit.taxDepositDueDatesList}
-                                highlightOnHover
+                                
                                 pagination={true}
                                 paginationServer
                                 customStyles={customStyles}

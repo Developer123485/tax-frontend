@@ -518,7 +518,7 @@ export default function Deductors() {
                         fixedHeaderScrollHeight="340px"
                         columns={columns}
                         data={deductors}
-                        highlightOnHover
+                        
                         pagination={true}
                         paginationServer
                         customStyles={customStyles}

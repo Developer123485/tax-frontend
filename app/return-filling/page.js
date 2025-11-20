@@ -748,7 +748,7 @@ export default function ReturnFilling() {
                                 fixedHeaderScrollHeight="340px"
                                 columns={columns}
                                 data={returnFillings.returnFillingDueDatesList}
-                                highlightOnHover
+                                
                                 pagination={true}
                                 paginationServer
                                 customStyles={customStyles}

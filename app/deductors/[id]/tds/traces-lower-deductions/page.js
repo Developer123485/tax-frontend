@@ -269,7 +269,7 @@ export default function TDSReturn({ params }) {
                         fixedHeaderScrollHeight="340px"
                         columns={columns}
                         data={list?.tracesLowerDeductionList}
-                        highlightOnHover
+                        
                         pagination={true}
                         paginationServer
                         customStyles={customStyles}

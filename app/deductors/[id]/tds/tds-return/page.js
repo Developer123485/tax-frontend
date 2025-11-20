@@ -487,7 +487,7 @@ export default function TDSReturn({ params }) {
                         fixedHeaderScrollHeight="340px"
                         columns={columns}
                         data={tdsReturns?.tdsReturnList}
-                        highlightOnHover
+                        
                         pagination={true}
                         paginationServer
                         customStyles={customStyles}

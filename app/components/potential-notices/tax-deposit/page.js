@@ -103,7 +103,7 @@ export default function TaxDepositList(props) {
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
                                     data={props.response.lateDepositReportList}
-                                    highlightOnHover
+                                    
                                     pagination={true}
                                     paginationServer
                                     customStyles={customStyles}

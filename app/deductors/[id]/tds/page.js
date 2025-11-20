@@ -913,7 +913,7 @@ export default function TDSDashboard({ params }) {
                             fixedHeaderScrollHeight="340px"
                             columns={columns}
                             data={correctionStatements}
-                            highlightOnHover
+                            
                             pagination={true}
                             paginationServer
                             customStyles={customStyles}

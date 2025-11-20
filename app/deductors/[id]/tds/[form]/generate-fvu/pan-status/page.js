@@ -419,7 +419,7 @@ export default function PanStatus({ params }) {
                                                         fixedHeaderScrollHeight="420px"
                                                         columns={columns}
                                                         data={panStatusResponse.panLists}
-                                                        highlightOnHover
+                                                        
                                                         paginationServer
                                                         paginationTotalRows={panStatusResponse.totalRows}
                                                         paginationPerPage={pageSize}

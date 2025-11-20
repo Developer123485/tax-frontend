@@ -98,7 +98,7 @@ export default function LateFeePayable(props) {
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
                                     data={props.response.lateFeePayableList}
-                                    highlightOnHover
+                                    
                                     paginationServer
                                     customStyles={customStyles}
                                     pagination={true}

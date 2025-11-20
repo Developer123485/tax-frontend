@@ -92,7 +92,7 @@ export default function LateDeductions(props) {
                 fixedHeaderScrollHeight="340px"
                 columns={columns}
                 data={props.lateDeductionReports.lateDeductionsList}
-                highlightOnHover
+                
                 pagination={true}
                 paginationServer
                 customStyles={customStyles}

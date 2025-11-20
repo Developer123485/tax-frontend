@@ -649,7 +649,7 @@ export default function TracesActivities({ params }) {
                                   fixedHeaderScrollHeight="340px"
                                   columns={columns}
                                   data={requestDownloads}
-                                  highlightOnHover
+                                  
                                   customStyles={customStyles}
                                   paginationComponentOptions={{
                                     noRowsPerPage: true,

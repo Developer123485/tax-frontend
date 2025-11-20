@@ -158,7 +158,7 @@ export default function Errors() {
                                     fixedHeaderScrollHeight="340px"
                                     columns={columns}
                                     data={errors}
-                                    highlightOnHover
+                                    
                                     customStyles={customStyles}
                                     paginationPerPage={pageSize}
                                 />

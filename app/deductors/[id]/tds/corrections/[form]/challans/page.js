@@ -324,7 +324,6 @@ export default function Challans({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={columns}
                           data={challans.challanList}
-                          highlightOnHover
                           pagination={true}
                           paginationServer
                           selectableRows={true}

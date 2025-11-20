@@ -66,7 +66,7 @@ export default function Miscellaneous34C(props) {
                   fixedHeaderScrollHeight="340px"
                   columns={columns}
                   data={props.response.miscellaneousCReportList}
-                  highlightOnHover
+                  
                   pagination={true}
                   paginationServer
                   customStyles={customStyles}

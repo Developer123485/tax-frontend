@@ -350,7 +350,7 @@ export default function DdoWiseDetails({ params }) {
                                         fixedHeaderScrollHeight="340px"
                                         columns={columns}
                                         data={ddoWiseDetails.ddoWiseDetailList}
-                                        highlightOnHover
+                                        
                                         pagination
                                         paginationServer
                                         paginationTotalRows={ddoWiseDetails.totalRows}

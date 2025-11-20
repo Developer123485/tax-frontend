@@ -459,7 +459,7 @@ export default function Challans({ params }) {
                           fixedHeaderScrollHeight="400px"
                           columns={columns}
                           data={deducteeEntrys.deducteeEntryList}
-                          highlightOnHover
+                          
                           pagination={true}
                           paginationServer
                           selectableRows={true}

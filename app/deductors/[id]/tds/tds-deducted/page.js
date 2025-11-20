@@ -254,7 +254,7 @@ export default function TDSDeducted({ params }) {
                                                 fixedHeaderScrollHeight="340px"
                                                 columns={columns}
                                                 data={tdsDeductedList?.tdsDeductedReport}
-                                                highlightOnHover
+                                                
                                                 pagination={true}
                                                 paginationServer
                                                 customStyles={customStyles}
