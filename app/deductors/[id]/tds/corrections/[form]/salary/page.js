@@ -57,10 +57,7 @@ export default function SaalryDetails({ params }) {
   const customStyles = {
     rows: {
       style: {
-        backgroundColor: "#FFFFFF",
-        "&:hover": {
-          backgroundColor: "#F2F7FF!important",
-        },
+      
         minHeight: "45px",
       },
     },

@@ -65,10 +65,7 @@ export default function TaxDeposit() {
   const customStyles = {
     rows: {
       style: {
-        backgroundColor: "#FFFFFF",
-        "&:hover": {
-          backgroundColor: "#F2F7FF!important",
-        },
+      
         minHeight: "45px",
       },
     },
@@ -716,7 +713,6 @@ export default function TaxDeposit() {
                                 fixedHeaderScrollHeight="340px"
                                 columns={columns}
                                 data={taxDeposit.taxDepositDueDatesList}
-                                
                                 pagination={true}
                                 paginationServer
                                 customStyles={customStyles}

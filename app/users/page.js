@@ -38,10 +38,7 @@ export default function Users() {
   const customStyles = {
     rows: {
       style: {
-        backgroundColor: "#FFFFFF",
-        "&:hover": {
-          backgroundColor: "#F2F7FF!important",
-        },
+      
         minHeight: "32px",
       },
     },

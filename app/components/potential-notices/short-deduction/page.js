@@ -19,10 +19,7 @@ export default function ShortDeductions(props) {
   const customStyles = {
     rows: {
       style: {
-        backgroundColor: "#FFFFFF",
-        "&:hover": {
-          backgroundColor: "#F2F7FF!important",
-        },
+      
         minHeight: "45px",
       },
     },
