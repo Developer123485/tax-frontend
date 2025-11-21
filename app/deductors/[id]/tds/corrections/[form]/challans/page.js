@@ -59,7 +59,7 @@ export default function Challans({ params }) {
   const customStyles = {
     rows: {
       style: {
-      
+
         minHeight: "45px",
       },
     },
@@ -207,9 +207,12 @@ export default function Challans({ params }) {
   ];
   const conditionalRowStyles =
     [{
-      when: (row) => row.correction, style:
-        { backgroundColor: "#E2FFE8", userSelect: "auto", },
-    },];
+      when: row => row.correction,
+      style: {
+        backgroundColor: "#FFF9C4",   // soft yellow
+        color: "#795548",
+      },
+    }];
   useEffect(() => {
     if (
       searchParams.get("financial_year") &&
@@ -298,7 +301,7 @@ export default function Challans({ params }) {
                   type="button"
                   disabled={
                     (challans && challans.challanList.length == 0 ? true : false) || loading}
-                  onClick={(e) => undoChallan(e)} 
+                  onClick={(e) => undoChallan(e)}
                   className="btn btn-primary"
                 >
                   {loading && (
