@@ -48,8 +48,13 @@ export default function Challans({ params }) {
     {
       name: form,
       isActive: false,
-      href: `/deductors/${deductorId}/tds/corrections/${form}${typeof window !== "undefined" ? window.location.search : ""
-        }`,
+      href: `/deductors/${deductorId}/tds/corrections/${form}?correctionId=${searchParams.get(
+        "correctionId"
+      )}&categoryId=${searchParams.get(
+        "categoryId"
+      )}&financial_year=${searchParams.get(
+        "financial_year"
+      )}&quarter=${searchParams.get("quarter")}`,
     },
     {
       name: "Challans",
