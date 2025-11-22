@@ -246,7 +246,7 @@ export default function DeducteeEntry({ params }) {
       },
     },
     {
-      when: row => row.correction === "PAN Update",
+      when: row => row.correction === "Pan Update",
       style: {
         backgroundColor: "#D1E8FF",   // soft blue
         color: "#0D47A1",
