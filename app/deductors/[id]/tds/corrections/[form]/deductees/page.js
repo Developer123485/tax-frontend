@@ -14,6 +14,7 @@ import api from "@/app/utils/interceptors";
 import { CommonService } from "@/app/services/common.service";
 import { usePathname } from "next/navigation";
 import { CorrectionsService } from "@/app/services/corrections.service";
+import { TracesActivitiesService } from "@/app/services/tracesActivities.service";
 export default function Deductees({ params }) {
   const resolvedParams = use(params);
   const searchParams = useSearchParams(null);
@@ -70,7 +71,7 @@ export default function Deductees({ params }) {
   const customStyles = {
     rows: {
       style: {
-      
+
         minHeight: "45px",
       },
     },
@@ -257,6 +258,85 @@ export default function Deductees({ params }) {
       });
   }
 
+  const handleDeducteeChange = (state) => {
+    setSelectedDeducteeData(state.selectedRows);
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!captcha) {
+      toast.error("Input Captcha is required");
+      return false;
+    }
+    setSubmitLoading(true);
+    const model = {
+      captcha: captcha,
+      deductorId: deductorId,
+      ids: (verifyType == "all" ? [] : selectedDeducteeData.map(p => p.id)),
+      type: "Correction"
+    }
+    if (type === "Deductees") {
+      model.status = deducteeStatus;
+      TracesActivitiesService.verifyDeducteePans(model).then(res => {
+        if (res) {
+          setSelectedDeducteeData([]);
+        }
+        toast.success(res);
+        fetchCorrectionDeductees("");
+        setConfirmModal(false);
+        setVerifyType("");
+        setSubmitLoading(false);
+        setToggleCleared(!toggleCleared);
+        setCaptchaBase64("");
+      }).catch(e => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setVerifyType("");
+        setConfirmModal(false);
+        setSubmitLoading(false);
+        setSelectedDeducteeData([]);
+        setToggleCleared(!toggleCleared);
+        setCaptchaBase64("");
+      })
+    } else {
+      model.ids = (verifyType == "all" ? [] : selectedEmployeeData.map(p => p.id));
+      model.status = employeeStatus;
+      TracesActivitiesService.verifyEmployeePans(model).then(res => {
+        if (res) {
+          setSelectedEmployeeData([]);
+          fetchCorrectionEmployees("");
+        }
+        toast.success(res);
+        setConfirmModal(false);
+        setVerifyType("");
+        setSubmitLoading(false);
+        setToggleCleared(!toggleCleared);
+        setCaptchaBase64("");
+      }).catch(e => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setVerifyType("");
+        setConfirmModal(false);
+        setToggleCleared(!toggleCleared);
+        setSubmitLoading(false);
+        setCaptchaBase64("");
+      })
+    }
+  }
+
+
+  const handleEmployeeChange = (state) => {
+    setSelectedEmployeeData(state.selectedRows);
+  };
+
   function fetchCorrectionDeductees(searchValue) {
     if (!searchValue) {
       setShowLoader(true);
@@ -278,6 +358,43 @@ export default function Deductees({ params }) {
       .catch((e) => {
         setShowLoader(false);
       });
+  }
+
+
+  function submitLogin(e) {
+    setCaptcha("");
+    if (deductorInfo.tracesLogin && deductorInfo.tracesPassword) {
+      const model = {
+        userName: deductorInfo.tracesLogin,
+        password: deductorInfo.tracesPassword,
+        tanNumber: deductorInfo?.deductorTan
+      }
+      TracesActivitiesService.startLogin(model).then(res => {
+        if (res) {
+          setCaptchaBase64(res.captcha);
+          setConfirmModal(true);
+          setBulkLoading(false);
+          setAllLoading(false);
+        }
+      }).catch(e => {
+        if (e?.response?.data?.errorMessage) {
+          toast.error(e?.response?.data?.errorMessage);
+        }
+        else {
+          toast.error(e?.message);
+        }
+        setBulkLoading(false);
+        setAllLoading(false);
+      })
+    } else {
+      setAllLoading(false);
+      setBulkLoading(false);
+      setCaptchaBase64("");
+      setToggleCleared(false);
+      setVerifyType("");
+      setCaptcha("");
+      toast.error("TRACES username and password do not exist for the deductor");
+    }
   }
 
   function fetchCorrectionEmployees(searchValue) {
@@ -313,14 +430,42 @@ export default function Deductees({ params }) {
         <div className="container">
           <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
             <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
-              <div className="col-md-7">
+              <div className="col-md-4">
                 <h4 className="fw-bold mb-0">
                   {form != "form-24Q" ? "Deductees" : "Employees"}
                 </h4>
               </div>
               {form != "form-24Q" &&
                 <>
-                  <div className="col-md-2">
+                  <div className="col-md-5">
+                    <button type="button"
+                      disabled={selectedDeducteeData.length == 0 || bulkLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setBulkLoading(true);
+                        setVerifyType("bulk");
+                        submitLogin(e);
+                      }}
+                    >
+                      {bulkLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Bulk PAN Verify
+                    </button>
+                    <button type="button"
+                      disabled={deductees.length == 0 || allLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("all");
+                        submitLogin(e)
+                      }}
+                    >
+                      {allLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Verify All PANs
+                    </button>
                     <button
                       type="button"
                       className="btn btn-primary"
@@ -364,7 +509,34 @@ export default function Deductees({ params }) {
               }
               {form == "form-24Q" &&
                 <>
-                  <div className="col-md-2">
+                  <div className="col-md-5">
+                    <button type="button"
+                      disabled={selectedEmployeeData.length == 0 || bulkLoading}
+                      className="btn btn-primary me-3"
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("bulk");
+                        submitLogin(e)
+                      }}
+                    >
+                      {bulkLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Bulk PAN Verify
+                    </button>
+                    <button type="button" className="btn btn-primary me-3"
+                      disabled={employees.length == 0 || allLoading}
+                      onClick={(e) => {
+                        setAllLoading(true);
+                        setVerifyType("all");
+                        submitLogin(e)
+                      }}
+                    >
+                      {allLoading && (
+                        <div className="spinner-border me-2" role="status"></div>
+                      )}
+                      Verify All PANs
+                    </button>
                     <button
                       type="button"
                       className="btn btn-primary"
@@ -418,7 +590,8 @@ export default function Deductees({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={deducteeColumns}
                           data={deductees}
-                          
+                          selectableRows={true}
+                          onSelectedRowsChange={handleDeducteeChange}
                           pagination={true}
                           paginationServer
                           // selectableRows={true}
@@ -449,7 +622,9 @@ export default function Deductees({ params }) {
                           fixedHeaderScrollHeight="340px"
                           columns={employeeColumns}
                           data={employees}
-                          
+                          onSelectedRowsChange={handleEmployeeChange}
+                          selectableRows={true}
+                          selectableRowsNoSelectAll={true}
                           pagination={true}
                           paginationServer
                           clearSelectedRows={toggleCleared}  // ✅ This clears checkboxes
@@ -474,6 +649,64 @@ export default function Deductees({ params }) {
         </div>
       </section >
       <ProcessPopup showLoader={showLoader}></ProcessPopup>
+      <Modal
+        className=""
+        size="sm"
+        centered
+        keyboard={false}
+        backdrop="static"
+        show={confirmModal}
+        onHide={() => {
+          setAllLoading(false);
+          setBulkLoading(false);
+          setCaptchaBase64("");
+          setToggleCleared(false);
+          setVerifyType("");
+          setCaptcha("");
+          setConfirmModal(false)
+        }}
+      >
+        <Modal.Header className="border-0" closeButton></Modal.Header>
+        <Modal.Body>
+          <div className="container">
+            <div style={{ padding: 10 }}>
+              {captchaBase64 && (
+                <img src={captchaBase64} alt="CAPTCHA" style={{ marginBottom: 10 }} />
+              )}
+              <br />
+              <input
+                type="text"
+                maxLength={5}
+                value={captcha}
+                onChange={(e) => setCaptcha(
+                  e.target.value,
+                )}
+                style={{ padding: 10, fontSize: 16, marginBottom: 10 }}
+              />
+              <br />
+              <button
+                className="btn btn-primary"
+                disabled={submitLoading}
+                onClick={handleSubmit} style={{ padding: 10, fontSize: 16 }}>
+                {submitLoading && (
+                  <div className="spinner-border me-2" role="status"></div>
+                )}
+                Submit
+              </button>
+              {captchaBase64 && <button className="btn btn-default" onClick={resendCaptcha} style={{ marginLeft: 14, padding: 8, fontSize: 14 }}>
+                {resendLoading && (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                Resend
+              </button>}
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
