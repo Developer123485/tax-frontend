@@ -108,8 +108,8 @@ export default function Deductees({ params }) {
       grow: 1.5,
     },
     {
-      name: "New Pan",
-      selector: (row) => (row.newPannumber ? row.newPannumber : "-"),
+      name: "PAN Status",
+      selector: (row) => (row.panVerificationStatus ? row.panVerificationStatus : "-"),
       grow: 2,
     },
     {
@@ -118,9 +118,14 @@ export default function Deductees({ params }) {
       grow: 2,
     },
     {
-      name: "Deductee Detail Count",
-      selector: (row) => (row.deducteeDetailCount ? row.deducteeDetailCount : "-"),
+      name: "Last Verified On",
+      selector: (row) => (row.verifyLastDate ? CommonService.formatDate(row.verifyLastDate) : "-"),
       grow: 2,
+    },
+    {
+      name: "DD Count",
+      selector: (row) => (row.deducteeDetailCount ? row.deducteeDetailCount : "-"),
+      grow: 1.5,
     },
     {
       name: "Actions",
@@ -183,9 +188,8 @@ export default function Deductees({ params }) {
       grow: 1.5,
     },
     {
-      name: "New pan",
-      selector: (row) => row.newPannumber || "-",
-      grow: 2,
+      name: "Pan Status",
+      selector: (row) => (row.panVerificationStatus ? row.panVerificationStatus : "-"),
     },
     {
       name: "Name as per PAN",
@@ -193,7 +197,12 @@ export default function Deductees({ params }) {
       grow: 2,
     },
     {
-      name: "Employee Detail Count",
+      name: "Last Verified On",
+      selector: (row) => (row.verifyLastDate ? CommonService.formatDate(row.verifyLastDate) : "-"),
+      grow: 2,
+    },
+    {
+      name: "DD Count",
       selector: (row) => (row.employeeDetailCount ? row.employeeDetailCount : "-"),
     },
     {
