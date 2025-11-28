@@ -13,4 +13,4 @@ jobs:
         run: sudo apt-get update -y && sudo apt-get install sshpass -y
 
       - name: SSH into dev env
-        run: sshpass -p n-H3uLk?zeMqHcvt ssh -o StrictHostKeyChecking=no root@65.20.78.78 "cd /root/frontend/tax-frontend && bash build.sh"
+        run: sshpass -p '3S?Cz@$X3S?Cz@$X' ssh -o StrictHostKeyChecking=no root@69.169.109.54 "cd /root/tax-frontend && bash build.sh"
