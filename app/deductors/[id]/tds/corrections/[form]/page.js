@@ -276,6 +276,7 @@ export default function TDSForm({ params }) {
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
       deductorId: deductorId,
+      correctionId: parseInt(searchParams.get("correctionId")),
       categoryId: parseInt(searchParams.get("categoryId")),
       file: formData,
       isFormValidation: value,
@@ -296,7 +297,7 @@ export default function TDSForm({ params }) {
       if (selectedFile.type != "text/plain") {
         setIsUploading(true);
         result = await api.post(
-          `forms/uploadExcelFile/${model.categoryId}/${model.deductorId}/${model.financialYear}/${model.quarter}/${model.isFormValidation}`,
+          `correctionStatements/uploadExcelFile/${model.categoryId}/${model.deductorId}/${model.correctionId}/${model.financialYear}/${model.quarter}/${model.isFormValidation}`,
           model.file,
           config
         );
