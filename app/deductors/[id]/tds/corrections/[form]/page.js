@@ -242,14 +242,15 @@ export default function TDSForm({ params }) {
         financialYear: searchParams.get("financial_year"),
         quarter: searchParams.get("quarter"),
         deductorId: deductorId,
+        correctionId: parseInt(searchParams.get("correctionId")),
         categoryId: parseInt(searchParams.get("categoryId")),
       };
-      FormsService.exportFormData(model)
+      CorrectionsService.exportFormData(model)
         .then((res) => {
           if (res) {
             let url = window.URL.createObjectURL(new Blob([res]));
             toast.success("Export Data Successfully!");
-            saveAs(url, "CHALLAN-DEDUCCTEE-EXPORT-" + form + ".xlsx");
+            saveAs(url, "Correction-Challan-Deductee-export-" + form + ".xlsx");
           }
         }).catch(e => {
           if (e?.response?.data?.errorMessage) {
@@ -668,7 +669,7 @@ export default function TDSForm({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary w-100"
-                    // onClick={(e) => setIsExportFormConfirmation(true)}
+                      onClick={(e) => setIsExportFormConfirmation(true)}
                     >
                       Form Export
                     </button>

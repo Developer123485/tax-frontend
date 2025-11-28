@@ -25,7 +25,8 @@ export const CorrectionsService = {
     getCorrectionEmployee,
     saveCorrectionEmployee,
     saveCorrectionDeductee,
-    finalCorrectionReport
+    finalCorrectionReport,
+    exportFormData
 };
 
 async function getCorrectionChallans(model) {
@@ -84,6 +85,14 @@ async function getCorrectionDeductees(model, deductorId) {
     return result;
 }
 
+async function exportFormData(model) {
+    let axiosConfig = {
+        responseType: "blob",
+    };
+    const result = await api.post(`correctionStatements/exportExcelFile`, model, axiosConfig);
+    return result;
+}
+
 async function getCorrectionDeductee(deducteeId) {
     const result = await api.get(`correctionStatements/deductee/${deducteeId}`);
     return result;
@@ -103,8 +112,8 @@ async function saveCorrectionEmployee(model) {
 }
 
 async function finalCorrectionReport(model) {
-  const result = await api.post(`correctionStatements/finalCorrectionReport`, model);
-  return result;
+    const result = await api.post(`correctionStatements/finalCorrectionReport`, model);
+    return result;
 }
 
 async function saveCorrectionDeductee(model) {
