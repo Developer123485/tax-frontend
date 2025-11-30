@@ -689,6 +689,20 @@ export default function Detail({ params }) {
         }
     }
 
+    function undoDeductor(e) {
+        e.preventDefault();
+        CorrectionsService.undoDeductor(deductorDetail)
+            .then((res) => {
+                if (res) {
+                    toast.success("Undo Deductor Changes successfully");
+                    router.push(`/deductors/${deductorId}/tds`);
+                }
+            })
+            .catch((res) => {
+                toast.error(res);
+            });
+    }
+
     async function itdLogin(e) {
         const model = {
             password: deductorDetail.itdPassword,
@@ -757,6 +771,7 @@ export default function Detail({ params }) {
                                 handleInputDeductor={handleInputDeductor}
                                 deductorDetail={deductorDetail}
                                 handleSaveDeductor={saveDeductor}
+                                undoDeductor={undoDeductor}
                                 deductorErrors={deductorErrors}
                             ></ResponsibleDetail>
                         )}
