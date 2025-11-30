@@ -508,6 +508,15 @@ export default function ResponsibleDetail(props) {
                   Cancel Edit
                 </button>
               )}
+              {deductorDetail.correction &&
+                <button
+                  type="button"
+                  className="btn btn-primary me-2"
+                  onClick={(e) => props.undoDeductor(e)}
+                >
+                  Undo Deductor
+                </button>
+              }
               <button
                 type="button"
                 className="btn btn-primary"
@@ -515,15 +524,6 @@ export default function ResponsibleDetail(props) {
               >
                 Save Deductor
               </button>
-              {deductorDetail.correction &&
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={(e) => props.undoDeductor(e)}
-                >
-                  Undo Deductor
-                </button>
-              }
             </div>
           </div>
         </>
