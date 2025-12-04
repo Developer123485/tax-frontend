@@ -127,17 +127,17 @@ export default function Challans({ params }) {
       selector: (row) => `${row?.others.toFixed(2) || "-"}`,
     },
     {
+      name: "Total Tax",
+      selector: (row) => row.totalTaxDeposit.toFixed(2) || "-",
+      grow: 1.5,
+    },
+    {
       name: "Tds/Tcs Interest",
       selector: (row) => `${row?.tdsInterest.toFixed(2) || "-"}`,
     },
     {
       name: "Tds/Tcs Others",
       selector: (row) => `${row?.tdsOther.toFixed(2) || "-"}`,
-    },
-    {
-      name: "Total Tax",
-      selector: (row) => row.totalTaxDeposit.toFixed(2) || "-",
-      grow: 1.5,
     },
     {
       name: "BSR Code",
