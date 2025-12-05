@@ -112,7 +112,7 @@ export default function Remitters() {
                                 </OverlayTrigger>
                             </a>
                         </span> */}
-                        <span className="mx-2 opacity-50">|</span>
+                        {/* <span className="mx-2 opacity-50">|</span> */}
                         <span>
                             {" "}
                             <a
