@@ -60,6 +60,18 @@ export default function HeaderList() {
                       <li className="nav-item">
                         <a
                           className={
+                            pathname == "/remitters"
+                              ? "active nav-link px-3"
+                              : "nav-link px-3"
+                          }
+                          onClick={(e) => router.push("/remitters")}
+                        >
+                          Remitters
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a
+                          className={
                             pathname == "/deductors"
                               ? "active nav-link px-3"
                               : "nav-link px-3"
