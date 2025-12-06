@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProcessPopup from "../../modals/processing";
 import { CommonService } from "@/app/services/common.service";
+import SearchableDropdown from "../../deductors/searchable-dropdown";
 
 export default function RemitterDetail(props) {
   const [isFocused, setIsFocused] = useState(false);
@@ -43,7 +44,7 @@ export default function RemitterDetail(props) {
     <>
       {enumList && (
         <form autoComplete="off">
-          <div>
+          <div className="row row d-flex g-3">
             <div className="row bg-light-gray px-3 py-4 px-md-2 py-md-3 rounded-3 mb-4 g-3">
               <div className="col-md-12 mt-0">
                 <h5 className="text-blue fw-bold">Remitter Details</h5>
@@ -143,6 +144,82 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
+
+
+
+
+              {/* State */}
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>State</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.states && enumList.states.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterState", e)}
+                  id={remitterDetail.remitterState}
+                  options={enumList.states}
+                ></SearchableDropdown>
+                }
+                {/* <select
+                  className="form-select"
+                  style={highlightStyle1}
+                  onFocus={() => setIsFocused1(true)}
+                  onBlur={() => setIsFocused1(false)}
+                  value={remitterDetail.remitterState}
+                  onChange={(e) => handleInput("remitterState", e)}
+                >
+                  <option value={""}>Select State</option>
+                  {enumList.states
+                    ?.filter((p) => p.value !== "OVERSEAS")
+                    ?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                </select> */}
+                {isNextDirty && remitterErrors.remitterStateError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStateError}
+                  </span>
+                )}
+              </div>
+
+              {/* Country */}
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Country</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterCountry", e)}
+                  id={remitterDetail.remitterCountry}
+                  options={enumList.countries}
+                ></SearchableDropdown>
+                }
+                {/* <select
+                  className="form-select"
+                  style={highlightStyle1}
+                  onFocus={() => setIsFocused1(true)}
+                  onBlur={() => setIsFocused1(false)}
+                  value={remitterDetail.remitterState}
+                  onChange={(e) => handleInput("remitterState", e)}
+                >
+                  <option value={""}>Select State</option>
+                  {enumList.states
+                    ?.filter((p) => p.value !== "OVERSEAS")
+                    ?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                </select> */}
+                {isNextDirty && remitterErrors.remitterStateError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStateError}
+                  </span>
+                )}
+              </div>
+
               {/* Building */}
               <div className="col-md-3">
                 <label className="form-label">Building Name</label>
@@ -175,36 +252,6 @@ export default function RemitterDetail(props) {
                 {isNextDirty && remitterErrors.remitterStreetError && (
                   <span className="text-danger">
                     {remitterErrors.remitterStreetError}
-                  </span>
-                )}
-              </div>
-
-              {/* State */}
-              <div className="col-md-3">
-                <label className="form-label">
-                  <span>State</span>
-                  <span className="text-danger"> *</span>
-                </label>
-                <select
-                  className="form-select"
-                  style={highlightStyle1}
-                  onFocus={() => setIsFocused1(true)}
-                  onBlur={() => setIsFocused1(false)}
-                  value={remitterDetail.remitterState}
-                  onChange={(e) => handleInput("remitterState", e)}
-                >
-                  <option value={""}>Select State</option>
-                  {enumList.states
-                    ?.filter((p) => p.value !== "OVERSEAS")
-                    ?.map((option, index) => (
-                      <option key={index} value={option.key}>
-                        {option.value}
-                      </option>
-                    ))}
-                </select>
-                {isNextDirty && remitterErrors.remitterStateError && (
-                  <span className="text-danger">
-                    {remitterErrors.remitterStateError}
                   </span>
                 )}
               </div>
@@ -298,6 +345,127 @@ export default function RemitterDetail(props) {
                   }}
                 />
               </div>
+
+              <div className="col-md-3">
+                <label className="form-label">TAN ACK Part C</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.tanAckPartC}
+                  onChange={(e) => handleInput("tanAckPartC", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Income Tax Ward</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.incTaxWard}
+                  onChange={(e) => handleInput("incTaxWard", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Principal Place of Business (Remitter)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.princPlcBusRemter}
+                  onChange={(e) => handleInput("princPlcBusRemter", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Domestic Flag</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.domesticFlg}
+                  onChange={(e) => handleInput("domesticFlg", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Area Code</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.areaCode}
+                  onChange={(e) => handleInput("areaCode", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Range Code</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.rangeCode}
+                  onChange={(e) => handleInput("rangeCode", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">AO Type</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.aoType}
+                  onChange={(e) => handleInput("aoType", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">AO Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.aoNumber}
+                  onChange={(e) => handleInput("aoNumber", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Responsible Person Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.responsibleName}
+                  onChange={(e) => handleInput("responsibleName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Father Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.fatherName}
+                  onChange={(e) => handleInput("fatherName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Mother Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.motherName}
+                  onChange={(e) => handleInput("motherName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Designation</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.desgination}
+                  onChange={(e) => handleInput("desgination", e)}
+                />
+              </div>
+
             </div>
 
             <div className="row">

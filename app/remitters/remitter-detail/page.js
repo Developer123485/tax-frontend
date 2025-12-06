@@ -68,6 +68,18 @@ export default function AddRemitter() {
         userId: 0,
         itdLogin: "",
         itdPassword: "",
+        tanAckPartC: "",
+        incTaxWard: "",
+        princPlcBusRemter: "",
+        domesticFlg: "",
+        areaCode: "",
+        rangeCode: "",
+        aoType: "",
+        aoNumber: "",
+        responsibleName: "",
+        fatherName: "",
+        motherName: "",
+        desgination: "",
     });
     const [remitterErrors, setRemitterErrors] = useState({
         remitterStateError: "",
@@ -120,10 +132,17 @@ export default function AddRemitter() {
     }
 
     function handleInputRemitter(names, e) {
-        setRemitterDetail((prevState) => ({
-            ...prevState,
-            [names]: e.target.value,
-        }));
+        if (names == "remitterState" || names == "remitterCountry") {
+            setRemitterDetail((prevState) => ({
+                ...prevState,
+                [names]: e,
+            }));
+        } else {
+            setRemitterDetail((prevState) => ({
+                ...prevState,
+                [names]: e.target.value,
+            }));
+        }
     }
 
     function resendCaptcha(e) {

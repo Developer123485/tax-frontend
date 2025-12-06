@@ -90,11 +90,9 @@ export default function Remitters() {
                 <>
                     {" "}
                     <div className="d-flex justify-content-center">
-                        {/* <span>
+                        <span>
                             <a onClick={(e) => {
-                                sessionStorage.setItem("deductorName", row.deductorName);
-                                sessionStorage.setItem("deductorTan", row.deductorTan);
-                                router.push(`/deductors/${row.id}/tds`)
+                                router.push(`/remitters/${row.id}/dashboard`)
                             }}>
                                 <OverlayTrigger
                                     placement="bottom"
@@ -111,8 +109,8 @@ export default function Remitters() {
                                     </div>
                                 </OverlayTrigger>
                             </a>
-                        </span> */}
-                        {/* <span className="mx-2 opacity-50">|</span> */}
+                        </span>
+                        <span className="mx-2 opacity-50">|</span>
                         <span>
                             {" "}
                             <a
@@ -189,9 +187,7 @@ export default function Remitters() {
     };
 
     const handleRowDoubleClick = (row) => {
-        // sessionStorage.setItem("deductorName", row.deductorName);
-        // sessionStorage.setItem("deductorTan", row.deductorTan);
-        // router.push(`/deductors/${row.id}/tds`);
+        router.push(`/remitters/${row.id}/dashboard`)
     };
 
     function deleteRemitter(e) {

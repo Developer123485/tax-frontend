@@ -1272,6 +1272,56 @@ input.has-error {
   color: #222;
 }
 
+.form-card {
+  border: 1px solid #e6e6e6;
+  transition: 0.23s ease;
+  cursor: pointer;
+  background: #fff;
+  text-align: center;
+}
+.form-card:hover {
+  border-color: #0062d4;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.09);
+  transform: translateY(-3px);
+}
+.badge-lg {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: #bfdbff;
+  color: #004182;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.sidebar-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 16px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  cursor: pointer;
+  background: white;
+  transition: 0.25s ease;
+}
+.sidebar-card:hover {
+  background: #f4f8ff;
+  border-color: #0062d4;
+  transform: translateX(3px);
+}
+.sidebar-card-content {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-card span {
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 15px;
+}
+
 .date-picker-group {
   margin-bottom: 16px;
 }
