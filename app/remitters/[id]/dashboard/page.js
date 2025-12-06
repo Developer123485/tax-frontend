@@ -28,6 +28,7 @@ export default function Dashboard({ params }) {
     const resolvedParams = use(params);
     const [currentPage, setCurrentPage] = useState(1);
     const [deleteId, setDeleteId] = useState(1);
+    const remitterId = resolvedParams?.id;
     const [pageSize, setPageSize] = useState(50);
     const [deductorInfo, setDeductorInfo] = useState(null);
     const [isloading, setIsLoading] = useState(false);
@@ -149,7 +150,7 @@ export default function Dashboard({ params }) {
 
                             <div className="d-flex flex-column gap-3">
                                 {/* Master List */}
-                                <div className="sidebar-card" onClick={() => router.push("tds/deductees")}>
+                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittee`)}>
                                     <Image src="/images/dashboards/users_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
                                         <span className="title">Remittee List</span>
