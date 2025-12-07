@@ -138,14 +138,22 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === COUNTRY === */}
-            <div className="col-md-4">
-              <label className="form-label">Country</label>
-              <input
-                type="text"
-                className="form-control"
-                value={remittee.remitteeCountry || ""}
-                onChange={(e) => handleInput("remitteeCountry", e)}
-              />
+            <div className="col-md-6">
+              <label htmlFor="inputCountry" className="form-label">
+                <span>Country</span>
+                <span className="text-danger"> *</span>
+              </label>
+              {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                setEventId={(e) => handleInput("remitteeCountry", e)}
+                id={remittee.remitteeCountry}
+                options={enumList.countries}
+              ></SearchableDropdown>
+              }
+              {isNextDirty && remitterErrors.remitterStateError && (
+                <span className="text-danger">
+                  {remitterErrors.remitterStateError}
+                </span>
+              )}
             </div>
 
             {/* === PINCODE === */}

@@ -77,6 +77,395 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
+              {/* PAN */}
+              <div className="col-md-3">
+                <label htmlFor="inputPANNo" className="form-label">
+                  <span>PAN</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={10}
+                  value={
+                    remitterDetail.remitterPan
+                      ? remitterDetail.remitterPan.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("remitterPan", e);
+                  }}
+                />
+                {isNextDirty && remitterErrors.remitterPanError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterPanError}
+                  </span>
+                )}
+              </div>
+
+              {/* Name */}
+              <div className="col-md-3">
+                <label className="form-label">
+                  <span>Remitter Name</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={75}
+                  value={remitterDetail.name}
+                  onChange={(e) => handleInput("name", e)}
+                />
+                {isNextDirty && remitterErrors.remitterNameError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterNameError}
+                  </span>
+                )}
+              </div>
+
+              {/* Flat */}
+              <div className="col-md-3">
+                <label className="form-label">
+                  <span>Flat/Block No.</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={25}
+                  value={remitterDetail.remitterFlat}
+                  onChange={(e) => handleInput("remitterFlat", e)}
+                />
+                {isNextDirty && remitterErrors.remitterFlatNoError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterFlatNoError}
+                  </span>
+                )}
+              </div>
+
+
+
+
+
+              {/* State */}
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>State</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.states && enumList.states.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterState", e)}
+                  id={remitterDetail.remitterState}
+                  options={enumList.states}
+                ></SearchableDropdown>
+                }
+                {/* <select
+                  className="form-select"
+                  style={highlightStyle1}
+                  onFocus={() => setIsFocused1(true)}
+                  onBlur={() => setIsFocused1(false)}
+                  value={remitterDetail.remitterState}
+                  onChange={(e) => handleInput("remitterState", e)}
+                >
+                  <option value={""}>Select State</option>
+                  {enumList.states
+                    ?.filter((p) => p.value !== "OVERSEAS")
+                    ?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                </select> */}
+                {isNextDirty && remitterErrors.remitterStateError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStateError}
+                  </span>
+                )}
+              </div>
+
+              {/* Country */}
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Country</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterCountry", e)}
+                  id={remitterDetail.remitterCountry}
+                  options={enumList.countries}
+                ></SearchableDropdown>
+                }
+                {/* <select
+                  className="form-select"
+                  style={highlightStyle1}
+                  onFocus={() => setIsFocused1(true)}
+                  onBlur={() => setIsFocused1(false)}
+                  value={remitterDetail.remitterState}
+                  onChange={(e) => handleInput("remitterState", e)}
+                >
+                  <option value={""}>Select State</option>
+                  {enumList.states
+                    ?.filter((p) => p.value !== "OVERSEAS")
+                    ?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                </select> */}
+                {isNextDirty && remitterErrors.remitterStateError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStateError}
+                  </span>
+                )}
+              </div>
+
+              {/* Building */}
+              <div className="col-md-3">
+                <label className="form-label">Building Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={25}
+                  value={remitterDetail.remitterBuilding}
+                  onChange={(e) =>
+                    handleInput("remitterBuilding", e)
+                  }
+                />
+                {isNextDirty && remitterErrors.remitterBuildingNameError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterBuildingNameError}
+                  </span>
+                )}
+              </div>
+
+              {/* Street */}
+              <div className="col-md-3">
+                <label className="form-label">Road/Street</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={25}
+                  value={remitterDetail.remitterStreet}
+                  onChange={(e) => handleInput("remitterStreet", e)}
+                />
+                {isNextDirty && remitterErrors.remitterStreetError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStreetError}
+                  </span>
+                )}
+              </div>
+
+              {/* Area */}
+              <div className="col-md-3">
+                <label className="form-label">Area/Locality</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={25}
+                  value={remitterDetail.remitterArea}
+                  onChange={(e) => handleInput("remitterArea", e)}
+                />
+                {isNextDirty && remitterErrors.remitterAreaError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterAreaError}
+                  </span>
+                )}
+              </div>
+
+              {/* City */}
+              <div className="col-md-3">
+                <label className="form-label">Town/City/District</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={25}
+                  value={remitterDetail.remitterCity}
+                  onChange={(e) => handleInput("remitterCity", e)}
+                />
+                {isNextDirty && remitterErrors.remitterDistrictError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterDistrictError}
+                  </span>
+                )}
+              </div>
+
+              {/* Pincode */}
+              <div className="col-md-3">
+                <label className="form-label">
+                  Pincode <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={6}
+                  value={remitterDetail.remitterPincode}
+                  onChange={(e) => {
+                    if (CommonService.isNumeric(e.target.value))
+                      handleInput("remitterPincode", e);
+                  }}
+                />
+                {isNextDirty && remitterErrors.remitterPincodeError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterPincodeError}
+                  </span>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="col-md-3">
+                <label className="form-label">
+                  Email <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  maxLength={50}
+                  value={remitterDetail.remitterEmail}
+                  onChange={(e) => handleInput("remitterEmail", e)}
+                />
+                {isNextDirty && remitterErrors.remitterEmailIdError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterEmailIdError}
+                  </span>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div className="col-md-3">
+                <label className="form-label">Mobile</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength={10}
+                  value={remitterDetail.remitterPhone}
+                  onChange={(e) => {
+                    if (CommonService.isNumeric(e.target.value))
+                      handleInput("remitterPhone", e);
+                  }}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">TAN ACK Part C</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.tanAckPartC}
+                  onChange={(e) => handleInput("tanAckPartC", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Income Tax Ward</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.incTaxWard}
+                  onChange={(e) => handleInput("incTaxWard", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Principal Place of Business (Remitter)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.princPlcBusRemter}
+                  onChange={(e) => handleInput("princPlcBusRemter", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Domestic Flag</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.domesticFlg}
+                  onChange={(e) => handleInput("domesticFlg", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Area Code</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.areaCode}
+                  onChange={(e) => handleInput("areaCode", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Range Code</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.rangeCode}
+                  onChange={(e) => handleInput("rangeCode", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">AO Type</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.aoType}
+                  onChange={(e) => handleInput("aoType", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">AO Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.aoNumber}
+                  onChange={(e) => handleInput("aoNumber", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Responsible Person Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.responsibleName}
+                  onChange={(e) => handleInput("responsibleName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Father Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.fatherName}
+                  onChange={(e) => handleInput("fatherName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Mother Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.motherName}
+                  onChange={(e) => handleInput("motherName", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Designation</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.desgination}
+                  onChange={(e) => handleInput("desgination", e)}
+                />
+              </div>
+
             </div>
 
             <div className="row">
