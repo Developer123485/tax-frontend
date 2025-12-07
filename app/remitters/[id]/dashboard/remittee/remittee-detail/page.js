@@ -137,13 +137,13 @@ export default function AddRemittee() {
 
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
-                    <RemitteeDetail
+                    {/* <RemitteeDetail
                         remittee={remittee}
                         errors={errors}
                         enumList={enumList}
                         handleInput={handleInput}
                         handleSave={saveRemittee}
-                    />
+                    /> */}
                 </div>
             </section>
         </>
