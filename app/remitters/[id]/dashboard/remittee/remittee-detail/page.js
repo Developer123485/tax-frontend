@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { EnumService } from "@/app/services/enum.service";
 import { RemitteeService } from "@/app/services/remittee.service";
-import RemitteeDetail from "@/app/components/15ca-master-detail/remittee/page";
+// import RemitteeDetail from "@/app/components/15ca-master-detail/remittee/page";
 
 export default function AddRemittee() {
     const router = useRouter();
