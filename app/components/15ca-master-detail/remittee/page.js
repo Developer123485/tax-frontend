@@ -161,7 +161,7 @@ export default function RemitteeDetail(props) {
             {/* === PINCODE === */}
             <div className="col-md-3">
               <label className="form-label">
-                Pincode <span className="text-danger">*</span>
+                Zipcode <span className="text-danger">*</span>
               </label>
               <input
                 type="text"
@@ -201,7 +201,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === PURPOSE CODE === */}
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <label className="form-label">Purpose Code</label>
               <input
                 type="text"
@@ -209,7 +209,7 @@ export default function RemitteeDetail(props) {
                 value={remittee.purposeCode || ""}
                 onChange={(e) => handleInput("purposeCode", e)}
               />
-            </div>
+            </div> */}
 
             {/* === COUNTRY REM MADE === */}
             <div className="col-md-6">
