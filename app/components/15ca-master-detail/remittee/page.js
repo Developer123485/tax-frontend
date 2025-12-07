@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProcessPopup from "../../modals/processing";
+import SearchableDropdown from "../../deductors/searchable-dropdown";
 
 export default function RemitteeDetail(props) {
   const router = useRouter(null);
@@ -11,6 +12,7 @@ export default function RemitteeDetail(props) {
     remittee,
     remitterErrors,
     isNextDirty,
+    enumList
   } = props;
 
   function handleInput(name, e) {
@@ -28,7 +30,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === NAME === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">
                 Name <span className="text-danger">*</span>
               </label>
@@ -46,7 +48,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === PAN === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">
                 PAN <span className="text-danger">*</span>
               </label>
@@ -72,7 +74,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === FLAT === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Flat / Door No.</label>
               <input
                 type="text"
@@ -83,7 +85,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === BUILDING === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Building Name</label>
               <input
                 type="text"
@@ -94,7 +96,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === STREET === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Street</label>
               <input
                 type="text"
@@ -105,7 +107,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === AREA === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Area</label>
               <input
                 type="text"
@@ -116,7 +118,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === CITY === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">City</label>
               <input
                 type="text"
@@ -127,7 +129,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === STATE === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">State</label>
               <input
                 type="text"
@@ -157,7 +159,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === PINCODE === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">
                 Pincode <span className="text-danger">*</span>
               </label>
@@ -176,7 +178,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === EMAIL === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Email</label>
               <input
                 type="text"
@@ -187,7 +189,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === PHONE === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Phone</label>
               <input
                 type="text"
@@ -199,7 +201,7 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === PURPOSE CODE === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">Purpose Code</label>
               <input
                 type="text"
@@ -210,18 +212,34 @@ export default function RemitteeDetail(props) {
             </div>
 
             {/* === COUNTRY REM MADE === */}
-            <div className="col-md-4">
-              <label className="form-label">Country Remittance Made</label>
+            <div className="col-md-6">
+              <label htmlFor="inputCountry" className="form-label">
+                <span>Country Remittance Made</span>
+              </label>
+              {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                setEventId={(e) => handleInput("countryRemMade", e)}
+                id={remittee.countryRemMade}
+                options={enumList.countries}
+              ></SearchableDropdown>
+              }
+              {isNextDirty && remitterErrors.remitterStateError && (
+                <span className="text-danger">
+                  {remitterErrors.remitterStateError}
+                </span>
+              )}
+            </div>
+            {remittee.countryRemMade == "2" && <div className="col-md-3">
+              <label className="form-label"></label>
               <input
                 type="text"
                 className="form-control"
                 value={remittee.countryRemMade || ""}
                 onChange={(e) => handleInput("countryRemMade", e)}
               />
-            </div>
+            </div>}
 
             {/* === PRINCIPAL PLACE OF BUSINESS === */}
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label className="form-label">
                 Principal Place of Business
               </label>
