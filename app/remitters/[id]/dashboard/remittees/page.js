@@ -203,6 +203,7 @@ export default function Remittee({ params }) {
             pageSize: pageSize,
             pageNumber: currentPage,
             search: searchValue,
+            remitterId: remitterId
         };
 
         RemitteeService.getRemittees(model)

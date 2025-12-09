@@ -134,10 +134,11 @@ export default function AddRemittee({ params }) {
     function saveRemittee(e) {
         e.preventDefault();
         if (!validate()) return;
+        remittee.remitterId = remitterId;
         RemitteeService.saveRemittee(remittee)
             .then((res) => {
                 toast.success("Remittee saved successfully");
-                router.push("/remittees");
+                router.push(`/remitters/${remitterId}/dashboard/remittees`);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message || "Error saving remittee");
