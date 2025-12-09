@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
@@ -10,10 +10,11 @@ import { EnumService } from "@/app/services/enum.service";
 import { RemitteeService } from "@/app/services/remittee.service";
 import RemitteeDetail from "@/app/components/15ca-master-detail/remittee";
 
-export default function AddRemittee() {
+export default function AddRemittee({ params }) {
     const router = useRouter();
+    const resolvedParams = use(params);
     const searchParams = useSearchParams();
-
+    const remitterId = resolvedParams?.id;
     const [enumList, setEnumList] = useState({});
     const [isDirty, setIsDirty] = useState(false);
 
@@ -22,7 +23,17 @@ export default function AddRemittee() {
     const emailRegex = /^\S+@\S+\.\S+$/;
 
     const [breadcrumbs] = useState([
-        { name: "Remittees", isActive: false, href: "/remittees" },
+        {
+            name: "Remitters",
+            isActive: false,
+            href: "/remitters",
+        },
+        {
+            name: "Dashboard",
+            isActive: false,
+            href: `/remitters/${remitterId}/dashboard`,
+        },
+        { name: "Remittees", isActive: false, href: `/remitters/${remitterId}/dashboard/remittees` },
         { name: "Remittee Detail", isActive: true }
     ]);
 
@@ -43,6 +54,7 @@ export default function AddRemittee() {
         remitteePhone: "",
         nature: "",
         countryRemMade: "",
+        code: "",
         countryRemMadeDesc: "",
         princPlcBusRemtee: "",
         purposeCode: "",
@@ -64,6 +76,10 @@ export default function AddRemittee() {
 
         loadRemittee();
     }, []);
+
+    useEffect(() => {
+        validate();
+    }, [remittee.remitteeEmail, remittee.name, remittee.remitteePan, remittee.code]);
 
     function loadRemittee() {
         const id = searchParams.get("id");
@@ -95,6 +111,7 @@ export default function AddRemittee() {
         let err = {};
 
         if (!remittee.name) err.name = "Name is required";
+        if (!remittee.code) err.code = "Code is required";
 
         if (!remittee.remitteePan) err.remitteePan = "PAN is required";
         else if (!panRegex.test(remittee.remitteePan.toUpperCase()))
@@ -104,8 +121,8 @@ export default function AddRemittee() {
         else if (!emailRegex.test(remittee.remitteeEmail))
             err.remitteeEmail = "Invalid email format";
 
-        if (remittee.remitteePincode && remittee.remitteePincode.length !== 6)
-            err.remitteePincode = "Pincode must be 6 digits";
+        // if (remittee.remitteePincode && remittee.remitteePincode.length !== 6)
+        //     err.remitteePincode = "Pincode must be 6 digits";
 
         setErrors(err);
         return Object.keys(err).length === 0;
@@ -116,10 +133,8 @@ export default function AddRemittee() {
     // ----------------------------------------------------
     function saveRemittee(e) {
         e.preventDefault();
-
         if (!validate()) return;
-
-        RemitteesService.saveRemittee(remittee)
+        RemitteeService.saveRemittee(remittee)
             .then((res) => {
                 toast.success("Remittee saved successfully");
                 router.push("/remittees");
@@ -139,9 +154,9 @@ export default function AddRemittee() {
                 <div className="container mt-5">
                     <RemitteeDetail
                         remittee={remittee}
-                        errors={errors}
+                        remitterErrors={errors}
                         enumList={enumList}
-                        handleInput={handleInput}
+                        handleInputRemitter={handleInput}
                         handleSave={saveRemittee}
                     />
                 </div>

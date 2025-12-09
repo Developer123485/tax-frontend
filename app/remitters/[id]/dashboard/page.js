@@ -150,7 +150,7 @@ export default function Dashboard({ params }) {
 
                             <div className="d-flex flex-column gap-3">
                                 {/* Master List */}
-                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittee`)}>
+                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittees`)}>
                                     <Image src="/images/dashboards/users_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
                                         <span className="title">Remittee List</span>

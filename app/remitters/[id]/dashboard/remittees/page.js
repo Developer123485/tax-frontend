@@ -335,7 +335,7 @@ export default function Remittee({ params }) {
                                 <div
                                     className="col-md-4"
 
-                                    onClick={(e) => router.push(`/remitters/${remitterId}/dashboard/remittee/remittee-detail`)}
+                                    onClick={(e) => router.push(`/remitters/${remitterId}/dashboard/remittees/remittee-detail`)}
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                                         <div className="row align-items-center">
