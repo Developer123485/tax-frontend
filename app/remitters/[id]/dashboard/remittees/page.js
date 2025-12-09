@@ -12,6 +12,7 @@ import HeaderList from "@/app/components/header/header-list";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { saveAs } from "file-saver";
 import { RemitteeService } from "@/app/services/remittee.service";
+import BreadcrumbList from "@/app/components/breadcrumbs/page";
 
 export default function Remittee({ params }) {
     const [show, setShow] = useState(false);
@@ -320,7 +321,7 @@ export default function Remittee({ params }) {
         <>
             <ToastContainer />
             <HeaderList></HeaderList>
-            {/* <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList> */}
+            <BreadcrumbList breadcrumbs={breadcrumbs}></BreadcrumbList>
             <section className="py-5 py-md-3">
                 <div className="container">
                     <div className="row align-items-center deductors-sec">
