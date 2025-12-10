@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
-import RemittanceDetail from "@/app/components/15ca-master-detail/remittance";
+import RemittanceDetail from "@/app/components/remittances/remittance-detail";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
