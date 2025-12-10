@@ -30,7 +30,7 @@ export default function BankDetailForm(props) {
                     </div>
 
                     {/* BANK NAME - DROPDOWN */}
-                    <div className="col-md-4">
+                    <div className="col-md-5">
                         <label className="form-label">
                             Bank Name <span className="text-danger">*</span>
                         </label>

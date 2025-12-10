@@ -92,13 +92,20 @@ export default function AoOrderDetailForm(props) {
 
                     {/* Code */}
                     <div className="col-md-3">
-                        <label className="form-label">Code</label>
+                        <label className="form-label">Code
+                            <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
                             value={aoOrder.code || ""}
                             onChange={(e) => handleInput("code", e)}
                         />
+                        {errors.code && (
+                            <span className="text-danger">
+                                {errors.code}
+                            </span>
+                        )}
                     </div>
 
                     {/* Save */}

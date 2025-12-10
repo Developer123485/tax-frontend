@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BankDetailService } from "@/app/services/bank.service";
 import BankDetailForm from "@/app/components/15ca-master-detail/banks";
+import { EnumService } from "@/app/services/enum.service";
 
 export default function AddBankDetail({ params }) {
     const router = useRouter();
@@ -34,15 +35,15 @@ export default function AddBankDetail({ params }) {
     ];
 
     useEffect(() => {
-        loadBankNames();
+        EnumService.getEnumStatues().then((res) => {
+            if (res) {
+                debugger
+                setBankNames(res.banks || []);
+            }
+        });
         loadBankDetail();
     }, []);
 
-    function loadBankNames() {
-        BankDetailService.getBankNames().then((res) => {
-            setBankNames(res || []);
-        });
-    }
 
     function loadBankDetail() {
         const id = searchParams.get("id");
