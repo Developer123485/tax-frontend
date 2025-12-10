@@ -15,7 +15,7 @@ export async function POST(request) {
 
     // Puppeteer auto-installs its own Chromium
     const browser = await puppeteer.launch({
-      headless: false, // IMPORTANT: TRACES blocks headless browsers
+      headless: true, // IMPORTANT: TRACES blocks headless browsers
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
