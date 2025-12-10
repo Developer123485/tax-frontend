@@ -29,7 +29,7 @@ export default function AddBankDetail({ params }) {
     const breadcrumbs = [
         { name: "Remitters", isActive: false, href: "/remitters" },
         { name: "Dashboard", isActive: false, href: `/remitters/${remitterId}/dashboard` },
-        { name: "Bank Details", isActive: false, href: `/remitters/${remitterId}/dashboard/bank-details` },
+        { name: "Banks", isActive: false, href: `/remitters/${remitterId}/dashboard/banks` },
         { name: "Bank Detail", isActive: true }
     ];
 

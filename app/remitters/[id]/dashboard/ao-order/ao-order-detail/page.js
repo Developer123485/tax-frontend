@@ -36,7 +36,7 @@ export default function AddAoOrder({ params }) {
     const [breadcrumbs] = useState([
         { name: "Remitters", isActive: false, href: "/remitters" },
         { name: "Dashboard", isActive: false, href: `/remitters/${remitterId}/dashboard` },
-        { name: "AO Order Details", isActive: false, href: `/remitters/${remitterId}/dashboard/ao-orders` },
+        { name: "AO Order Details", isActive: false, href: `/remitters/${remitterId}/dashboard/ao-order` },
         { name: "AO Order Detail", isActive: true }
     ]);
 
