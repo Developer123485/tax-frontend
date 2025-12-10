@@ -83,7 +83,7 @@ export default function AddBankDetail({ params }) {
         BankDetailService.saveBankDetail(bankDetail)
             .then(() => {
                 toast.success("Bank detail saved successfully");
-                router.push(`/remitters/${remitterId}/dashboard/bank-details`);
+                router.push(`/remitters/${remitterId}/dashboard/banks`);
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.message || "Error saving record");
