@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import SearchableDropdown from "../../deductors/searchable-dropdown";
+import SearchableDropdown from "../deductors/searchable-dropdown";
 // import { CurrencyList, NatureList } from "@/app/enums/remittance.enums";
 
 export default function RemittanceDetail({
