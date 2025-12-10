@@ -15,12 +15,30 @@ export async function POST(request) {
 
     // Puppeteer auto-installs its own Chromium
     const browser = await puppeteer.launch({
-      headless: true, // visible mode
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: false, // IMPORTANT: TRACES blocks headless browsers
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-blink-features=AutomationControlled",
+        "--disable-dev-shm-usage",
+        "--disable-infobars",
+        "--window-size=1400,900",
+      ]
     });
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 900 });
+    // Real user user-agent
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+      "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    );
+
+    // Required headers
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": "en-US,en;q=0.9",
+      "Upgrade-Insecure-Requests": "1"
+    });
 
     await page.goto("https://www.tdscpc.gov.in/app/login.xhtml?usr=Ded", {
       waitUntil: "networkidle2",
