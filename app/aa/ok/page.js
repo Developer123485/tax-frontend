@@ -3,25 +3,38 @@
 import React from "react";
 
 export default function LoginFormaa() {
-  const handleStartEFiling = () => {
-    const payload = {
-      Tan: "PTLJ10787A",              // user TAN
-      Password: "bansal@123", // password
-      FinancialYear: "2024-25",
-      Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
-      CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
-      DeductorName: "ABC Pvt Ltd"
-    };
+  const handleStartEFiling = async () => {
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        UserName: "PTLA13241E1",
+        Password: "bansal@123",
+        TanNumber: "PTLJ10787A"
+      }),
+    });
 
-    // Send the message to the Chrome extension content script
-    window.postMessage(
-      {
-        type: "TV_START_EFILING",
-        payload,
-      },
-      window.location.origin
-    );
-    console.log('📤 TV_START_EFILING sent to extension:', payload);
+    const data = await res.json();
+    console.log("Captcha:", data.captcha);
+
+    // const payload = {
+    //   Tan: "PTLJ10787A",              // user TAN
+    //   Password: "bansal@123", // password
+    //   FinancialYear: "2024-25",
+    //   Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
+    //   CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
+    //   DeductorName: "ABC Pvt Ltd"
+    // };
+
+    // // Send the message to the Chrome extension content script
+    // window.postMessage(
+    //   {
+    //     type: "TV_START_EFILING",
+    //     payload,
+    //   },
+    //   window.location.origin
+    // );
+    // console.log('📤 TV_START_EFILING sent to extension:', payload);
   };
 
   // optional listener for confirmation

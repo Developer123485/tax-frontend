@@ -48,7 +48,7 @@ export async function POST(request) {
       throw new Error(`tanpan element not found. Error: ${err.message}`);
     }
 
-    await page.waitForTimeout(1500);
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     return NextResponse.json({
       success: true,
