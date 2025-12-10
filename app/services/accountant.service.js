@@ -15,7 +15,7 @@ export const AccountantService = {
 };
 
 async function getAccountants(model) {
-    return apiRequest
+    return api
         .post(`/accountant/fetch`, model, axiosConfig)
         .then((result) => {
             return result;
@@ -26,7 +26,7 @@ async function getAccountants(model) {
 }
 
 async function getAccountant(id) {
-    return apiRequest
+    return api
         .get(`/accountant/${id}`, axiosConfig)
         .then((result) => {
             return result;
@@ -37,7 +37,7 @@ async function getAccountant(id) {
 }
 
 async function saveAccountant(model) {
-    return apiRequest
+    return api
         .post(`/accountant/save`, model, axiosConfig)
         .then((result) => {
             return result;
@@ -48,7 +48,7 @@ async function saveAccountant(model) {
 }
 
 async function deleteAccountant(id) {
-    return apiRequest
+    return api
         .delete(`/accountant/${id}`, axiosConfig)
         .then((result) => {
             return result;
