@@ -163,7 +163,7 @@ export default function Dashboard({ params }) {
                                 {/* Add Master Entry */}
                                 <div
                                     className="sidebar-card"
-                                    onClick={() => router.push(`/deductors/${deductorId}/tds/deductees/detail`)}
+                                    onClick={() => router.push(`/remitters/${remitterId}/dashboard/accountants`)}
                                 >
                                     <Image src="/images/dashboards/enter_data_manually_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
