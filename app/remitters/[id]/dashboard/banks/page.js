@@ -57,27 +57,22 @@ export default function BankDetailList({ params }) {
         {
             name: "S No",
             selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
-            width: "80px",
         },
         {
             name: "Code",
             selector: (row) => row.code || "-",
-            width: "120px",
         },
         {
             name: "Bank Name",
             selector: (row) => row.bankName || "-",
-            width: "200px",
         },
         {
             name: "Branch Name",
             selector: (row) => row.bankBranchName || "-",
-            width: "200px",
         },
         {
             name: "BSR Code",
             selector: (row) => row.bsrCode || "-",
-            width: "150px",
         },
         {
             name: "Actions",

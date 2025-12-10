@@ -37,7 +37,6 @@ export default function AddBankDetail({ params }) {
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
             if (res) {
-                debugger
                 setBankNames(res.banks || []);
             }
         });
