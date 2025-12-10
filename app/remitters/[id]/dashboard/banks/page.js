@@ -182,7 +182,7 @@ export default function BankDetailList({ params }) {
                             <h2 className="fw-bold">Simplify TDS Filing -</h2>
                             <p className="fs-18 mb-0">
                                 Enter, Import, or Download <br />
-                                Data Instantly for Remittee!
+                                Data Instantly for Banks!
                             </p>
                         </div>
                         <div className="col-md-8">

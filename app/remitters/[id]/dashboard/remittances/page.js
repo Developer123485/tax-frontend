@@ -1,166 +1,164 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
-import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
-import ProcessPopup from "@/app/components/modals/processing";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Image from "next/image";
 import DataTable from "react-data-table-component";
 import HeaderList from "@/app/components/header/header-list";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
-import { AoOrderService } from "@/app/services/ao-order.service";
+import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
+import ProcessPopup from "@/app/components/modals/processing";
 
-export default function AoOrderList({ params }) {
+import { RemittanceService } from "@/app/services/remittances.service";
+
+export default function RemittanceList({ params }) {
     const resolvedParams = use(params);
     const remitterId = resolvedParams?.id;
     const router = useRouter();
 
-    const [aoOrders, setAoOrders] = useState([]);
+    // STATE
+    const [remittances, setRemittances] = useState([]);
     const [search, setSearch] = useState("");
-    const [showLoader, setShowLoader] = useState(true);
-    const [deleteConfirm, setDeleteConfirm] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(50);
-    const [totalItems, setTotalItems] = useState(0);
-    const [deleteId, setDeleteId] = useState(0);
+    const [totalRows, setTotalRows] = useState(0);
+    const [showLoader, setShowLoader] = useState(true);
 
-    const [breadcrumbs] = useState([
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
+    const breadcrumbs = [
         { name: "Remitters", isActive: false, href: "/remitters" },
         { name: "Dashboard", isActive: false, href: `/remitters/${remitterId}/dashboard` },
-        { name: "AO Order Details", isActive: true }
-    ]);
+        { name: "Remittance", isActive: true }
+    ];
 
-    const customStyles = {
-        rows: { style: { minHeight: "45px" } },
-        headCells: { style: { border: "1px solid #F2F7FF", fontSize: "12px" } },
-        cells: {
-            style: {
-                border: "1px solid #FFFFFF",
-                fontSize: "12px",
-                whiteSpace: "nowrap",
-                overflow: "hidden"
+    // Fetch data
+    function fetchRemittances(page = 1, searchValue = "") {
+        setShowLoader(true);
+        const model = {
+            pageNumber: page,
+            pageSize,
+            search: searchValue,
+            remitterId
+        };
+
+        RemittanceService.fetchRemittances(model)
+            .then((res) => {
+                setRemittances(res.remittanceList || []);
+                setTotalRows(res.totalRows || 0);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.errorMessage || err.message);
+            })
+            .finally(() => {
+                setTimeout(() => setShowLoader(false), 300);
+            });
+    }
+
+    useEffect(() => {
+        fetchRemittances(currentPage);
+    }, [currentPage]);
+
+    // Search debounce
+    useEffect(() => {
+        const t = setTimeout(() => {
+            if (search !== "") {
+                fetchRemittances(1, search);
             }
-        }
-    };
+        }, 600);
+        return () => clearTimeout(t);
+    }, [search]);
 
+    // DELETE HANDLER
+    function deleteRemittance(e) {
+        e.preventDefault();
+        setDeleteLoading(true);
+
+        RemittanceService.deleteRemittance(deleteId)
+            .then(() => {
+                toast.success("Remittance deleted successfully");
+                fetchRemittances(currentPage);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.errorMessage || err.message);
+            })
+            .finally(() => {
+                setDeleteLoading(false);
+                setDeleteConfirm(false);
+            });
+    }
+
+    // DATATABLE COLUMNS
     const columns = [
         {
-            name: "S No",
-            selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
+            name: "S. No",
             width: "80px",
+            selector: (row, index) => (currentPage - 1) * pageSize + index + 1
         },
         {
-            name: "AO Order Obtained",
-            selector: (row) => row.isAoOrderObtained || "-",
-            width: "160px"
+            name: "Country",
+            selector: (row) => row.country || "-",
+            width: "150px"
         },
         {
-            name: "Section",
-            selector: (row) => row.section || "-",
-            width: "120px"
+            name: "Currency",
+            selector: (row) => row.currency || "-"
         },
         {
-            name: "Officer Name",
-            selector: (row) => row.assessingOfficerName || "-",
+            name: "Nature",
+            selector: (row) => row.nature || "-"
         },
         {
-            name: "Order Date",
-            selector: (row) =>
-                row.orderDate
-                    ? new Date(row.orderDate).toLocaleDateString("en-IN")
-                    : "-",
-            width: "120px"
+            name: "Amount Payable",
+            selector: (row) => row.amountPayable?.toLocaleString() || "-"
+        },
+        {
+            name: "TDS Amount",
+            selector: (row) => row.amountOfTds?.toLocaleString() || "-"
         },
         {
             name: "Actions",
-            width: "135px",
+            width: "140px",
             selector: (row) => (
                 <div className="d-flex justify-content-center">
                     <a
                         onClick={() =>
                             router.push(
-                                `/remitters/${remitterId}/dashboard/ao-orders/aoorder-detail?id=${row.id}`
+                                `/remitters/${remitterId}/dashboard/remittance/remittance-detail?id=${row.id}`
                             )
                         }
                     >
-                        <OverlayTrigger overlay={<Tooltip>Edit</Tooltip>} placement="bottom">
-                            <Image
-                                src="/images/dashboards/table_edit_icon.svg"
-                                width={16}
-                                height={16}
-                                alt="edit"
-                            />
-                        </OverlayTrigger>
+                        <Image
+                            src="/images/dashboards/table_edit_icon.svg"
+                            width={16}
+                            height={16}
+                            alt="edit"
+                        />
                     </a>
+
                     <span className="mx-2 opacity-50">|</span>
+
                     <a
                         onClick={() => {
                             setDeleteId(row.id);
                             setDeleteConfirm(true);
                         }}
                     >
-                        <OverlayTrigger overlay={<Tooltip>Delete</Tooltip>} placement="bottom">
-                            <Image
-                                src="/images/dashboards/table_delete_icon.svg"
-                                width={16}
-                                height={16}
-                                alt="delete"
-                            />
-                        </OverlayTrigger>
+                        <Image
+                            src="/images/dashboards/table_delete_icon.svg"
+                            width={16}
+                            height={16}
+                            alt="delete"
+                        />
                     </a>
                 </div>
-            ),
-        },
+            )
+        }
     ];
-
-    useEffect(() => {
-        fetchAoOrders(currentPage);
-    }, [currentPage]);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            fetchAoOrders(1, search);
-        }, 1200);
-        return () => clearTimeout(timer);
-    }, [search]);
-
-    function fetchAoOrders(page, searchValue = "") {
-        setShowLoader(true);
-
-        const model = {
-            pageSize,
-            pageNumber: page,
-            search: searchValue,
-            remitterId
-        };
-
-        AoOrderService.getAoOrders(model)
-            .then((res) => {
-                setAoOrders(res.aoOrderDetailList || []);
-                setTotalItems(res.totalRows || 0);
-            })
-            .catch((e) => toast.error(e?.response?.data?.errorMessage || e.message))
-            .finally(() => setTimeout(() => setShowLoader(false), 500));
-    }
-
-    function deleteAoOrder(e) {
-        e.preventDefault();
-        setDeleteLoading(true);
-
-        AoOrderService.deleteAoOrder(deleteId)
-            .then(() => {
-                toast.success("AO Order deleted successfully");
-                fetchAoOrders(currentPage);
-            })
-            .catch((e) => toast.error(e?.response?.data?.errorMessage || e.message))
-            .finally(() => {
-                setDeleteLoading(false);
-                setDeleteConfirm(false);
-            });
-    }
 
     return (
         <>
@@ -174,7 +172,7 @@ export default function AoOrderList({ params }) {
                             <h2 className="fw-bold">Simplify TDS Filing -</h2>
                             <p className="fs-18 mb-0">
                                 Enter, Import, or Download <br />
-                                Data Instantly for Ao Orders!
+                                Data Instantly for Remittances!
                             </p>
                         </div>
                         <div className="col-md-8">
@@ -197,7 +195,7 @@ export default function AoOrderList({ params }) {
                                             </div>
                                             <div className="col-md-7">
                                                 <h5 className="fw-bold text-capitalize mb-0">
-                                                    Add AO Order
+                                                    Add Remittance
                                                 </h5>
                                             </div>
                                         </div>
@@ -262,28 +260,32 @@ export default function AoOrderList({ params }) {
                     </div>
                 </div>
             </section>
-            <section className="py-5 bg-light-gray">
+            <section className="py-4">
                 <div className="container">
-                    <div className="bg-white border rounded-3 pb-2">
-
-                        {/* Header */}
-                        <div className="row px-3 py-3 datatable-header">
+                    <div className="bg-white border rounded-3 p-3">
+                        {/* HEADER */}
+                        <div className="row mb-3">
                             <div className="col-md-8">
-                                <h4 className="fw-bold">AO Order Details</h4>
+                                <h4 className="fw-bold">Remittance</h4>
                             </div>
                             <div className="col-md-4">
                                 <div className="input-group searchbox">
                                     <input
                                         type="search"
                                         placeholder="Search here"
-                                        className="form-control bg-light-gray border-end-0"
-                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="form-control bg-light-gray"
+                                        onChange={(e) => {
+                                            setSearch(e.target.value);
+                                            if (!e.target.value) {
+                                                fetchRemittances(1, "");
+                                            }
+                                        }}
                                     />
-                                    <button className="btn btn-outline-secondary border px-2 py-1">
+                                    <button className="btn btn-outline-secondary">
                                         <Image
                                             src="/images/dashboards/search_icon.svg"
-                                            width={24}
-                                            height={24}
+                                            width={20}
+                                            height={20}
                                             alt="search"
                                         />
                                     </button>
@@ -291,20 +293,35 @@ export default function AoOrderList({ params }) {
                             </div>
                         </div>
 
-                        {/* Table */}
-                        <div className="table-responsive px-2">
-                            {!showLoader && aoOrders.length > 0 && (
+                        {/* ADD BUTTON */}
+                        <div className="row mb-3">
+                            <div className="col-md-12 text-end">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                        router.push(
+                                            `/remitters/${remitterId}/dashboard/remittance/remittance-detail`
+                                        )
+                                    }
+                                >
+                                    + Add Remittance
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* TABLE */}
+                        <div className="table-responsive">
+                            {!showLoader && (
                                 <DataTable
                                     fixedHeader
-                                    fixedHeaderScrollHeight="340px"
+                                    fixedHeaderScrollHeight="350px"
                                     columns={columns}
-                                    data={aoOrders}
+                                    data={remittances}
                                     pagination
                                     paginationServer
-                                    paginationTotalRows={totalItems}
+                                    paginationTotalRows={totalRows}
                                     paginationPerPage={pageSize}
                                     paginationDefaultPage={currentPage}
-                                    customStyles={customStyles}
                                     onChangePage={(page) => setCurrentPage(page)}
                                 />
                             )}
@@ -313,12 +330,13 @@ export default function AoOrderList({ params }) {
                 </div>
             </section>
 
+            {/* MODALS */}
             <ProcessPopup showLoader={showLoader} />
             <DeleteConfirmation
                 show={deleteConfirm}
                 deleteLoading={deleteLoading}
-                delete={deleteAoOrder}
-                setDeleteConfirm={setDeleteConfirm}
+                setDeleteConfirm={(v) => setDeleteConfirm(v)}
+                delete={deleteRemittance}
             />
         </>
     );

@@ -90,7 +90,7 @@ export default function Dashboard({ params }) {
                             <h4 className="text-uppercase fw-bold mb-4">15CA Form</h4>
                             <div className="d-flex flex-column gap-3">
                                 {/* Master List */}
-                                <div className="sidebar-card" onClick={() => router.push("tds/deductees")}>
+                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=A`)}>
                                     <Image
                                         src="/images/dashboards/users_icon.svg"
                                         width={45}
@@ -108,7 +108,7 @@ export default function Dashboard({ params }) {
                                 {/* Add Master Entry */}
                                 <div
                                     className="sidebar-card"
-                                    onClick={() => router.push(`/deductors/${deductorId}/tds/deductees/detail`)}
+                                    onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=B`)}
                                 >
                                     <Image src="/images/dashboards/enter_data_manually_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
@@ -122,7 +122,7 @@ export default function Dashboard({ params }) {
                                 {/* Import Excel */}
                                 <label className="sidebar-card pointer">
                                     <Image src="/images/dashboards/import_excel_file_icon.svg" width={45} height={45} alt="" />
-                                    <div className="sidebar-card-content">
+                                    <div className="sidebar-card-content" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=C`)}>
                                         <span className="title">Part C</span>
                                         <p className="description">
                                             Submit details where the remitter is required to obtain an order from the Assessing Officer for determining tax liability and the payment exceeds ₹5 lakh during the financial year.
@@ -131,7 +131,7 @@ export default function Dashboard({ params }) {
                                 </label>
 
                                 {/* Download Excel Template */}
-                                <div className="sidebar-card" onClick={download}>
+                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=D`)}>
                                     <Image src="/images/dashboards/download_excel_file_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
                                         <span className="title">Part D</span>
@@ -206,7 +206,7 @@ export default function Dashboard({ params }) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
 
             <DeleteConfirmation
