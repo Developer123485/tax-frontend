@@ -99,6 +99,7 @@ export default function AddRemitter() {
         statusError: "",
         remitterResidentialError: "",
         codeError: "",
+        princPlcBusRemterError: "",
     });
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
@@ -223,6 +224,7 @@ export default function AddRemitter() {
         let statusError = "";
         let codeError = "";
         let remitterCountryError = "";
+        let princPlcBusRemterError = "";
         let regexs = /^[^a-zA-Z0-9]+$/;
 
         // STATE
@@ -237,6 +239,11 @@ export default function AddRemitter() {
         if (!remitterDetail.remitterStatus) {
             statusError = "Remitter Status is required";
         }
+        debugger
+        if (!remitterDetail.princPlcBusRemter) {
+            princPlcBusRemterError = "Remitter PrincPlcBusRemter is required";
+        }
+
 
         if (!remitterDetail.remitterCountry) {
             remitterCountryError = "Remitter Country is required";
@@ -258,17 +265,17 @@ export default function AddRemitter() {
         }
 
         // EMAIL
-        if (!remitterDetail.remitterEmail) {
-            remitterEmailIdError = "Remitter email is required";
-        }
-        if (remitterDetail.remitterEmail) {
-            const regx = String(remitterDetail.remitterEmail)
-                .toLowerCase()
-                .match(emailRegex);
-            if (!regx) {
-                remitterEmailIdError = "Remitter email is invalid.";
-            }
-        }
+        // if (!remitterDetail.remitterEmail) {
+        //     remitterEmailIdError = "Remitter email is required";
+        // }
+        // if (remitterDetail.remitterEmail) {
+        //     const regx = String(remitterDetail.remitterEmail)
+        //         .toLowerCase()
+        //         .match(emailRegex);
+        //     if (!regx) {
+        //         remitterEmailIdError = "Remitter email is invalid.";
+        //     }
+        // }
 
         // NAME
         if (!remitterDetail.name) {
@@ -377,7 +384,8 @@ export default function AddRemitter() {
             remitterPanError ||
             codeError ||
             remitterResidentialError ||
-            statusError
+            statusError ||
+            princPlcBusRemterError
         ) {
             setRemitterErrors((prevState) => ({
                 ...prevState,
@@ -395,7 +403,8 @@ export default function AddRemitter() {
                 remitterPanError,
                 codeError,
                 remitterResidentialError,
-                statusError
+                statusError,
+                princPlcBusRemterError
             }));
             return false;
         }
@@ -417,7 +426,8 @@ export default function AddRemitter() {
             remitterPanError: "",
             codeError: "",
             remitterResidentialError: "",
-            statusError: ""
+            statusError: "",
+            princPlcBusRemterError: ""
         }));
 
         return true;

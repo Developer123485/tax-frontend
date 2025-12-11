@@ -330,7 +330,7 @@ export default function RemitterDetail(props) {
               {/* Email */}
               <div className="col-md-3">
                 <label className="form-label">
-                  Email <span className="text-danger">*</span>
+                  Email
                 </label>
                 <input
                   type="email"
@@ -339,11 +339,11 @@ export default function RemitterDetail(props) {
                   value={remitterDetail.remitterEmail}
                   onChange={(e) => handleInput("remitterEmail", e)}
                 />
-                {isNextDirty && remitterErrors.remitterEmailIdError && (
+                {/* {isNextDirty && remitterErrors.remitterEmailIdError && (
                   <span className="text-danger">
                     {remitterErrors.remitterEmailIdError}
                   </span>
-                )}
+                )} */}
               </div>
 
               {/* Phone */}
@@ -376,19 +376,39 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  value={remitterDetail.incTaxWard}
-                  onChange={(e) => handleInput("incTaxWard", e)}
+                  value={
+                    remitterDetail.incTaxWard
+                      ? remitterDetail.incTaxWard.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("incTaxWard", e);
+                  }}
                 />
               </div>
 
               <div className="col-md-3">
                 <label className="form-label">Principal Place of Business (Remitter)</label>
+                <span className="text-danger">*</span>
                 <input
                   type="text"
                   className="form-control"
-                  value={remitterDetail.princPlcBusRemter}
-                  onChange={(e) => handleInput("princPlcBusRemter", e)}
+                  value={
+                    remitterDetail.princPlcBusRemter
+                      ? remitterDetail.princPlcBusRemter.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("princPlcBusRemter", e);
+                  }}
                 />
+                {isNextDirty && remitterErrors.princPlcBusRemterError && (
+                  <span className="text-danger">
+                    {remitterErrors.princPlcBusRemterError}
+                  </span>
+                )}
               </div>
 
               <div className="col-md-3">
@@ -406,8 +426,16 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  value={remitterDetail.areaCode}
-                  onChange={(e) => handleInput("areaCode", e)}
+                  maxLength={3}
+                  value={
+                    remitterDetail.areaCode
+                      ? remitterDetail.areaCode.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("areaCode", e);
+                  }}
                 />
               </div>
 
@@ -419,6 +447,7 @@ export default function RemitterDetail(props) {
                   type="text"
                   className="form-control"
                   value={remitterDetail.code}
+                  maxLength={15}
                   onChange={(e) => handleInput("code", e)}
                 />
                 {isNextDirty && remitterErrors.codeError && (
@@ -443,8 +472,16 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  value={remitterDetail.aoType}
-                  onChange={(e) => handleInput("aoType", e)}
+                  maxLength={2}
+                  value={
+                    remitterDetail.aoType
+                      ? remitterDetail.aoType.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("aoType", e);
+                  }}
                 />
               </div>
 
