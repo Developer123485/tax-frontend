@@ -80,6 +80,7 @@ export default function AddRemitter() {
         fatherName: "",
         motherName: "",
         desgination: "",
+        code: "",
     });
     const [remitterErrors, setRemitterErrors] = useState({
         remitterStateError: "",
@@ -94,6 +95,9 @@ export default function AddRemitter() {
         remitterAreaError: "",
         remitterDistrictError: "",
         remitterPanError: "",
+        statusError: "",
+        remitterResidentialError: "",
+        codeError: "",
     });
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
@@ -132,7 +136,7 @@ export default function AddRemitter() {
     }
 
     function handleInputRemitter(names, e) {
-        if (names == "remitterState" || names == "remitterCountry") {
+        if (names == "remitterState" || names == "remitterCountry" || names == "remitterStatus" || names == "remitterResidential") {
             setRemitterDetail((prevState) => ({
                 ...prevState,
                 [names]: e,
@@ -210,12 +214,31 @@ export default function AddRemitter() {
         let remitterAreaError = "";
         let remitterDistrictError = "";
         let remitterPanError = "";
+        let remitterResidentialError = "";
+        let statusError = "";
+        let codeError = "";
 
         let regexs = /^[^a-zA-Z0-9]+$/;
 
         // STATE
         if (!remitterDetail.remitterState) {
             remitterStateError = "Remitter state is required";
+        }
+
+        if (!remitterDetail.code) {
+            remitterResidentialError = "Remitter Code is required";
+        }
+
+        if (!remitterDetail.statusError) {
+            statusError = "Remitter Residentials is required";
+        }
+
+        if (!remitterDetail.codeError) {
+            codeError = "Remitter Code is required";
+        }
+
+        if (!remitterDetail.remitterResidential) {
+            remitterStateError = "Remitter Status is required";
         }
 
         // PINCODE
@@ -346,7 +369,10 @@ export default function AddRemitter() {
             remitterBuildingNameError ||
             remitterAreaError ||
             remitterDistrictError ||
-            remitterPanError
+            remitterPanError ||
+            codeError ||
+            remitterResidentialError ||
+            statusError
         ) {
             setRemitterErrors((prevState) => ({
                 ...prevState,
@@ -361,7 +387,10 @@ export default function AddRemitter() {
                 remitterBuildingNameError,
                 remitterAreaError,
                 remitterDistrictError,
-                remitterPanError
+                remitterPanError,
+                codeError,
+                remitterResidentialError,
+                statusError
             }));
             return false;
         }
@@ -380,12 +409,14 @@ export default function AddRemitter() {
             remitterBuildingNameError: "",
             remitterAreaError: "",
             remitterDistrictError: "",
-            remitterPanError: ""
+            remitterPanError: "",
+            codeError: "",
+            remitterResidentialError: "",
+            statusError: ""
         }));
 
         return true;
     }
-
 
     function saveRemitter(e) {
         e.preventDefault();

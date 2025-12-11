@@ -144,10 +144,6 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
-
-
-
-
               {/* State */}
               <div className="col-md-6">
                 <label htmlFor="inputCountry" className="form-label">
@@ -160,23 +156,6 @@ export default function RemitterDetail(props) {
                   options={enumList.states}
                 ></SearchableDropdown>
                 }
-                {/* <select
-                  className="form-select"
-                  style={highlightStyle1}
-                  onFocus={() => setIsFocused1(true)}
-                  onBlur={() => setIsFocused1(false)}
-                  value={remitterDetail.remitterState}
-                  onChange={(e) => handleInput("remitterState", e)}
-                >
-                  <option value={""}>Select State</option>
-                  {enumList.states
-                    ?.filter((p) => p.value !== "OVERSEAS")
-                    ?.map((option, index) => (
-                      <option key={index} value={option.key}>
-                        {option.value}
-                      </option>
-                    ))}
-                </select> */}
                 {isNextDirty && remitterErrors.remitterStateError && (
                   <span className="text-danger">
                     {remitterErrors.remitterStateError}
@@ -252,6 +231,42 @@ export default function RemitterDetail(props) {
                 {isNextDirty && remitterErrors.remitterStreetError && (
                   <span className="text-danger">
                     {remitterErrors.remitterStreetError}
+                  </span>
+                )}
+              </div>
+
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Resdential Status</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.resdentialStatus && enumList.resdentialStatus.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterResidential", e)}
+                  id={remitterDetail.remitterResidential}
+                  options={enumList.resdentialStatus}
+                ></SearchableDropdown>
+                }
+                {isNextDirty && remitterErrors.remitterResidentialError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterResidentialError}
+                  </span>
+                )}
+              </div>
+
+              <div className="col-md-6">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Status</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.status && enumList.status.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterStatus", e)}
+                  id={remitterDetail.remitterStatus}
+                  options={enumList.status}
+                ></SearchableDropdown>
+                }
+                {isNextDirty && remitterErrors.statusError && (
+                  <span className="text-danger">
+                    {remitterErrors.statusError}
                   </span>
                 )}
               </div>
@@ -437,22 +452,12 @@ export default function RemitterDetail(props) {
               </div>
 
               <div className="col-md-3">
-                <label className="form-label">Father Name</label>
+                <label className="form-label">Father/Mother Name</label>
                 <input
                   type="text"
                   className="form-control"
                   value={remitterDetail.fatherName}
                   onChange={(e) => handleInput("fatherName", e)}
-                />
-              </div>
-
-              <div className="col-md-3">
-                <label className="form-label">Mother Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.motherName}
-                  onChange={(e) => handleInput("motherName", e)}
                 />
               </div>
 
