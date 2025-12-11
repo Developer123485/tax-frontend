@@ -93,6 +93,7 @@ export default function AddRemitter() {
         remitterStreetError: "",
         remitterBuildingNameError: "",
         remitterAreaError: "",
+        remitterCountryError: "",
         remitterDistrictError: "",
         remitterPanError: "",
         statusError: "",
@@ -121,6 +122,9 @@ export default function AddRemitter() {
         remitterDetail.remitterBuilding,
         remitterDetail.remitterArea,
         remitterDetail.remitterStreet,
+        remitterDetail.remitterCountry,
+        remitterDetail.remitterResidential,
+        remitterDetail.remitterStatus,
     ]);
 
     function getRemiter() {
@@ -217,6 +221,7 @@ export default function AddRemitter() {
         let remitterResidentialError = "";
         let statusError = "";
         let codeError = "";
+        let remitterCountryError = "";
 
         let regexs = /^[^a-zA-Z0-9]+$/;
 
@@ -226,19 +231,19 @@ export default function AddRemitter() {
         }
 
         if (!remitterDetail.code) {
-            remitterResidentialError = "Remitter Code is required";
-        }
-
-        if (!remitterDetail.statusError) {
-            statusError = "Remitter Residentials is required";
-        }
-
-        if (!remitterDetail.codeError) {
             codeError = "Remitter Code is required";
         }
 
+        if (!remitterDetail.remitterStatus) {
+            statusError = "Remitter Status is required";
+        }
+
+        if (!remitterDetail.remitterCountry) {
+            remitterCountryError = "Remitter Country is required";
+        }
+
         if (!remitterDetail.remitterResidential) {
-            remitterStateError = "Remitter Status is required";
+            remitterResidentialError = "Remitter Residential Status is required";
         }
 
         // PINCODE

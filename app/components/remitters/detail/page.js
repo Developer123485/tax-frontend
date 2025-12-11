@@ -192,9 +192,9 @@ export default function RemitterDetail(props) {
                       </option>
                     ))}
                 </select> */}
-                {isNextDirty && remitterErrors.remitterStateError && (
+                {isNextDirty && remitterErrors.remitterCountryError && (
                   <span className="text-danger">
-                    {remitterErrors.remitterStateError}
+                    {remitterErrors.remitterCountryError}
                   </span>
                 )}
               </div>
@@ -412,7 +412,9 @@ export default function RemitterDetail(props) {
               </div>
 
               <div className="col-md-3">
-                <label className="form-label">Code</label>
+                <label className="form-label">Code
+                  <span className="text-danger">*</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
