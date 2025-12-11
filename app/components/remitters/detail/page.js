@@ -54,7 +54,7 @@ export default function RemitterDetail(props) {
               <div className="col-md-3">
                 <label htmlFor="inputTANNo" className="form-label">
                   <span>TAN</span>
-                  <span className="text-danger"> *</span>
+                  {/* <span className="text-danger"> *</span> */}
                 </label>
                 <input
                   type="text"
@@ -70,11 +70,11 @@ export default function RemitterDetail(props) {
                     handleInput("remitterTan", e);
                   }}
                 />
-                {isNextDirty && remitterErrors.remitterTanError && (
+                {/* {isNextDirty && remitterErrors.remitterTanError && (
                   <span className="text-danger">
                     {remitterErrors.remitterTanError}
                   </span>
-                )}
+                )} */}
               </div>
 
               {/* PAN */}
@@ -421,6 +421,11 @@ export default function RemitterDetail(props) {
                   value={remitterDetail.code}
                   onChange={(e) => handleInput("code", e)}
                 />
+                {isNextDirty && remitterErrors.codeError && (
+                  <span className="text-danger">
+                    {remitterErrors.codeError}
+                  </span>
+                )}
               </div>
 
               <div className="col-md-3">

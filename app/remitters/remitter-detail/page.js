@@ -125,6 +125,7 @@ export default function AddRemitter() {
         remitterDetail.remitterCountry,
         remitterDetail.remitterResidential,
         remitterDetail.remitterStatus,
+        remitterDetail.code
     ]);
 
     function getRemiter() {
@@ -222,7 +223,6 @@ export default function AddRemitter() {
         let statusError = "";
         let codeError = "";
         let remitterCountryError = "";
-
         let regexs = /^[^a-zA-Z0-9]+$/;
 
         // STATE
@@ -282,15 +282,15 @@ export default function AddRemitter() {
         }
 
         // TAN
-        if (!remitterDetail.remitterTan) {
-            remitterTanError = "Remitter TAN is required";
-        }
-        if (
-            remitterDetail.remitterTan &&
-            remitterDetail.remitterTan.length !== 10
-        ) {
-            remitterTanError = "The remitter TAN must be 10 digits.";
-        }
+        // if (!remitterDetail.remitterTan) {
+        //     remitterTanError = "Remitter TAN is required";
+        // }
+        // if (
+        //     remitterDetail.remitterTan &&
+        //     remitterDetail.remitterTan.length !== 10
+        // ) {
+        //     remitterTanError = "The remitter TAN must be 10 digits.";
+        // }
         if (
             remitterDetail.remitterTan &&
             remitterDetail.remitterTan.length === 10
