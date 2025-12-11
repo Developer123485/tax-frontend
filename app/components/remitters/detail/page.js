@@ -412,6 +412,16 @@ export default function RemitterDetail(props) {
               </div>
 
               <div className="col-md-3">
+                <label className="form-label">Code</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.code}
+                  onChange={(e) => handleInput("code", e)}
+                />
+              </div>
+
+              <div className="col-md-3">
                 <label className="form-label">Range Code</label>
                 <input
                   type="text"
