@@ -114,8 +114,8 @@ export default function DeductorDetail(props) {
                     </button>
                   </div>
                 </div>
-                <div className="col-md-1 justify-content-end">
-                  <button type="button" className="btn btn-primary px-2 w-100">
+                <div className="col-md-1 justify-content-end" >
+                  <button type="button" className="btn btn-primary px-2 w-100" onClick={(e) => props.itdLogin()}>
                     Auto Fill
                   </button>
                 </div>
