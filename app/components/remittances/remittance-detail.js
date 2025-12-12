@@ -17,6 +17,50 @@ export default function RemittanceDetail({
             <div className="row bg-light-gray px-3 py-4 rounded-3 g-3 my-4">
                 <h5 className="text-blue fw-bold">Remittance Details</h5>
 
+                {/* REMITTEE DROPDOWN */}
+                <div className="col-md-4">
+                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.remitteeId}
+                        options={dropdowns.remittees}
+                        setEventId={(e) => handleInput("remitteeId", e)}
+                    />
+                    {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
+                </div>
+
+                {/* REMITTEE DROPDOWN */}
+                <div className="col-md-4">
+                    <label className="form-label">Banks <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.bankDetailId}
+                        options={dropdowns.banks}
+                        setEventId={(e) => handleInput("bankDetailId", e)}
+                    />
+                    {errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
+                </div>
+
+                {/* REMITTEE DROPDOWN */}
+                <div className="col-md-4">
+                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.aoOrderDetailId}
+                        options={dropdowns.aoDetails}
+                        setEventId={(e) => handleInput("aoOrderDetailId", e)}
+                    />
+                    {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
+                </div>
+
+                {/* REMITTEE DROPDOWN */}
+                <div className="col-md-4">
+                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.accountantDetailId}
+                        options={dropdowns.accountants}
+                        setEventId={(e) => handleInput("accountantDetailId", e)}
+                    />
+                    {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
+                </div>
+
                 {/* COUNTRY */}
                 <div className="col-md-4">
                     <label className="form-label">Country</label>
@@ -73,16 +117,7 @@ export default function RemittanceDetail({
 
 
 
-                {/* REMITTEE DROPDOWN */}
-                <div className="col-md-4">
-                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.remitteeId}
-                        options={dropdowns.remittees}
-                        setEventId={(e) => handleInput("remitteeId", e)}
-                    />
-                    {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
-                </div>
+
 
                 {/* BANK DROPDOWN */}
                 <div className="col-md-4">

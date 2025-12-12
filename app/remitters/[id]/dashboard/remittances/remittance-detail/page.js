@@ -76,10 +76,10 @@ export default function AddRemittance({ params }) {
         userId: 0,
         remitterId: remitterId,
         formType: "",
-
-        // Dropdowns (FK)
-        remitteeId: "",
-        bankDetailId: ""
+        remitteeId: null,
+        bankDetailId: null,
+        aoOrderDetailId: null,
+        accountantDetailId: null,
     });
 
 
