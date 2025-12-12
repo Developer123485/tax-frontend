@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Dropdown, Form } from 'react-bootstrap';
 
 export default function SearchableDropdown(props) {
+    debugger
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const filteredOptions = props.options.filter(option =>
-        option.value.toLowerCase().includes(searchTerm.toLowerCase())
+        option?.value?.toLowerCase()?.includes(searchTerm.toLowerCase())
     );
     const handleSelect = (eventKey) => {
         props.setEventId(eventKey);
@@ -17,7 +18,7 @@ export default function SearchableDropdown(props) {
         <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)} onSelect={handleSelect}>
             <Dropdown.Toggle
                 className='bg-white text-dark border border-secondary w-100 text-start'
-                style={{ minWidth: '450px' }}
+                style={{ minWidth: '400px' }}
             >
                 {filteredOptions && filteredOptions.length > 0 && props.id &&
                     filteredOptions.find(p => p.key == props.id)?.value

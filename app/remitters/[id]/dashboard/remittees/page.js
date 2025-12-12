@@ -104,7 +104,7 @@ export default function Remittee({ params }) {
                             <a
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    router.push(`/remitters/${remitterId}/dashboard/remittee/remittee-detail?id=${row.id}`);
+                                    router.push(`/remitters/${remitterId}/dashboard/remittees/remittee-detail?id=${row.id}`);
                                 }}
                             >
                                 <OverlayTrigger

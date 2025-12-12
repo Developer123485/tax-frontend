@@ -1,25 +1,118 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import RemittanceDetail from "@/app/components/remittances/remittance-detail";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
+import { EnumService } from "@/app/services/enum.service";
 
 export default function AddRemittance({ params }) {
-
     const router = useRouter();
-    const resolved = params;
-    const remitterId = resolved.id;
+    const resolvedParams = use(params);
+    const remitterId = resolvedParams?.id;
     const search = useSearchParams();
     const id = search.get("id");
 
-    const [model, setModel] = useState({});
+    // ---------------------------------------------------
+    // FULL MODEL MATCHING SaveRemittanceModel (C#)
+    // ---------------------------------------------------
+    const [model, setModel] = useState({
+        id: 0,
+        country: "",
+        aggregateAmount: null,
+        amountPayable: null,
+        amountOfTds: null,
+        inForiegn: null,
+        inIndian: null,
+        grossedUp: null,
+        itActRelevantSection: "",
+        itActIncomeChargeable: null,
+        itActTaxLiability: null,
+        itActBasisForTax: "",
+        dtaaTaxResidencyAvailable: null,
+        dtaaRelevant: "",
+        dtaaRelevantArticle: "",
+        dtaaTaxableIncomeAsPerDtaa: null,
+        dtaaTaxLiabilityAsPerDtaa: null,
+        dtaaArticleForRoyaltyOrFts: "",
+        dtaaTdsRatePercentage: null,
+
+        businessIncomeAmount: null,
+        businessIncomeTaxBasis: "",
+        capitalGainsLongTerm: null,
+        capitalGainsShortTerm: null,
+        capitalGainsTaxBasis: "",
+
+        otherRemittanceNature: "",
+        otherRemittanceTaxableAsPerDtaa: null,
+        otherRemittanceTdsRate: null,
+        otherRemittanceReasonIfNoTds: "",
+
+        tdsAmountInForeignCurrency: null,
+        tdsAmountInINR: null,
+        tdsRate: null,
+
+        actualRemittanceAfterTds: null,
+        tdsDeductionDate: "",
+        otherNature: "",
+        wheatherTaxPayable: "",
+        currency: "",
+        currencyOther: "",
+        rateOfTds: null,
+        dateOfDeduction: "",
+        nameOfBank: "",
+        nameOfBranch: "",
+        bsrCode: "",
+        proposedDate: "",
+        nature: "",
+        purposeCode: "",
+        createdDate: "",
+        updatedDate: "",
+        createdBy: null,
+        updatedBy: null,
+        userId: 0,
+        remitterId: remitterId,
+        formType: "",
+
+        // Dropdowns (FK)
+        remitteeId: "",
+        bankDetailId: ""
+    });
+
+
+    const breadcrumbs = [
+        { name: "Remitters", href: "/remitters", isActive: false },
+        { name: "Dashboard", href: `/remitters/${remitterId}/dashboard`, isActive: false },
+        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittance`, isActive: false },
+        { name: "Remittance Detail", isActive: true }
+    ];
+
     const [errors, setErrors] = useState({});
     const [remitteeList, setRemitteeList] = useState([]);
-    const [bankList, setBankList] = useState([]);
+    const [enums, setEnums] = useState([]);
+    const [dropdowns, setDropdowns] = useState([]);
+
+    useEffect(() => {
+        EnumService.getEnumStatues().then((res) => {
+            if (res) {
+                setEnums(res || []);
+            }
+        });
+        RemittanceService.getRemittanceDropdowns(remitterId).then((res) => {
+            debugger
+            if (res) {
+                setDropdowns(res || []);
+            }
+        });
+
+        if (id) {
+            RemittanceService.getRemittance(id).then((r) => setModel(r));
+        }
+    }, []);
+
 
     function handleInput(field, e) {
         const value = e?.target?.value ?? e;
@@ -54,37 +147,22 @@ export default function AddRemittance({ params }) {
             );
     }
 
-    useEffect(() => {
-        RemittanceService.getRemittees(remitterId).then((r) => setRemitteeList(r));
-        RemittanceService.getBanks(remitterId).then((r) => setBankList(r));
-
-        if (id) {
-            RemittanceService.getRemittance(id).then((r) => setModel(r));
-        }
-    }, []);
-
-    const breadcrumbs = [
-        { name: "Remitters", href: "/remitters", isActive: false },
-        { name: "Dashboard", href: `/remitters/${remitterId}/dashboard`, isActive: false },
-        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittance`, isActive: false },
-        { name: "Remittance Detail", isActive: true }
-    ];
 
     return (
         <>
             <ToastContainer />
             <HeaderList />
             <BreadcrumbList breadcrumbs={breadcrumbs} />
-
             <section className="container my-5">
-                <RemittanceDetail
+                {enums && enums.banks?.length > 0 && dropdowns && dropdowns.remittees?.length > 0 && <RemittanceDetail
                     model={model}
                     errors={errors}
-                    remitteeList={remitteeList}
-                    bankList={bankList}
+                    enums={enums}
+                    dropdowns={dropdowns}
                     handleInput={handleInput}
                     handleSave={save}
                 />
+                }
             </section>
         </>
     );

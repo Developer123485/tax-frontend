@@ -7,8 +7,8 @@ export const RemitteeService = {
     deleteRemittee,
 };
 
-async function getRemittee(id) {
-    const result = await api.get(`remitee/${id}`);
+async function getRemittee(remitterId, id) {
+    const result = await api.get(`remitee/${remitterId}/${id}`);
     return result;
 }
 

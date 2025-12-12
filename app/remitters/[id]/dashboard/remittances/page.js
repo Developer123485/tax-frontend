@@ -10,7 +10,7 @@ import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
 import ProcessPopup from "@/app/components/modals/processing";
-
+import { useSearchParams } from "next/navigation";
 import { RemittanceService } from "@/app/services/remittances.service";
 
 export default function RemittanceList({ params }) {
@@ -25,7 +25,7 @@ export default function RemittanceList({ params }) {
     const [pageSize] = useState(50);
     const [totalRows, setTotalRows] = useState(0);
     const [showLoader, setShowLoader] = useState(true);
-
+    const searchParams = useSearchParams(null);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -45,11 +45,12 @@ export default function RemittanceList({ params }) {
             search: searchValue,
             remitterId
         };
-
         RemittanceService.fetchRemittances(model)
             .then((res) => {
-                setRemittances(res.remittanceList || []);
-                setTotalRows(res.totalRows || 0);
+                if (res) {
+                    setRemittances(res?.remittanceList || []);
+                    setTotalRows(res?.totalRows || 0);
+                }
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.errorMessage || err.message);
@@ -126,11 +127,9 @@ export default function RemittanceList({ params }) {
             selector: (row) => (
                 <div className="d-flex justify-content-center">
                     <a
-                        onClick={() =>
-                            router.push(
-                                `/remitters/${remitterId}/dashboard/remittance/remittance-detail?id=${row.id}`
-                            )
-                        }
+                        onClick={() => {
+                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?id=${row.id}&partType=${searchParams.get("partType")}`)
+                        }}
                     >
                         <Image
                             src="/images/dashboards/table_edit_icon.svg"
@@ -139,9 +138,7 @@ export default function RemittanceList({ params }) {
                             alt="edit"
                         />
                     </a>
-
                     <span className="mx-2 opacity-50">|</span>
-
                     <a
                         onClick={() => {
                             setDeleteId(row.id);
@@ -179,8 +176,10 @@ export default function RemittanceList({ params }) {
                             <div className="row justify-content-between">
                                 <div
                                     className="col-md-4"
-
-                                    onClick={(e) => router.push(`/remitters/${remitterId}/dashboard/ao-order/ao-order-detail`)}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
+                                    }}
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
                                         <div className="row align-items-center">
@@ -260,76 +259,82 @@ export default function RemittanceList({ params }) {
                     </div>
                 </div>
             </section>
-            <section className="py-4">
+            <section className="py-5 py-md-4 bg-light-gray">
                 <div className="container">
-                    <div className="bg-white border rounded-3 p-3">
-                        {/* HEADER */}
-                        <div className="row mb-3">
+                    <div className="bg-white pb-2 pb-md-0 border border-1 rounded-3">
+                        <div className="row px-3 py-3 px-md-3 py-md-2 align-items-center datatable-header">
                             <div className="col-md-8">
-                                <h4 className="fw-bold">Remittance</h4>
+                                <h4 className="fw-bold mb-0">Remittances</h4>
                             </div>
                             <div className="col-md-4">
-                                <div className="input-group searchbox">
-                                    <input
-                                        type="search"
-                                        placeholder="Search here"
-                                        className="form-control bg-light-gray"
-                                        onChange={(e) => {
-                                            setSearch(e.target.value);
-                                            if (!e.target.value) {
-                                                fetchRemittances(1, "");
-                                            }
-                                        }}
-                                    />
-                                    <button className="btn btn-outline-secondary">
-                                        <Image
-                                            src="/images/dashboards/search_icon.svg"
-                                            width={20}
-                                            height={20}
-                                            alt="search"
+                                <div className="d-flex">
+                                    <div className="input-group searchbox">
+                                        <input
+                                            type="search"
+                                            placeholder="Search here"
+                                            className="form-control bg-light-gray border-end-0"
+                                            id="SearchRemitters"
+                                            onChange={(e) => {
+                                                setSearch(e.target.value);
+                                                if (!e.target.value) {
+                                                    setTimeout(() => {
+                                                        fetchRemittances(1, e.target.value)
+                                                    }, 600);
+                                                }
+                                            }}
                                         />
-                                    </button>
+                                        <button
+                                            className="btn btn-outline-secondary border border-1 border-start-0 px-2 py-1"
+                                            type="button"
+                                        >
+                                            {" "}
+                                            <Image
+                                                className=""
+                                                src="/images/dashboards/search_icon.svg"
+                                                alt="search_icon"
+                                                width={24}
+                                                height={24}
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        {/* ADD BUTTON */}
-                        <div className="row mb-3">
-                            <div className="col-md-12 text-end">
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() =>
-                                        router.push(
-                                            `/remitters/${remitterId}/dashboard/remittance/remittance-detail`
-                                        )
-                                    }
-                                >
-                                    + Add Remittance
-                                </button>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="table-responsive">
+                                    <div>
+                                        {!showLoader && remittances && remittances.length > 0 && (
+                                            <DataTable
+                                                fixedHeader
+                                                fixedHeaderScrollHeight="340px"
+                                                columns={columns}
+                                                data={remittances}
+                                                pagination={true}
+                                                paginationServer
+                                                customStyles={customStyles}
+                                                paginationTotalRows={totalItems}
+                                                paginationPerPage={pageSize}
+                                                selectableRowsNoSelectAll={true}
+                                                paginationDefaultPage={currentPage}
+                                                paginationComponentOptions={{
+                                                    noRowsPerPage: true,
+                                                }}
+                                                onRowDoubleClicked={handleRowDoubleClick}
+                                                onChangePage={(page) => {
+                                                    if (currentPage !== page) {
+                                                        setCurrentPage(page);
+                                                    }
+                                                }}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        {/* TABLE */}
-                        <div className="table-responsive">
-                            {!showLoader && (
-                                <DataTable
-                                    fixedHeader
-                                    fixedHeaderScrollHeight="350px"
-                                    columns={columns}
-                                    data={remittances}
-                                    pagination
-                                    paginationServer
-                                    paginationTotalRows={totalRows}
-                                    paginationPerPage={pageSize}
-                                    paginationDefaultPage={currentPage}
-                                    onChangePage={(page) => setCurrentPage(page)}
-                                />
-                            )}
                         </div>
                     </div>
                 </div>
             </section>
-
             {/* MODALS */}
             <ProcessPopup showLoader={showLoader} />
             <DeleteConfirmation
