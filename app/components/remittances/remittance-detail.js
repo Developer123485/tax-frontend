@@ -52,7 +52,7 @@ export default function RemittanceDetail({
 
                 {/* REMITTEE DROPDOWN */}
                 <div className="col-md-4">
-                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
+                    <label className="form-label">Accountants <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.accountantDetailId}
                         options={dropdowns.accountants}
