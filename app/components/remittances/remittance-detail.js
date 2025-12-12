@@ -63,13 +63,21 @@ export default function RemittanceDetail({
 
                 {/* COUNTRY */}
                 <div className="col-md-4">
-                    <label className="form-label">Country</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.country || ""}
-                        onChange={(e) => handleInput("country", e)}
+                    <label className="form-label">Country <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.country}
+                        options={enums.countries}
+                        setEventId={(e) => handleInput("country", e)}
                     />
+                    {model.currency === "Other" && (
+                        <input
+                            type="text"
+                            className="form-control mt-2"
+                            placeholder="Enter other currency"
+                            value={model.currencyOther || ""}
+                            onChange={(e) => handleInput("currencyOther", e)}
+                        />
+                    )}
                 </div>
 
                 {/* CURRENCY */}
@@ -77,7 +85,7 @@ export default function RemittanceDetail({
                     <label className="form-label">Currency <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.currency}
-                        options={enums.currencies}
+                        options={enums.currencyType}
                         setEventId={(e) => handleInput("currency", e)}
                     />
                     {model.currency === "Other" && (

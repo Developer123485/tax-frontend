@@ -35,7 +35,7 @@ export default function SearchableDropdown(props) {
 
             <Dropdown.Menu
                 className='ps-2 pe-3 py-2 w-100'
-                style={{ minWidth: '450px', maxHeight: '190px', overflowX: 'hidden', overflowY: 'scroll' }}
+                style={{ minWidth: '400px', maxHeight: '190px', overflowX: 'hidden', overflowY: 'scroll' }}
             >
                 <Form.Control
                     autoFocus
