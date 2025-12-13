@@ -4,7 +4,7 @@ import { Dropdown, Form } from 'react-bootstrap';
 export default function SearchableDropdown(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
-    const filteredOptions = props.options.filter(option =>
+    const filteredOptions = props?.options?.filter(option =>
         option?.value?.toLowerCase()?.includes(searchTerm.toLowerCase())
     );
     const handleSelect = (eventKey) => {
@@ -46,8 +46,8 @@ export default function SearchableDropdown(props) {
                     style={{ margin: '5px' }}
                 />
 
-                {filteredOptions.length > 0 ? (
-                    filteredOptions.map((option, index) => (
+                {filteredOptions?.length > 0 ? (
+                    filteredOptions?.map((option, index) => (
                         <Dropdown.Item
                             eventKey={option.key}
                             key={index}

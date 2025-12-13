@@ -5,7 +5,7 @@ import SearchableDropdown from "../deductors/searchable-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function RemittanceDetailA({
+export default function RemittanceDetailB({
     model,
     errors,
     handleInput,
@@ -86,23 +86,23 @@ export default function RemittanceDetailA({
                 } */}
 
                 {/* COUNTRY */}
-                {/* <div className="col-md-6">
+                <div className="col-md-6">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
                         options={enums.countries}
                         setEventId={(e) => handleInput("country", e)}
                     />
-                    {model.currency === "Other" && (
+                    {model.country === "Other" && (
                         <input
                             type="text"
                             className="form-control "
-                            placeholder="Enter other currency"
-                            value={model.currencyOther || ""}
-                            onChange={(e) => handleInput("currencyOther", e)}
+                            placeholder="Other COuntry Name"
+                            value={model.countryOther || ""}
+                            onChange={(e) => handleInput("countryOther", e)}
                         />
                     )}
-                </div> */}
+                </div>
 
                 {/* CURRENCY */}
                 {/* <div className="col-md-6">

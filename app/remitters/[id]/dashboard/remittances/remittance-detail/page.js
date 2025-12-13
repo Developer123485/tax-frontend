@@ -3,7 +3,8 @@
 import React, { useEffect, useState, use } from "react";
 import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
-import RemittanceDetail from "@/app/components/remittances/remittance-detail-part-a";
+import RemittanceDetailA from "@/app/components/remittances/remittance-detail-part-a";
+import RemittanceDetailB from "@/app/components/remittances/remittance-detail-part-b";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,6 +30,7 @@ export default function AddRemittance({ params }) {
         inIndian: null,
         grossedUp: null,
         itActRelevantSection: "",
+        countryOther: null,
         itActIncomeChargeable: null,
         itActTaxLiability: null,
         itActBasisForTax: "",
@@ -160,7 +162,18 @@ export default function AddRemittance({ params }) {
             <HeaderList />
             <BreadcrumbList breadcrumbs={breadcrumbs} />
             <section className="container my-5">
-                {enums && enums.banks?.length > 0 && dropdowns && dropdowns.remittees?.length > 0 && <RemittanceDetail
+                {search.get("partType") == "A" && <RemittanceDetailA
+                    model={model}
+                    errors={errors}
+                    enums={enums}
+                    dropdowns={dropdowns}
+                    isDirty={isDirty}
+                    handleInput={handleInput}
+                    partType={search.get("partType")}
+                    handleSave={save}
+                />
+                }
+                {search.get("partType") == "B" && <RemittanceDetailB
                     model={model}
                     errors={errors}
                     enums={enums}
