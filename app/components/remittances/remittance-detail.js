@@ -123,10 +123,6 @@ export default function RemittanceDetail({
                     </div>
                 )}
 
-
-
-
-
                 {/* BANK DROPDOWN */}
                 <div className="col-md-4">
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
@@ -176,6 +172,195 @@ export default function RemittanceDetail({
                         type="date"
                         className="form-control"
                         value={model.tdsDeductionDate ?? ""}
+                        onChange={(e) => handleInput("tdsDeductionDate", e)}
+                    />
+                </div>
+
+                <div className="col-md-4">
+                    <label className="form-label">Country</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.country || ""}
+                        onChange={(e) => handleInput("country", e)}
+                    />
+                </div>
+
+                {/* Aggregate Amount */}
+                <div className="col-md-4">
+                    <label className="form-label">Aggregate Amount</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.aggregateAmount || ""}
+                        onChange={(e) => handleInput("aggregateAmount", e)}
+                    />
+                </div>
+
+                {/* Amount Payable */}
+                <div className="col-md-4">
+                    <label className="form-label">Amount Payable</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amountPayable || ""}
+                        onChange={(e) => handleInput("amountPayable", e)}
+                    />
+                </div>
+
+                {/* Amount Of TDS */}
+                <div className="col-md-4">
+                    <label className="form-label">TDS Amount</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amountOfTds || ""}
+                        onChange={(e) => handleInput("amountOfTds", e)}
+                    />
+                </div>
+
+                {/* In Foreign */}
+                <div className="col-md-4">
+                    <label className="form-label">Amount (Foreign Currency)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.inForiegn || ""}
+                        onChange={(e) => handleInput("inForiegn", e)}
+                    />
+                </div>
+
+                {/* In Indian */}
+                <div className="col-md-4">
+                    <label className="form-label">Amount (INR)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.inIndian || ""}
+                        onChange={(e) => handleInput("inIndian", e)}
+                    />
+                </div>
+
+                {/* Grossed Up */}
+                <div className="col-md-4">
+                    <label className="form-label">Grossed Up Amount</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.grossedUp || ""}
+                        onChange={(e) => handleInput("grossedUp", e)}
+                    />
+                </div>
+
+                {/* IT Act Section */}
+                <div className="col-md-4">
+                    <label className="form-label">IT Act Relevant Section</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.itActRelevantSection || ""}
+                        onChange={(e) => handleInput("itActRelevantSection", e)}
+                    />
+                </div>
+
+                {/* IT Act Income Chargeable */}
+                <div className="col-md-4">
+                    <label className="form-label">Income Chargeable (IT Act)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.itActIncomeChargeable || ""}
+                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
+                    />
+                </div>
+
+                {/* IT Act Tax Liability */}
+                <div className="col-md-4">
+                    <label className="form-label">Tax Liability (IT Act)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.itActTaxLiability || ""}
+                        onChange={(e) => handleInput("itActTaxLiability", e)}
+                    />
+                </div>
+
+                {/* DTAA Available */}
+                <div className="col-md-4">
+                    <label className="form-label">DTAA Residency Available</label>
+                    <select
+                        className="form-control"
+                        value={model.dtaaTaxResidencyAvailable ?? ""}
+                        onChange={(e) => handleInput("dtaaTaxResidencyAvailable", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                {/* DTAA Relevant */}
+                <div className="col-md-4">
+                    <label className="form-label">DTAA Relevant</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.dtaaRelevant || ""}
+                        onChange={(e) => handleInput("dtaaRelevant", e)}
+                    />
+                </div>
+
+                {/* DTAA Article */}
+                <div className="col-md-4">
+                    <label className="form-label">DTAA Relevant Article</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.dtaaRelevantArticle || ""}
+                        onChange={(e) => handleInput("dtaaRelevantArticle", e)}
+                    />
+                </div>
+
+                {/* DTAA TDS Rate */}
+                <div className="col-md-4">
+                    <label className="form-label">DTAA TDS Rate (%)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.dtaaTdsRatePercentage || ""}
+                        onChange={(e) => handleInput("dtaaTdsRatePercentage", e)}
+                    />
+                </div>
+
+                {/* TDS Rate */}
+                <div className="col-md-4">
+                    <label className="form-label">TDS Rate (%)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.tdsRate || ""}
+                        onChange={(e) => handleInput("tdsRate", e)}
+                    />
+                </div>
+
+                {/* Actual Remittance */}
+                <div className="col-md-4">
+                    <label className="form-label">Actual Remittance After TDS</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.actualRemittanceAfterTds || ""}
+                        onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
+                    />
+                </div>
+
+                {/* TDS Deduction Date */}
+                <div className="col-md-4">
+                    <label className="form-label">TDS Deduction Date</label>
+                    <input
+                        type="date"
+                        className="form-control"
+                        value={model.tdsDeductionDate || ""}
                         onChange={(e) => handleInput("tdsDeductionDate", e)}
                     />
                 </div>
