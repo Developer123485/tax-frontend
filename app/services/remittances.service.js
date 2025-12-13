@@ -15,7 +15,7 @@ export const RemittanceService = {
 };
 
 async function fetchRemittances(model) {
-    return api.post(`/remittance/fetch`, model, axiosConfig).then(r => r.data);
+    return api.post(`/remittance/fetch`, model, axiosConfig).then(r => r);
 }
 
 async function getRemittance(id) {
@@ -28,7 +28,7 @@ async function getRemittanceDropdowns(remitterId) {
 
 
 async function saveRemittance(model) {
-    return api.post(`/remittance/save`, model, axiosConfig).then(r => r.data);
+    return api.post(`/remittance/create`, model, axiosConfig).then(r => r.data);
 }
 
 async function deleteRemittance(id) {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState, use } from "react";
 import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
-import RemittanceDetail from "@/app/components/remittances/remittance-detail";
+import RemittanceDetail from "@/app/components/remittances/remittance-detail-part-a";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -56,21 +56,22 @@ export default function AddRemittance({ params }) {
         tdsRate: null,
 
         actualRemittanceAfterTds: null,
-        tdsDeductionDate: "",
+        tdsDeductionDate: null,
         otherNature: "",
         wheatherTaxPayable: "",
         currency: "",
         currencyOther: "",
         rateOfTds: null,
-        dateOfDeduction: "",
+        dateOfDeduction: null,
         nameOfBank: "",
         nameOfBranch: "",
         bsrCode: "",
-        proposedDate: "",
+        proposedDate: null,
         nature: "",
         purposeCode: "",
-        createdDate: "",
-        updatedDate: "",
+        purposeCode1: "",
+        createdDate: null,
+        updatedDate: null,
         createdBy: null,
         updatedBy: null,
         userId: 0,
@@ -86,7 +87,7 @@ export default function AddRemittance({ params }) {
     const breadcrumbs = [
         { name: "Remitters", href: "/remitters", isActive: false },
         { name: "Dashboard", href: `/remitters/${remitterId}/dashboard`, isActive: false },
-        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittance`, isActive: false },
+        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}`, isActive: false },
         { name: "Remittance Detail", isActive: true }
     ];
 
@@ -115,13 +116,14 @@ export default function AddRemittance({ params }) {
 
 
     function handleInput(field, e) {
+        debugger
         const value = e?.target?.value ?? e;
         setModel((p) => ({ ...p, [field]: value }));
     }
 
     function validate() {
         let e = {};
-
+        debugger
         if (!model.currency) e.currency = "Currency is required";
         if (!model.nature) e.nature = "Nature is required";
         if (!model.remitteeId) e.remitteeId = "Select remittee";
@@ -132,15 +134,16 @@ export default function AddRemittance({ params }) {
     }
 
     function save(e) {
+        debugger
         e.preventDefault();
         if (!validate()) return;
-
+        debugger
         model.remitterId = remitterId;
-
+        model.formType = search.get("partType");
         RemittanceService.saveRemittance(model)
             .then(() => {
                 toast.success("Saved successfully");
-                router.push(`/remitters/${remitterId}/dashboard/remittance`);
+                router.push(`/remitters/${remitterId}/dashboard/remittances?partType=` + search.get("partType"));
             })
             .catch((err) =>
                 toast.error(err?.response?.data?.message || "Error saving")
@@ -160,6 +163,7 @@ export default function AddRemittance({ params }) {
                     enums={enums}
                     dropdowns={dropdowns}
                     handleInput={handleInput}
+                    partType={search.get("partType")}
                     handleSave={save}
                 />
                 }

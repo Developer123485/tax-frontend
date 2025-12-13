@@ -9,7 +9,8 @@ export default function RemittanceDetail({
     handleInput,
     handleSave,
     enums,
-    dropdowns
+    dropdowns,
+    partType
 }) {
 
     return (
@@ -19,7 +20,7 @@ export default function RemittanceDetail({
 
                 {/* REMITTEE DROPDOWN */}
                 <div className="col-md-4">
-                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
+                    <label className="form-label">Remittees <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
                         options={dropdowns.remittees}
@@ -39,8 +40,27 @@ export default function RemittanceDetail({
                     {errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
 
-                {/* REMITTEE DROPDOWN */}
                 <div className="col-md-4">
+                    <label className="form-label">Amount Payable (INR)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.inIndian || ""}
+                        onChange={(e) => handleInput("inIndian", e)}
+                    />
+                </div>
+
+                <div className="col-md-4">
+                    <label className="form-label">Aggregate Amount</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.aggregateAmount || ""}
+                        onChange={(e) => handleInput("aggregateAmount", e)}
+                    />
+                </div>
+                {/* REMITTEE DROPDOWN */}
+                {/* {partType == "C" || partType == "B" && <div className="col-md-4">
                     <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
@@ -48,18 +68,20 @@ export default function RemittanceDetail({
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
                     {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
-                </div>
+                </div>} */}
 
                 {/* REMITTEE DROPDOWN */}
-                <div className="col-md-4">
-                    <label className="form-label">Accountants <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.accountantDetailId}
-                        options={dropdowns.accountants}
-                        setEventId={(e) => handleInput("accountantDetailId", e)}
-                    />
-                    {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
-                </div>
+                {/* {partType == "C" &&
+                    <div className="col-md-4">
+                        <label className="form-label">Accountants <span className="text-danger">*</span></label>
+                        <SearchableDropdown
+                            id={model.accountantDetailId}
+                            options={dropdowns.accountants}
+                            setEventId={(e) => handleInput("accountantDetailId", e)}
+                        />
+                        {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
+                    </div>
+                } */}
 
                 {/* COUNTRY */}
                 <div className="col-md-4">
@@ -123,8 +145,39 @@ export default function RemittanceDetail({
                     </div>
                 )}
 
-                {/* BANK DROPDOWN */}
                 <div className="col-md-4">
+                    <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.purposeCode}
+                        options={enums.revPurCategory}
+                        setEventId={(e) => handleInput("purposeCode", e)}
+                    />
+                    {errors.nature && <span className="text-danger">{errors.nature}</span>}
+                </div>
+
+
+                <div className="col-md-4">
+                    <label className="form-label">Rev Pur Code <span className="text-danger">*</span></label>
+                    <SearchableDropdown
+                        id={model.purposeCode1}
+                        options={enums.revPurCode}
+                        setEventId={(e) => handleInput("purposeCode1", e)}
+                    />
+                    {errors.nature && <span className="text-danger">{errors.nature}</span>}
+                </div>
+
+                <div className="col-md-4">
+                    <label className="form-label">Proposed Date</label>
+                    <input
+                        type="date"
+                        className="form-control"
+                        value={model.proposedDate || ""}
+                        onChange={(e) => handleInput("proposedDate", e)}
+                    />
+                </div>
+
+                {/* BANK DROPDOWN */}
+                {/* <div className="col-md-4">
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
@@ -132,10 +185,10 @@ export default function RemittanceDetail({
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
                     {errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
-                </div>
+                </div> */}
 
                 {/* AMOUNTS */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable</label>
                     <input
                         type="number"
@@ -143,7 +196,7 @@ export default function RemittanceDetail({
                         value={model.amountPayable || ""}
                         onChange={(e) => handleInput("amountPayable", e)}
                     />
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                     <label className="form-label">TDS Amount</label>
@@ -155,7 +208,7 @@ export default function RemittanceDetail({
                     />
                 </div>
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Actual Remittance After TDS</label>
                     <input
                         type="number"
@@ -163,10 +216,13 @@ export default function RemittanceDetail({
                         value={model.actualRemittanceAfterTds || ""}
                         onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
                     />
-                </div>
+                </div> */}
+
+
+
 
                 {/* TDS DATE */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">TDS Deduction Date</label>
                     <input
                         type="date"
@@ -174,9 +230,9 @@ export default function RemittanceDetail({
                         value={model.tdsDeductionDate ?? ""}
                         onChange={(e) => handleInput("tdsDeductionDate", e)}
                     />
-                </div>
+                </div> */}
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Country</label>
                     <input
                         type="text"
@@ -184,21 +240,13 @@ export default function RemittanceDetail({
                         value={model.country || ""}
                         onChange={(e) => handleInput("country", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* Aggregate Amount */}
-                <div className="col-md-4">
-                    <label className="form-label">Aggregate Amount</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.aggregateAmount || ""}
-                        onChange={(e) => handleInput("aggregateAmount", e)}
-                    />
-                </div>
+
 
                 {/* Amount Payable */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable</label>
                     <input
                         type="number"
@@ -206,10 +254,10 @@ export default function RemittanceDetail({
                         value={model.amountPayable || ""}
                         onChange={(e) => handleInput("amountPayable", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* Amount Of TDS */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">TDS Amount</label>
                     <input
                         type="number"
@@ -217,32 +265,32 @@ export default function RemittanceDetail({
                         value={model.amountOfTds || ""}
                         onChange={(e) => handleInput("amountOfTds", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* In Foreign */}
-                <div className="col-md-4">
-                    <label className="form-label">Amount (Foreign Currency)</label>
+                {/* <div className="col-md-4">
+                    <label className="form-label">Amount Payable (Foreign Currency)</label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.inForiegn || ""}
                         onChange={(e) => handleInput("inForiegn", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* In Indian */}
-                <div className="col-md-4">
-                    <label className="form-label">Amount (INR)</label>
+                {/* <div className="col-md-4">
+                    <label className="form-label">Amount Payable (INR)</label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.inIndian || ""}
                         onChange={(e) => handleInput("inIndian", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* Grossed Up */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Grossed Up Amount</label>
                     <input
                         type="number"
@@ -250,10 +298,10 @@ export default function RemittanceDetail({
                         value={model.grossedUp || ""}
                         onChange={(e) => handleInput("grossedUp", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* IT Act Section */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">IT Act Relevant Section</label>
                     <input
                         type="text"
@@ -261,10 +309,10 @@ export default function RemittanceDetail({
                         value={model.itActRelevantSection || ""}
                         onChange={(e) => handleInput("itActRelevantSection", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* IT Act Income Chargeable */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
                         type="number"
@@ -272,10 +320,10 @@ export default function RemittanceDetail({
                         value={model.itActIncomeChargeable || ""}
                         onChange={(e) => handleInput("itActIncomeChargeable", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* IT Act Tax Liability */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
                         type="number"
@@ -283,10 +331,10 @@ export default function RemittanceDetail({
                         value={model.itActTaxLiability || ""}
                         onChange={(e) => handleInput("itActTaxLiability", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* DTAA Available */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Residency Available</label>
                     <select
                         className="form-control"
@@ -297,10 +345,10 @@ export default function RemittanceDetail({
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
-                </div>
+                </div> */}
 
                 {/* DTAA Relevant */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Relevant</label>
                     <input
                         type="text"
@@ -308,10 +356,10 @@ export default function RemittanceDetail({
                         value={model.dtaaRelevant || ""}
                         onChange={(e) => handleInput("dtaaRelevant", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* DTAA Article */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Relevant Article</label>
                     <input
                         type="text"
@@ -319,10 +367,10 @@ export default function RemittanceDetail({
                         value={model.dtaaRelevantArticle || ""}
                         onChange={(e) => handleInput("dtaaRelevantArticle", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* DTAA TDS Rate */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA TDS Rate (%)</label>
                     <input
                         type="number"
@@ -330,11 +378,11 @@ export default function RemittanceDetail({
                         value={model.dtaaTdsRatePercentage || ""}
                         onChange={(e) => handleInput("dtaaTdsRatePercentage", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* TDS Rate */}
                 <div className="col-md-4">
-                    <label className="form-label">TDS Rate (%)</label>
+                    <label className="form-label">Rate Of TDS</label>
                     <input
                         type="number"
                         className="form-control"
@@ -344,7 +392,7 @@ export default function RemittanceDetail({
                 </div>
 
                 {/* Actual Remittance */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Actual Remittance After TDS</label>
                     <input
                         type="number"
@@ -352,7 +400,7 @@ export default function RemittanceDetail({
                         value={model.actualRemittanceAfterTds || ""}
                         onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
                     />
-                </div>
+                </div> */}
 
                 {/* TDS Deduction Date */}
                 <div className="col-md-4">

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Dropdown, Form } from 'react-bootstrap';
 
 export default function SearchableDropdown(props) {
-    debugger
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const filteredOptions = props.options.filter(option =>

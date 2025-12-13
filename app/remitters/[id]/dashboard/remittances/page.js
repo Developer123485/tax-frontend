@@ -30,68 +30,27 @@ export default function RemittanceList({ params }) {
     const [deleteId, setDeleteId] = useState(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
 
-    const breadcrumbs = [
-        { name: "Remitters", isActive: false, href: "/remitters" },
-        { name: "Dashboard", isActive: false, href: `/remitters/${remitterId}/dashboard` },
-        { name: "Remittance", isActive: true }
-    ];
 
-    // Fetch data
-    function fetchRemittances(page = 1, searchValue = "") {
-        setShowLoader(true);
-        const model = {
-            pageNumber: page,
-            pageSize,
-            search: searchValue,
-            remitterId
-        };
-        RemittanceService.fetchRemittances(model)
-            .then((res) => {
-                if (res) {
-                    setRemittances(res?.remittanceList || []);
-                    setTotalRows(res?.totalRows || 0);
-                }
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.errorMessage || err.message);
-            })
-            .finally(() => {
-                setTimeout(() => setShowLoader(false), 300);
-            });
-    }
-
-    useEffect(() => {
-        fetchRemittances(currentPage);
-    }, [currentPage]);
-
-    // Search debounce
-    useEffect(() => {
-        const t = setTimeout(() => {
-            if (search !== "") {
-                fetchRemittances(1, search);
-            }
-        }, 600);
-        return () => clearTimeout(t);
-    }, [search]);
-
-    // DELETE HANDLER
-    function deleteRemittance(e) {
-        e.preventDefault();
-        setDeleteLoading(true);
-
-        RemittanceService.deleteRemittance(deleteId)
-            .then(() => {
-                toast.success("Remittance deleted successfully");
-                fetchRemittances(currentPage);
-            })
-            .catch((err) => {
-                toast.error(err?.response?.data?.errorMessage || err.message);
-            })
-            .finally(() => {
-                setDeleteLoading(false);
-                setDeleteConfirm(false);
-            });
-    }
+    const customStyles = {
+        rows: { style: { minHeight: "45px" } },
+        headCells: {
+            style: {
+                justifyContent: "start",
+                border: "1px solid #F2F7FF",
+                fontSize: "12px",
+            },
+        },
+        cells: {
+            style: {
+                justifyContent: "start",
+                border: "1px solid #FFFFFF",
+                fontSize: "12px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+            },
+        },
+    };
 
     // DATATABLE COLUMNS
     const columns = [
@@ -156,6 +115,72 @@ export default function RemittanceList({ params }) {
             )
         }
     ];
+
+
+    const breadcrumbs = [
+        { name: "Remitters", isActive: false, href: "/remitters" },
+        { name: "Dashboard", isActive: false, href: `/remitters/${remitterId}/dashboard` },
+        { name: "Remittance", isActive: true }
+    ];
+
+    // Fetch data
+    function fetchRemittances(page = 1, searchValue = "") {
+        setShowLoader(true);
+        const model = {
+            pageNumber: page,
+            pageSize,
+            search: searchValue,
+            remitterId,
+            formType: searchParams.get("partType")
+        };
+        RemittanceService.fetchRemittances(model)
+            .then((res) => {
+                debugger
+                if (res) {
+                    setRemittances(res?.remittanceList || []);
+                    setTotalRows(res?.totalRows || 0);
+                }
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.errorMessage || err.message);
+            })
+            .finally(() => {
+                setTimeout(() => setShowLoader(false), 300);
+            });
+    }
+
+    useEffect(() => {
+        fetchRemittances(currentPage);
+    }, [currentPage]);
+
+    // Search debounce
+    useEffect(() => {
+        const t = setTimeout(() => {
+            if (search !== "") {
+                fetchRemittances(1, search);
+            }
+        }, 600);
+        return () => clearTimeout(t);
+    }, [search]);
+
+    // DELETE HANDLER
+    function deleteRemittance(e) {
+        e.preventDefault();
+        setDeleteLoading(true);
+
+        RemittanceService.deleteRemittance(deleteId)
+            .then(() => {
+                toast.success("Remittance deleted successfully");
+                fetchRemittances(currentPage);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.errorMessage || err.message);
+            })
+            .finally(() => {
+                setDeleteLoading(false);
+                setDeleteConfirm(false);
+            });
+    }
 
     return (
         <>
@@ -313,14 +338,13 @@ export default function RemittanceList({ params }) {
                                                 pagination={true}
                                                 paginationServer
                                                 customStyles={customStyles}
-                                                paginationTotalRows={totalItems}
+                                                paginationTotalRows={totalRows}
                                                 paginationPerPage={pageSize}
                                                 selectableRowsNoSelectAll={true}
                                                 paginationDefaultPage={currentPage}
                                                 paginationComponentOptions={{
                                                     noRowsPerPage: true,
                                                 }}
-                                                onRowDoubleClicked={handleRowDoubleClick}
                                                 onChangePage={(page) => {
                                                     if (currentPage !== page) {
                                                         setCurrentPage(page);
