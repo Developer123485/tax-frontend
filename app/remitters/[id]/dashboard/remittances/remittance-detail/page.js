@@ -92,6 +92,7 @@ export default function AddRemittance({ params }) {
     ];
 
     const [errors, setErrors] = useState({});
+    const [isDirty, setIsDirty] = useState(false);
     const [remitteeList, setRemitteeList] = useState([]);
     const [enums, setEnums] = useState([]);
     const [dropdowns, setDropdowns] = useState([]);
@@ -103,7 +104,6 @@ export default function AddRemittance({ params }) {
             }
         });
         RemittanceService.getRemittanceDropdowns(remitterId).then((res) => {
-            debugger
             if (res) {
                 setDropdowns(res || []);
             }
@@ -114,30 +114,33 @@ export default function AddRemittance({ params }) {
         }
     }, []);
 
+    useEffect(() => {
+        validate();
+    }, [model.nature, model.otherNature, model.accountantDetailId, model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1]);
+
 
     function handleInput(field, e) {
-        debugger
         const value = e?.target?.value ?? e;
         setModel((p) => ({ ...p, [field]: value }));
     }
 
     function validate() {
         let e = {};
-        debugger
-        if (!model.currency) e.currency = "Currency is required";
-        if (!model.nature) e.nature = "Nature is required";
-        if (!model.remitteeId) e.remitteeId = "Select remittee";
-        if (!model.bankDetailId) e.bankDetailId = "Select bank";
-
-        setErrors(e);
-        return Object.keys(e).length === 0;
+        if (search.get("partType") == "A") {
+            if (!model.nature) e.nature = "Nature is required";
+            if (!model.remitteeId) e.remitteeId = "Select remittee";
+            if (!model.bankDetailId) e.bankDetailId = "Select bank";
+            if (!model.purposeCode) e.purposeCode = "required!";
+            if (!model.purposeCode1 && model.purposeCode == "16.99") e.purposeCode1 = "required!";
+            setErrors(e);
+            return Object.keys(e).length === 0;
+        }
     }
 
     function save(e) {
-        debugger
         e.preventDefault();
+        setIsDirty(true);
         if (!validate()) return;
-        debugger
         model.remitterId = remitterId;
         model.formType = search.get("partType");
         RemittanceService.saveRemittance(model)
@@ -162,6 +165,7 @@ export default function AddRemittance({ params }) {
                     errors={errors}
                     enums={enums}
                     dropdowns={dropdowns}
+                    isDirty={isDirty}
                     handleInput={handleInput}
                     partType={search.get("partType")}
                     handleSave={save}
