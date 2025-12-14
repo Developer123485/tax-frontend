@@ -5,6 +5,7 @@ import HeaderList from "@/app/components/header/header-list";
 import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import RemittanceDetailA from "@/app/components/remittances/remittance-detail-part-a";
 import RemittanceDetailB from "@/app/components/remittances/remittance-detail-part-b";
+import RemittanceDetailD from "@/app/components/remittances/remittance-detail-part-d";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -166,6 +167,20 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
+        if (search.get("partType") == "D") {
+            if (!model.nature) e.nature = "Nature is required";
+            if (!model.remitteeId) e.remitteeId = "Select remittee";
+            if (!model.bankDetailId) e.bankDetailId = "Select bank";
+            if (!model.currency) e.currency = "Select Currency";
+            if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
+            if (!model.purposeCode) e.purposeCode = "required!";
+            if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
+            if (!model.purposeCode1) e.purposeCode1 = "required!";
+            if (!model.inIndian) e.inIndian = "required!";
+            if (!model.inForiegn) e.inForiegn = "required!";
+            setErrors(e);
+            return Object.keys(e).length === 0;
+        }
     }
 
     function save(e) {
@@ -203,6 +218,17 @@ export default function AddRemittance({ params }) {
                 />
                 }
                 {search.get("partType") == "B" && <RemittanceDetailB
+                    model={model}
+                    errors={errors}
+                    enums={enums}
+                    dropdowns={dropdowns}
+                    isDirty={isDirty}
+                    handleInput={handleInput}
+                    partType={search.get("partType")}
+                    handleSave={save}
+                />
+                }
+                {search.get("partType") == "D" && <RemittanceDetailD
                     model={model}
                     errors={errors}
                     enums={enums}
