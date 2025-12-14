@@ -6,6 +6,7 @@ import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import RemittanceDetailA from "@/app/components/remittances/remittance-detail-part-a";
 import RemittanceDetailB from "@/app/components/remittances/remittance-detail-part-b";
 import RemittanceDetailD from "@/app/components/remittances/remittance-detail-part-d";
+import RemittanceDetailC from "@/app/components/remittances/remittance-detail-part-c";
 import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -182,6 +183,28 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
+        if (search.get("partType") == "C") {
+            if (!model.nature) e.nature = "Nature is required";
+            if (!model.remitteeId) e.remitteeId = "Select remittee";
+            if (!model.bankDetailId) e.bankDetailId = "Select bank";
+            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+            if (!model.accountantDetailId) e.accountantDetailId = "Select Bank Detail";
+            if (!model.currency) e.currency = "Select Currency";
+            if (!model.grossedUp) e.grossedUp = "Required!";
+            if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
+            if (!model.country) e.country = "Select Country";
+            if (!model.countryOther && model.country == "OT") e.countryOther = "Required";
+            if (!model.purposeCode) e.purposeCode = "required!";
+            if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
+            if (!model.purposeCode1) e.purposeCode1 = "required!";
+            if (!model.amountOfTds) e.amountOfTds = "required!";
+            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.inIndian) e.inIndian = "required!";
+            if (!model.inForiegn) e.inForiegn = "required!";
+            if (!model.proposedDate) e.proposedDate = "required!";
+            setErrors(e);
+            return Object.keys(e).length === 0;
+        }
     }
 
     function save(e) {
@@ -230,6 +253,17 @@ export default function AddRemittance({ params }) {
                 />
                 }
                 {search.get("partType") == "D" && <RemittanceDetailD
+                    model={model}
+                    errors={errors}
+                    enums={enums}
+                    dropdowns={dropdowns}
+                    isDirty={isDirty}
+                    handleInput={handleInput}
+                    partType={search.get("partType")}
+                    handleSave={save}
+                />
+                }
+                {search.get("partType") == "C" && <RemittanceDetailC
                     model={model}
                     errors={errors}
                     enums={enums}
