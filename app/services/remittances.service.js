@@ -28,17 +28,17 @@ async function getRemittanceDropdowns(remitterId) {
 
 
 async function saveRemittance(model) {
-    return api.post(`/remittance/create`, model, axiosConfig).then(r => r.data);
+    return api.post(`/remittance/create`, model, axiosConfig).then(r => r);
 }
 
 async function deleteRemittance(id) {
-    return api.delete(`/remittance/${id}`, axiosConfig).then(r => r.data);
+    return api.get(`/remittance/delete/${id}`, axiosConfig).then(r => r);
 }
 
 async function getRemittees(remitterId) {
-    return api.get(`/remittee/list/${remitterId}`, axiosConfig).then(r => r.data);
+    return api.get(`/remittee/list/${remitterId}`, axiosConfig).then(r => r);
 }
 
 async function getBanks(remitterId) {
-    return api.get(`/bankdetail/list/${remitterId}`, axiosConfig).then(r => r.data);
+    return api.get(`/bankdetail/list/${remitterId}`, axiosConfig).then(r => r);
 }

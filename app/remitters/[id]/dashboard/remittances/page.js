@@ -64,8 +64,12 @@ export default function RemittanceList({ params }) {
             selector: (row) => row.nature || "-"
         },
         {
-            name: "Amount Payable",
-            selector: (row) => row.amountPayable?.toLocaleString() || "-"
+            name: "Amount Payable(INR)",
+            selector: (row) => row.inIndian?.toLocaleString() || "-"
+        },
+        {
+            name: "Amount Payable(In Foriegn)",
+            selector: (row) => row.inForiegn?.toLocaleString() || "-"
         },
         {
             name: "TDS Amount",
