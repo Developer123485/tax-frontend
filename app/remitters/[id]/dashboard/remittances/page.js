@@ -60,15 +60,6 @@ export default function RemittanceList({ params }) {
             selector: (row, index) => (currentPage - 1) * pageSize + index + 1
         },
         {
-            name: "Country",
-            selector: (row) => row.country || "-",
-            width: "150px"
-        },
-        {
-            name: "Currency",
-            selector: (row) => row.currency || "-"
-        },
-        {
             name: "Nature",
             selector: (row) => row.nature || "-"
         },

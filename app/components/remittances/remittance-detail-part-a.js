@@ -143,7 +143,7 @@ export default function RemittanceDetailA({
                             value={model.otherNature || ""}
                             onChange={(e) => handleInput("otherNature", e)}
                         />
-                        {isDirty && errors.nature && <span className="text-danger">{errors.nature}</span>}
+                        {isDirty && errors.otherNature && <span className="text-danger">{errors.otherNature}</span>}
                     </div>
                 )}
 
@@ -208,13 +208,16 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 <div className="col-md-6">
-                    <label className="form-label">TDS Amount</label>
+                    <label className="form-label">TDS Amount
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amountOfTds || ""}
                         onChange={(e) => handleInput("amountOfTds", e)}
                     />
+                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
                 </div>
 
                 {/* <div className="col-md-6">
@@ -391,13 +394,16 @@ export default function RemittanceDetailA({
 
                 {/* TDS Rate */}
                 <div className="col-md-6">
-                    <label className="form-label">Rate Of TDS</label>
+                    <label className="form-label">Rate Of TDS
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.tdsRate || ""}
                         onChange={(e) => handleInput("tdsRate", e)}
                     />
+                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
                 </div>
 
                 {/* Actual Remittance */}

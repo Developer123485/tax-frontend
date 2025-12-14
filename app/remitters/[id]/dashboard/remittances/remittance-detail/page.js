@@ -118,7 +118,9 @@ export default function AddRemittance({ params }) {
 
     useEffect(() => {
         validate();
-    }, [model.nature, model.otherNature, model.accountantDetailId, model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1]);
+    }, [model.nature, model.otherNature, model.accountantDetailId, model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
+    model.amountOfTds, model.tdsRate
+    ]);
 
 
     function handleInput(field, e) {
@@ -133,7 +135,10 @@ export default function AddRemittance({ params }) {
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
             if (!model.purposeCode) e.purposeCode = "required!";
-            if (!model.purposeCode1 && model.purposeCode == "16.99") e.purposeCode1 = "required!";
+            if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
+            if (!model.purposeCode1) e.purposeCode1 = "required!";
+            if (!model.amountOfTds) e.amountOfTds = "required!";
+            if (!model.tdsRate) e.tdsRate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
