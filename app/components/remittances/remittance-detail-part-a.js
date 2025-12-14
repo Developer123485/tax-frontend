@@ -43,13 +43,16 @@ export default function RemittanceDetailA({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Amount Payable (INR)</label>
+                    <label className="form-label">Amount Payable (INR)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.inIndian || ""}
                         onChange={(e) => handleInput("inIndian", e)}
                     />
+                    {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
                 <div className="col-md-6">

@@ -19,7 +19,7 @@ async function fetchRemittances(model) {
 }
 
 async function getRemittance(id) {
-    return api.get(`/remittance/${id}`, axiosConfig).then(r => r.data);
+    return api.get(`/remittance/${id}`, axiosConfig).then(r => r);
 }
 
 async function getRemittanceDropdowns(remitterId) {

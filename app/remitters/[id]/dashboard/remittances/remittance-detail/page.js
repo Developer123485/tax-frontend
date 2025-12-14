@@ -118,8 +118,9 @@ export default function AddRemittance({ params }) {
 
     useEffect(() => {
         validate();
-    }, [model.nature, model.otherNature, model.accountantDetailId, model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
-    model.amountOfTds, model.tdsRate
+    }, [model.nature, model.otherNature, model.accountantDetailId,
+    model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
+    model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther
     ]);
 
 
@@ -139,6 +140,29 @@ export default function AddRemittance({ params }) {
             if (!model.purposeCode1) e.purposeCode1 = "required!";
             if (!model.amountOfTds) e.amountOfTds = "required!";
             if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.inIndian) e.inIndian = "required!";
+            setErrors(e);
+            return Object.keys(e).length === 0;
+        }
+        if (search.get("partType") == "B") {
+            if (!model.nature) e.nature = "Nature is required";
+            if (!model.remitteeId) e.remitteeId = "Select remittee";
+            if (!model.bankDetailId) e.bankDetailId = "Select bank";
+            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+
+            if (!model.currency) e.currency = "Select Currency";
+            if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
+
+            if (!model.country) e.country = "Select Country";
+            if (!model.countryOther && model.country == "OT") e.countryOther = "Required";
+
+            if (!model.purposeCode) e.purposeCode = "required!";
+            if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
+            if (!model.purposeCode1) e.purposeCode1 = "required!";
+            if (!model.amountOfTds) e.amountOfTds = "required!";
+            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.inIndian) e.inIndian = "required!";
+            if (!model.inForiegn) e.inForiegn = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }

@@ -42,15 +42,6 @@ export default function RemittanceDetailB({
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
 
-                <div className="col-md-6">
-                    <label className="form-label">Amount Payable (INR)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
-                    />
-                </div>
 
                 <div className="col-md-6">
                     <label className="form-label">Aggregate Amount</label>
@@ -62,7 +53,7 @@ export default function RemittanceDetailB({
                     />
                 </div>
                 {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" || partType == "B" && <div className="col-md-6">
+                <div className="col-md-6">
                     <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
@@ -70,7 +61,7 @@ export default function RemittanceDetailB({
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
                     {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
-                </div>} */}
+                </div>
 
                 {/* REMITTEE DROPDOWN */}
                 {/* {partType == "C" &&
@@ -90,29 +81,38 @@ export default function RemittanceDetailB({
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
-                        options={enums.countries}
+                        options={enums.countryCodeRemitter}
                         setEventId={(e) => handleInput("country", e)}
                     />
-                    {model.country === "Other" && (
+                    {isDirty && errors.country && <span className="text-danger">{errors.country}</span>}
+                </div>
+                {model.country === "OT" && (
+                    <div className="col-md-6">
+                        <label className="form-label">Other Country <span className="text-danger">*</span></label>
                         <input
                             type="text"
                             className="form-control "
-                            placeholder="Other COuntry Name"
+                            placeholder="Other Country Name"
                             value={model.countryOther || ""}
                             onChange={(e) => handleInput("countryOther", e)}
                         />
-                    )}
-                </div>
+                        {isDirty && errors.countryOther && <span className="text-danger">{errors.countryOther}</span>}
+                    </div>
+                )}
 
                 {/* CURRENCY */}
-                {/* <div className="col-md-6">
+                <div className="col-md-6">
                     <label className="form-label">Currency <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.currency}
-                        options={enums.currencyType}
+                        options={enums.currencies}
                         setEventId={(e) => handleInput("currency", e)}
                     />
-                    {model.currency === "Other" && (
+                    {isDirty && errors.currency && <span className="text-danger">{errors.currency}</span>}
+                </div>
+                {model.currency === "99" && (
+                    <div className="col-md-6">
+                        <label className="form-label">Other Currency <span className="text-danger">*</span></label>
                         <input
                             type="text"
                             className="form-control "
@@ -120,8 +120,37 @@ export default function RemittanceDetailB({
                             value={model.currencyOther || ""}
                             onChange={(e) => handleInput("currencyOther", e)}
                         />
-                    )}
-                </div> */}
+                        {isDirty && errors.currencyOther && <span className="text-danger">{errors.currencyOther}</span>}
+                    </div>
+                )}
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount Payable (INR)
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.inIndian || ""}
+                        onChange={(e) => handleInput("inIndian", e)}
+                    />
+                    {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount Payable (IN Foreign)
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.inForiegn || ""}
+                        onChange={(e) => handleInput("inForiegn", e)}
+                    />
+                    {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
+                </div>
+
 
                 {/* NATURE */}
                 <div className="col-md-6">
@@ -208,13 +237,16 @@ export default function RemittanceDetailB({
                 </div> */}
 
                 <div className="col-md-6">
-                    <label className="form-label">TDS Amount</label>
+                    <label className="form-label">TDS Amount
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amountOfTds || ""}
                         onChange={(e) => handleInput("amountOfTds", e)}
                     />
+                    {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
                 </div>
 
                 {/* <div className="col-md-6">
@@ -391,13 +423,16 @@ export default function RemittanceDetailB({
 
                 {/* TDS Rate */}
                 <div className="col-md-6">
-                    <label className="form-label">Rate Of TDS</label>
+                    <label className="form-label">Rate Of TDS
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.tdsRate || ""}
                         onChange={(e) => handleInput("tdsRate", e)}
                     />
+                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
                 </div>
 
                 {/* Actual Remittance */}
