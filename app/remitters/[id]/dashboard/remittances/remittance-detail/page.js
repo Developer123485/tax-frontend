@@ -56,7 +56,7 @@ export default function AddRemittance({ params }) {
         otherRemittanceTdsRate: null,
         otherRemittanceReasonIfNoTds: "",
 
-        
+
 
         tdsAmountInForeignCurrency: null,
         tdsAmountInINR: null,
@@ -128,7 +128,9 @@ export default function AddRemittance({ params }) {
     model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther,
     model.proposedDate,
     model.grossedUp,
-    model.dtaaTaxResidencyAvailable
+    model.dtaaTaxResidencyAvailable,
+    model.inForiegn,
+    model.inIndian
     ]);
 
 
