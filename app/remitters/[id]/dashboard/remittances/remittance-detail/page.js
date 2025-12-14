@@ -121,7 +121,8 @@ export default function AddRemittance({ params }) {
         validate();
     }, [model.nature, model.otherNature, model.accountantDetailId,
     model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
-    model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther
+    model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther,
+    model.proposedDate
     ]);
 
 
@@ -142,6 +143,7 @@ export default function AddRemittance({ params }) {
             if (!model.amountOfTds) e.amountOfTds = "required!";
             if (!model.tdsRate) e.tdsRate = "required!";
             if (!model.inIndian) e.inIndian = "required!";
+            if (!model.proposedDate) e.proposedDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -150,13 +152,10 @@ export default function AddRemittance({ params }) {
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
             if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
-
             if (!model.currency) e.currency = "Select Currency";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
-
             if (!model.country) e.country = "Select Country";
             if (!model.countryOther && model.country == "OT") e.countryOther = "Required";
-
             if (!model.purposeCode) e.purposeCode = "required!";
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";
@@ -164,6 +163,7 @@ export default function AddRemittance({ params }) {
             if (!model.tdsRate) e.tdsRate = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
+            if (!model.proposedDate) e.proposedDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -178,6 +178,7 @@ export default function AddRemittance({ params }) {
             if (!model.purposeCode1) e.purposeCode1 = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
+            if (!model.proposedDate) e.proposedDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }

@@ -198,7 +198,9 @@ export default function RemittanceDetailD({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Proposed Date</label>
+                    <label className="form-label">Proposed Date
+                        <span className="text-danger">*</span>
+                    </label>
                     <div>
                         <DatePicker
                             autoComplete="off"
@@ -211,6 +213,7 @@ export default function RemittanceDetailD({
                             dateFormat="dd/MM/yyyy"
                             placeholderText="dd/MM/yyyy"
                         />
+                        {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                     </div>
                 </div>
 
