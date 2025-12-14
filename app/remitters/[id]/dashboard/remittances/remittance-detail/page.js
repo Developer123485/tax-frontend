@@ -41,6 +41,7 @@ export default function AddRemittance({ params }) {
         dtaaRelevantArticle: "",
         dtaaTaxableIncomeAsPerDtaa: null,
         dtaaTaxLiabilityAsPerDtaa: null,
+
         dtaaArticleForRoyaltyOrFts: "",
         dtaaTdsRatePercentage: null,
 
@@ -54,6 +55,8 @@ export default function AddRemittance({ params }) {
         otherRemittanceTaxableAsPerDtaa: null,
         otherRemittanceTdsRate: null,
         otherRemittanceReasonIfNoTds: "",
+
+        
 
         tdsAmountInForeignCurrency: null,
         tdsAmountInINR: null,
@@ -123,7 +126,9 @@ export default function AddRemittance({ params }) {
     }, [model.nature, model.otherNature, model.accountantDetailId,
     model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
     model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther,
-    model.proposedDate
+    model.proposedDate,
+    model.grossedUp,
+    model.dtaaTaxResidencyAvailable
     ]);
 
 
@@ -202,6 +207,7 @@ export default function AddRemittance({ params }) {
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
+            if (!model.dtaaTaxResidencyAvailable) e.dtaaTaxResidencyAvailable = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }

@@ -49,7 +49,7 @@ export default function RemittanceDetailC({
                         options={dropdowns.aoDetails}
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
-                    {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
+                    {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
 
                 {/* REMITTEE DROPDOWN */}
@@ -60,7 +60,7 @@ export default function RemittanceDetailC({
                         options={dropdowns.accountants}
                         setEventId={(e) => handleInput("accountantDetailId", e)}
                     />
-                    {errors.accountantDetailId && <span className="text-danger">{errors.accountantDetailId}</span>}
+                    {isDirty && errors.accountantDetailId && <span className="text-danger">{errors.accountantDetailId}</span>}
                 </div>
 
                 {/* COUNTRY */}
@@ -212,7 +212,7 @@ export default function RemittanceDetailC({
                         className="form-select"
                         aria-label="Default select example"
                         autoComplete="off"
-                        value={deducteeEntry.grossedUp}
+                        value={model.grossedUp}
                         onChange={(e) => handleInput("grossedUp", e)}
                     >
                         <option value={"N"}>
@@ -222,40 +222,60 @@ export default function RemittanceDetailC({
                     </select>
                     {isDirty && errors.grossedUp && <span className="text-danger">{errors.grossedUp}</span>}
                 </div>
-                {/* BANK DROPDOWN */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Bank <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.bankDetailId}
-                        options={enums.banks}
-                        setEventId={(e) => handleInput("bankDetailId", e)}
-                    />
-                    {errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
-                </div> */}
 
-                {/* AMOUNTS */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Amount Payable</label>
+                <div className="col-md-12">
+                    <h5>I.T ACT</h5>
+                </div>
+
+                {/* IT Act Section */}
+                <div className="col-md-6">
+                    <label className="form-label">IT Act Relevant Section</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.itActRelevantSection || ""}
+                        onChange={(e) => handleInput("itActRelevantSection", e)}
+                    />
+                </div>
+
+                {/* IT Act Income Chargeable */}
+                <div className="col-md-6">
+                    <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
                         type="number"
                         className="form-control"
-                        value={model.amountPayable || ""}
-                        onChange={(e) => handleInput("amountPayable", e)}
+                        value={model.itActIncomeChargeable || ""}
+                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
                     />
-                </div> */}
+                </div>
 
-                {/* <div className="col-md-6">
-                    <label className="form-label">TDS Amount
-                        <span className="text-danger">*</span>
-                    </label>
+                {/* IT Act Tax Liability */}
+                <div className="col-md-6">
+                    <label className="form-label">Tax Liability (IT Act)</label>
                     <input
                         type="number"
                         className="form-control"
-                        value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
+                        value={model.itActTaxLiability || ""}
+                        onChange={(e) => handleInput("itActTaxLiability", e)}
                     />
-                    {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
-                </div> */}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Basis of determining taxable Income</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.itActBasisForTax || ""}
+                        onChange={(e) => handleInput("itActBasisForTax", e)}
+                    />
+                </div>
+
+                <div className="col-md-12">
+                    <h5>DTAA</h5>
+                </div>
+
+
+
 
                 {/* <div className="col-md-6">
                     <label className="form-label">Actual Remittance After TDS</label>
@@ -341,55 +361,26 @@ export default function RemittanceDetailC({
                 {/* Grossed Up */}
 
 
-                {/* IT Act Section */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">IT Act Relevant Section</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.itActRelevantSection || ""}
-                        onChange={(e) => handleInput("itActRelevantSection", e)}
-                    />
-                </div> */}
-
-                {/* IT Act Income Chargeable */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Income Chargeable (IT Act)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.itActIncomeChargeable || ""}
-                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
-                    />
-                </div> */}
-
-                {/* IT Act Tax Liability */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Tax Liability (IT Act)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.itActTaxLiability || ""}
-                        onChange={(e) => handleInput("itActTaxLiability", e)}
-                    />
-                </div> */}
 
                 {/* DTAA Available */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">DTAA Residency Available</label>
+                <div className="col-md-6">
+                    <label className="form-label">DTAA Residency Available
+                        <span className="text-danger">*</span>
+                    </label>
                     <select
                         className="form-control"
                         value={model.dtaaTaxResidencyAvailable ?? ""}
                         onChange={(e) => handleInput("dtaaTaxResidencyAvailable", e)}
                     >
                         <option value="">Select</option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
                     </select>
-                </div> */}
+                    {isDirty && errors.dtaaTaxResidencyAvailable && <span className="text-danger">{errors.dtaaTaxResidencyAvailable}</span>}
+                </div>
 
                 {/* DTAA Relevant */}
-                {/* <div className="col-md-6">
+                <div className="col-md-6">
                     <label className="form-label">DTAA Relevant</label>
                     <input
                         type="text"
@@ -397,21 +388,34 @@ export default function RemittanceDetailC({
                         value={model.dtaaRelevant || ""}
                         onChange={(e) => handleInput("dtaaRelevant", e)}
                     />
-                </div> */}
+                </div>
 
                 {/* DTAA Article */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">DTAA Relevant Article</label>
+                <div className="col-md-6">
+                    <label className="form-label">Taxable income as per DTAA</label>
                     <input
                         type="text"
                         className="form-control"
-                        value={model.dtaaRelevantArticle || ""}
-                        onChange={(e) => handleInput("dtaaRelevantArticle", e)}
+                        value={model.dtaaTaxableIncomeAsPerDtaa || ""}
+                        onChange={(e) => handleInput("dtaaTaxableIncomeAsPerDtaa", e)}
                     />
-                </div> */}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Tax Liability as per DTAA</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.dtaaTaxLiabilityAsPerDtaa || ""}
+                        onChange={(e) => handleInput("dtaaTaxLiabilityAsPerDtaa", e)}
+                    />
+                </div>
+
+
+
 
                 {/* DTAA TDS Rate */}
-                {/* <div className="col-md-6">
+                <div className="col-md-6">
                     <label className="form-label">DTAA TDS Rate (%)</label>
                     <input
                         type="number"
@@ -419,7 +423,7 @@ export default function RemittanceDetailC({
                         value={model.dtaaTdsRatePercentage || ""}
                         onChange={(e) => handleInput("dtaaTdsRatePercentage", e)}
                     />
-                </div> */}
+                </div>
 
                 {/* TDS Rate */}
                 {/* <div className="col-md-6">
@@ -465,7 +469,7 @@ export default function RemittanceDetailC({
                 </div> */}
 
                 {/* SAVE BUTTON */}
-                <div className="col-md-12 mt-4">
+                <div className="col-md-12 mt-2">
                     <button className="btn btn-primary" type="button" onClick={handleSave}>
                         Save Remittance
                     </button>
