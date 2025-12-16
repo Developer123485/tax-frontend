@@ -204,6 +204,8 @@ export default function RemittanceDetailC({
                     </div>
                 </div>
 
+
+
                 <div className="col-md-6">
                     <label className="form-label">Grossed Up Amount
                         <span className="text-danger">*</span>
@@ -274,94 +276,6 @@ export default function RemittanceDetailC({
                     <h5>DTAA</h5>
                 </div>
 
-
-
-
-                {/* <div className="col-md-6">
-                    <label className="form-label">Actual Remittance After TDS</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.actualRemittanceAfterTds || ""}
-                        onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
-                    />
-                </div> */}
-
-
-
-
-                {/* TDS DATE */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">TDS Deduction Date</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        value={model.tdsDeductionDate ?? ""}
-                        onChange={(e) => handleInput("tdsDeductionDate", e)}
-                    />
-                </div> */}
-
-                {/* <div className="col-md-6">
-                    <label className="form-label">Country</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.country || ""}
-                        onChange={(e) => handleInput("country", e)}
-                    />
-                </div> */}
-
-                {/* Aggregate Amount */}
-
-
-                {/* Amount Payable */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Amount Payable</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.amountPayable || ""}
-                        onChange={(e) => handleInput("amountPayable", e)}
-                    />
-                </div> */}
-
-                {/* Amount Of TDS */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">TDS Amount</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
-                    />
-                </div> */}
-
-                {/* In Foreign */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Amount Payable (Foreign Currency)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
-                    />
-                </div> */}
-
-                {/* In Indian */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Amount Payable (INR)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
-                    />
-                </div> */}
-
-                {/* Grossed Up */}
-
-
-
                 {/* DTAA Available */}
                 <div className="col-md-6">
                     <label className="form-label">DTAA Residency Available
@@ -411,9 +325,6 @@ export default function RemittanceDetailC({
                     />
                 </div>
 
-
-
-
                 {/* DTAA TDS Rate */}
                 <div className="col-md-6">
                     <label className="form-label">DTAA TDS Rate (%)</label>
@@ -425,48 +336,39 @@ export default function RemittanceDetailC({
                     />
                 </div>
 
-                {/* TDS Rate */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Rate Of TDS
+                <div className="col-md-6">
+                    <label className="form-label">
+                        TDS Rate (%)
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        className="form-control"
+                        value={model.tdsRate || ""}
+                        onChange={(e) => handleInput("tdsRate", e)}
+                    />
+                    {isDirty && errors.tdsRate && (
+                        <span className="text-danger">{errors.tdsRate}</span>
+                    )}
+                </div>
+
+                {/* AMOUNT OF TDS */}
+                <div className="col-md-6">
+                    <label className="form-label">
+                        Amount of TDS
                         <span className="text-danger">*</span>
                     </label>
                     <input
                         type="number"
                         className="form-control"
-                        value={model.tdsRate || ""}
-                        onChange={(e) => handleInput("tdsRate", e)}
+                        value={model.amountOfTds || ""}
+                        onChange={(e) => handleInput("amountOfTds", e)}
                     />
-                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
-                </div> */}
-
-                {/* Actual Remittance */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">Actual Remittance After TDS</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.actualRemittanceAfterTds || ""}
-                        onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
-                    />
-                </div> */}
-
-                {/* TDS Deduction Date */}
-                {/* <div className="col-md-6">
-                    <label className="form-label">TDS Deduction Date</label>
-                    <div>
-                        <DatePicker
-                            autoComplete="off"
-                            selected={model.tdsDeductionDate}
-                            id="dateOfDoposit"
-                            className="form-control w-100"
-                            onChange={(e) => {
-                                handleInput("tdsDeductionDate", e);
-                            }}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="dd/MM/yyyy"
-                        />
-                    </div>
-                </div> */}
+                    {isDirty && errors.amountOfTds && (
+                        <span className="text-danger">{errors.amountOfTds}</span>
+                    )}
+                </div>
 
                 {/* SAVE BUTTON */}
                 <div className="col-md-12 mt-2">
