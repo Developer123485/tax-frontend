@@ -337,6 +337,110 @@ export default function RemittanceDetailC({
                 </div>
 
                 <div className="col-md-6">
+                    <label className="form-label">Business Income Amount</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.businessIncomeAmount || ""}
+                        onChange={(e) => handleInput("businessIncomeAmount", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Business Income Tax Basis</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.businessIncomeTaxBasis || ""}
+                        onChange={(e) => handleInput("businessIncomeTaxBasis", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Capital Gains (Long Term)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.capitalGainsLongTerm || ""}
+                        onChange={(e) => handleInput("capitalGainsLongTerm", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Capital Gains (Short Term)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.capitalGainsShortTerm || ""}
+                        onChange={(e) => handleInput("capitalGainsShortTerm", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Capital Gains Tax Basis</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.capitalGainsTaxBasis || ""}
+                        onChange={(e) => handleInput("capitalGainsTaxBasis", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Other Remittance Nature</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.otherRemittanceNature || ""}
+                        onChange={(e) => handleInput("otherRemittanceNature", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Other Remittance Taxable as per DTAA</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.otherRemittanceTaxableAsPerDtaa || ""}
+                        onChange={(e) => handleInput("otherRemittanceTaxableAsPerDtaa", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Other Remittance TDS Rate (%)</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        className="form-control"
+                        value={model.otherRemittanceTdsRate || ""}
+                        onChange={(e) => handleInput("otherRemittanceTdsRate", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Reason if No TDS</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.otherRemittanceReasonIfNoTds || ""}
+                        onChange={(e) => handleInput("otherRemittanceReasonIfNoTds", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Whether Tax Payable</label>
+                    <select
+                        className="form-select"
+                        value={model.wheatherTaxPayable || ""}
+                        onChange={(e) => handleInput("wheatherTaxPayable", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+
+                <div className="col-md-6">
                     <label className="form-label">
                         TDS Rate (%)
                         <span className="text-danger">*</span>
@@ -369,6 +473,19 @@ export default function RemittanceDetailC({
                         <span className="text-danger">{errors.amountOfTds}</span>
                     )}
                 </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">TDS Deduction Date</label>
+                    <DatePicker
+                        selected={model.tdsDeductionDate}
+                        className="form-control w-100"
+                        onChange={(e) => handleInput("tdsDeductionDate", e)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="dd/MM/yyyy"
+                    />
+                </div>
+
+
 
                 {/* SAVE BUTTON */}
                 <div className="col-md-12 mt-2">
