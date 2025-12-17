@@ -133,6 +133,7 @@ export default function AddRemittee({ params }) {
     // ----------------------------------------------------
     function saveRemittee(e) {
         e.preventDefault();
+        setIsDirty(true);
         if (!validate()) return;
         remittee.remitterId = remitterId;
         RemitteeService.saveRemittee(remittee)
@@ -157,6 +158,7 @@ export default function AddRemittee({ params }) {
                         remittee={remittee}
                         remitterErrors={errors}
                         enumList={enumList}
+                        isDirty={isDirty}
                         handleInputRemitter={handleInput}
                         handleSave={saveRemittee}
                     />

@@ -11,7 +11,8 @@ export default function RemitteeDetail(props) {
         handleInputRemitter,
         remittee,
         remitterErrors,
-        enumList
+        enumList,
+        isDirty
     } = props;
 
     function handleInput(name, e) {
@@ -39,14 +40,14 @@ export default function RemitteeDetail(props) {
                                 value={remittee.name || ""}
                                 onChange={(e) => handleInput("name", e)}
                             />
-                            {remitterErrors.name && (
+                            {isDirty && remitterErrors.name && (
                                 <span className="text-danger">
                                     {remitterErrors.name}
                                 </span>
                             )}
                         </div>
 
-                         <div className="col-md-3">
+                        <div className="col-md-3">
                             <label className="form-label">
                                 Code <span className="text-danger">*</span>
                             </label>
@@ -57,7 +58,7 @@ export default function RemitteeDetail(props) {
                                 maxLength={10}
                                 onChange={(e) => handleInput("code", e)}
                             />
-                            {remitterErrors.code && (
+                            {isDirty && remitterErrors.code && (
                                 <span className="text-danger">
                                     {remitterErrors.code}
                                 </span>
@@ -83,7 +84,7 @@ export default function RemitteeDetail(props) {
                                     handleInput("remitteePan", e);
                                 }}
                             />
-                            {remitterErrors.remitteePan && (
+                            {isDirty && remitterErrors.remitteePan && (
                                 <span className="text-danger">
                                     {remitterErrors.remitteePan}
                                 </span>
@@ -205,7 +206,7 @@ export default function RemitteeDetail(props) {
                                 value={remittee.remitteeEmail || ""}
                                 onChange={(e) => handleInput("remitteeEmail", e)}
                             />
-                            {remitterErrors.remitteeEmail && (
+                            {isDirty && remitterErrors.remitteeEmail && (
                                 <span className="text-danger">
                                     {remitterErrors.remitteeEmail}
                                 </span>
