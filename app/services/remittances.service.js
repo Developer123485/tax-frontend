@@ -11,7 +11,8 @@ export const RemittanceService = {
     deleteRemittance,
     getRemittees,
     getBanks,
-    getRemittanceDropdowns
+    getRemittanceDropdowns,
+    generateXml
 };
 
 async function fetchRemittances(model) {
@@ -24,6 +25,14 @@ async function getRemittance(id) {
 
 async function getRemittanceDropdowns(remitterId) {
     return api.get(`/remittance/dropdownList/${remitterId}`, axiosConfig).then(r => r);
+}
+
+async function generateXml(id, remitterId) {
+    let axiosConfig = {
+        responseType: "blob",
+    };
+    const result = await api.get(`remittance/generateXml/${id}/${remitterId}`, axiosConfig);
+    return result;
 }
 
 

@@ -77,7 +77,7 @@ export default function RemittanceList({ params }) {
         },
         {
             name: "Actions",
-            width: "140px",
+            width: "180px",
             selector: (row) => (
                 <div className="d-flex justify-content-center">
                     <a
@@ -105,6 +105,14 @@ export default function RemittanceList({ params }) {
                             height={16}
                             alt="delete"
                         />
+                    </a>
+                    <span className="mx-2 opacity-50">|</span>
+                    <a
+                        onClick={() => {
+                            generateXml(row.id);
+                        }}
+                    >
+                        Generate
                     </a>
                 </div>
             )
@@ -157,6 +165,19 @@ export default function RemittanceList({ params }) {
         }, 600);
         return () => clearTimeout(t);
     }, [search]);
+
+    function generateXml(id) {
+        RemittanceService.generateXml(id, remitterId).then(res => {
+            const url = window.URL.createObjectURL(new Blob([res]));
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `FORM15CA_${id}.xml`;; // suggested filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        })
+    }
 
     // DELETE HANDLER
     function deleteRemittance(e) {
