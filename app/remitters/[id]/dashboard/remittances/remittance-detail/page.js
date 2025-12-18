@@ -55,9 +55,8 @@ export default function AddRemittance({ params }) {
         otherRemittanceTaxableAsPerDtaa: null,
         otherRemittanceTdsRate: null,
         otherRemittanceReasonIfNoTds: "",
-
-
-
+        certificateDate: null,
+        certificateNo: "",
         tdsAmountInForeignCurrency: null,
         tdsAmountInINR: null,
         tdsRate: null,

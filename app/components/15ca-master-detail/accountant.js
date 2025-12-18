@@ -154,27 +154,7 @@ export default function AccountantDetailForm(props) {
                         />
                     </div>
 
-                    {/* CERTIFICATE NO */}
-                    <div className="col-md-3">
-                        <label className="form-label">Certificate No</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={accountant.certificateNo || ""}
-                            onChange={(e) => handleInput("certificateNo", e)}
-                        />
-                    </div>
-
-                    {/* CERTIFICATE DATE */}
-                    <div className="col-md-3">
-                        <label className="form-label">Certificate Date</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            value={accountant.certificateDate || ""}
-                            onChange={(e) => handleInput("certificateDate", e)}
-                        />
-                    </div>
+                 
 
                     {/* SAVE BUTTON */}
                     <div className="col-md-12 mt-3">
