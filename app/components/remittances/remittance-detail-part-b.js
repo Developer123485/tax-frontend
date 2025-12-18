@@ -186,12 +186,13 @@ export default function RemittanceDetailB({
                     {isDirty && errors.purposeCode && <span className="text-danger">{errors.purposeCode}</span>}
                 </div>
 
-
                 <div className="col-md-6">
-                    <label className="form-label">Rev Pur Code <span className="text-danger">*</span></label>
+                    <label className="form-label">Rev Pur Code(Select before Rev Pur Category) <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode1}
-                        options={enums.revPurCode}
+                        options={model.purposeCode ? enums.revPurCode.filter(item =>
+                            item.key.startsWith(model.purposeCode)
+                        ) : null}
                         setEventId={(e) => handleInput("purposeCode1", e)}
                     />
                     {isDirty && errors.purposeCode1 && <span className="text-danger">{errors.purposeCode1}</span>}
