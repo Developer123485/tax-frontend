@@ -17,9 +17,8 @@ export default function RemittanceDetailA({
 
     return (
         <form autoComplete="off">
-            <div className="row bg-light-gray px-3 py-4 rounded-3 g-3 my-4">
+            <div className="row bg-light-gray px-1 py-1 rounded-3 g-3 my-4">
                 <h5 className="text-blue fw-bold">Remittance Details</h5>
-
                 {/* REMITTEE DROPDOWN */}
                 <div className="col-md-6">
                     <label className="form-label">Remittees <span className="text-danger">*</span></label>
