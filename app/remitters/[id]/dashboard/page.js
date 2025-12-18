@@ -34,6 +34,7 @@ export default function Dashboard({ params }) {
     const [isloading, setIsLoading] = useState(false);
     const deductorId = resolvedParams?.id;
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedForm, setSelectedForm] = useState("15CA");
     const [formsData, setFormsData] = useState(["Part A", "Part B", "Part C", "Part D"]);
     const [financialYear, setFinancialYear] = useState("");
     const [quarter, setQuarter] = useState("");
@@ -87,10 +88,39 @@ export default function Dashboard({ params }) {
                     <div className="row">
                         {/* LEFT — 15CA Form */}
                         <div className="col-md-6 pe-md-4 border-end">
-                            <h4 className="text-uppercase fw-bold mb-4">15CA Form</h4>
+                            <div className="container-fluid text-uppercase fw-bold mb-4">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex gap-3">
+                                        <label className="form-check-label fs-20 d-flex align-items-center gap-2">
+                                            <input
+                                                type="radio"
+                                                name="formType"
+                                                value="15CA"
+                                                checked={selectedForm === "15CA"}
+                                                onChange={() => setSelectedForm("15CA")}
+                                                className="form-check-input"
+                                            />
+                                            15CA Form
+                                        </label>
+
+                                        <label className="form-check-label d-flex align-items-center gap-2">
+                                            <input
+                                                type="radio"
+                                                name="formType"
+                                                value="15CB"
+                                                checked={selectedForm === "15CB"}
+                                                onChange={() => setSelectedForm("15CB")}
+                                                className="form-check-input"
+                                            />
+                                            15CB Form
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="d-flex flex-column gap-3">
                                 {/* Master List */}
-                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=A`)}>
+                                {selectedForm == "15CA" && <div className="sidebar-card"
+                                    onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=A`)}>
                                     <Image
                                         src="/images/dashboards/users_icon.svg"
                                         width={45}
@@ -103,10 +133,10 @@ export default function Dashboard({ params }) {
                                             Submit details of remittances where the remitter is not required to obtain a certificate from the Assessing Officer and the amount does not exceed ₹5 lakh during the financial year.
                                         </p>
                                     </div>
-                                </div>
+                                </div>}
 
                                 {/* Add Master Entry */}
-                                <div
+                                {selectedForm == "15CA" && <div
                                     className="sidebar-card"
                                     onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=B`)}
                                 >
@@ -118,11 +148,13 @@ export default function Dashboard({ params }) {
                                         </p>
                                     </div>
                                 </div>
-
+                                }
                                 {/* Import Excel */}
                                 <label className="sidebar-card pointer">
                                     <Image src="/images/dashboards/import_excel_file_icon.svg" width={45} height={45} alt="" />
-                                    <div className="sidebar-card-content" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=C`)}>
+                                    <div className="sidebar-card-content" onClick={() => {
+                                        router.push(`/remitters/${remitterId}/dashboard/remittances?partType=C&formType=${selectedForm}`)
+                                    }}>
                                         <span className="title">Part C</span>
                                         <p className="description">
                                             Submit details where the remitter is required to obtain an order from the Assessing Officer for determining tax liability and the payment exceeds ₹5 lakh during the financial year.
@@ -131,7 +163,7 @@ export default function Dashboard({ params }) {
                                 </label>
 
                                 {/* Download Excel Template */}
-                                <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=D`)}>
+                                {selectedForm == "15CA" && <div className="sidebar-card" onClick={() => router.push(`/remitters/${remitterId}/dashboard/remittances?partType=D`)}>
                                     <Image src="/images/dashboards/download_excel_file_icon.svg" width={45} height={45} alt="" />
                                     <div className="sidebar-card-content">
                                         <span className="title">Part D</span>
@@ -139,7 +171,7 @@ export default function Dashboard({ params }) {
                                             Submit details of remittances not chargeable to tax under the provisions of the Income-tax Act, 1961.
                                         </p>
                                     </div>
-                                </div>
+                                </div>}
 
                             </div>
                         </div>
