@@ -86,7 +86,7 @@ export default function RemittanceDetailB({
                     />
                     {isDirty && errors.country && <span className="text-danger">{errors.country}</span>}
                 </div>
-                {model.country === "OT" && (
+                {model.country === "9999" && (
                     <div className="col-md-6">
                         <label className="form-label">Other Country <span className="text-danger">*</span></label>
                         <input

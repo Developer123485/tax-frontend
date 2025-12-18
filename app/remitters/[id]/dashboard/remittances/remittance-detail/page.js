@@ -162,7 +162,7 @@ export default function AddRemittance({ params }) {
             if (!model.currency) e.currency = "Select Currency";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
             if (!model.country) e.country = "Select Country";
-            if (!model.countryOther && model.country == "OT") e.countryOther = "Required";
+            if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
             if (!model.purposeCode) e.purposeCode = "required!";
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";
@@ -199,7 +199,7 @@ export default function AddRemittance({ params }) {
             if (!model.grossedUp) e.grossedUp = "Required!";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
             if (!model.country) e.country = "Select Country";
-            if (!model.countryOther && model.country == "OT") e.countryOther = "Required";
+            if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
             if (!model.purposeCode) e.purposeCode = "required!";
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";

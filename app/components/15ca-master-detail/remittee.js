@@ -244,7 +244,7 @@ export default function RemitteeDetail(props) {
                             {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("countryRemMade", e)}
                                 id={remittee.countryRemMade}
-                                options={enumList.countries}
+                                options={enumList.countryCodeRemitter}
                             ></SearchableDropdown>
                             }
                             {/* {isNextDirty && remitterErrors.remitterStateError && (
@@ -253,7 +253,7 @@ export default function RemitteeDetail(props) {
                                 </span>
                             )} */}
                         </div>
-                        {remittee.countryRemMade == "2" && <div className="col-md-3">
+                        {remittee.countryRemMade == "9999" && <div className="col-md-3">
                             <label className="form-label"></label>
                             <input
                                 type="text"
