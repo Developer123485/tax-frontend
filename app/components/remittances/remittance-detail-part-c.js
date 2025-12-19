@@ -436,13 +436,17 @@ export default function RemittanceDetailC({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Other Remittance Taxable as per DTAA</label>
-                    <input
-                        type="number"
+                    <label className="form-label">Other Remittance Taxable as per DTAA
+                    </label>
+                    <select
                         className="form-control"
-                        value={model.otherRemittanceTaxableAsPerDtaa || ""}
+                        value={model.otherRemittanceTaxableAsPerDtaa ?? ""}
                         onChange={(e) => handleInput("otherRemittanceTaxableAsPerDtaa", e)}
-                    />
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
                 </div>
 
                 <div className="col-md-6">
