@@ -348,6 +348,22 @@ export default function RemittanceDetailC({
                     />
                 </div>
 
+                <div className="col-md-6">
+                    <label className="form-label">Remitance is for Royalities
+                        <span className="text-danger">*</span>
+                    </label>
+                    <select
+                        className="form-control"
+                        value={model.remittanceForRoyality ?? ""}
+                        onChange={(e) => handleInput("remittanceForRoyality", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.remittanceForRoyality && <span className="text-danger">{errors.remittanceForRoyality}</span>}
+                </div>
+
                 {/* DTAA TDS Rate */}
                 <div className="col-md-6">
                     <label className="form-label">DTAA TDS Rate (%)</label>

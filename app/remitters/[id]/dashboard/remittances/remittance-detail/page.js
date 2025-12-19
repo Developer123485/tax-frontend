@@ -41,7 +41,7 @@ export default function AddRemittance({ params }) {
         dtaaRelevantArticle: "",
         dtaaTaxableIncomeAsPerDtaa: null,
         dtaaTaxLiabilityAsPerDtaa: null,
-
+        remittanceForRoyality: null,
         dtaaArticleForRoyaltyOrFts: "",
         dtaaTdsRatePercentage: null,
 
@@ -129,7 +129,8 @@ export default function AddRemittance({ params }) {
     model.grossedUp,
     model.dtaaTaxResidencyAvailable,
     model.inForiegn,
-    model.inIndian
+    model.inIndian,
+    model.remittanceForRoyality
     ]);
 
 
@@ -142,6 +143,7 @@ export default function AddRemittance({ params }) {
         let e = {};
         if (search.get("partType") == "A") {
             if (!model.nature) e.nature = "Nature is required";
+            if (!model.remittanceForRoyality) e.nature = "required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
             if (!model.purposeCode) e.purposeCode = "required!";
