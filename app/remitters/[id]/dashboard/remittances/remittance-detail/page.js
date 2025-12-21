@@ -24,70 +24,115 @@ export default function AddRemittance({ params }) {
     // ---------------------------------------------------
     const [model, setModel] = useState({
         id: 0,
+
+        // =====================
+        // BASIC
+        // =====================
         country: "",
+        countryOther: null,
+
         aggregateAmount: null,
         amountPayable: null,
         amountOfTds: null,
+
         inForiegn: null,
         inIndian: null,
         grossedUp: null,
-        countryOther: null,
-        itActRelevantSection: "",
-        itActIncomeChargeable: null,
-        itActTaxLiability: null,
-        itActBasisForTax: "",
-        dtaaTaxResidencyAvailable: null,
-        dtaaRelevant: "",
-        dtaaRelevantArticle: "",
-        dtaaTaxableIncomeAsPerDtaa: null,
-        dtaaTaxLiabilityAsPerDtaa: null,
-        remittanceForRoyality: null,
-        dtaaArticleForRoyaltyOrFts: "",
-        dtaaTdsRatePercentage: null,
 
-        businessIncomeAmount: null,
-        businessIncomeTaxBasis: "",
-        capitalGainsLongTerm: null,
-        capitalGainsShortTerm: null,
-        capitalGainsTaxBasis: "",
-
-        otherRemittanceNature: "",
-        otherRemittanceTaxableAsPerDtaa: null,
-        otherRemittanceTdsRate: null,
-        otherRemittanceReasonIfNoTds: "",
-        certificateDate: null,
-        certificateNo: "",
-        tdsAmountInForeignCurrency: null,
-        tdsAmountInINR: null,
-        tdsRate: null,
-
-        actualRemittanceAfterTds: null,
-        tdsDeductionDate: null,
         otherNature: "",
         wheatherTaxPayable: "",
+
         currency: "",
         currencyOther: "",
+
         rateOfTds: null,
         dateOfDeduction: null,
+
         nameOfBank: "",
         nameOfBranch: "",
         bsrCode: "",
+
         proposedDate: null,
         nature: "",
         purposeCode: "",
         purposeCode1: "",
+
+        certificateDate: null,
+        certificateNo: "",
+        formType: "",
+
+        // =====================
+        // IT ACT
+        // =====================
+        itActRelevantSection: "",
+        itActIncomeChargeable: null,
+        itActTaxLiability: null,
+        itActBasisForTax: "",
+
+        // =====================
+        // DTAA
+        // =====================
+        taxResidCert: null,
+        relevantDtaa: "",
+        relevantArtDtaa: "",
+        taxIncDtaa: null,
+        taxLiablDtaa: null,
+
+        remForRoyFlg: null,
+        artDtaa: "",
+        rateTdsADtaa: null,
+
+        remAcctBusIncFlg: null,
+        incLiabIndiaFlg: null,
+        amtToTaxInd: null,
+        arrAtRateDedTax: null,
+        reasonofReleventArtDtaa: "",
+        rateDednDtaa: "",
+
+        remOnCapGainFlg: null,
+        amtLongTrm: null,
+        amtShortTrm: null,
+        basisTaxIncDtaa: "",
+
+        otherRemDtaa: null,
+        natureRemDtaa: "",
+        taxIndDtaaFlg: null,
+        rateTdsDDtaa: "",
+        relArtDetlDDtaa: "",
+
+        // =====================
+        // TDS
+        // =====================
+        amtPayForgnTds: null,
+        amtPayIndianTds: null,
+        rateTdsSecbFlg: null,
+        rateTdsSecB: null,
+        actlAmtTdsForgn: null,
+        dednDateTds: null,
+
+        // =====================
+        // DECLARATION
+        // =====================
+        i_We: "",
+        verificationDate: null,
+        verDesignation: "",
+        verificationPlace: "",
+
+        // =====================
+        // AUDIT / LINKS
+        // =====================
         createdDate: null,
         updatedDate: null,
         createdBy: null,
         updatedBy: null,
         userId: 0,
         remitterId: remitterId,
-        formType: "",
         remitteeId: null,
         bankDetailId: null,
         aoOrderDetailId: null,
-        accountantDetailId: null,
+        accountantDetailId: null
     });
+
 
 
     const breadcrumbs = [
@@ -196,7 +241,7 @@ export default function AddRemittance({ params }) {
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
             if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
-            if (!model.accountantDetailId) e.accountantDetailId = "Select Bank Detail";
+            if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";
             if (!model.grossedUp) e.grossedUp = "Required!";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";

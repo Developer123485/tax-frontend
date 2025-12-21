@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SearchableDropdown from "../deductors/searchable-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,15 +14,14 @@ export default function RemittanceDetailC({
     dropdowns,
     isDirty
 }) {
-
     return (
         <form autoComplete="off">
-            <div className="row bg-light-gray px-1 py-1 rounded-3 g-3 my-4">
+            <div className="row bg-light-gray px-2 py-2 rounded-3 g-3 my-4">
                 <h5 className="text-blue fw-bold">Remittance Details</h5>
 
-                {/* REMITTEE DROPDOWN */}
+                {/* REMITTEE */}
                 <div className="col-md-6">
-                    <label className="form-label">Remittees <span className="text-danger">*</span></label>
+                    <label className="form-label">Remittee <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
                         options={dropdowns.remittees}
@@ -31,9 +30,9 @@ export default function RemittanceDetailC({
                     {isDirty && errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
                 </div>
 
-                {/* REMITTEE DROPDOWN */}
+                {/* BANK */}
                 <div className="col-md-6">
-                    <label className="form-label">Banks <span className="text-danger">*</span></label>
+                    <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
                         options={dropdowns.banks}
@@ -41,9 +40,10 @@ export default function RemittanceDetailC({
                     />
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
-                {/* REMITTEE DROPDOWN */}
+
+                {/* AO */}
                 <div className="col-md-6">
-                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
+                    <label className="form-label">AO Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
                         options={dropdowns.aoDetails}
@@ -52,9 +52,9 @@ export default function RemittanceDetailC({
                     {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
 
-                {/* REMITTEE DROPDOWN */}
+                {/* ACCOUNTANT */}
                 <div className="col-md-6">
-                    <label className="form-label">Accountants <span className="text-danger">*</span></label>
+                    <label className="form-label">Accountant <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.accountantDetailId}
                         options={dropdowns.accountants}
@@ -63,18 +63,16 @@ export default function RemittanceDetailC({
                     {isDirty && errors.accountantDetailId && <span className="text-danger">{errors.accountantDetailId}</span>}
                 </div>
 
-                {/* CERTIFICATE NO */}
+                {/* CERTIFICATE */}
                 <div className="col-md-3">
                     <label className="form-label">Certificate No</label>
                     <input
-                        type="text"
                         className="form-control"
                         value={model.certificateNo || ""}
                         onChange={(e) => handleInput("certificateNo", e)}
                     />
                 </div>
 
-                {/* CERTIFICATE DATE */}
                 <div className="col-md-3">
                     <label className="form-label">Certificate Date</label>
                     <input
@@ -95,13 +93,12 @@ export default function RemittanceDetailC({
                     />
                     {isDirty && errors.country && <span className="text-danger">{errors.country}</span>}
                 </div>
+
                 {model.country === "9999" && (
                     <div className="col-md-6">
                         <label className="form-label">Other Country <span className="text-danger">*</span></label>
                         <input
-                            type="text"
-                            className="form-control "
-                            placeholder="Other Country Name"
+                            className="form-control"
                             value={model.countryOther || ""}
                             onChange={(e) => handleInput("countryOther", e)}
                         />
@@ -119,13 +116,12 @@ export default function RemittanceDetailC({
                     />
                     {isDirty && errors.currency && <span className="text-danger">{errors.currency}</span>}
                 </div>
+
                 {model.currency === "99" && (
                     <div className="col-md-6">
                         <label className="form-label">Other Currency <span className="text-danger">*</span></label>
                         <input
-                            type="text"
-                            className="form-control "
-                            placeholder="Enter other currency"
+                            className="form-control"
                             value={model.currencyOther || ""}
                             onChange={(e) => handleInput("currencyOther", e)}
                         />
@@ -133,10 +129,9 @@ export default function RemittanceDetailC({
                     </div>
                 )}
 
+                {/* AMOUNTS */}
                 <div className="col-md-6">
-                    <label className="form-label">Amount Payable (INR)
-                        <span className="text-danger">*</span>
-                    </label>
+                    <label className="form-label">Amount Payable (INR) <span className="text-danger">*</span></label>
                     <input
                         type="number"
                         className="form-control"
@@ -146,11 +141,8 @@ export default function RemittanceDetailC({
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
-
                 <div className="col-md-6">
-                    <label className="form-label">Amount Payable (IN Foreign)
-                        <span className="text-danger">*</span>
-                    </label>
+                    <label className="form-label">Amount Payable (Foreign) <span className="text-danger">*</span></label>
                     <input
                         type="number"
                         className="form-control"
@@ -160,10 +152,9 @@ export default function RemittanceDetailC({
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
 
-
                 {/* NATURE */}
                 <div className="col-md-6">
-                    <label className="form-label">Natures <span className="text-danger">*</span></label>
+                    <label className="form-label">Nature <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.nature}
                         options={enums.incomeNatureType}
@@ -171,20 +162,20 @@ export default function RemittanceDetailC({
                     />
                     {isDirty && errors.nature && <span className="text-danger">{errors.nature}</span>}
                 </div>
+
                 {model.nature === "16.99" && (
                     <div className="col-md-6">
-                        <label className="form-label">Others Natures <span className="text-danger">*</span></label>
+                        <label className="form-label">Other Nature <span className="text-danger">*</span></label>
                         <input
-                            type="text"
                             className="form-control"
-                            placeholder="Enter other nature"
                             value={model.otherNature || ""}
                             onChange={(e) => handleInput("otherNature", e)}
                         />
-                        {isDirty && errors.nature && <span className="text-danger">{errors.nature}</span>}
+                        {isDirty && errors.otherNature && <span className="text-danger">{errors.otherNature}</span>}
                     </div>
                 )}
 
+                {/* PURPOSE CODE */}
                 <div className="col-md-6">
                     <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
                     <SearchableDropdown
@@ -196,74 +187,60 @@ export default function RemittanceDetailC({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Rev Pur Code(Select before Rev Pur Category) <span className="text-danger">*</span></label>
+                    <label className="form-label">Rev Pur Code (Select before Rev Pur Category)*</label>
                     <SearchableDropdown
                         id={model.purposeCode1}
-                        options={model.purposeCode ? enums.revPurCode.filter(item =>
-                            item.key.startsWith(model.purposeCode)
-                        ) : null}
+                        options={
+                            model.purposeCode
+                                ? enums.revPurCode.filter(x =>
+                                    x.key.startsWith(model.purposeCode)
+                                )
+                                : []
+                        }
                         setEventId={(e) => handleInput("purposeCode1", e)}
                     />
                     {isDirty && errors.purposeCode1 && <span className="text-danger">{errors.purposeCode1}</span>}
                 </div>
 
+                {/* PROPOSED DATE */}
                 <div className="col-md-6">
-                    <label className="form-label">Proposed Date
-                        <span className="text-danger">*</span>
-                    </label>
-                    <div>
-                        <DatePicker
-                            autoComplete="off"
-                            selected={model.proposedDate}
-                            id="dateOfDoposit"
-                            className="form-control w-100"
-                            onChange={(e) => {
-                                handleInput("proposedDate", e);
-                            }}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="dd/MM/yyyy"
-                        />
-                        {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
-                    </div>
+                    <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
+                    <DatePicker
+                        selected={model.proposedDate}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("proposedDate", e)}
+                    />
+                    {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                 </div>
 
-
-
+                {/* GROSSED UP */}
                 <div className="col-md-6">
-                    <label className="form-label">Grossed Up Amount
-                        <span className="text-danger">*</span>
-                    </label>
+                    <label className="form-label">Grossed Up <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
-                        aria-label="Default select example"
-                        autoComplete="off"
-                        value={model.grossedUp}
+                        value={model.grossedUp || "N"}
                         onChange={(e) => handleInput("grossedUp", e)}
                     >
-                        <option value={"N"}>
-                            No
-                        </option>
-                        <option value={"Y"}>Yes</option>
+                        <option value="N">No</option>
+                        <option value="Y">Yes</option>
                     </select>
                     {isDirty && errors.grossedUp && <span className="text-danger">{errors.grossedUp}</span>}
                 </div>
 
                 <div className="col-md-12">
-                    <h5>I.T ACT</h5>
+                    <h5 className="fw-bold mt-3">I.T. Act</h5>
                 </div>
 
-                {/* IT Act Section */}
                 <div className="col-md-6">
                     <label className="form-label">IT Act Relevant Section</label>
                     <input
-                        type="text"
                         className="form-control"
                         value={model.itActRelevantSection || ""}
                         onChange={(e) => handleInput("itActRelevantSection", e)}
                     />
                 </div>
 
-                {/* IT Act Income Chargeable */}
                 <div className="col-md-6">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
@@ -274,7 +251,6 @@ export default function RemittanceDetailC({
                     />
                 </div>
 
-                {/* IT Act Tax Liability */}
                 <div className="col-md-6">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
@@ -286,9 +262,8 @@ export default function RemittanceDetailC({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Basis of determining taxable Income</label>
+                    <label className="form-label">Basis for Tax (IT Act)</label>
                     <input
-                        type="number"
                         className="form-control"
                         value={model.itActBasisForTax || ""}
                         onChange={(e) => handleInput("itActBasisForTax", e)}
@@ -296,182 +271,243 @@ export default function RemittanceDetailC({
                 </div>
 
                 <div className="col-md-12">
-                    <h5>DTAA</h5>
+                    <h5 className="fw-bold mt-4">DTAA</h5>
                 </div>
 
-                {/* DTAA Available */}
                 <div className="col-md-6">
-                    <label className="form-label">DTAA Residency Available
-                        <span className="text-danger">*</span>
-                    </label>
-                    <select
-                        className="form-control"
-                        value={model.dtaaTaxResidencyAvailable ?? ""}
-                        onChange={(e) => handleInput("dtaaTaxResidencyAvailable", e)}
-                    >
-                        <option value="">Select</option>
-                        <option value="Y">Yes</option>
-                        <option value="N">No</option>
-                    </select>
-                    {isDirty && errors.dtaaTaxResidencyAvailable && <span className="text-danger">{errors.dtaaTaxResidencyAvailable}</span>}
-                </div>
-
-                {/* DTAA Relevant */}
-                <div className="col-md-6">
-                    <label className="form-label">DTAA Relevant</label>
+                    <label className="form-label">Tax Residency Certificate</label>
                     <input
-                        type="text"
                         className="form-control"
-                        value={model.dtaaRelevant || ""}
-                        onChange={(e) => handleInput("dtaaRelevant", e)}
-                    />
-                </div>
-
-                {/* DTAA Article */}
-                <div className="col-md-6">
-                    <label className="form-label">Taxable income as per DTAA</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.dtaaTaxableIncomeAsPerDtaa || ""}
-                        onChange={(e) => handleInput("dtaaTaxableIncomeAsPerDtaa", e)}
+                        value={model.taxResidCert || ""}
+                        onChange={(e) => handleInput("taxResidCert", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Tax Liability as per DTAA</label>
+                    <label className="form-label">Relevant DTAA</label>
+                    <input
+                        className="form-control"
+                        value={model.relevantDtaa || ""}
+                        onChange={(e) => handleInput("relevantDtaa", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Relevant Article (DTAA)</label>
+                    <input
+                        className="form-control"
+                        value={model.relevantArtDtaa || ""}
+                        onChange={(e) => handleInput("relevantArtDtaa", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Taxable Income (DTAA)</label>
                     <input
                         type="number"
                         className="form-control"
-                        value={model.dtaaTaxLiabilityAsPerDtaa || ""}
-                        onChange={(e) => handleInput("dtaaTaxLiabilityAsPerDtaa", e)}
+                        value={model.taxIncDtaa || ""}
+                        onChange={(e) => handleInput("taxIncDtaa", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Remitance is for Royalities
-                        <span className="text-danger">*</span>
-                    </label>
-                    <select
+                    <label className="form-label">Tax Liability (DTAA)</label>
+                    <input
+                        type="number"
                         className="form-control"
-                        value={model.remittanceForRoyality ?? ""}
-                        onChange={(e) => handleInput("remittanceForRoyality", e)}
+                        value={model.taxLiablDtaa || ""}
+                        onChange={(e) => handleInput("taxLiablDtaa", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Remittance for Royalty</label>
+                    <select
+                        className="form-select"
+                        value={model.remForRoyFlg || ""}
+                        onChange={(e) => handleInput("remForRoyFlg", e)}
                     >
                         <option value="">Select</option>
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
                     </select>
-                    {isDirty && errors.remittanceForRoyality && <span className="text-danger">{errors.remittanceForRoyality}</span>}
                 </div>
 
-                {/* DTAA TDS Rate */}
                 <div className="col-md-6">
                     <label className="form-label">DTAA TDS Rate (%)</label>
                     <input
                         type="number"
+                        step="0.01"
                         className="form-control"
-                        value={model.dtaaTdsRatePercentage || ""}
-                        onChange={(e) => handleInput("dtaaTdsRatePercentage", e)}
+                        value={model.rateTdsADtaa || ""}
+                        onChange={(e) => handleInput("rateTdsADtaa", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Business Income Amount</label>
+                    <label className="form-label">Amount to be Taxed in India</label>
                     <input
                         type="number"
                         className="form-control"
-                        value={model.businessIncomeAmount || ""}
-                        onChange={(e) => handleInput("businessIncomeAmount", e)}
+                        value={model.amtToTaxInd || ""}
+                        onChange={(e) => handleInput("amtToTaxInd", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Business Income Tax Basis</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.businessIncomeTaxBasis || ""}
-                        onChange={(e) => handleInput("businessIncomeTaxBasis", e)}
-                    />
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Capital Gains (Long Term)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.capitalGainsLongTerm || ""}
-                        onChange={(e) => handleInput("capitalGainsLongTerm", e)}
-                    />
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Capital Gains (Short Term)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.capitalGainsShortTerm || ""}
-                        onChange={(e) => handleInput("capitalGainsShortTerm", e)}
-                    />
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Capital Gains Tax Basis</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.capitalGainsTaxBasis || ""}
-                        onChange={(e) => handleInput("capitalGainsTaxBasis", e)}
-                    />
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Other Remittance Nature</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.otherRemittanceNature || ""}
-                        onChange={(e) => handleInput("otherRemittanceNature", e)}
-                    />
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Other Remittance Taxable as per DTAA
-                    </label>
-                    <select
-                        className="form-control"
-                        value={model.otherRemittanceTaxableAsPerDtaa ?? ""}
-                        onChange={(e) => handleInput("otherRemittanceTaxableAsPerDtaa", e)}
-                    >
-                        <option value="">Select</option>
-                        <option value="Y">Yes</option>
-                        <option value="N">No</option>
-                    </select>
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">Other Remittance TDS Rate (%)</label>
+                    <label className="form-label">Arrived Rate for Deduction</label>
                     <input
                         type="number"
                         step="0.01"
                         className="form-control"
-                        value={model.otherRemittanceTdsRate || ""}
-                        onChange={(e) => handleInput("otherRemittanceTdsRate", e)}
+                        value={model.arrAtRateDedTax || ""}
+                        onChange={(e) => handleInput("arrAtRateDedTax", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Reason if No TDS</label>
+                    <label className="form-label">Long Term Capital Gain</label>
                     <input
-                        type="text"
+                        type="number"
                         className="form-control"
-                        value={model.otherRemittanceReasonIfNoTds || ""}
-                        onChange={(e) => handleInput("otherRemittanceReasonIfNoTds", e)}
+                        value={model.amtLongTrm || ""}
+                        onChange={(e) => handleInput("amtLongTrm", e)}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Whether Tax Payable</label>
+                    <label className="form-label">Short Term Capital Gain</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amtShortTrm || ""}
+                        onChange={(e) => handleInput("amtShortTrm", e)}
+                    />
+                </div>
+
+                <div className="col-md-12">
+                    <h5 className="fw-bold mt-4">TDS</h5>
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount Payable (Foreign)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amtPayForgnTds || ""}
+                        onChange={(e) => handleInput("amtPayForgnTds", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount Payable (Indian)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amtPayIndianTds || ""}
+                        onChange={(e) => handleInput("amtPayIndianTds", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Actual TDS Amount (Foreign)</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.actlAmtTdsForgn || ""}
+                        onChange={(e) => handleInput("actlAmtTdsForgn", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">TDS Deduction Date</label>
+                    <DatePicker
+                        selected={model.dednDateTds}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("dednDateTds", e)}
+                    />
+                </div>
+
+
+                <div className="col-md-12">
+                    <h5 className="fw-bold mt-4">Declaration</h5>
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">I / We</label>
+                    <input
+                        className="form-control"
+                        value={model.i_We || ""}
+                        onChange={(e) => handleInput("i_We", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Verification Date</label>
+                    <DatePicker
+                        selected={model.verificationDate}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("verificationDate", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Designation</label>
+                    <input
+                        className="form-control"
+                        value={model.verDesignation || ""}
+                        onChange={(e) => handleInput("verDesignation", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Place</label>
+                    <input
+                        className="form-control"
+                        value={model.verificationPlace || ""}
+                        onChange={(e) => handleInput("verificationPlace", e)}
+                    />
+                </div>
+
+
+                {/* TDS */}
+                {/* <div className="col-md-6">
+                    <label className="form-label">TDS Rate (%) <span className="text-danger">*</span></label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        className="form-control"
+                        value={model.rateOfTds || ""}
+                        onChange={(e) => handleInput("rateOfTds", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount of TDS <span className="text-danger">*</span></label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.amountOfTds || ""}
+                        onChange={(e) => handleInput("amountOfTds", e)}
+                    />
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Date of Deduction</label>
+                    <DatePicker
+                        selected={model.dateOfDeduction}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("dateOfDeduction", e)}
+                    />
+                </div> */}
+
+                {/* TAX PAYABLE */}
+                {/* <div className="col-md-6">
+                    <label className="form-label">Whether Tax Payable <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
                         value={model.wheatherTaxPayable || ""}
@@ -481,58 +517,11 @@ export default function RemittanceDetailC({
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
                     </select>
-                </div>
+                </div> */}
 
-                <div className="col-md-6">
-                    <label className="form-label">
-                        TDS Rate (%)
-                        <span className="text-danger">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        className="form-control"
-                        value={model.tdsRate || ""}
-                        onChange={(e) => handleInput("tdsRate", e)}
-                    />
-                    {isDirty && errors.tdsRate && (
-                        <span className="text-danger">{errors.tdsRate}</span>
-                    )}
-                </div>
-
-                {/* AMOUNT OF TDS */}
-                <div className="col-md-6">
-                    <label className="form-label">
-                        Amount of TDS
-                        <span className="text-danger">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
-                    />
-                    {isDirty && errors.amountOfTds && (
-                        <span className="text-danger">{errors.amountOfTds}</span>
-                    )}
-                </div>
-
-                <div className="col-md-6">
-                    <label className="form-label">TDS Deduction Date</label>
-                    <DatePicker
-                        selected={model.tdsDeductionDate}
-                        className="form-control w-100"
-                        onChange={(e) => handleInput("tdsDeductionDate", e)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="dd/MM/yyyy"
-                    />
-                </div>
-
-
-
-                {/* SAVE BUTTON */}
-                <div className="col-md-12 mt-2">
-                    <button className="btn btn-primary" type="button" onClick={handleSave}>
+                {/* SAVE */}
+                <div className="col-md-12 mt-3">
+                    <button type="button" className="btn btn-primary" onClick={handleSave}>
                         Save Remittance
                     </button>
                 </div>
