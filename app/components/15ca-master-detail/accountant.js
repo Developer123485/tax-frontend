@@ -9,9 +9,7 @@ export default function AccountantDetailForm(props) {
         <>
             <form autoComplete="off">
                 <div className="row bg-light-gray px-3 py-4 rounded-3 g-3">
-
                     <h5 className="text-blue fw-bold mb-3">Accountant Details</h5>
-
                     {/* NAME */}
                     <div className="col-md-3">
                         <label className="form-label">
@@ -45,13 +43,16 @@ export default function AccountantDetailForm(props) {
 
                     {/* FIRM */}
                     <div className="col-md-3">
-                        <label className="form-label">Firm Name</label>
+                        <label className="form-label">Firm Name
+                            <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
                             value={accountant.accountantFirmName || ""}
                             onChange={(e) => handleInput("accountantFirmName", e)}
                         />
+                        {errors.accountantFirmName && <span className="text-danger">{errors.accountantFirmName}</span>}
                     </div>
 
                     {/* FLAT */}
@@ -153,8 +154,6 @@ export default function AccountantDetailForm(props) {
                             onChange={(e) => handleInput("registrationNo", e)}
                         />
                     </div>
-
-                 
 
                     {/* SAVE BUTTON */}
                     <div className="col-md-12 mt-3">

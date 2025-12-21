@@ -256,6 +256,8 @@ export default function AddRemittance({ params }) {
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.dtaaTaxResidencyAvailable) e.dtaaTaxResidencyAvailable = "required!";
+            if (!model.certificateNo) e.certificateNo = "required!";
+            if (!model.certificateDate) e.certificateDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }

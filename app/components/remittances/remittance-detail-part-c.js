@@ -65,22 +65,24 @@ export default function RemittanceDetailC({
 
                 {/* CERTIFICATE */}
                 <div className="col-md-3">
-                    <label className="form-label">Certificate No</label>
+                    <label className="form-label">Certificate No <span className="text-danger">*</span></label>
                     <input
                         className="form-control"
                         value={model.certificateNo || ""}
                         onChange={(e) => handleInput("certificateNo", e)}
                     />
+                    {isDirty && errors.certificateNo && <span className="text-danger">{errors.certificateNo}</span>}
                 </div>
 
                 <div className="col-md-3">
-                    <label className="form-label">Certificate Date</label>
+                    <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
                     <input
                         type="date"
                         className="form-control"
                         value={model.certificateDate || ""}
                         onChange={(e) => handleInput("certificateDate", e)}
                     />
+                    {isDirty && errors.certificateDate && <span className="text-danger">{errors.certificateDate}</span>}
                 </div>
 
                 {/* COUNTRY */}

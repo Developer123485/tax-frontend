@@ -65,6 +65,7 @@ export default function AddAccountant({ params }) {
         let err = {};
         if (!accountant.accountantName) err.accountantName = "Name is required";
         if (!accountant.code) err.code = "Code is required";
+        if (!accountant.accountantFirmName) err.accountantFirmName = "Firm name is required";
         setErrors(err);
         return Object.keys(err).length === 0;
     }
