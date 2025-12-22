@@ -58,10 +58,18 @@ export default function AddAoOrder({ params }) {
 
     function validate() {
         let err = {};
-        if (!aoOrder.section) err.section = "Section is required";
         if (!aoOrder.code) err.code = "Code is required";
-        if (!aoOrder.assessingOfficerName)
-            err.assessingOfficerName = "Assessing Officer Name is required";
+        if (aoOrder.isAoOrderObtained == "Y") {
+            if (!aoOrder.section) err.section = "Section is required";
+            if (!aoOrder.assessingOfficerName)
+                err.assessingOfficerName = "Assessing Officer Name is required";
+            if (!aoOrder.assessingOfficerDesignation)
+                err.assessingOfficerDesignation = "Assessing Officer Designation is required";
+            if (!aoOrder.orderCertificateNumber)
+                err.orderCertificateNumber = "Order Certificate is required";
+             if (!aoOrder.orderDate)
+                err.orderDate = "Order Date is required";
+        }
 
         setErrors(err);
         return Object.keys(err).length === 0;
