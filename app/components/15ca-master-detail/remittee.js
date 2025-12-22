@@ -258,8 +258,8 @@ export default function RemitteeDetail(props) {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={remittee.countryRemMade || ""}
-                                onChange={(e) => handleInput("countryRemMade", e)}
+                                value={remittee.countryRemMadeDesc || ""}
+                                onChange={(e) => handleInput("countryRemMadeDesc", e)}
                             />
                         </div>}
 

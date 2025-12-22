@@ -101,7 +101,6 @@ export default function AddRemittee({ params }) {
             [field]: value
         }));
 
-        setIsDirty(true);
     }
 
     // ----------------------------------------------------
