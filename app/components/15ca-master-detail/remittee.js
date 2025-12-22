@@ -254,7 +254,9 @@ export default function RemitteeDetail(props) {
                             )} */}
                         </div>
                         {remittee.countryRemMade == "9999" && <div className="col-md-3">
-                            <label className="form-label"></label>
+                            <label htmlFor="inputCountry" className="form-label">
+                                <span>Country Remittance Made Other</span>
+                            </label>
                             <input
                                 type="text"
                                 className="form-control"
