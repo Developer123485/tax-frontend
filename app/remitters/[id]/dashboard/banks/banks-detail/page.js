@@ -21,6 +21,7 @@ export default function AddBankDetail({ params }) {
         bankName: "",
         bankBranchName: "",
         bsrCode: "",
+        description: "",
         remitterId: remitterId
     });
 
@@ -59,6 +60,8 @@ export default function AddBankDetail({ params }) {
         if (!bankDetail.code) err.code = "Code is required";
         if (!bankDetail.bankName) err.bankName = "Bank Name is required";
         if (!bankDetail.bankBranchName) err.bankBranchName = "Branch Name is required";
+        if (!bankDetail.description) err.description = "Description is required";
+        if (!bankDetail.bsrCode) err.bsrCode = "Bsr Code is required";
 
         setErrors(err);
         return Object.keys(err).length === 0;

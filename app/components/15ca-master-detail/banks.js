@@ -71,6 +71,23 @@ export default function BankDetailForm(props) {
                             value={bankDetail.bsrCode || ""}
                             onChange={(e) => handleInput("bsrCode", e)}
                         />
+                        {errors.bsrCode && (
+                            <span className="text-danger">{errors.bsrCode}</span>
+                        )}
+                    </div>
+                    {/* BSR CODE */}
+                    <div className="col-md-4">
+                        <label className="form-label">Description</label>
+                        <textarea
+                            type="text"
+                            className="form-control"
+                            value={bankDetail.description || ""}
+                            rows={2}
+                            onChange={(e) => handleInput("description", e)}
+                        />
+                        {errors.description && (
+                            <span className="text-danger">{errors.description}</span>
+                        )}
                     </div>
 
                     <div className="col-md-12 mt-4">
