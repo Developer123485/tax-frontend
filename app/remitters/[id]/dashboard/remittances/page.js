@@ -29,6 +29,22 @@ export default function RemittanceList({ params }) {
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [model, setModel] = useState({
+        remitterId: null,
+        formType: null,
+        partType: null,
+        creationInfo: {},
+        formDetails: {},
+        remitter: {},
+        remittee: {},
+        remittance: {},
+        declaration: {},
+        itActDetails: {},
+        dtaadetails: {},
+        tdsDetails: {},
+        acctntDetls: {}
+    });
+
 
 
     const customStyles = {
@@ -134,11 +150,11 @@ export default function RemittanceList({ params }) {
             pageSize,
             search: searchValue,
             remitterId,
-            formType: searchParams.get("partType")
+            formType: searchParams.get("partType"),
+            type: searchParams.get("formType"),
         };
         RemittanceService.fetchRemittances(model)
             .then((res) => {
-                debugger
                 if (res) {
                     setRemittances(res?.remittanceList || []);
                     setTotalRows(res?.totalRows || 0);
@@ -151,6 +167,10 @@ export default function RemittanceList({ params }) {
                 setTimeout(() => setShowLoader(false), 300);
             });
     }
+
+    const getValue = (parent, tag) =>
+        parent?.getElementsByTagName(tag)?.[0]?.textContent || "";
+
 
     useEffect(() => {
         fetchRemittances(currentPage);
@@ -198,6 +218,168 @@ export default function RemittanceList({ params }) {
             });
     }
 
+    const handleXmlUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = async (event) => {
+            const xmlText = event.target.result;
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmlText, "text/xml");
+
+            const creationInfoNode = xml.getElementsByTagName("Form:CreationInfo")[0];
+            const formDetailsNode = xml.getElementsByTagName("Form:Form_Details")[0];
+            const remitterNode = xml.getElementsByTagName("FORM15CB:RemitterDetails")[0];
+            const remitteeNode = xml.getElementsByTagName("FORM15CB:RemitteeDetls")[0];
+            const remitteeAddrNode = remitteeNode?.getElementsByTagName("FORM15CB:RemitteeAddrs")[0];
+            const remittanceNode = xml.getElementsByTagName("FORM15CB:RemittanceDetails")[0];
+            const itActNode = xml.getElementsByTagName("FORM15CB:ItActDetails")[0];
+            const dtaaNode = xml.getElementsByTagName("FORM15CB:DTAADetails")[0];
+            const tdsNode = xml.getElementsByTagName("FORM15CB:TDSDetails")[0];
+            const acctntNode = xml.getElementsByTagName("FORM15CB:AcctntDetls")[0];
+            const acctntAddrNode = acctntNode?.getElementsByTagName("FORM15CB:AcctntAddrs")[0];
+
+            const parsedModel = {
+                remitterId: remitterId,
+                formType: searchParams.get("formType"),
+                partType: searchParams.get("partType"),
+
+                /* ---------------- Creation Info ---------------- */
+                creationInfo: {
+                    swVersionNo: getValue(creationInfoNode, "Form:SWVersionNo"),
+                    swCreatedBy: getValue(creationInfoNode, "Form:SWCreatedBy"),
+                    xmlCreatedBy: getValue(creationInfoNode, "Form:XMLCreatedBy"),
+                    xmlCreationDate: getValue(creationInfoNode, "Form:XMLCreationDate"),
+                    intermediaryCity: getValue(creationInfoNode, "Form:IntermediaryCity")
+                },
+
+                /* ---------------- Form Details ---------------- */
+                formDetails: {
+                    formName: getValue(formDetailsNode, "Form:FormName"),
+                    description: getValue(formDetailsNode, "Form:Description"),
+                    assessmentYear: getValue(formDetailsNode, "Form:AssessmentYear"),
+                    schemaVer: getValue(formDetailsNode, "Form:SchemaVer"),
+                    formVer: getValue(formDetailsNode, "Form:FormVer")
+                },
+
+                /* ---------------- Remitter ---------------- */
+                remitter: {
+                    iorWe: getValue(remitterNode, "FORM15CB:IorWe"),
+                    remitterHonorific: getValue(remitterNode, "FORM15CB:RemitterHonorific"),
+                    nameRemitter: getValue(remitterNode, "FORM15CB:NameRemitter"),
+                    pan: getValue(remitterNode, "FORM15CB:PAN"),
+                    beneficiaryHonorific: getValue(remitterNode, "FORM15CB:BeneficiaryHonorific")
+                },
+
+                /* ---------------- Remittee ---------------- */
+                remittee: {
+                    nameRemittee: getValue(remitteeNode, "FORM15CB:NameRemittee"),
+                    remitteeAddrs: {
+                        premisesBuildingVillage: getValue(remitteeAddrNode, "FORM15CB:PremisesBuildingVillage"),
+                        townCityDistrict: getValue(remitteeAddrNode, "FORM15CB:TownCityDistrict"),
+                        flatDoorBuilding: getValue(remitteeAddrNode, "FORM15CB:FlatDoorBuilding"),
+                        areaLocality: getValue(remitteeAddrNode, "FORM15CB:AreaLocality"),
+                        zipCode: getValue(remitteeAddrNode, "FORM15CB:ZipCode"),
+                        state: getValue(remitteeAddrNode, "Form:State"),
+                        roadStreet: getValue(remitteeAddrNode, "FORM15CB:RoadStreet"),
+                        country: getValue(remitteeAddrNode, "FORM15CB:Country")
+                    }
+                },
+
+                /* ---------------- Remittance ---------------- */
+                remittance: {
+                    countryRemMadeSecb: getValue(remittanceNode, "FORM15CB:CountryRemMadeSecb"),
+                    currencySecbCode: getValue(remittanceNode, "FORM15CB:CurrencySecbCode"),
+                    amtPayForgnRem: getValue(remittanceNode, "FORM15CB:AmtPayForgnRem"),
+                    amtPayIndRem: getValue(remittanceNode, "FORM15CB:AmtPayIndRem"),
+                    nameBankCode: getValue(remittanceNode, "FORM15CB:NameBankCode"),
+                    branchName: getValue(remittanceNode, "FORM15CB:BranchName"),
+                    bsrCode: getValue(remittanceNode, "FORM15CB:BsrCode"),
+                    propDateRem: getValue(remittanceNode, "FORM15CB:PropDateRem"),
+                    natureRemCategory: getValue(remittanceNode, "FORM15CB:NatureRemCategory"),
+                    revPurCategory: getValue(remittanceNode, "FORM15CB:RevPurCategory"),
+                    revPurCode: getValue(remittanceNode, "FORM15CB:RevPurCode"),
+                    taxPayGrossSecb: getValue(remittanceNode, "FORM15CB:TaxPayGrossSecb")
+                },
+
+                /* ---------------- IT Act ---------------- */
+                itActDetails: {
+                    remittanceCharIndia: getValue(itActNode, "FORM15CB:RemittanceCharIndia"),
+                    secRemCovered: getValue(itActNode, "FORM15CB:SecRemCovered"),
+                    amtIncChrgIt: getValue(itActNode, "FORM15CB:AmtIncChrgIt"),
+                    taxLiablIt: getValue(itActNode, "FORM15CB:TaxLiablIt"),
+                    basisDeterTax: getValue(itActNode, "FORM15CB:BasisDeterTax")
+                },
+
+                /* ---------------- DTAA ---------------- */
+                dtaaDetails: {
+                    taxResidCert: getValue(dtaaNode, "FORM15CB:TaxResidCert"),
+                    relevantDtaa: getValue(dtaaNode, "FORM15CB:RelevantDtaa"),
+                    relevantArtDtaa: getValue(dtaaNode, "FORM15CB:RelevantArtDtaa"),
+                    taxIncDtaa: getValue(dtaaNode, "FORM15CB:TaxIncDtaa"),
+                    taxLiablDtaa: getValue(dtaaNode, "FORM15CB:TaxLiablDtaa"),
+                    remForRoyFlg: getValue(dtaaNode, "FORM15CB:RemForRoyFlg"),
+                    artDtaa: getValue(dtaaNode, "FORM15CB:ArtDtaa"),
+                    rateTdsADtaa: getValue(dtaaNode, "FORM15CB:RateTdsADtaa"),
+                    remAcctBusIncFlg: getValue(dtaaNode, "FORM15CB:RemAcctBusIncFlg"),
+                    incLiabIndiaFlg: getValue(dtaaNode, "FORM15CB:IncLiabIndiaFlg"),
+                    arrAtRateDedTax: getValue(dtaaNode, "FORM15CB:ArrAtRateDedTax"),
+                    remOnCapGainFlg: getValue(dtaaNode, "FORM15CB:RemOnCapGainFlg"),
+                    amtLongTrm: getValue(dtaaNode, "FORM15CB:AmtLongTrm"),
+                    amtShortTrm: getValue(dtaaNode, "FORM15CB:AmtShortTrm"),
+                    basisTaxIncDtaa: getValue(dtaaNode, "FORM15CB:BasisTaxIncDtaa"),
+                    otherRemDtaa: getValue(dtaaNode, "FORM15CB:OtherRemDtaa"),
+                    natureRemDtaa: getValue(dtaaNode, "FORM15CB:NatureRemDtaa"),
+                    taxIndDtaaFlg: getValue(dtaaNode, "FORM15CB:TaxIndDtaaFlg"),
+                    rateTdsDDtaa: getValue(dtaaNode, "FORM15CB:RateTdsDDtaa")
+                },
+
+                /* ---------------- TDS ---------------- */
+                tdsDetails: {
+                    amtPayForgnTds: getValue(tdsNode, "FORM15CB:AmtPayForgnTds"),
+                    amtPayIndianTds: getValue(tdsNode, "FORM15CB:AmtPayIndianTds"),
+                    rateTdsSecbFlg: getValue(tdsNode, "FORM15CB:RateTdsSecbFlg"),
+                    rateTdsSecB: getValue(tdsNode, "FORM15CB:RateTdsSecB"),
+                    actlAmtTdsForgn: getValue(tdsNode, "FORM15CB:ActlAmtTdsForgn"),
+                    dednDateTds: getValue(tdsNode, "FORM15CB:DednDateTds")
+                },
+
+                /* ---------------- Accountant ---------------- */
+                acctntDetls: {
+                    nameAcctnt: getValue(acctntNode, "FORM15CB:NameAcctnt"),
+                    nameFirmAcctnt: getValue(acctntNode, "FORM15CB:NameFirmAcctnt"),
+                    membershipNumber: getValue(acctntNode, "FORM15CB:MembershipNumber"),
+                    regNoAcctnt: getValue(acctntNode, "FORM15CB:RegNoAcctnt"),
+                    acctntAddrs: {
+                        premisesBuildingVillage: getValue(acctntAddrNode, "FORM15CB:PremisesBuildingVillage"),
+                        townCityDistrict: getValue(acctntAddrNode, "FORM15CB:TownCityDistrict"),
+                        flatDoorBuilding: getValue(acctntAddrNode, "FORM15CB:FlatDoorBuilding"),
+                        areaLocality: getValue(acctntAddrNode, "FORM15CB:AreaLocality"),
+                        pincode: getValue(acctntAddrNode, "FORM15CB:Pincode"),
+                        state: getValue(acctntAddrNode, "Form:State"),
+                        roadStreet: getValue(acctntAddrNode, "FORM15CB:RoadStreet"),
+                        country: getValue(acctntAddrNode, "FORM15CB:Country")
+                    }
+
+                }
+            };
+
+            RemittanceService.uploadXmlApi(parsedModel).then(res => {
+                if (res) {
+                    toast.success("xml file sucessfully!")
+                }
+            }).finally(f => {
+
+            });
+        };
+
+        reader.readAsText(file);
+    };
+
+
+
     return (
         <>
             <ToastContainer />
@@ -219,7 +401,11 @@ export default function RemittanceList({ params }) {
                                     className="col-md-4"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
+                                        if (searchParams.get("formType")) {
+                                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
+                                        } else {
+                                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
+                                        }
                                     }}
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
@@ -258,15 +444,13 @@ export default function RemittanceList({ params }) {
                                                     {/* {fileName && <span className="text-danger">{fileName}</span>} */}
                                                     <label className="w-100 text-capitalize cursor-pointer">
                                                         <span className="fw-bold"> </span>
-                                                        <input
-                                                            type="file"
+                                                        <input type="file" accept=".xml,.xlsx"
                                                             className="visually-hidden"
-                                                            accept=".xlsx"
-                                                        />
+                                                            onChange={handleXmlUpload} />
                                                         <h5 className="fw-bold mb-0">
                                                             {" "}
                                                             {false ? "Uploading..." : "Import"}
-                                                            <br /> Excel File
+                                                            <br />  {searchParams.get("partType") == "C" && searchParams.get("formType") == "15CA" ? "XML/" : ""}Excel File
                                                         </h5>
                                                     </label>
                                                 </h5>

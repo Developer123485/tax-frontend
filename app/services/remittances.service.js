@@ -12,8 +12,15 @@ export const RemittanceService = {
     getRemittees,
     getBanks,
     getRemittanceDropdowns,
-    generateXml
+    generateXml,
+    uploadXmlApi
 };
+
+async function uploadXmlApi(parsedModel) {
+    return api
+        .post(`/remittance/xmlUpload`, parsedModel, axiosConfig)
+        .then(r => r);
+}
 
 async function fetchRemittances(model) {
     return api.post(`/remittance/fetch`, model, axiosConfig).then(r => r);
