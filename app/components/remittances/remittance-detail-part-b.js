@@ -60,7 +60,7 @@ export default function RemittanceDetailB({
                         options={dropdowns.aoDetails}
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
-                    {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
+                    {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
 
                 {/* REMITTEE DROPDOWN */}

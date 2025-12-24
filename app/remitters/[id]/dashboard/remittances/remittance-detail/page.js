@@ -175,7 +175,8 @@ export default function AddRemittance({ params }) {
     model.dtaaTaxResidencyAvailable,
     model.inForiegn,
     model.inIndian,
-    model.remittanceForRoyality
+    model.remittanceForRoyality,
+    model.remitteeId
     ]);
 
 
