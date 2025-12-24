@@ -439,11 +439,14 @@ export default function RemittanceDetailC({
 
                 <div className="col-md-6">
                     <label className="form-label">I / We</label>
-                    <input
-                        className="form-control"
-                        value={model.i_We || ""}
+                    <select
+                        className="form-select"
+                        value={model.i_We}
                         onChange={(e) => handleInput("i_We", e)}
-                    />
+                    >
+                        <option value="I">I</option>
+                        <option value="WE">WE</option>
+                    </select>
                 </div>
 
                 <div className="col-md-6">

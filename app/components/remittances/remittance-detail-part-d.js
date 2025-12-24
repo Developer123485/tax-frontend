@@ -217,6 +217,50 @@ export default function RemittanceDetailD({
                         />
                         {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                     </div>
+
+                    <div className="col-md-12">
+                        <h5 className="fw-bold mt-4">Declaration</h5>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label className="form-label">I / We</label>
+                        <select
+                            className="form-select"
+                            value={model.i_We}
+                            onChange={(e) => handleInput("i_We", e)}
+                        >
+                            <option value="I">I</option>
+                            <option value="WE">WE</option>
+                        </select>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label className="form-label">Verification Date</label>
+                        <DatePicker
+                            selected={model.verificationDate}
+                            className="form-control"
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(e) => handleInput("verificationDate", e)}
+                        />
+                    </div>
+
+                    <div className="col-md-6">
+                        <label className="form-label">Designation</label>
+                        <input
+                            className="form-control"
+                            value={model.verDesignation || ""}
+                            onChange={(e) => handleInput("verDesignation", e)}
+                        />
+                    </div>
+
+                    <div className="col-md-6">
+                        <label className="form-label">Place</label>
+                        <input
+                            className="form-control"
+                            value={model.verificationPlace || ""}
+                            onChange={(e) => handleInput("verificationPlace", e)}
+                        />
+                    </div>
                 </div>
 
                 {/* BANK DROPDOWN */}
