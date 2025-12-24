@@ -11,6 +11,7 @@ import { RemittanceService } from "@/app/services/remittances.service";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EnumService } from "@/app/services/enum.service";
+import RemittanceDetailCA from "@/app/components/remittances/remittance-detail-part-ca";
 
 export default function AddRemittance({ params }) {
     const router = useRouter();
@@ -342,6 +343,18 @@ export default function AddRemittance({ params }) {
                 />
                 }
                 {search.get("partType") == "C" && search.get("formType") == "15CB" && <RemittanceDetailC
+                    model={model}
+                    errors={errors}
+                    enums={enums}
+                    dropdowns={dropdowns}
+                    isDirty={isDirty}
+                    handleInput={handleInput}
+                    partType={search.get("partType")}
+                    formType={search.get("formType")}
+                    handleSave={save}
+                />
+                }
+                {search.get("partType") == "C" && search.get("formType") == "15CA" && <RemittanceDetailCA
                     model={model}
                     errors={errors}
                     enums={enums}
