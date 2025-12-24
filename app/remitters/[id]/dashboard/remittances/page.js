@@ -402,7 +402,7 @@ export default function RemittanceList({ params }) {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         if (searchParams.get("formType")) {
-                                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
+                                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}&formType=${searchParams.get("formType")}`);
                                         } else {
                                             router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?partType=${searchParams.get("partType")}`);
                                         }

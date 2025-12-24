@@ -139,7 +139,7 @@ export default function AddRemittance({ params }) {
     const breadcrumbs = [
         { name: "Remitters", href: "/remitters", isActive: false },
         { name: "Dashboard", href: `/remitters/${remitterId}/dashboard`, isActive: false },
-        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}`, isActive: false },
+        { name: "Remittance", href: search.get("partType") == "C" ? `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}` : `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}`, isActive: false },
         { name: "Remittance Detail", isActive: true }
     ];
 
@@ -181,7 +181,22 @@ export default function AddRemittance({ params }) {
     model.i_We,
     model.verDesignation,
     model.verificationDate,
-    model.verificationPlace
+    model.verificationPlace,
+    model.rateTdsADtaa,
+    model.artDtaa,
+    model.remForRoyFlg,
+    model.taxResidCert,
+    model.remAcctBusIncFlg,
+    model.rateDednDtaa,
+    model.amtToTaxInd,
+    model.remOnCapGainFlg,
+    model.amtShortTrm,
+    model.amtLongTrm,
+    model.otherRemDtaa,
+    model.natureRemDtaa,
+    model.taxIndDtaaFlg,
+    model.relArtDetlDDtaa,
+    model.rateTdsDDtaa
     ]);
 
 
@@ -253,6 +268,55 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
+        if (search.get("partType") == "C" && search.get("formType") == "15CA") {
+            if (!model.nature) e.nature = "Nature is required";
+            if (!model.remitteeId) e.remitteeId = "Select remittee";
+            if (!model.bankDetailId) e.bankDetailId = "Select bank";
+            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+            if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
+            if (!model.currency) e.currency = "Select Currency";
+            if (!model.grossedUp) e.grossedUp = "Required!";
+            if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
+            if (!model.country) e.country = "Select Country";
+            if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
+            if (!model.purposeCode) e.purposeCode = "required!";
+            if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
+            if (!model.purposeCode1) e.purposeCode1 = "required!";
+            if (!model.taxResidCert) e.taxResidCert = "required!";
+            if (!model.remForRoyFlg) e.remForRoyFlg = "required!";
+            if (model.remForRoyFlg == "Y" && !model.artDtaa) e.artDtaa = "required!";
+            if (model.remForRoyFlg == "Y" && !model.rateTdsADtaa) e.rateTdsADtaa = "required!";
+            if (model.remAcctBusIncFlg == "Y" && !model.amtToTaxInd) e.amtToTaxInd = "required!";
+            if (model.remAcctBusIncFlg == "N" && !model.rateDednDtaa) e.rateDednDtaa = "required!";
+            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.inIndian) e.inIndian = "required!";
+            if (!model.inForiegn) e.inForiegn = "required!";
+            if (!model.proposedDate) e.proposedDate = "required!";
+            if (!model.dtaaTaxResidencyAvailable) e.dtaaTaxResidencyAvailable = "required!";
+            if (!model.certificateNo) e.certificateNo = "required!";
+            if (!model.certificateDate) e.certificateDate = "required!";
+            if (!model.i_We) e.i_We = "required!";
+            if (!model.verDesignation) e.verDesignation = "required!";
+            if (!model.verificationPlace) e.verificationPlace = "required!";
+            if (!model.verificationDate) e.verificationDate = "required!";
+            if (!model.remAcctBusIncFlg) e.remAcctBusIncFlg = "required!";
+            if (!model.remOnCapGainFlg) e.remOnCapGainFlg = "required!";
+            if (!model.otherRemDtaa) e.otherRemDtaa = "required!";
+            if (!model.taxIndDtaaFlg) e.taxIndDtaaFlg = "required!";
+            if (model.remOnCapGainFlg == "Y" && !model.amtLongTrm) e.amtLongTrm = "required!";
+            if (model.remOnCapGainFlg == "Y" && !model.amtShortTrm) e.amtShortTrm = "required!";
+            if (model.remOnCapGainFlg == "Y" && !model.basisTaxIncDtaa) e.basisTaxIncDtaa = "required!";
+            if (model.otherRemDtaa == "Y" && !model.natureRemDtaa) e.natureRemDtaa = "required!";
+            if (model.taxIndDtaaFlg == "Y" && !model.relArtDetlDDtaa) e.relArtDetlDDtaa = "required!";
+            if (model.taxIndDtaaFlg == "N" && !model.rateTdsDDtaa) e.rateTdsDDtaa = "required!";
+            if (!model.amtPayForgnTds) e.amtPayForgnTds = "required!";
+            if (!model.amtPayIndianTds) e.amtPayIndianTds = "required!";
+            if (!model.actlAmtTdsForgn) e.actlAmtTdsForgn = "required!";
+            if (!model.dednDateTds) e.dednDateTds = "required!";
+
+            setErrors(e);
+            return Object.keys(e).length === 0;
+        }
         if (search.get("partType") == "C" && search.get("formType") == "15CB") {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
@@ -295,7 +359,11 @@ export default function AddRemittance({ params }) {
         RemittanceService.saveRemittance(model)
             .then(() => {
                 toast.success("Saved successfully");
-                router.push(`/remitters/${remitterId}/dashboard/remittances?partType=` + search.get("partType"));
+                if (search.get("partType") !== "C") {
+                    router.push(`/remitters/${remitterId}/dashboard/remittances?partType=` + search.get("partType"));
+                } else {
+                    router.push(`/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}`);
+                }
             })
             .catch((err) =>
                 toast.error(err?.response?.data?.message || "Error saving")

@@ -18,7 +18,7 @@ export default function RemittanceDetailCA({
     return (
         <form autoComplete="off">
             <div className="row bg-light-gray px-2 py-2 rounded-3 g-3 my-4">
-                <h5 className="text-blue fw-bold">Remittance Details (CB)</h5>  
+                <h5 className="text-blue fw-bold">Remittance Details (CB)</h5>
 
                 {/* REMITTEE */}
                 <div className="col-md-6">
@@ -103,6 +103,7 @@ export default function RemittanceDetailCA({
                         <input
                             className="form-control"
                             value={model.countryOther || ""}
+                            maxLength={125}
                             onChange={(e) => handleInput("countryOther", e)}
                         />
                         {isDirty && errors.countryOther && <span className="text-danger">{errors.countryOther}</span>}
@@ -155,6 +156,20 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
 
+
+                {/* PROPOSED DATE */}
+                <div className="col-md-6">
+                    <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
+                    <DatePicker
+                        selected={model.proposedDate}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("proposedDate", e)}
+                    />
+                    {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
+                </div>
+
+
                 {/* NATURE */}
                 <div className="col-md-6">
                     <label className="form-label">Nature <span className="text-danger">*</span></label>
@@ -172,6 +187,7 @@ export default function RemittanceDetailCA({
                         <input
                             className="form-control"
                             value={model.otherNature || ""}
+                            maxLength={255}
                             onChange={(e) => handleInput("otherNature", e)}
                         />
                         {isDirty && errors.otherNature && <span className="text-danger">{errors.otherNature}</span>}
@@ -205,18 +221,6 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.purposeCode1 && <span className="text-danger">{errors.purposeCode1}</span>}
                 </div>
 
-                {/* PROPOSED DATE */}
-                <div className="col-md-6">
-                    <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
-                    <DatePicker
-                        selected={model.proposedDate}
-                        className="form-control"
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("proposedDate", e)}
-                    />
-                    {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
-                </div>
-
                 {/* GROSSED UP */}
                 <div className="col-md-6">
                     <label className="form-label">Grossed Up <span className="text-danger">*</span></label>
@@ -240,6 +244,7 @@ export default function RemittanceDetailCA({
                     <input
                         className="form-control"
                         value={model.itActRelevantSection || ""}
+                        maxLength={30}
                         onChange={(e) => handleInput("itActRelevantSection", e)}
                     />
                 </div>
@@ -250,6 +255,7 @@ export default function RemittanceDetailCA({
                         type="number"
                         className="form-control"
                         value={model.itActIncomeChargeable || ""}
+                        maxLength={18}
                         onChange={(e) => handleInput("itActIncomeChargeable", e)}
                     />
                 </div>
@@ -259,6 +265,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         className="form-control"
+                        maxLength={18}
                         value={model.itActTaxLiability || ""}
                         onChange={(e) => handleInput("itActTaxLiability", e)}
                     />
@@ -278,12 +285,17 @@ export default function RemittanceDetailCA({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Tax Residency Certificate</label>
-                    <input
-                        className="form-control"
+                    <label className="form-label">Tax Residency Certificate <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
                         value={model.taxResidCert || ""}
                         onChange={(e) => handleInput("taxResidCert", e)}
-                    />
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.taxResidCert && <span className="text-danger">{errors.taxResidCert}</span>}
                 </div>
 
                 <div className="col-md-6">
@@ -325,7 +337,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Remittance for Royalty</label>
+                    <label className="form-label">Remittance for Royalty <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
                         value={model.remForRoyFlg || ""}
@@ -335,102 +347,289 @@ export default function RemittanceDetailCA({
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
                     </select>
+                    {isDirty && errors.remForRoyFlg && <span className="text-danger">{errors.remForRoyFlg}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">DTAA TDS Rate (%)</label>
+                    <label className="form-label">Art Dtaa
+                        {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.artDtaa || ""}
+                        disabled={model.remForRoyFlg == "N"}
+                        onChange={(e) => handleInput("artDtaa", e)}
+                    />
+                    {isDirty && model.remForRoyFlg == "Y" && errors.artDtaa && <span className="text-danger">{errors.artDtaa}</span>}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">DTAA TDS Rate (%)
+                        {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
                     <input
                         type="number"
                         step="0.01"
                         className="form-control"
                         value={model.rateTdsADtaa || ""}
+                        disabled={model.remForRoyFlg == "N"}
                         onChange={(e) => handleInput("rateTdsADtaa", e)}
                     />
+                    {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Amount to be Taxed in India</label>
+                    <label className="form-label">Rem Acct Bus Inc Flg <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
+                        value={model.remAcctBusIncFlg || ""}
+                        onChange={(e) => handleInput("remAcctBusIncFlg", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.remAcctBusIncFlg && <span className="text-danger">{errors.remAcctBusIncFlg}</span>}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Amount to be Taxed in India
+                        {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amtToTaxInd || ""}
+                        disabled={model.remAcctBusIncFlg == "N"}
                         onChange={(e) => handleInput("amtToTaxInd", e)}
                     />
+                    {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Arrived Rate for Deduction</label>
+                    <label className="form-label">Rate Dedn Dtaa
+                        {errors.remAcctBusIncFlg == "N" && <span className="text-danger">*</span>}
+                    </label>
                     <input
-                        type="number"
-                        step="0.01"
+                        type="text"
                         className="form-control"
-                        value={model.arrAtRateDedTax || ""}
-                        onChange={(e) => handleInput("arrAtRateDedTax", e)}
+                        value={model.rateDednDtaa || ""}
+                        disabled={model.remAcctBusIncFlg == "Y"}
+                        onChange={(e) => handleInput("rateDednDtaa", e)}
                     />
+                    {isDirty && model.remAcctBusIncFlg == "N" && errors.rateDednDtaa && <span className="text-danger">{errors.rateDednDtaa}</span>}
                 </div>
 
+
                 <div className="col-md-6">
-                    <label className="form-label">Long Term Capital Gain</label>
+                    <label className="form-label">Rem On Cap Gain Flg <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
+                        value={model.remOnCapGainFlg || ""}
+                        onChange={(e) => handleInput("remOnCapGainFlg", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.remOnCapGainFlg && <span className="text-danger">{errors.remOnCapGainFlg}</span>}
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Long Term Capital Gain
+                        {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amtLongTrm || ""}
+                        disabled={model.remOnCapGainFlg == "N"}
                         onChange={(e) => handleInput("amtLongTrm", e)}
                     />
+                    {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Short Term Capital Gain</label>
+                    <label className="form-label">Short Term Capital Gain
+                        {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amtShortTrm || ""}
+                        disabled={model.remOnCapGainFlg == "N"}
                         onChange={(e) => handleInput("amtShortTrm", e)}
                     />
+                    {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
                 </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Basis Tax Inc Dtaa
+                        {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.basisTaxIncDtaa || ""}
+                        disabled={model.remOnCapGainFlg == "N"}
+                        onChange={(e) => handleInput("basisTaxIncDtaa", e)}
+                    />
+                    {isDirty && model.remOnCapGainFlg == "Y" && errors.basisTaxIncDtaa && <span className="text-danger">{errors.basisTaxIncDtaa}</span>}
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
+                        value={model.otherRemDtaa || ""}
+                        onChange={(e) => handleInput("otherRemDtaa", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.otherRemDtaa && <span className="text-danger">{errors.otherRemDtaa}</span>}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Nature Rem Dtaa
+                        {model.otherRemDtaa == "Y" && <span className="text-danger">*</span>}
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.natureRemDtaa || ""}
+                        disabled={model.otherRemDtaa === "N"}
+                        onChange={(e) => handleInput("natureRemDtaa", e)}
+                    />
+                    {isDirty && model.otherRemDtaa == "Y" && errors.natureRemDtaa && <span className="text-danger">{errors.natureRemDtaa}</span>}
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Tax Ind Dtaa Flg <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
+                        value={model.taxIndDtaaFlg || ""}
+                        onChange={(e) => handleInput("taxIndDtaaFlg", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.taxIndDtaaFlg && <span className="text-danger">{errors.taxIndDtaaFlg}</span>}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Rate Tds DDtaa
+                        {model.taxIndDtaaFlg == "Y" && <span className="text-danger">*</span>}
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.rateTdsDDtaa || ""}
+                        disabled={model.taxIndDtaaFlg === "N"}
+                        maxLength={125}
+                        onChange={(e) => handleInput("rateTdsDDtaa", e)}
+                    />
+                    {isDirty && model.taxIndDtaaFlg == "Y" && errors.rateTdsDDtaa && <span className="text-danger">{errors.rateTdsDDtaa}</span>}
+                </div>
+
+                <div className="col-md-6">
+                    <label className="form-label">Rel Art DetlD Dtaa
+                        {model.taxIndDtaaFlg == "N" && <span className="text-danger">*</span>}
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.relArtDetlDDtaa || ""}
+                        disabled={model.taxIndDtaaFlg === "Y"}
+                        maxLength={125}
+                        onChange={(e) => handleInput("relArtDetlDDtaa", e)}
+                    />
+                    {isDirty && model.taxIndDtaaFlg == "N" && errors.relArtDetlDDtaa && <span className="text-danger">{errors.relArtDetlDDtaa}</span>}
+                </div>
+
 
                 <div className="col-md-12">
                     <h5 className="fw-bold mt-4">TDS</h5>
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Amount Payable (Foreign)</label>
+                    <label className="form-label">Amount Payable (Foreign)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amtPayForgnTds || ""}
                         onChange={(e) => handleInput("amtPayForgnTds", e)}
                     />
+                    {isDirty && errors.amtPayForgnTds && <span className="text-danger">{errors.amtPayForgnTds}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Amount Payable (Indian)</label>
+                    <label className="form-label">Amount Payable (Indian)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.amtPayIndianTds || ""}
                         onChange={(e) => handleInput("amtPayIndianTds", e)}
                     />
+                    {isDirty && errors.amtPayIndianTds && <span className="text-danger">{errors.amtPayIndianTds}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">Actual TDS Amount (Foreign)</label>
+                    <label className="form-label">Rate Tds Secb Flg</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={model.rateTdsSecbFlg || ""}
+                        onChange={(e) => handleInput("rateTdsSecbFlg", e)}
+                    />
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Rate Tds Sec B</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={model.rateTdsSecB || ""}
+                        onChange={(e) => handleInput("rateTdsSecB", e)}
+                    />
+                </div>
+
+
+                <div className="col-md-6">
+                    <label className="form-label">Actual TDS Amount (Foreign)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="number"
                         className="form-control"
                         value={model.actlAmtTdsForgn || ""}
                         onChange={(e) => handleInput("actlAmtTdsForgn", e)}
                     />
+                    {isDirty && errors.actlAmtTdsForgn && <span className="text-danger">{errors.actlAmtTdsForgn}</span>}
                 </div>
 
                 <div className="col-md-6">
-                    <label className="form-label">TDS Deduction Date</label>
+                    <label className="form-label">TDS Deduction Date
+                        <span className="text-danger">*</span>
+                    </label>
                     <DatePicker
                         selected={model.dednDateTds}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
                         onChange={(e) => handleInput("dednDateTds", e)}
                     />
+                    {isDirty && errors.dednDateTds && <span className="text-danger">{errors.dednDateTds}</span>}
                 </div>
 
 
