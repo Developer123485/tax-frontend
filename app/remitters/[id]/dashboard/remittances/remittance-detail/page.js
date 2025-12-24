@@ -176,7 +176,11 @@ export default function AddRemittance({ params }) {
     model.inForiegn,
     model.inIndian,
     model.remittanceForRoyality,
-    model.remitteeId
+    model.remitteeId,
+    model.i_We,
+    model.verDesignation,
+    model.verificationDate,
+    model.verificationPlace
     ]);
 
 
@@ -198,6 +202,10 @@ export default function AddRemittance({ params }) {
             if (!model.tdsRate) e.tdsRate = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
+            if (!model.i_We) e.i_We = "required!";
+            if (!model.verDesignation) e.verDesignation = "required!";
+            if (!model.verificationPlace) e.verificationPlace = "required!";
+            if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -218,6 +226,10 @@ export default function AddRemittance({ params }) {
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
+            if (!model.i_We) e.i_We = "required!";
+            if (!model.verDesignation) e.verDesignation = "required!";
+            if (!model.verificationPlace) e.verificationPlace = "required!";
+            if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -233,6 +245,10 @@ export default function AddRemittance({ params }) {
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
+            if (!model.i_We) e.i_We = "required!";
+            if (!model.verDesignation) e.verDesignation = "required!";
+            if (!model.verificationPlace) e.verificationPlace = "required!";
+            if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -258,6 +274,10 @@ export default function AddRemittance({ params }) {
             if (!model.dtaaTaxResidencyAvailable) e.dtaaTaxResidencyAvailable = "required!";
             if (!model.certificateNo) e.certificateNo = "required!";
             if (!model.certificateDate) e.certificateDate = "required!";
+            if (!model.i_We) e.i_We = "required!";
+            if (!model.verDesignation) e.verDesignation = "required!";
+            if (!model.verificationPlace) e.verificationPlace = "required!";
+            if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
