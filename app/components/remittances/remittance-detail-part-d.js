@@ -218,62 +218,63 @@ export default function RemittanceDetailD({
                         {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                     </div>
 
-                    <div className="col-md-12">
-                        <h5 className="fw-bold mt-4">Declaration</h5>
-                    </div>
 
-                    <div className="col-md-6">
-                        <label className="form-label">I / We
-                            <span className="text-danger">*</span>
-                        </label>
-                        <select
-                            className="form-select"
-                            value={model.i_We}
-                            onChange={(e) => handleInput("i_We", e)}
-                        >
-                            <option value="I">I</option>
-                            <option value="WE">WE</option>
-                        </select>
-                        {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
-                    </div>
+                </div>
+                <div className="col-md-12">
+                    <h5 className="fw-bold mt-4">Declaration</h5>
+                </div>
 
-                    <div className="col-md-6">
-                        <label className="form-label">Verification Date
-                            <span className="text-danger">*</span>
-                        </label>
-                        <DatePicker
-                            selected={model.verificationDate}
-                            className="form-control"
-                            dateFormat="dd/MM/yyyy"
-                            onChange={(e) => handleInput("verificationDate", e)}
-                        />
-                        {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
-                    </div>
+                <div className="col-md-6">
+                    <label className="form-label">I / We
+                        <span className="text-danger">*</span>
+                    </label>
+                    <select
+                        className="form-select"
+                        value={model.i_We}
+                        onChange={(e) => handleInput("i_We", e)}
+                    >
+                        <option value="I">I</option>
+                        <option value="WE">WE</option>
+                    </select>
+                    {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
+                </div>
 
-                    <div className="col-md-6">
-                        <label className="form-label">Designation
-                            <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            className="form-control"
-                            value={model.verDesignation || ""}
-                            onChange={(e) => handleInput("verDesignation", e)}
-                        />
-                        {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
-                    </div>
+                <div className="col-md-6">
+                    <label className="form-label">Verification Date
+                        <span className="text-danger">*</span>
+                    </label>
+                    <DatePicker
+                        selected={model.verificationDate}
+                        className="form-control"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(e) => handleInput("verificationDate", e)}
+                    />
+                    {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
+                </div>
 
-                    <div className="col-md-6">
-                        <label className="form-label">Place
-                            <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            className="form-control"
-                            value={model.verificationPlace || ""}
-                            onChange={(e) => handleInput("verificationPlace", e)}
-                        />
-                        {isDirty && errors.verificationPlace && <span className="text-danger">{errors.verificationPlace}</span>}
+                <div className="col-md-6">
+                    <label className="form-label">Designation
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        className="form-control"
+                        value={model.verDesignation || ""}
+                        onChange={(e) => handleInput("verDesignation", e)}
+                    />
+                    {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
+                </div>
 
-                    </div>
+                <div className="col-md-6">
+                    <label className="form-label">Place
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        className="form-control"
+                        value={model.verificationPlace || ""}
+                        onChange={(e) => handleInput("verificationPlace", e)}
+                    />
+                    {isDirty && errors.verificationPlace && <span className="text-danger">{errors.verificationPlace}</span>}
+
                 </div>
 
                 {/* BANK DROPDOWN */}

@@ -113,7 +113,7 @@ export default function AddRemittance({ params }) {
         // =====================
         // DECLARATION
         // =====================
-        i_We: "",
+        i_We: "I",
         verificationDate: null,
         verDesignation: "",
         verificationPlace: "",
