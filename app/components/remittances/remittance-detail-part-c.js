@@ -12,12 +12,13 @@ export default function RemittanceDetailC({
     handleSave,
     enums,
     dropdowns,
-    isDirty
+    isDirty,
+    formType
 }) {
     return (
         <form autoComplete="off">
             <div className="row bg-light-gray px-2 py-2 rounded-3 g-3 my-4">
-                <h5 className="text-blue fw-bold">Remittance Details</h5>
+                <h5 className="text-blue fw-bold">Remittance Details (CB)</h5>  
 
                 {/* REMITTEE */}
                 <div className="col-md-6">

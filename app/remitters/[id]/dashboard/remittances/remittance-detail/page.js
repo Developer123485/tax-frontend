@@ -138,7 +138,7 @@ export default function AddRemittance({ params }) {
     const breadcrumbs = [
         { name: "Remitters", href: "/remitters", isActive: false },
         { name: "Dashboard", href: `/remitters/${remitterId}/dashboard`, isActive: false },
-        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}`, isActive: false },
+        { name: "Remittance", href: `/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}`, isActive: false },
         { name: "Remittance Detail", isActive: true }
     ];
 
@@ -252,7 +252,7 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
-        if (search.get("partType") == "C") {
+        if (search.get("partType") == "C" && search.get("formType") == "15CB") {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
@@ -289,6 +289,8 @@ export default function AddRemittance({ params }) {
         if (!validate()) return;
         model.remitterId = remitterId;
         model.formType = search.get("partType");
+        if (search.get("partType") == "C")
+            model.type = search.get("formType");
         RemittanceService.saveRemittance(model)
             .then(() => {
                 toast.success("Saved successfully");
@@ -339,7 +341,7 @@ export default function AddRemittance({ params }) {
                     handleSave={save}
                 />
                 }
-                {search.get("partType") == "C" && <RemittanceDetailC
+                {search.get("partType") == "C" && search.get("formType") == "15CB" && <RemittanceDetailC
                     model={model}
                     errors={errors}
                     enums={enums}
@@ -347,6 +349,7 @@ export default function AddRemittance({ params }) {
                     isDirty={isDirty}
                     handleInput={handleInput}
                     partType={search.get("partType")}
+                    formType={search.get("formType")}
                     handleSave={save}
                 />
                 }
