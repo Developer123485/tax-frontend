@@ -95,10 +95,10 @@ export default function AddRemittance({ params }) {
         basisTaxIncDtaa: "",
 
         otherRemDtaa: null,
-        natureRemDtaa: "",
+        natureRemDtaa: null,
         taxIndDtaaFlg: null,
-        rateTdsDDtaa: "",
-        relArtDetlDDtaa: "",
+        rateTdsDDtaa: null,
+        relArtDetlDDtaa: null,
 
         // =====================
         // TDS
@@ -188,7 +188,6 @@ export default function AddRemittance({ params }) {
         let e = {};
         if (search.get("partType") == "A") {
             if (!model.nature) e.nature = "Nature is required";
-            if (!model.remittanceForRoyality) e.nature = "required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
             if (!model.purposeCode) e.purposeCode = "required!";
