@@ -20,7 +20,7 @@ export default function RemittanceDetailA({
             <div className="row bg-light-gray px-1 py-1 rounded-3 g-3 my-4">
                 <h5 className="text-blue fw-bold">Remittance Details</h5>
                 {/* REMITTEE DROPDOWN */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Remittees <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
@@ -31,7 +31,7 @@ export default function RemittanceDetailA({
                 </div>
 
                 {/* REMITTEE DROPDOWN */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Banks <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
@@ -41,7 +41,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount Payable (INR)
                         <span className="text-danger">*</span>
                     </label>
@@ -54,7 +54,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Aggregate Amount</label>
                     <input
                         type="number"
@@ -64,7 +64,7 @@ export default function RemittanceDetailA({
                     />
                 </div>
                 {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" || partType == "B" && <div className="col-md-6">
+                {/* {partType == "C" || partType == "B" && <div className="col-md-4">
                     <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
@@ -76,7 +76,7 @@ export default function RemittanceDetailA({
 
                 {/* REMITTEE DROPDOWN */}
                 {/* {partType == "C" &&
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label className="form-label">Accountants <span className="text-danger">*</span></label>
                         <SearchableDropdown
                             id={model.accountantDetailId}
@@ -88,7 +88,7 @@ export default function RemittanceDetailA({
                 } */}
 
                 {/* COUNTRY */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
@@ -107,7 +107,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* CURRENCY */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Currency <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.currency}
@@ -126,7 +126,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* NATURE */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Natures <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.nature}
@@ -136,7 +136,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.nature && <span className="text-danger">{errors.nature}</span>}
                 </div>
                 {model.nature === "16.99" && (
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label className="form-label">Others Natures <span className="text-danger">*</span></label>
                         <input
                             type="text"
@@ -149,7 +149,7 @@ export default function RemittanceDetailA({
                     </div>
                 )}
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode}
@@ -160,7 +160,7 @@ export default function RemittanceDetailA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rev Pur Code(Select before Rev Pur Category) <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode1}
@@ -172,7 +172,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.purposeCode1 && <span className="text-danger">{errors.purposeCode1}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Proposed Date
                         <span className="text-danger">*</span>
                     </label>
@@ -193,7 +193,7 @@ export default function RemittanceDetailA({
                 </div>
 
                 {/* BANK DROPDOWN */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
@@ -204,7 +204,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* AMOUNTS */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable</label>
                     <input
                         type="number"
@@ -214,7 +214,7 @@ export default function RemittanceDetailA({
                     />
                 </div> */}
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">TDS Amount
                         <span className="text-danger">*</span>
                     </label>
@@ -227,7 +227,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
                 </div>
 
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Actual Remittance After TDS</label>
                     <input
                         type="number"
@@ -241,7 +241,7 @@ export default function RemittanceDetailA({
 
 
                 {/* TDS DATE */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">TDS Deduction Date</label>
                     <input
                         type="date"
@@ -251,7 +251,7 @@ export default function RemittanceDetailA({
                     />
                 </div> */}
 
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Country</label>
                     <input
                         type="text"
@@ -265,7 +265,7 @@ export default function RemittanceDetailA({
 
 
                 {/* Amount Payable */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable</label>
                     <input
                         type="number"
@@ -276,7 +276,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* Amount Of TDS */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">TDS Amount</label>
                     <input
                         type="number"
@@ -287,7 +287,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* In Foreign */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable (Foreign Currency)</label>
                     <input
                         type="number"
@@ -298,7 +298,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* In Indian */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Amount Payable (INR)</label>
                     <input
                         type="number"
@@ -309,7 +309,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* Grossed Up */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Grossed Up Amount</label>
                     <input
                         type="number"
@@ -320,7 +320,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* IT Act Section */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">IT Act Relevant Section</label>
                     <input
                         type="text"
@@ -331,7 +331,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* IT Act Income Chargeable */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
                         type="number"
@@ -342,7 +342,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* IT Act Tax Liability */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
                         type="number"
@@ -353,7 +353,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* DTAA Available */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Residency Available</label>
                     <select
                         className="form-control"
@@ -367,7 +367,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* DTAA Relevant */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Relevant</label>
                     <input
                         type="text"
@@ -378,7 +378,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* DTAA Article */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA Relevant Article</label>
                     <input
                         type="text"
@@ -389,7 +389,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* DTAA TDS Rate */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">DTAA TDS Rate (%)</label>
                     <input
                         type="number"
@@ -400,7 +400,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* TDS Rate */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rate Of TDS
                         <span className="text-danger">*</span>
                     </label>
@@ -414,7 +414,7 @@ export default function RemittanceDetailA({
                 </div>
 
                 {/* Actual Remittance */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Actual Remittance After TDS</label>
                     <input
                         type="number"
@@ -425,7 +425,7 @@ export default function RemittanceDetailA({
                 </div> */}
 
                 {/* TDS Deduction Date */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">TDS Deduction Date</label>
                     <div>
                         <DatePicker
@@ -447,7 +447,7 @@ export default function RemittanceDetailA({
                     <h5 className="fw-bold mt-4">Declaration</h5>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">I / We
                         <span className="text-danger">*</span>
                     </label>
@@ -462,7 +462,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Verification Date
                         <span className="text-danger">*</span>
                     </label>
@@ -475,7 +475,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Designation
                         <span className="text-danger">*</span>
                     </label>
@@ -487,7 +487,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Place
                         <span className="text-danger">*</span>
                     </label>

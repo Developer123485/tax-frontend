@@ -21,7 +21,7 @@ export default function RemittanceDetailCA({
                 <h5 className="text-blue fw-bold">Remittance Details (CB)</h5>
 
                 {/* REMITTEE */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Remittee <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
@@ -32,7 +32,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* BANK */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
@@ -43,7 +43,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* AO */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">AO Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
@@ -54,7 +54,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* ACCOUNTANT */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Accountant <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.accountantDetailId}
@@ -65,7 +65,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* CERTIFICATE */}
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label className="form-label">Certificate No <span className="text-danger">*</span></label>
                     <input
                         className="form-control"
@@ -76,7 +76,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.certificateNo && <span className="text-danger">{errors.certificateNo}</span>}
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
                     <DatePicker
                         selected={model.certificateDate}
@@ -88,7 +88,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* COUNTRY */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
@@ -99,7 +99,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {model.country === "9999" && (
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label className="form-label">Other Country <span className="text-danger">*</span></label>
                         <input
                             className="form-control"
@@ -112,7 +112,7 @@ export default function RemittanceDetailCA({
                 )}
 
                 {/* CURRENCY */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Currency <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.currency}
@@ -123,7 +123,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {model.currency === "99" && (
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label className="form-label">Other Currency <span className="text-danger">*</span></label>
                         <input
                             className="form-control"
@@ -135,7 +135,7 @@ export default function RemittanceDetailCA({
                 )}
 
                 {/* AMOUNTS */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount Payable (INR) <span className="text-danger">*</span></label>
                     <input
                         type="number"
@@ -146,7 +146,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount Payable (Foreign) <span className="text-danger">*</span></label>
                     <input
                         type="number"
@@ -159,7 +159,7 @@ export default function RemittanceDetailCA({
 
 
                 {/* PROPOSED DATE */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
                     <DatePicker
                         selected={model.proposedDate}
@@ -172,7 +172,7 @@ export default function RemittanceDetailCA({
 
 
                 {/* NATURE */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Nature <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.nature}
@@ -183,7 +183,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {model.nature === "16.99" && (
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label className="form-label">Other Nature <span className="text-danger">*</span></label>
                         <input
                             className="form-control"
@@ -196,7 +196,7 @@ export default function RemittanceDetailCA({
                 )}
 
                 {/* PURPOSE CODE */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode}
@@ -206,7 +206,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.purposeCode && <span className="text-danger">{errors.purposeCode}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rev Pur Code (Select before Rev Pur Category)*</label>
                     <SearchableDropdown
                         id={model.purposeCode1}
@@ -223,7 +223,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* GROSSED UP */}
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Grossed Up <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -240,7 +240,7 @@ export default function RemittanceDetailCA({
                     <h5 className="fw-bold mt-3">I.T. Act</h5>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">IT Act Relevant Section</label>
                     <input
                         className="form-control"
@@ -250,7 +250,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
                         type="number"
@@ -261,7 +261,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
                         type="number"
@@ -272,7 +272,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Basis for Tax (IT Act)</label>
                     <input
                         className="form-control"
@@ -285,7 +285,7 @@ export default function RemittanceDetailCA({
                     <h5 className="fw-bold mt-4">DTAA</h5>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Tax Residency Certificate <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -299,7 +299,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.taxResidCert && <span className="text-danger">{errors.taxResidCert}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Relevant DTAA</label>
                     <input
                         className="form-control"
@@ -308,7 +308,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Relevant Article (DTAA)</label>
                     <input
                         className="form-control"
@@ -317,7 +317,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Taxable Income (DTAA)</label>
                     <input
                         type="number"
@@ -327,7 +327,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Tax Liability (DTAA)</label>
                     <input
                         type="number"
@@ -337,7 +337,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Remittance for Royalty <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -351,7 +351,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.remForRoyFlg && <span className="text-danger">{errors.remForRoyFlg}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Art Dtaa
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -365,7 +365,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remForRoyFlg == "Y" && errors.artDtaa && <span className="text-danger">{errors.artDtaa}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">DTAA TDS Rate (%)
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -380,7 +380,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rem Acct Bus Inc Flg <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -394,7 +394,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.remAcctBusIncFlg && <span className="text-danger">{errors.remAcctBusIncFlg}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount to be Taxed in India
                         {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -408,7 +408,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rate Dedn Dtaa
                         {errors.remAcctBusIncFlg == "N" && <span className="text-danger">*</span>}
                     </label>
@@ -423,7 +423,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rem On Cap Gain Flg <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -438,7 +438,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Long Term Capital Gain
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -452,7 +452,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Short Term Capital Gain
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -466,7 +466,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Basis Tax Inc Dtaa
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -481,7 +481,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -495,7 +495,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.otherRemDtaa && <span className="text-danger">{errors.otherRemDtaa}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Nature Rem Dtaa
                         {model.otherRemDtaa == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -510,7 +510,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Tax Ind Dtaa Flg <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
@@ -524,7 +524,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.taxIndDtaaFlg && <span className="text-danger">{errors.taxIndDtaaFlg}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rate Tds DDtaa
                         {model.taxIndDtaaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -539,7 +539,7 @@ export default function RemittanceDetailCA({
                     {isDirty && model.taxIndDtaaFlg == "Y" && errors.rateTdsDDtaa && <span className="text-danger">{errors.rateTdsDDtaa}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rel Art DetlD Dtaa
                         {model.taxIndDtaaFlg == "N" && <span className="text-danger">*</span>}
                     </label>
@@ -559,7 +559,7 @@ export default function RemittanceDetailCA({
                     <h5 className="fw-bold mt-4">TDS</h5>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount Payable (Foreign)
                         <span className="text-danger">*</span>
                     </label>
@@ -572,7 +572,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.amtPayForgnTds && <span className="text-danger">{errors.amtPayForgnTds}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount Payable (Indian)
                         <span className="text-danger">*</span>
                     </label>
@@ -585,7 +585,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.amtPayIndianTds && <span className="text-danger">{errors.amtPayIndianTds}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rate Tds Secb Flg</label>
                     <input
                         type="text"
@@ -596,7 +596,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Rate Tds Sec B</label>
                     <input
                         type="number"
@@ -607,7 +607,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Actual TDS Amount (Foreign)
                         <span className="text-danger">*</span>
                     </label>
@@ -620,7 +620,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.actlAmtTdsForgn && <span className="text-danger">{errors.actlAmtTdsForgn}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">TDS Deduction Date
                         <span className="text-danger">*</span>
                     </label>
@@ -638,7 +638,7 @@ export default function RemittanceDetailCA({
                     <h5 className="fw-bold mt-4">Declaration</h5>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">I / We
                         <span className="text-danger">*</span>
                     </label>
@@ -653,7 +653,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Verification Date
                         <span className="text-danger">*</span>
                     </label>
@@ -666,7 +666,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Designation
                         <span className="text-danger">*</span>
                     </label>
@@ -678,7 +678,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Place
                         <span className="text-danger">*</span>
                     </label>
@@ -693,7 +693,7 @@ export default function RemittanceDetailCA({
 
 
                 {/* TDS */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">TDS Rate (%) <span className="text-danger">*</span></label>
                     <input
                         type="number"
@@ -704,7 +704,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Amount of TDS <span className="text-danger">*</span></label>
                     <input
                         type="number"
@@ -714,7 +714,7 @@ export default function RemittanceDetailCA({
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label className="form-label">Date of Deduction</label>
                     <DatePicker
                         selected={model.dateOfDeduction}
@@ -725,7 +725,7 @@ export default function RemittanceDetailCA({
                 </div> */}
 
                 {/* TAX PAYABLE */}
-                {/* <div className="col-md-6">
+                {/* <div className="col-md-4">
                     <label className="form-label">Whether Tax Payable <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
