@@ -196,7 +196,11 @@ export default function AddRemittance({ params }) {
     model.natureRemDtaa,
     model.taxIndDtaaFlg,
     model.relArtDetlDDtaa,
-    model.rateTdsDDtaa
+    model.rateTdsDDtaa,
+    model.certificateDate,
+    model.certificateDate,
+    model.grossedUp,
+    model.basisTaxIncDtaa,
     ]);
 
 
@@ -268,6 +272,7 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
+        debugger
         if (search.get("partType") == "C" && search.get("formType") == "15CA") {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
@@ -288,11 +293,9 @@ export default function AddRemittance({ params }) {
             if (model.remForRoyFlg == "Y" && !model.rateTdsADtaa) e.rateTdsADtaa = "required!";
             if (model.remAcctBusIncFlg == "Y" && !model.amtToTaxInd) e.amtToTaxInd = "required!";
             if (model.remAcctBusIncFlg == "N" && !model.rateDednDtaa) e.rateDednDtaa = "required!";
-            if (!model.tdsRate) e.tdsRate = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
-            if (!model.dtaaTaxResidencyAvailable) e.dtaaTaxResidencyAvailable = "required!";
             if (!model.certificateNo) e.certificateNo = "required!";
             if (!model.certificateDate) e.certificateDate = "required!";
             if (!model.i_We) e.i_We = "required!";
@@ -307,8 +310,8 @@ export default function AddRemittance({ params }) {
             if (model.remOnCapGainFlg == "Y" && !model.amtShortTrm) e.amtShortTrm = "required!";
             if (model.remOnCapGainFlg == "Y" && !model.basisTaxIncDtaa) e.basisTaxIncDtaa = "required!";
             if (model.otherRemDtaa == "Y" && !model.natureRemDtaa) e.natureRemDtaa = "required!";
-            if (model.taxIndDtaaFlg == "Y" && !model.relArtDetlDDtaa) e.relArtDetlDDtaa = "required!";
-            if (model.taxIndDtaaFlg == "N" && !model.rateTdsDDtaa) e.rateTdsDDtaa = "required!";
+            if (model.taxIndDtaaFlg == "N" && !model.relArtDetlDDtaa) e.relArtDetlDDtaa = "required!";
+            if (model.taxIndDtaaFlg == "Y" && !model.rateTdsDDtaa) e.rateTdsDDtaa = "required!";
             if (!model.amtPayForgnTds) e.amtPayForgnTds = "required!";
             if (!model.amtPayIndianTds) e.amtPayIndianTds = "required!";
             if (!model.actlAmtTdsForgn) e.actlAmtTdsForgn = "required!";

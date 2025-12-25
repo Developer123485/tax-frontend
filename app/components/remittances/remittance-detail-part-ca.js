@@ -70,6 +70,7 @@ export default function RemittanceDetailCA({
                     <input
                         className="form-control"
                         value={model.certificateNo || ""}
+                        maxLength={15}
                         onChange={(e) => handleInput("certificateNo", e)}
                     />
                     {isDirty && errors.certificateNo && <span className="text-danger">{errors.certificateNo}</span>}
@@ -77,10 +78,10 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-3">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
-                    <input
-                        type="date"
+                    <DatePicker
+                        selected={model.certificateDate}
                         className="form-control"
-                        value={model.certificateDate || ""}
+                        dateFormat="dd/MM/yyyy"
                         onChange={(e) => handleInput("certificateDate", e)}
                     />
                     {isDirty && errors.certificateDate && <span className="text-danger">{errors.certificateDate}</span>}

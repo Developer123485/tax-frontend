@@ -4,37 +4,58 @@ import { Dropdown, Form } from 'react-bootstrap';
 export default function SearchableDropdown(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
-    const filteredOptions = props?.options?.filter(option =>
-        option?.value?.toLowerCase()?.includes(searchTerm.toLowerCase())
+
+    const selectedOption = props.options?.find(o => o.key === props.id);
+
+    const filteredOptions = props.options?.filter(option =>
+        option.value.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    const handleSelect = (eventKey) => {
-        props.setEventId(eventKey);
-        setSearchTerm('');
-        setShowDropdown(false);
-    };
 
     return (
-        <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)} onSelect={handleSelect}>
+        <Dropdown
+            show={showDropdown}
+            onToggle={() => setShowDropdown(!showDropdown)}
+            className="w-100"
+        >
             <Dropdown.Toggle
-                className='bg-white text-dark border border-secondary w-100 text-start'
-                style={{ minWidth: '400px' }}
+                className="bg-white text-dark border w-100 d-flex align-items-center justify-content-between"
+                style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                }}
             >
-                {filteredOptions && filteredOptions.length > 0 && props.id &&
-                    filteredOptions.find(p => p.key == props.id)?.value
-                    ? filteredOptions.find(p => p.key == props.id)?.value
-                    : "Select"
-                }
+                <span
+                    style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        maxWidth: "90%",
+                        display: "inline-block"
+                    }}
+                >
+                    {selectedOption?.value || "Select"}
+                </span>
 
                 {props.id && (
-                    <span className='ms-2' onClick={(e) => { e.stopPropagation(); props.setEventId(""); }}>
+                    <span
+                        className="ms-2 text-danger"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            props.setEventId("");
+                        }}
+                    >
                         <i className="fa-solid fa-circle-xmark"></i>
                     </span>
                 )}
             </Dropdown.Toggle>
 
             <Dropdown.Menu
-                className='ps-2 pe-3 py-2 w-100'
-                style={{ minWidth: '400px', maxHeight: '190px', overflowX: 'hidden', overflowY: 'scroll' }}
+                className="w-100"
+                style={{
+                    maxHeight: "220px",
+                    overflowY: "auto"
+                }}
             >
                 <Form.Control
                     autoFocus
@@ -42,16 +63,17 @@ export default function SearchableDropdown(props) {
                     placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="m-2"
                     onClick={(e) => e.stopPropagation()}
-                    style={{ margin: '5px' }}
                 />
 
-                {filteredOptions?.length > 0 ? (
-                    filteredOptions?.map((option, index) => (
+                {filteredOptions.length > 0 ? (
+                    filteredOptions.map((option) => (
                         <Dropdown.Item
+                            key={option.key}
                             eventKey={option.key}
-                            key={index}
-                            active={props.id === option.key}   // <-- highlight selected item
+                            active={props.id === option.key}
+                            className="text-wrap"
                         >
                             {option.value}
                         </Dropdown.Item>
@@ -62,4 +84,4 @@ export default function SearchableDropdown(props) {
             </Dropdown.Menu>
         </Dropdown>
     );
-};
+}
