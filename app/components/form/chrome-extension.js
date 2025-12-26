@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 export default function EnableExtensionModal(props) {
-    const {deductorInfo, searchParams, form} = props;
+    const { deductorInfo, searchParams, form } = props;
     const handleStartEFiling = async () => {
         const response = await fetch(`https://py-api.taxvahan.site/get-fvu-file?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
         if (!response.ok) {
@@ -33,7 +33,8 @@ export default function EnableExtensionModal(props) {
             },
             window.location.origin
         );
-        console.log('📤 TV_START_EFILING sent to extension:', payload);
+        console.log('📤 TV_START_EFILING sent to extension:', model);
+        props.close();
     };
 
     // optional listener for confirmation
