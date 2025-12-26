@@ -19,6 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { apiUrl } from "@/app/config";
 import axios from "axios";
 import ProcessPopup from "@/app/components/modals/processing";
+import EnableExtensionModal from "@/app/components/form/chrome-extension";
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -52,6 +53,7 @@ export default function GenerateFVU({ params }) {
   const [tokenNo, setTokenNo] = useState("");
   const [isDirty, setIsDirty] = useState(null);
   const [isFileSaved, setIsFileSaved] = useState(false);
+  const [showExtension, setShowExtension] = useState(false);
   const [tokenError, setTokenError] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const [outputPath, setOutputPath] = useState('');
@@ -83,6 +85,16 @@ export default function GenerateFVU({ params }) {
       isActive: true,
     },
   ]);
+
+  React.useEffect(() => {
+    const listener = (event) => {
+      if (event.data?.type === "TV_EFILING_TAB_OPENED") {
+        console.log("✅ E-portal tab opened:", event.data.result);
+      }
+    };
+    window.addEventListener("message", listener);
+    return () => window.removeEventListener("message", listener);
+  }, []);
 
   useEffect(() => {
     if (
@@ -311,11 +323,11 @@ export default function GenerateFVU({ params }) {
     try {
       let csiFileRead;
       if (!interestAndfines?.isDownloadCSIAllow) {
-        const csiFilePath = `${window.location.origin}/static/csi/PTLI10787A150725.csi`;
+        const csiFilePath = `${window.location.origin}/static/csi/PTLJ10787A150725.csi`;
         const response = await fetch(csiFilePath);
         const blob = await response.blob();
         // Step 2: Convert blob into File object (optional but good for backend handling)
-        csiFileRead = new File([blob], "PTLI10787A150725.csi", { type: "text/plain" });
+        csiFileRead = new File([blob], "PTLJ10787A150725.csi", { type: "text/plain" });
       }
       // Step 3: Prepare and call API
       const formData = new FormData();
@@ -412,17 +424,18 @@ export default function GenerateFVU({ params }) {
   //   }
   // }
   async function directEFiling(e) {
-    const response = await fetch(`https://py-api.taxvahan.site/getfiles?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
-    if (!response.ok) {
-      toast.error("Failed to download ZIP");
-      return;
-    }
-    const contentType = response.headers.get("Content-Type");
-    // If response is JSON instead of ZIP, it's likely an error message
-    if (contentType && contentType.includes("application/json")) {
-      toast.error("No file is available for download. Please click on 'Generate FVU'.");
-      return;
-    }
+    // const response = await fetch(`https://py-api.taxvahan.site/get-fvu-file?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+    // if (!response.ok) {
+    //   toast.error("Failed to download ZIP");
+    //   return;
+    // }
+
+    // const contentType = response.headers.get("Content-Type");
+    // // If response is JSON instead of ZIP, it's likely an error message
+    // if (contentType && contentType.includes("application/json")) {
+    //   toast.error("No file is available for download. Please click on 'Generate FVU'.");
+    //   return;
+    // }
     const model = {
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
@@ -432,22 +445,30 @@ export default function GenerateFVU({ params }) {
       tan: deductorInfo.deductorTan,
     };
     if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
-      setIsDirectLoading(true);
-      FuvValidateReturnService.directEFiling(model)
-        .then((res) => {
+      window.postMessage(
+        {
+          type: "TV_START_EFILING",
+          model,
+        },
+        window.location.origin
+      );
 
-        }).catch(e => {
-          if (e?.response?.data?.errorMessage) {
-            toast.error(e?.response?.data?.errorMessage);
-          }
-          else {
-            toast.error(e?.message);
-          }
-          setIsDirectLoading(false);
-        })
-        .finally((f) => {
-          setIsDirectLoading(false);
-        });
+      // setIsDirectLoading(true);
+      // FuvValidateReturnService.directEFiling(model)
+      //   .then((res) => {
+
+      //   }).catch(e => {
+      //     if (e?.response?.data?.errorMessage) {
+      //       toast.error(e?.response?.data?.errorMessage);
+      //     }
+      //     else {
+      //       toast.error(e?.message);
+      //     }
+      //     setIsDirectLoading(false);
+      //   })
+      //   .finally((f) => {
+      //     setIsDirectLoading(false);
+      //   });
     } else {
       toast.error("TRACES Tan and password do not exist for the deductor");
     }
@@ -997,7 +1018,7 @@ export default function GenerateFVU({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary px-3 py-2 mb-3"
-                      disabled={isDirectLoading} onClick={(e) => directEFiling(e)}
+                      disabled={isDirectLoading} onClick={(e) => setShowExtension(true)}
                     >
                       {isDirectLoading && (
                         <span
@@ -1097,7 +1118,7 @@ export default function GenerateFVU({ params }) {
             </div>
           </div>
         </div>
-      </section>
+      </section >
       <Modal
         className=""
         size="md"
@@ -1141,6 +1162,13 @@ export default function GenerateFVU({ params }) {
           </div>
         </Modal.Body>
       </Modal>
+      <EnableExtensionModal
+        show={showExtension}
+        close={e => {
+          setShowExtension(false);
+          directEFiling(e);
+        }}
+      />
       <ProcessPopup showLoader={showLoader}></ProcessPopup>
     </>
   );
