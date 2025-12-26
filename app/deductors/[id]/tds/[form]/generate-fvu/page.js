@@ -424,18 +424,18 @@ export default function GenerateFVU({ params }) {
   //   }
   // }
   async function directEFiling(e) {
-    // const response = await fetch(`https://py-api.taxvahan.site/get-fvu-file?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
-    // if (!response.ok) {
-    //   toast.error("Failed to download ZIP");
-    //   return;
-    // }
+    const response = await fetch(`https://py-api.taxvahan.site/get-fvu-file?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+    if (!response.ok) {
+      toast.error("Failed to download ZIP");
+      return;
+    }
 
-    // const contentType = response.headers.get("Content-Type");
-    // // If response is JSON instead of ZIP, it's likely an error message
-    // if (contentType && contentType.includes("application/json")) {
-    //   toast.error("No file is available for download. Please click on 'Generate FVU'.");
-    //   return;
-    // }
+    const contentType = response.headers.get("Content-Type");
+    // If response is JSON instead of ZIP, it's likely an error message
+    if (contentType && contentType.includes("application/json")) {
+      toast.error("No file is available for download. Please click on 'Generate FVU'.");
+      return;
+    }
     const model = {
       financialYear: searchParams.get("financial_year"),
       quarter: searchParams.get("quarter"),
