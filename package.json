@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/html-docx-js": "^0.3.4",
+    "baseline-browser-mapping": "^2.9.11",
     "eslint": "^8",
     "eslint-config-next": "14.1.4"
   }
