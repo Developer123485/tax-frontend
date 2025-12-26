@@ -478,7 +478,7 @@ export default function GenerateFVU({ params }) {
     e.preventDefault();
     setIsDownloadLoading(true);
     try {
-      const response = await fetch(`https://py-api.taxvahan.site/getfiles?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
+      const response = await fetch(`http://127.0.0.1:5000/getfiles?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
       if (!response.ok) {
         toast.error("Failed to download ZIP");
         return;
@@ -1164,9 +1164,11 @@ export default function GenerateFVU({ params }) {
       </Modal>
       <EnableExtensionModal
         show={showExtension}
+        deductorInfo={deductorInfo}
+        searchParams={searchParams}
+        form={form}
         close={e => {
           setShowExtension(false);
-          directEFiling(e);
         }}
       />
       <ProcessPopup showLoader={showLoader}></ProcessPopup>
