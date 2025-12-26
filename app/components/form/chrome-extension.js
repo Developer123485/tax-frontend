@@ -28,7 +28,7 @@ export default function EnableExtensionModal(props) {
 
                     <button
                         className="btn btn-outline-success"
-                        onClick={props.close}
+                        onClick={props.directEFiling}
                     >
                         If you have already installed the extension, you may proceed with e-Filing
                     </button>
