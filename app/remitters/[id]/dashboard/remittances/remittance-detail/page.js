@@ -234,6 +234,8 @@ export default function AddRemittance({ params }) {
             if (!model.i_We) e.i_We = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
+            if (!model.country) e.country = "Select Country";
+            if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
             setErrors(e);
             return Object.keys(e).length === 0;
         }
@@ -273,6 +275,8 @@ export default function AddRemittance({ params }) {
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.i_We) e.i_We = "required!";
+            if (!model.country) e.country = "Select Country";
+            if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
@@ -283,6 +287,7 @@ export default function AddRemittance({ params }) {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
+
             if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
             if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";

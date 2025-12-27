@@ -557,7 +557,7 @@ export default function RemitterDetail(props) {
                 </div>
               </div>
 
-              {/* 
+
               <div className="col-md-3">
                 <label className="form-label">Domestic Flag</label>
                 <input
@@ -566,7 +566,7 @@ export default function RemitterDetail(props) {
                   value={remitterDetail.domesticFlg}
                   onChange={(e) => handleInput("domesticFlg", e)}
                 />
-              </div> */}
+              </div>
 
 
 
