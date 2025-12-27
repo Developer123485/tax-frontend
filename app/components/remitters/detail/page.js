@@ -543,7 +543,7 @@ export default function RemitterDetail(props) {
                 {/* Row 2 */}
                 <div className="col-md-6 mt-3">
                   <label className="form-label">
-                    Principal Place of Business <span className="text-danger">*</span>
+                    Principal Place of Business
                   </label>
                   <input
                     type="text"
