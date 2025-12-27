@@ -426,39 +426,8 @@ export default function GenerateFVU({ params }) {
       toast.error("No file is available for download. Please click on 'Generate FVU'.");
       return;
     }
-    const model = {
-      financialYear: searchParams.get("financial_year"),
-      quarter: searchParams.get("quarter"),
-      deductorName: deductorInfo.deductorName,
-      categoryId: parseInt(searchParams.get("categoryId")),
-      password: deductorInfo.tracesPassword,
-      tan: deductorInfo.deductorTan,
-    };
     if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
-      window.postMessage(
-        {
-          type: "TV_START_EFILING",
-          model,
-        },
-        window.location.origin
-      );
-
-      // setIsDirectLoading(true);
-      // FuvValidateReturnService.directEFiling(model)
-      //   .then((res) => {
-
-      //   }).catch(e => {
-      //     if (e?.response?.data?.errorMessage) {
-      //       toast.error(e?.response?.data?.errorMessage);
-      //     }
-      //     else {
-      //       toast.error(e?.message);
-      //     }
-      //     setIsDirectLoading(false);
-      //   })
-      //   .finally((f) => {
-      //     setIsDirectLoading(false);
-      //   });
+      setShowExtension(true);
     } else {
       toast.error("TRACES Tan and password do not exist for the deductor");
     }
@@ -1008,7 +977,7 @@ export default function GenerateFVU({ params }) {
                     <button
                       type="button"
                       className="btn btn-primary px-3 py-2 mb-3"
-                      disabled={isDirectLoading} onClick={(e) => setShowExtension(true)}
+                      disabled={isDirectLoading} onClick={(e) => directEFiling(e)}
                     >
                       {isDirectLoading && (
                         <span

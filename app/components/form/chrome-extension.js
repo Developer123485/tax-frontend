@@ -7,24 +7,21 @@ import "react-toastify/dist/ReactToastify.css";
 export default function EnableExtensionModal(props) {
     const { deductorInfo, searchParams, form } = props;
     const handleStartEFiling = async () => {
-        const response = await fetch(`https://py-api.taxvahan.site/get-fvu-file?param1=${deductorInfo.deductorName}&param2=${searchParams.get("financial_year")}&param3=${searchParams.get("quarter")}&param4=${form.replace("form-", "")}`);
-        if (!response.ok) {
-            toast.error("Failed to download ZIP");
-            return;
-        }
-        const contentType = response.headers.get("Content-Type");
-        // If response is JSON instead of ZIP, it's likely an error message
-        if (contentType && contentType.includes("application/json")) {
-            toast.error("No file is available for download. Please click on 'Generate FVU'.");
-            return;
-        }
+        // const payload = {
+        //     FinancialYear: searchParams.get("financial_year"),
+        //     Quarter: searchParams.get("quarter"),
+        //     DeductorName: deductorInfo.deductorName,
+        //     CategoryId: parseInt(searchParams.get("categoryId")),
+        //     Password: deductorInfo.tracesPassword,
+        //     Tan: deductorInfo.deductorTan,
+        // };
         const payload = {
-            FinancialYear: searchParams.get("financial_year"),
-            Quarter: searchParams.get("quarter"),
-            DeductorName: deductorInfo.deductorName,
-            CategoryId: parseInt(searchParams.get("categoryId")),
-            Password: deductorInfo.tracesPassword,
-            Tan: deductorInfo.deductorTan,
+            Tan: "PTLJ10787A",              // user TAN
+            Password: "bansal@123", // password
+            FinancialYear: "2024-25",
+            Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
+            CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
+            DeductorName: "ABC Pvt Ltd"
         };
         // Send the message to the Chrome extension content script
         window.postMessage(
