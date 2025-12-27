@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EnableExtensionModal(props) {
     const { deductorInfo, searchParams, form } = props;
@@ -9,32 +12,29 @@ export default function EnableExtensionModal(props) {
             toast.error("Failed to download ZIP");
             return;
         }
-
         const contentType = response.headers.get("Content-Type");
         // If response is JSON instead of ZIP, it's likely an error message
         if (contentType && contentType.includes("application/json")) {
             toast.error("No file is available for download. Please click on 'Generate FVU'.");
             return;
         }
-        const model = {
-            financialYear: searchParams.get("financial_year"),
-            quarter: searchParams.get("quarter"),
-            deductorName: deductorInfo.deductorName,
-            categoryId: parseInt(searchParams.get("categoryId")),
-            password: deductorInfo.tracesPassword,
-            tan: deductorInfo.deductorTan,
+        const payload = {
+            FinancialYear: searchParams.get("financial_year"),
+            Quarter: searchParams.get("quarter"),
+            DeductorName: deductorInfo.deductorName,
+            CategoryId: parseInt(searchParams.get("categoryId")),
+            Password: deductorInfo.tracesPassword,
+            Tan: deductorInfo.deductorTan,
         };
-
         // Send the message to the Chrome extension content script
         window.postMessage(
             {
                 type: "TV_START_EFILING",
-                model,
+                payload,
             },
             window.location.origin
         );
-        console.log('📤 TV_START_EFILING sent to extension:', model);
-        props.close();
+        console.log('📤 TV_START_EFILING sent to extension:', payload);
     };
 
     // optional listener for confirmation
@@ -50,37 +50,52 @@ export default function EnableExtensionModal(props) {
 
 
     return (
-        <Modal show={props.show} centered backdrop="static" keyboard={false}>
-            <Modal.Header>
-                <Modal.Title>Enable Chrome Extension</Modal.Title>
-            </Modal.Header>
+        <>
+            <ToastContainer />
 
-            <Modal.Body>
-                <p className="mb-3">
-                    To continue with <b>e-Filing</b>, please install and enable the
-                    <b> TaxVahan E-Filing Assistant</b> Chrome extension.
-                </p>
+            <Modal
+                show={props.show}
+                onHide={props.close}
+                centered
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Enable Chrome Extension</Modal.Title>
+                </Modal.Header>
 
-                <div className="d-flex flex-column gap-2">
-                    <a
-                        href="https://chromewebstore.google.com/detail/taxvahan-e-filing-assista/cldkfgelbiljjfemghhgcgiiaghbaehm"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary"
-                    >
-                        Install Extension
-                    </a>
+                <Modal.Body>
+                    <p className="mb-3">
+                        To continue with <b>e-Filing</b>, please install and enable the
+                        <b> TaxVahan E-Filing Assistant</b> Chrome extension.
+                    </p>
 
-                    <button
-                        className="btn btn-outline-success"
-                        onClick={handleStartEFiling}
-                    >
-                        If you have already installed the extension, you may proceed with e-Filing
+                    <div className="d-flex flex-column gap-2">
+                        <a
+                            href="https://chromewebstore.google.com/detail/taxvahan-e-filing-assista/cldkfgelbiljjfemghhgcgiiaghbaehm"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary"
+                        >
+                            Install Extension
+                        </a>
+
+                        <button
+                            className="btn btn-outline-success"
+                            onClick={handleStartEFiling}
+                        >
+                            Already Installed? Continue to e-Filing
+                        </button>
+                    </div>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <button className="btn btn-secondary" onClick={props.close}>
+                        Close
                     </button>
-                </div>
-            </Modal.Body>
-        </Modal>
-
+                </Modal.Footer>
+            </Modal>
+        </>
     )
 }
 

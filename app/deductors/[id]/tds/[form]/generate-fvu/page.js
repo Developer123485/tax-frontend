@@ -86,16 +86,6 @@ export default function GenerateFVU({ params }) {
     },
   ]);
 
-  React.useEffect(() => {
-    const listener = (event) => {
-      if (event.data?.type === "TV_EFILING_TAB_OPENED") {
-        console.log("✅ E-portal tab opened:", event.data.result);
-      }
-    };
-    window.addEventListener("message", listener);
-    return () => window.removeEventListener("message", listener);
-  }, []);
-
   useEffect(() => {
     if (
       searchParams.get("financial_year") &&
