@@ -111,6 +111,9 @@ export default function AddRemittee({ params }) {
 
         if (!remittee.name) err.name = "Name is required";
         if (!remittee.code) err.code = "Code is required";
+        if (!remittee.princPlcBusRemtee) err.princPlcBusRemtee = "PrincPlcBusRemtee is required";
+        if (!remittee.countryRemMade) err.countryRemMade = "Country Remittance is required";
+        if (!remittee.countryRemMadeDesc && remittee.countryRemMade == "9999") err.countryRemMadeDesc = "Other Country Remittance is required";
 
         if (!remittee.remitteePan) err.remitteePan = "PAN is required";
         else if (!panRegex.test(remittee.remitteePan.toUpperCase()))

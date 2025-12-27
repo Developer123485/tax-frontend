@@ -164,7 +164,7 @@ export default function RemitteeDetail(props) {
                         </div>
 
                         {/* === COUNTRY === */}
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country</span>
                                 {/* <span className="text-danger"> *</span> */}
@@ -243,9 +243,11 @@ export default function RemitteeDetail(props) {
             </div> */}
 
                         {/* === COUNTRY REM MADE === */}
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
-                                <span>Country Remittance Made</span>
+                                <span>Country Remittance Made
+                                    <span className="text-danger">*</span>
+                                </span>
                             </label>
                             {enumList.countryCodeRemitter && enumList.countryCodeRemitter.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("countryRemMade", e)}
@@ -253,28 +255,37 @@ export default function RemitteeDetail(props) {
                                 options={enumList.countryCodeRemitter}
                             ></SearchableDropdown>
                             }
-                            {/* {isNextDirty && remitterErrors.remitterStateError && (
+                            {isDirty && remitterErrors.remitterStateError && (
                                 <span className="text-danger">
                                     {remitterErrors.remitterStateError}
                                 </span>
-                            )} */}
+                            )}
                         </div>
-                        {remittee.countryRemMade == "9999" && <div className="col-md-3">
+                        <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
-                                <span>Country Remittance Made Other</span>
+                                <span>Country Remittance Made Other
+                                    {remittee.countryRemMade == "9999" && <span className="text-danger">*</span>}
+                                </span>
                             </label>
                             <input
                                 type="text"
                                 className="form-control"
+                                disabled={remittee.countryRemMade != "9999"}
                                 value={remittee.countryRemMadeDesc || ""}
                                 onChange={(e) => handleInput("countryRemMadeDesc", e)}
                             />
-                        </div>}
+                            {isDirty && remitterErrors.countryRemMadeDesc && (
+                                <span className="text-danger">
+                                    {remitterErrors.countryRemMadeDesc}
+                                </span>
+                            )}
+                        </div>
 
                         {/* === PRINCIPAL PLACE OF BUSINESS === */}
                         <div className="col-md-3">
                             <label className="form-label">
                                 Principal Place of Business
+                                <span className="text-danger">*</span>
                             </label>
                             <input
                                 type="text"
@@ -282,6 +293,11 @@ export default function RemitteeDetail(props) {
                                 value={remittee.princPlcBusRemtee || ""}
                                 onChange={(e) => handleInput("princPlcBusRemtee", e)}
                             />
+                            {isDirty && remitterErrors.countryRemMadeDesc && (
+                                <span className="text-danger">
+                                    {remitterErrors.countryRemMadeDesc}
+                                </span>
+                            )}
                         </div>
                     </div>
 
