@@ -242,11 +242,48 @@ export default function RemitteeDetail(props) {
               />
             </div> */}
 
+                        <div className="col-md-3">
+                            <label htmlFor="inputCountry" className="form-label">
+                                <span>Status Of Remittee</span>
+                                {/* <span className="text-danger"> *</span> */}
+                            </label>
+                            {enumList.status && enumList.status.length > 0 && <SearchableDropdown
+                                setEventId={(e) => handleInput("status", e)}
+                                id={remittee.remitterStatus}
+                                options={enumList.status}
+                            ></SearchableDropdown>
+                            }
+                            {/* {isNextDirty && remitterErrors.statusError && (
+                                <span className="text-danger">
+                                    {remitterErrors.statusError}
+                                </span>
+                            )} */}
+                        </div>
+
+                        <div className="col-md-3">
+                            <label className="form-label">Currency </label>
+                            <SearchableDropdown
+                                id={remittee.currency}
+                                options={enumList.currencies}
+                                setEventId={(e) => handleInput("currency", e)}
+                            />
+                        </div>
+
+                        <div className="col-md-3">
+                            <label className="form-label">Other Currency </label>
+                            <input
+                                className="form-control"
+                                disabled={remittee.currency !== "99"}
+                                value={remittee.currencyOther || ""}
+                                onChange={(e) => handleInput("currencyOther", e)}
+                            />
+                        </div>
+
                         {/* === COUNTRY REM MADE === */}
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country Remittance Made
-                                    <span className="text-danger">*</span>
+                                    {/* <span className="text-danger">*</span> */}
                                 </span>
                             </label>
                             {enumList.countryCodeRemitter && enumList.countryCodeRemitter.length > 0 && <SearchableDropdown
@@ -255,16 +292,16 @@ export default function RemitteeDetail(props) {
                                 options={enumList.countryCodeRemitter}
                             ></SearchableDropdown>
                             }
-                            {isDirty && remitterErrors.remitterStateError && (
+                            {/* {isDirty && remitterErrors.remitterStateError && (
                                 <span className="text-danger">
                                     {remitterErrors.remitterStateError}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country Remittance Made Other
-                                    {remittee.countryRemMade == "9999" && <span className="text-danger">*</span>}
+                                    {/* {remittee.countryRemMade == "9999" && <span className="text-danger">*</span>} */}
                                 </span>
                             </label>
                             <input
@@ -274,18 +311,17 @@ export default function RemitteeDetail(props) {
                                 value={remittee.countryRemMadeDesc || ""}
                                 onChange={(e) => handleInput("countryRemMadeDesc", e)}
                             />
-                            {isDirty && remitterErrors.countryRemMadeDesc && (
+                            {/* {isDirty && remitterErrors.countryRemMadeDesc && (
                                 <span className="text-danger">
                                     {remitterErrors.countryRemMadeDesc}
                                 </span>
-                            )}
+                            )} */}
                         </div>
 
                         {/* === PRINCIPAL PLACE OF BUSINESS === */}
                         <div className="col-md-3">
                             <label className="form-label">
                                 Principal Place of Business
-                                <span className="text-danger">*</span>
                             </label>
                             <input
                                 type="text"
@@ -293,11 +329,11 @@ export default function RemitteeDetail(props) {
                                 value={remittee.princPlcBusRemtee || ""}
                                 onChange={(e) => handleInput("princPlcBusRemtee", e)}
                             />
-                            {isDirty && remitterErrors.countryRemMadeDesc && (
+                            {/* {isDirty && remitterErrors.countryRemMadeDesc && (
                                 <span className="text-danger">
                                     {remitterErrors.countryRemMadeDesc}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                     </div>
 
