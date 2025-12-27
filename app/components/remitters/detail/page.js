@@ -555,23 +555,16 @@ export default function RemitterDetail(props) {
                     }}
                   />
                 </div>
+                <div className="col-md-3">
+                  <label className="form-label">Domestic Flag</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={remitterDetail.domesticFlg}
+                    onChange={(e) => handleInput("domesticFlg", e)}
+                  />
+                </div>
               </div>
-
-
-              <div className="col-md-3">
-                <label className="form-label">Domestic Flag</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.domesticFlg}
-                  onChange={(e) => handleInput("domesticFlg", e)}
-                />
-              </div>
-
-
-
-
-
 
             </div>
 
