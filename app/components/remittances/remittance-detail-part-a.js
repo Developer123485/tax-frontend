@@ -63,29 +63,6 @@ export default function RemittanceDetailA({
                         onChange={(e) => handleInput("aggregateAmount", e)}
                     />
                 </div>
-                {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" || partType == "B" && <div className="col-md-4">
-                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.aoOrderDetailId}
-                        options={dropdowns.aoDetails}
-                        setEventId={(e) => handleInput("aoOrderDetailId", e)}
-                    />
-                    {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
-                </div>} */}
-
-                {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" &&
-                    <div className="col-md-4">
-                        <label className="form-label">Accountants <span className="text-danger">*</span></label>
-                        <SearchableDropdown
-                            id={model.accountantDetailId}
-                            options={dropdowns.accountants}
-                            setEventId={(e) => handleInput("accountantDetailId", e)}
-                        />
-                        {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
-                    </div>
-                } */}
 
                 {/* COUNTRY */}
                 <div className="col-md-4">

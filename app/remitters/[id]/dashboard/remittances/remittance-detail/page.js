@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EnumService } from "@/app/services/enum.service";
 import RemittanceDetailCA from "@/app/components/remittances/remittance-detail-part-ca";
+import { RemitteeService } from "@/app/services/remittee.service";
 
 export default function AddRemittance({ params }) {
     const router = useRouter();
@@ -207,6 +208,14 @@ export default function AddRemittance({ params }) {
     function handleInput(field, e) {
         const value = e?.target?.value ?? e;
         setModel((p) => ({ ...p, [field]: value }));
+        if (field == "remitteeId") {
+            RemitteeService.getRemittee(e?.target?.value).then(res => {
+                setModel((p) => ({ ...p, ["country"]: res.countryRemMade }));
+                setModel((p) => ({ ...p, ["countryOther"]: res.countryRemMadeDesc }));
+                setModel((p) => ({ ...p, ["currency"]: res.currency }));
+                setModel((p) => ({ ...p, ["currencyOther"]: res.currencyOther }));
+            })
+        }
     }
 
     function validate() {
