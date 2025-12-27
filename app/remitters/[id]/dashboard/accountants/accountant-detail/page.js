@@ -86,7 +86,7 @@ export default function AddAccountant({ params }) {
 
     function saveAccountant(e) {
         e.preventDefault();
-        setIsDirty();
+        setIsDirty(true);
         if (!validate()) return;
         accountant.remitterId = remitterId;
         AccountantService.saveAccountant(accountant)
