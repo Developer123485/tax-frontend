@@ -14,6 +14,7 @@ export default function AddBankDetail({ params }) {
     const resolvedParams = use(params);
     const searchParams = useSearchParams();
     const remitterId = resolvedParams?.id;
+    const [isDirty, setIsDirty] = useState(false);
 
     const [bankDetail, setBankDetail] = useState({
         id: 0,
@@ -54,6 +55,10 @@ export default function AddBankDetail({ params }) {
         }
     }
 
+    useEffect(() => {
+        validate();
+    }, [bankDetail.bankName, bankDetail.code, bankDetail.bankBranchName, bankDetail.description, bankDetail.bsrCode]);
+
     function validate() {
         let err = {};
 
@@ -78,6 +83,7 @@ export default function AddBankDetail({ params }) {
 
     function saveBankDetail(e) {
         e.preventDefault();
+        setIsDirty(true);
         if (!validate()) return;
 
         bankDetail.remitterId = remitterId;
@@ -103,6 +109,7 @@ export default function AddBankDetail({ params }) {
                     <BankDetailForm
                         bankDetail={bankDetail}
                         errors={errors}
+                        isDirty={isDirty}
                         bankNames={bankNames}
                         handleInput={handleInput}
                         handleSave={saveBankDetail}

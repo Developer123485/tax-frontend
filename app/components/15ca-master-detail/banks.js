@@ -3,7 +3,7 @@ import React from "react";
 import SearchableDropdown from "@/app/components/deductors/searchable-dropdown";
 
 export default function BankDetailForm(props) {
-    const { bankDetail, errors, bankNames, handleInput } = props;
+    const { bankDetail, errors, bankNames, handleInput, isDirty } = props;
 
     return (
         <>
@@ -16,15 +16,20 @@ export default function BankDetailForm(props) {
                     {/* CODE */}
                     <div className="col-md-3">
                         <label className="form-label">
-                            Code <span className="text-danger">*</span>
+                            Bank Code <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             value={bankDetail.code || ""}
-                            onChange={(e) => handleInput("code", e)}
+                            maxLength={10}
+                            onChange={(e) => {
+                                e.target.value = e.target.value.toUpperCase();
+                                handleInput("code", e)
+                            }
+                            }
                         />
-                        {errors.code && (
+                        {isDirty && errors.code && (
                             <span className="text-danger">{errors.code}</span>
                         )}
                     </div>
@@ -41,7 +46,7 @@ export default function BankDetailForm(props) {
                             options={bankNames}
                         />
 
-                        {errors.bankName && (
+                        {isDirty && errors.bankName && (
                             <span className="text-danger">{errors.bankName}</span>
                         )}
                     </div>
@@ -57,7 +62,7 @@ export default function BankDetailForm(props) {
                             value={bankDetail.bankBranchName || ""}
                             onChange={(e) => handleInput("bankBranchName", e)}
                         />
-                        {errors.bankBranchName && (
+                        {isDirty && errors.bankBranchName && (
                             <span className="text-danger">{errors.bankBranchName}</span>
                         )}
                     </div>
@@ -71,7 +76,7 @@ export default function BankDetailForm(props) {
                             value={bankDetail.bsrCode || ""}
                             onChange={(e) => handleInput("bsrCode", e)}
                         />
-                        {errors.bsrCode && (
+                        {isDirty && errors.bsrCode && (
                             <span className="text-danger">{errors.bsrCode}</span>
                         )}
                     </div>
@@ -85,7 +90,7 @@ export default function BankDetailForm(props) {
                             rows={2}
                             onChange={(e) => handleInput("description", e)}
                         />
-                        {errors.description && (
+                        {isDirty && errors.description && (
                             <span className="text-danger">{errors.description}</span>
                         )}
                     </div>

@@ -59,8 +59,9 @@ export default function BankDetailList({ params }) {
             selector: (row, index) => (currentPage - 1) * pageSize + index + 1,
         },
         {
-            name: "Code",
+            name: "Bank Code",
             selector: (row) => row.code || "-",
+            width: "170px",
         },
         {
             name: "Bank Name",
