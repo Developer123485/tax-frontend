@@ -223,7 +223,6 @@ export default function AddRemittance({ params }) {
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.i_We) e.i_We = "required!";
-            if (!model.verDesignation) e.verDesignation = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
@@ -247,7 +246,6 @@ export default function AddRemittance({ params }) {
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.i_We) e.i_We = "required!";
-            if (!model.verDesignation) e.verDesignation = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
@@ -266,7 +264,6 @@ export default function AddRemittance({ params }) {
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.i_We) e.i_We = "required!";
-            if (!model.verDesignation) e.verDesignation = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);
@@ -299,7 +296,6 @@ export default function AddRemittance({ params }) {
             if (!model.certificateNo) e.certificateNo = "required!";
             if (!model.certificateDate) e.certificateDate = "required!";
             if (!model.i_We) e.i_We = "required!";
-            if (!model.verDesignation) e.verDesignation = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             if (!model.remAcctBusIncFlg) e.remAcctBusIncFlg = "required!";
@@ -343,7 +339,6 @@ export default function AddRemittance({ params }) {
             if (!model.certificateNo) e.certificateNo = "required!";
             if (!model.certificateDate) e.certificateDate = "required!";
             if (!model.i_We) e.i_We = "required!";
-            if (!model.verDesignation) e.verDesignation = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
             setErrors(e);

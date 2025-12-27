@@ -88,23 +88,28 @@ export default function RemittanceDetailA({
                 } */}
 
                 {/* COUNTRY */}
-                {/* <div className="col-md-4">
+                <div className="col-md-4">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
-                        options={enums.countries}
+                        options={enums.countryCodeRemitter}
                         setEventId={(e) => handleInput("country", e)}
                     />
-                    {model.currency === "Other" && (
+                    {isDirty && errors.country && <span className="text-danger">{errors.country}</span>}
+                </div>
+                {model.country === "9999" && (
+                    <div className="col-md-4">
+                        <label className="form-label">Other Country <span className="text-danger">*</span></label>
                         <input
                             type="text"
                             className="form-control "
-                            placeholder="Enter other currency"
-                            value={model.currencyOther || ""}
-                            onChange={(e) => handleInput("currencyOther", e)}
+                            placeholder="Other Country Name"
+                            value={model.countryOther || ""}
+                            onChange={(e) => handleInput("countryOther", e)}
                         />
-                    )}
-                </div> */}
+                        {isDirty && errors.countryOther && <span className="text-danger">{errors.countryOther}</span>}
+                    </div>
+                )}
 
                 {/* CURRENCY */}
                 {/* <div className="col-md-4">
@@ -475,7 +480,7 @@ export default function RemittanceDetailA({
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Designation
                         <span className="text-danger">*</span>
                     </label>
@@ -485,7 +490,7 @@ export default function RemittanceDetailA({
                         onChange={(e) => handleInput("verDesignation", e)}
                     />
                     {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                     <label className="form-label">Place

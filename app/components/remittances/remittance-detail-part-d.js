@@ -77,7 +77,7 @@ export default function RemittanceDetailD({
                 } */}
 
                 {/* COUNTRY */}
-                {/* <div className="col-md-4">
+                <div className="col-md-4">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.country}
@@ -98,7 +98,7 @@ export default function RemittanceDetailD({
                         />
                         {isDirty && errors.countryOther && <span className="text-danger">{errors.countryOther}</span>}
                     </div>
-                )} */}
+                )}
 
                 {/* CURRENCY */}
                 <div className="col-md-4">
@@ -251,7 +251,7 @@ export default function RemittanceDetailD({
                     />
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
-
+                {/* 
                 <div className="col-md-4">
                     <label className="form-label">Designation
                         <span className="text-danger">*</span>
@@ -262,7 +262,7 @@ export default function RemittanceDetailD({
                         onChange={(e) => handleInput("verDesignation", e)}
                     />
                     {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                     <label className="form-label">Place

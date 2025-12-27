@@ -100,6 +100,9 @@ export default function AddRemitter() {
         remitterResidentialError: "",
         codeError: "",
         princPlcBusRemterError: "",
+        fatherError: "",
+        responsibleNameError: "",
+        designationError: "",
     });
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
@@ -224,6 +227,9 @@ export default function AddRemitter() {
         let statusError = "";
         let codeError = "";
         let remitterCountryError = "";
+        let fatherError = "";
+        let responsibleNameError = "";
+        let designationError = "";
         let princPlcBusRemterError = "";
         let regexs = /^[^a-zA-Z0-9]+$/;
 
@@ -234,6 +240,15 @@ export default function AddRemitter() {
 
         if (!remitterDetail.code) {
             codeError = "Remitter Code is required";
+        }
+        if (!remitterDetail.fatherName) {
+            fatherError = "Name is required";
+        }
+        if (!remitterDetail.responsibleName) {
+            responsibleNameError = "Responsible Name is required";
+        }
+        if (!remitterDetail.desgination) {
+            designationError = "Designation is required";
         }
 
         if (!remitterDetail.remitterStatus) {
@@ -385,7 +400,10 @@ export default function AddRemitter() {
             codeError ||
             remitterResidentialError ||
             statusError ||
-            princPlcBusRemterError
+            princPlcBusRemterError ||
+            fatherError ||
+            responsibleNameError ||
+            designationError
         ) {
             setRemitterErrors((prevState) => ({
                 ...prevState,
@@ -400,6 +418,9 @@ export default function AddRemitter() {
                 remitterBuildingNameError,
                 remitterAreaError,
                 remitterDistrictError,
+                fatherError,
+                responsibleNameError,
+                designationError,
                 remitterPanError,
                 codeError,
                 remitterResidentialError,
@@ -427,7 +448,10 @@ export default function AddRemitter() {
             codeError: "",
             remitterResidentialError: "",
             statusError: "",
-            princPlcBusRemterError: ""
+            princPlcBusRemterError: "",
+            fatherError,
+            responsibleNameError,
+            designationError,
         }));
 
         return true;

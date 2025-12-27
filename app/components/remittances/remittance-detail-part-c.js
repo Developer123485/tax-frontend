@@ -666,7 +666,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                     <label className="form-label">Designation
                         <span className="text-danger">*</span>
                     </label>
@@ -676,7 +676,7 @@ export default function RemittanceDetailCA({
                         onChange={(e) => handleInput("verDesignation", e)}
                     />
                     {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
-                </div>
+                </div> */}
 
                 <div className="col-md-4">
                     <label className="form-label">Place

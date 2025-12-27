@@ -50,6 +50,28 @@ export default function RemitterDetail(props) {
                 <h5 className="text-blue fw-bold">Remitter Details</h5>
               </div>
 
+              <div className="col-md-3">
+                <label className="form-label">Remitter Code
+                  <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.code}
+                  maxLength={10}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("code", e)
+                  }
+                  }
+                />
+                {isNextDirty && remitterErrors.codeError && (
+                  <span className="text-danger">
+                    {remitterErrors.codeError}
+                  </span>
+                )}
+              </div>
+
               {/* Name */}
               <div className="col-md-3">
                 <label className="form-label">
@@ -372,48 +394,60 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
+
+
+
+
               <div className="col-md-3">
-                <label className="form-label">Code
-                  <span className="text-danger">*</span>
+                <label className="form-label">Responsible Person Name
+                  <span className="text-danger"> *</span>
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.code}
-                  maxLength={10}
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("code", e)
-                  }
-                  }
-                />
-                {isNextDirty && remitterErrors.codeError && (
-                  <span className="text-danger">
-                    {remitterErrors.codeError}
-                  </span>
-                )}
-              </div>
-
-
-
-              <div className="col-md-3">
-                <label className="form-label">Responsible Person Name</label>
                 <input
                   type="text"
                   className="form-control"
                   value={remitterDetail.responsibleName}
                   onChange={(e) => handleInput("responsibleName", e)}
                 />
+                {isNextDirty && remitterErrors.responsibleNameError && (
+                  <span className="text-danger">
+                    {remitterErrors.responsibleNameError}
+                  </span>
+                )}
               </div>
 
               <div className="col-md-3">
-                <label className="form-label">Father/Mother Name</label>
+                <label className="form-label">Father/Mother Name
+                  <span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
                   value={remitterDetail.fatherName}
                   onChange={(e) => handleInput("fatherName", e)}
                 />
+                {isNextDirty && remitterErrors.fatherError && (
+                  <span className="text-danger">
+                    {remitterErrors.fatherError}
+                  </span>
+                )}
+              </div>
+
+              <div className="col-md-3">
+                <label className="form-label">Designation
+                  <span className="text-danger"> *</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.desgination}
+                  maxLength={75}
+                  onChange={(e) => handleInput("desgination", e)}
+                />
+                {isNextDirty && remitterErrors.designationError && (
+                  <span className="text-danger">
+                    {remitterErrors.designationError}
+                  </span>
+                )}
               </div>
 
 
