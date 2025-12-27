@@ -81,9 +81,14 @@ export default function Remittee({ params }) {
             width: "80px",
         },
         {
+            name: "Remittee Code",
+            selector: (row) => row.code || "-",
+            width: "160px",
+        },
+        {
             name: "Name",
             selector: (row) => row.name || "-",
-            width: "160px",
+            width: "290px",
         },
         {
             name: "Pan",

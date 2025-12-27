@@ -380,8 +380,12 @@ export default function RemitterDetail(props) {
                   type="text"
                   className="form-control"
                   value={remitterDetail.code}
-                  maxLength={15}
-                  onChange={(e) => handleInput("code", e)}
+                  maxLength={10}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("code", e)
+                  }
+                  }
                 />
                 {isNextDirty && remitterErrors.codeError && (
                   <span className="text-danger">

@@ -68,17 +68,24 @@ export default function Remitters() {
             width: "80px",
         },
         {
+            name: "Remitter Code",
+            selector: (row) => row.code || "-",
+            width: "160px",
+        },
+        {
             name: "Name",
             selector: (row) => row.name || "-",
-            width: "160px",
+            width: "300px",
         },
         {
             name: "Tan",
             selector: (row) => row?.remitterTan || "",
+            width: "130px",
         },
         {
             name: "Pan",
             selector: (row) => row?.remitterPan || "",
+            width: "130px",
         },
         {
             name: "Email",

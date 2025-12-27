@@ -47,23 +47,6 @@ export default function RemitteeDetail(props) {
                             )}
                         </div>
 
-                        <div className="col-md-3">
-                            <label className="form-label">
-                                Code <span className="text-danger">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={remittee.code || ""}
-                                maxLength={10}
-                                onChange={(e) => handleInput("code", e)}
-                            />
-                            {isDirty && remitterErrors.code && (
-                                <span className="text-danger">
-                                    {remitterErrors.code}
-                                </span>
-                            )}
-                        </div>
 
                         {/* === PAN === */}
                         <div className="col-md-3">
@@ -87,6 +70,29 @@ export default function RemitteeDetail(props) {
                             {isDirty && remitterErrors.remitteePan && (
                                 <span className="text-danger">
                                     {remitterErrors.remitteePan}
+                                </span>
+                            )}
+                        </div>
+
+
+                        <div className="col-md-3">
+                            <label className="form-label">
+                                Code <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={remittee.code || ""}
+                                maxLength={10}
+                                onChange={(e) => {
+                                    e.target.value = e.target.value.toUpperCase();
+                                    handleInput("code", e)
+                                }
+                                }
+                            />
+                            {isDirty && remitterErrors.code && (
+                                <span className="text-danger">
+                                    {remitterErrors.code}
                                 </span>
                             )}
                         </div>
@@ -179,7 +185,7 @@ export default function RemitteeDetail(props) {
                         {/* === PINCODE === */}
                         <div className="col-md-3">
                             <label className="form-label">
-                                Zipcode
+                                Zip Code
                             </label>
                             <input
                                 type="text"
@@ -197,7 +203,7 @@ export default function RemitteeDetail(props) {
 
                         {/* === EMAIL === */}
                         <div className="col-md-3">
-                            <label className="form-label">Email
+                            <label className="form-label">Email Address
                                 <span className="text-danger">*</span>
                             </label>
                             <input
@@ -215,7 +221,7 @@ export default function RemitteeDetail(props) {
 
                         {/* === PHONE === */}
                         <div className="col-md-3">
-                            <label className="form-label">Phone</label>
+                            <label className="form-label">Phone Number</label>
                             <input
                                 type="text"
                                 maxLength={15}
@@ -241,7 +247,7 @@ export default function RemitteeDetail(props) {
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country Remittance Made</span>
                             </label>
-                            {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                            {enumList.countryCodeRemitter && enumList.countryCodeRemitter.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("countryRemMade", e)}
                                 id={remittee.countryRemMade}
                                 options={enumList.countryCodeRemitter}
