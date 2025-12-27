@@ -6,12 +6,15 @@ import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { ToastContainer, toast } from "react-toastify";
 import { AccountantService } from "@/app/services/accountant.service";
 import AccountantDetailForm from "@/app/components/15ca-master-detail/accountant";
+import { EnumService } from "@/app/services/enum.service";
 
 export default function AddAccountant({ params }) {
     const router = useRouter();
     const resolvedParams = use(params);
     const searchParams = useSearchParams();
     const remitterId = resolvedParams?.id;
+    const [isDirty, setIsDirty] = useState(false);
+    const [enumList, setEnumList] = useState({});
 
     const [accountant, setAccountant] = useState({
         id: 0,
@@ -44,7 +47,12 @@ export default function AddAccountant({ params }) {
         { name: "Accountant Detail", isActive: true }
     ]);
 
-    useEffect(() => loadAccountant(), []);
+    useEffect(() => {
+        EnumService.getEnumStatues().then((res) => {
+            if (res) setEnumList(res);
+        });
+        loadAccountant()
+    }, []);
 
     function loadAccountant() {
         const id = searchParams.get("id");
@@ -60,22 +68,27 @@ export default function AddAccountant({ params }) {
         setAccountant((prev) => ({ ...prev, [field]: value }));
     }
 
+    useEffect(() => {
+        validate();
+    }, [accountant.accountantName, accountant.code, accountant.accountantFirmName, accountant.country, accountant.registrationNo]);
+
     // VALIDATION
     function validate() {
         let err = {};
         if (!accountant.accountantName) err.accountantName = "Name is required";
         if (!accountant.code) err.code = "Code is required";
         if (!accountant.accountantFirmName) err.accountantFirmName = "Firm name is required";
+        if (!accountant.country) err.country = "Country is required";
+        if (!accountant.registrationNo) err.registrationNo = "Membership no is required";
         setErrors(err);
         return Object.keys(err).length === 0;
     }
 
     function saveAccountant(e) {
         e.preventDefault();
+        setIsDirty();
         if (!validate()) return;
-
         accountant.remitterId = remitterId;
-
         AccountantService.saveAccountant(accountant)
             .then(() => {
                 toast.success("Accountant saved successfully");
@@ -97,6 +110,8 @@ export default function AddAccountant({ params }) {
                     <AccountantDetailForm
                         accountant={accountant}
                         errors={errors}
+                        isDirty={isDirty}
+                        enumList={enumList}
                         handleInput={handleInput}
                         handleSave={saveAccountant}
                     />

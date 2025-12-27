@@ -60,9 +60,14 @@ export default function AccountantList({ params }) {
             width: "80px",
         },
         {
+            name: "Accountant Code",
+            selector: (row) => row.code || "-",
+            width: "170px",
+        },
+        {
             name: "Name",
             selector: (row) => row.accountantName || "-",
-            width: "180px",
+            width: "290px",
         },
         {
             name: "Firm Name",
