@@ -3,7 +3,7 @@ import React from "react";
 import ProcessPopup from "../modals/processing";
 
 export default function AoOrderDetailForm(props) {
-    const { aoOrder, errors, handleInput, handleSave } = props;
+    const { aoOrder, errors, handleInput, handleSave, isDirty } = props;
 
     return (
         <>
@@ -11,6 +11,29 @@ export default function AoOrderDetailForm(props) {
                 <div className="row bg-light-gray px-3 py-4 rounded-3 g-3">
 
                     <h5 className="text-blue fw-bold mb-3">AO Order Details</h5>
+
+                    {/* Code */}
+                    <div className="col-md-3">
+                        <label className="form-label">AO Order Code
+                            <span className="text-danger">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            maxLength={10}
+                            value={aoOrder.code || ""}
+                            onChange={(e) => {
+                                e.target.value = e.target.value.toUpperCase();
+                                handleInput("code", e)
+                            }
+                            }
+                        />
+                        {isDirty && errors.code && (
+                            <span className="text-danger">
+                                {errors.code}
+                            </span>
+                        )}
+                    </div>
 
                     {/* Is AO Order Obtained */}
                     <div className="col-md-3">
@@ -33,10 +56,12 @@ export default function AoOrderDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={15}
+                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.section || ""}
                             onChange={(e) => handleInput("section", e)}
                         />
-                        {aoOrder.isAoOrderObtained == "Y" && errors.section && (
+                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.section && (
                             <span className="text-danger">{errors.section}</span>
                         )}
                     </div>
@@ -49,10 +74,12 @@ export default function AoOrderDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.assessingOfficerName || ""}
+                            maxLength={125}
                             onChange={(e) => handleInput("assessingOfficerName", e)}
                         />
-                        {aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerName && (
+                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerName && (
                             <span className="text-danger">
                                 {errors.assessingOfficerName}
                             </span>
@@ -67,10 +94,12 @@ export default function AoOrderDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={125}
+                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.assessingOfficerDesignation || ""}
                             onChange={(e) => handleInput("assessingOfficerDesignation", e)}
                         />
-                        {aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerDesignation && (
+                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerDesignation && (
                             <span className="text-danger">
                                 {errors.assessingOfficerDesignation}
                             </span>
@@ -85,10 +114,12 @@ export default function AoOrderDetailForm(props) {
                         <input
                             type="date"
                             className="form-control"
+                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.orderDate || ""}
+                            maxLength={125}
                             onChange={(e) => handleInput("orderDate", e)}
                         />
-                        {aoOrder.isAoOrderObtained == "Y" && errors.orderDate && (
+                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.orderDate && (
                             <span className="text-danger">
                                 {errors.orderDate}
                             </span>
@@ -103,33 +134,19 @@ export default function AoOrderDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            disabled={aoOrder.isAoOrderObtained == "N"}
+                            maxLength={10}
                             value={aoOrder.orderCertificateNumber || ""}
                             onChange={(e) => handleInput("orderCertificateNumber", e)}
                         />
-                        {aoOrder.isAoOrderObtained == "Y" && errors.orderCertificateNumber && (
+                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.orderCertificateNumber && (
                             <span className="text-danger">
                                 {errors.orderCertificateNumber}
                             </span>
                         )}
                     </div>
 
-                    {/* Code */}
-                    <div className="col-md-3">
-                        <label className="form-label">Code
-                            <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={aoOrder.code || ""}
-                            onChange={(e) => handleInput("code", e)}
-                        />
-                        {errors.code && (
-                            <span className="text-danger">
-                                {errors.code}
-                            </span>
-                        )}
-                    </div>
+
 
                     {/* Save */}
                     <div className="col-md-12 mt-3">

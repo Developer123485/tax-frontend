@@ -41,7 +41,7 @@ async function saveBankDetail(model) {
 // Delete
 async function deleteBankDetail(id) {
     return api
-        .delete(`/bankdetail/${id}`, axiosConfig)
+        .get(`/bankdetail/delete/${id}`, axiosConfig)
         .then((result) => result)
         .catch((err) => Promise.reject(err));
 }

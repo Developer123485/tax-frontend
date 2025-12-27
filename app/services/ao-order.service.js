@@ -36,7 +36,7 @@ async function saveAoOrder(model) {
 
 async function deleteAoOrder(id) {
     return api
-        .delete(`/AoOrderDetail/${id}`, axiosConfig)
+        .get(`/AoOrderDetail/delete/${id}`, axiosConfig)
         .then((result) => result)
         .catch((err) => Promise.reject(err));
 }

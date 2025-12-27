@@ -53,6 +53,11 @@ export default function AoOrderList({ params }) {
             width: "80px",
         },
         {
+            name: "AO Order Code",
+            selector: (row) => row.code || "-",
+            width: "170px",
+        },
+        {
             name: "AO Order Obtained",
             selector: (row) => row.isAoOrderObtained || "-",
             width: "160px"
@@ -73,6 +78,10 @@ export default function AoOrderList({ params }) {
                     ? new Date(row.orderDate).toLocaleDateString("en-IN")
                     : "-",
             width: "120px"
+        },
+        {
+            name: "Order Certificate No",
+            selector: (row) => row.orderCertificateNumber || "-",
         },
         {
             name: "Actions",

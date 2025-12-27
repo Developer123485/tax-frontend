@@ -11,7 +11,7 @@ export default function AddAoOrder({ params }) {
     const router = useRouter();
     const resolvedParams = use(params);
     const searchParams = useSearchParams();
-
+    const [isDirty, setIsDirty] = useState(false);
     const remitterId = resolvedParams?.id;
 
     const [aoOrder, setAoOrder] = useState({
@@ -56,6 +56,10 @@ export default function AddAoOrder({ params }) {
         setAoOrder((prev) => ({ ...prev, [field]: value }));
     }
 
+    useEffect(() => {
+        validate();
+    }, [aoOrder.code, aoOrder.isAoOrderObtained, aoOrder.section, aoOrder.assessingOfficerName, aoOrder.assessingOfficerDesignation, aoOrder.orderCertificateNumber, aoOrder.orderDate]);
+
     function validate() {
         let err = {};
         if (!aoOrder.code) err.code = "Code is required";
@@ -67,7 +71,7 @@ export default function AddAoOrder({ params }) {
                 err.assessingOfficerDesignation = "Assessing Officer Designation is required";
             if (!aoOrder.orderCertificateNumber)
                 err.orderCertificateNumber = "Order Certificate is required";
-             if (!aoOrder.orderDate)
+            if (!aoOrder.orderDate)
                 err.orderDate = "Order Date is required";
         }
 
@@ -76,6 +80,7 @@ export default function AddAoOrder({ params }) {
     }
 
     function saveAoOrder(e) {
+        setIsDirty(true);
         e.preventDefault();
         if (!validate()) return;
 
@@ -102,6 +107,7 @@ export default function AddAoOrder({ params }) {
                     <AoOrderDetailForm
                         aoOrder={aoOrder}
                         errors={errors}
+                        isDirty={isDirty}
                         handleInput={handleInput}
                         handleSave={saveAoOrder}
                     />

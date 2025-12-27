@@ -49,7 +49,7 @@ async function saveAccountant(model) {
 
 async function deleteAccountant(id) {
     return api
-        .delete(`/accountant/${id}`, axiosConfig)
+        .get(`/accountant/delete/${id}`, axiosConfig)
         .then((result) => {
             return result;
         })
