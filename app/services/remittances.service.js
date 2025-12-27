@@ -35,10 +35,7 @@ async function getRemittanceDropdowns(remitterId) {
 }
 
 async function generateXml(id, remitterId) {
-    let axiosConfig = {
-        responseType: "blob",
-    };
-    const result = await api.get(`remittance/generateXml/${id}/${remitterId}`, axiosConfig);
+    const result = await api.get(`remittance/generateXml/${id}/${remitterId}`);
     return result;
 }
 

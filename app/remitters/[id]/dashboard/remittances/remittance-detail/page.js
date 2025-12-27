@@ -369,16 +369,19 @@ export default function AddRemittance({ params }) {
         if (search.get("partType") == "C")
             model.type = search.get("formType");
         RemittanceService.saveRemittance(model)
-            .then(() => {
-                toast.success("Saved successfully");
-                if (search.get("partType") !== "C") {
-                    router.push(`/remitters/${remitterId}/dashboard/remittances?partType=` + search.get("partType"));
-                } else {
-                    router.push(`/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}`);
+            .then((res) => {
+                if (res) {
+                    toast.success("Saved successfully");
+                    if (search.get("partType") !== "C") {
+                        router.push(`/remitters/${remitterId}/dashboard/remittances?partType=` + search.get("partType"));
+                    } else {
+                        router.push(`/remitters/${remitterId}/dashboard/remittances?partType=${search.get("partType")}&formType=${search.get("formType")}`);
+                    }
                 }
             })
-            .catch((err) =>
+            .catch((err) => {
                 toast.error(err?.response?.data?.message || "Error saving")
+            }
             );
     }
 

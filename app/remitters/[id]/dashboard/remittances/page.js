@@ -12,6 +12,7 @@ import DeleteConfirmation from "@/app/components/modals/delete-confirmation";
 import ProcessPopup from "@/app/components/modals/processing";
 import { useSearchParams } from "next/navigation";
 import { RemittanceService } from "@/app/services/remittances.service";
+import { Modal } from "react-bootstrap";
 
 export default function RemittanceList({ params }) {
     const resolvedParams = use(params);
@@ -20,12 +21,14 @@ export default function RemittanceList({ params }) {
 
     // STATE
     const [remittances, setRemittances] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(50);
     const [totalRows, setTotalRows] = useState(0);
     const [showLoader, setShowLoader] = useState(true);
     const searchParams = useSearchParams(null);
+    const [showErrorFile, setShowErrorFile] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -187,6 +190,7 @@ export default function RemittanceList({ params }) {
     }, [search]);
 
     function generateXml(id) {
+        setErrors([]);
         RemittanceService.generateXml(id, remitterId).then(res => {
             const url = window.URL.createObjectURL(new Blob([res]));
             const a = document.createElement("a");
@@ -196,6 +200,11 @@ export default function RemittanceList({ params }) {
             a.click();
             a.remove();
             window.URL.revokeObjectURL(url);
+        }).catch(err => {
+            if (err?.response?.data && err?.response?.data?.length > 0) {
+                setErrors(err?.response?.data);
+                setShowErrorFile(true);
+            }
         })
     }
 
@@ -559,6 +568,38 @@ export default function RemittanceList({ params }) {
                     </div>
                 </div>
             </section>
+            <Modal
+                size="md"
+                centered
+                backdrop="static"
+                keyboard={false}
+                show={showErrorFile}
+                onHide={() => setShowErrorFile(false)}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-danger">
+                        Validation Errors
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    {errors && errors.length > 0 ? (
+                        <ul className="list-group list-group-flush">
+                            {errors.map((error, index) => (
+                                <li
+                                    key={index}
+                                    className="list-group-item text-danger border-0 px-0"
+                                >
+                                    • {error}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="text-muted text-center mb-0">No errors found.</p>
+                    )}
+                </Modal.Body>
+            </Modal>
+
             {/* MODALS */}
             <ProcessPopup showLoader={showLoader} />
             <DeleteConfirmation
