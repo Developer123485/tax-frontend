@@ -50,37 +50,31 @@ export default function RemitterDetail(props) {
                 <h5 className="text-blue fw-bold">Remitter Details</h5>
               </div>
 
-              {/* TAN */}
+              {/* Name */}
               <div className="col-md-3">
-                <label htmlFor="inputTANNo" className="form-label">
-                  <span>TAN</span>
-                  {/* <span className="text-danger"> *</span> */}
+                <label className="form-label">
+                  <span>Name Of Remitter</span>
+                  <span className="text-danger"> *</span>
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={10}
-                  value={
-                    remitterDetail.remitterTan
-                      ? remitterDetail.remitterTan.toUpperCase()
-                      : ""
-                  }
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("remitterTan", e);
-                  }}
+                  maxLength={75}
+                  value={remitterDetail.name}
+                  onChange={(e) => handleInput("name", e)}
                 />
-                {/* {isNextDirty && remitterErrors.remitterTanError && (
+                {isNextDirty && remitterErrors.remitterNameError && (
                   <span className="text-danger">
-                    {remitterErrors.remitterTanError}
+                    {remitterErrors.remitterNameError}
                   </span>
-                )} */}
+                )}
               </div>
+
 
               {/* PAN */}
               <div className="col-md-3">
                 <label htmlFor="inputPANNo" className="form-label">
-                  <span>PAN</span>
+                  <span>PAN Of the Remitter</span>
                   <span className="text-danger"> *</span>
                 </label>
                 <input
@@ -104,25 +98,34 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
-              {/* Name */}
+              {/* TAN */}
               <div className="col-md-3">
-                <label className="form-label">
-                  <span>Remitter Name</span>
-                  <span className="text-danger"> *</span>
+                <label htmlFor="inputTANNo" className="form-label">
+                  <span>TAN Of the Remitter</span>
+                  {/* <span className="text-danger"> *</span> */}
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={75}
-                  value={remitterDetail.name}
-                  onChange={(e) => handleInput("name", e)}
+                  maxLength={10}
+                  value={
+                    remitterDetail.remitterTan
+                      ? remitterDetail.remitterTan.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("remitterTan", e);
+                  }}
                 />
-                {isNextDirty && remitterErrors.remitterNameError && (
+                {/* {isNextDirty && remitterErrors.remitterTanError && (
                   <span className="text-danger">
-                    {remitterErrors.remitterNameError}
+                    {remitterErrors.remitterTanError}
                   </span>
-                )}
+                )} */}
               </div>
+
+
 
               {/* Flat */}
               <div className="col-md-3">
@@ -144,60 +147,6 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
-              {/* State */}
-              <div className="col-md-6">
-                <label htmlFor="inputCountry" className="form-label">
-                  <span>State</span>
-                  <span className="text-danger"> *</span>
-                </label>
-                {enumList.states && enumList.states.length > 0 && <SearchableDropdown
-                  setEventId={(e) => handleInput("remitterState", e)}
-                  id={remitterDetail.remitterState}
-                  options={enumList.states}
-                ></SearchableDropdown>
-                }
-                {isNextDirty && remitterErrors.remitterStateError && (
-                  <span className="text-danger">
-                    {remitterErrors.remitterStateError}
-                  </span>
-                )}
-              </div>
-
-              {/* Country */}
-              <div className="col-md-6">
-                <label htmlFor="inputCountry" className="form-label">
-                  <span>Country</span>
-                  <span className="text-danger"> *</span>
-                </label>
-                {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
-                  setEventId={(e) => handleInput("remitterCountry", e)}
-                  id={remitterDetail.remitterCountry}
-                  options={enumList.countries}
-                ></SearchableDropdown>
-                }
-                {/* <select
-                  className="form-select"
-                  style={highlightStyle1}
-                  onFocus={() => setIsFocused1(true)}
-                  onBlur={() => setIsFocused1(false)}
-                  value={remitterDetail.remitterState}
-                  onChange={(e) => handleInput("remitterState", e)}
-                >
-                  <option value={""}>Select State</option>
-                  {enumList.states
-                    ?.filter((p) => p.value !== "OVERSEAS")
-                    ?.map((option, index) => (
-                      <option key={index} value={option.key}>
-                        {option.value}
-                      </option>
-                    ))}
-                </select> */}
-                {isNextDirty && remitterErrors.remitterCountryError && (
-                  <span className="text-danger">
-                    {remitterErrors.remitterCountryError}
-                  </span>
-                )}
-              </div>
 
               {/* Building */}
               <div className="col-md-3">
@@ -218,6 +167,7 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
+
               {/* Street */}
               <div className="col-md-3">
                 <label className="form-label">Road/Street</label>
@@ -235,41 +185,6 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
-              <div className="col-md-6">
-                <label htmlFor="inputCountry" className="form-label">
-                  <span>Resdential Status</span>
-                  <span className="text-danger"> *</span>
-                </label>
-                {enumList.resdentialStatus && enumList.resdentialStatus.length > 0 && <SearchableDropdown
-                  setEventId={(e) => handleInput("remitterResidential", e)}
-                  id={remitterDetail.remitterResidential}
-                  options={enumList.resdentialStatus}
-                ></SearchableDropdown>
-                }
-                {isNextDirty && remitterErrors.remitterResidentialError && (
-                  <span className="text-danger">
-                    {remitterErrors.remitterResidentialError}
-                  </span>
-                )}
-              </div>
-
-              <div className="col-md-6">
-                <label htmlFor="inputCountry" className="form-label">
-                  <span>Status</span>
-                  <span className="text-danger"> *</span>
-                </label>
-                {enumList.status && enumList.status.length > 0 && <SearchableDropdown
-                  setEventId={(e) => handleInput("remitterStatus", e)}
-                  id={remitterDetail.remitterStatus}
-                  options={enumList.status}
-                ></SearchableDropdown>
-                }
-                {isNextDirty && remitterErrors.statusError && (
-                  <span className="text-danger">
-                    {remitterErrors.statusError}
-                  </span>
-                )}
-              </div>
 
               {/* Area */}
               <div className="col-md-3">
@@ -304,6 +219,63 @@ export default function RemitterDetail(props) {
                   </span>
                 )}
               </div>
+
+              {/* State */}
+              <div className="col-md-3">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>State</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.states && enumList.states.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterState", e)}
+                  id={remitterDetail.remitterState}
+                  options={enumList.states}
+                ></SearchableDropdown>
+                }
+                {isNextDirty && remitterErrors.remitterStateError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterStateError}
+                  </span>
+                )}
+              </div>
+
+              {/* Country */}
+              <div className="col-md-3">
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Country</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterCountry", e)}
+                  id={remitterDetail.remitterCountry}
+                  options={enumList.countries}
+                ></SearchableDropdown>
+                }
+                {/* <select
+                  className="form-select"
+                  style={highlightStyle1}
+                  onFocus={() => setIsFocused1(true)}
+                  onBlur={() => setIsFocused1(false)}
+                  value={remitterDetail.remitterState}
+                  onChange={(e) => handleInput("remitterState", e)}
+                >
+                  <option value={""}>Select State</option>
+                  {enumList.states
+                    ?.filter((p) => p.value !== "OVERSEAS")
+                    ?.map((option, index) => (
+                      <option key={index} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))}
+                </select> */}
+                {isNextDirty && remitterErrors.remitterCountryError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterCountryError}
+                  </span>
+                )}
+              </div>
+
+
 
               {/* Pincode */}
               <div className="col-md-3">
@@ -348,7 +320,7 @@ export default function RemitterDetail(props) {
 
               {/* Phone */}
               <div className="col-md-3">
-                <label className="form-label">Mobile</label>
+                <label className="form-label">Phone Number</label>
                 <input
                   type="text"
                   className="form-control"
@@ -361,82 +333,43 @@ export default function RemitterDetail(props) {
                 />
               </div>
 
-              <div className="col-md-3">
-                <label className="form-label">TAN ACK Part C</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.tanAckPartC}
-                  onChange={(e) => handleInput("tanAckPartC", e)}
-                />
-              </div>
+
 
               <div className="col-md-3">
-                <label className="form-label">Income Tax Ward</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={
-                    remitterDetail.incTaxWard
-                      ? remitterDetail.incTaxWard.toUpperCase()
-                      : ""
-                  }
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("incTaxWard", e);
-                  }}
-                />
-              </div>
-
-              <div className="col-md-3">
-                <label className="form-label">Principal Place of Business (Remitter)</label>
-                <span className="text-danger">*</span>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={
-                    remitterDetail.princPlcBusRemter
-                      ? remitterDetail.princPlcBusRemter.toUpperCase()
-                      : ""
-                  }
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("princPlcBusRemter", e);
-                  }}
-                />
-                {isNextDirty && remitterErrors.princPlcBusRemterError && (
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Status Of Remitter</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.status && enumList.status.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterStatus", e)}
+                  id={remitterDetail.remitterStatus}
+                  options={enumList.status}
+                ></SearchableDropdown>
+                }
+                {isNextDirty && remitterErrors.statusError && (
                   <span className="text-danger">
-                    {remitterErrors.princPlcBusRemterError}
+                    {remitterErrors.statusError}
                   </span>
                 )}
               </div>
 
-              <div className="col-md-3">
-                <label className="form-label">Domestic Flag</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.domesticFlg}
-                  onChange={(e) => handleInput("domesticFlg", e)}
-                />
-              </div>
 
               <div className="col-md-3">
-                <label className="form-label">Area Code</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  maxLength={3}
-                  value={
-                    remitterDetail.areaCode
-                      ? remitterDetail.areaCode.toUpperCase()
-                      : ""
-                  }
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("areaCode", e);
-                  }}
-                />
+                <label htmlFor="inputCountry" className="form-label">
+                  <span>Resdential Status</span>
+                  <span className="text-danger"> *</span>
+                </label>
+                {enumList.resdentialStatus && enumList.resdentialStatus.length > 0 && <SearchableDropdown
+                  setEventId={(e) => handleInput("remitterResidential", e)}
+                  id={remitterDetail.remitterResidential}
+                  options={enumList.resdentialStatus}
+                ></SearchableDropdown>
+                }
+                {isNextDirty && remitterErrors.remitterResidentialError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterResidentialError}
+                  </span>
+                )}
               </div>
 
               <div className="col-md-3">
@@ -457,43 +390,7 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
-              <div className="col-md-3">
-                <label className="form-label">Range Code</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.rangeCode}
-                  onChange={(e) => handleInput("rangeCode", e)}
-                />
-              </div>
 
-              <div className="col-md-3">
-                <label className="form-label">AO Type</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  maxLength={2}
-                  value={
-                    remitterDetail.aoType
-                      ? remitterDetail.aoType.toUpperCase()
-                      : ""
-                  }
-                  onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                    handleInput("aoType", e);
-                  }}
-                />
-              </div>
-
-              <div className="col-md-3">
-                <label className="form-label">AO Number</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={remitterDetail.aoNumber}
-                  onChange={(e) => handleInput("aoNumber", e)}
-                />
-              </div>
 
               <div className="col-md-3">
                 <label className="form-label">Responsible Person Name</label>
@@ -515,15 +412,128 @@ export default function RemitterDetail(props) {
                 />
               </div>
 
-              <div className="col-md-3">
-                <label className="form-label">Designation</label>
+
+
+
+              {/* -------- below information for part C     ----------- */}
+
+
+              {/* <div className="col-md-3">
+                <label className="form-label">TAN ACK Part C</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={remitterDetail.desgination}
-                  onChange={(e) => handleInput("desgination", e)}
+                  value={remitterDetail.tanAckPartC}
+                  onChange={(e) => handleInput("tanAckPartC", e)}
                 />
+              </div> */}
+
+              {/* <div className="col-md-3">
+                <label className="form-label">Income Tax Ward</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={
+                    remitterDetail.incTaxWard
+                      ? remitterDetail.incTaxWard.toUpperCase()
+                      : ""
+                  }
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    handleInput("incTaxWard", e);
+                  }}
+                />
+              </div> */}
+
+              {/* ===== PART C SECTION ===== */}
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <h5 className="text-primary fw-bold mb-3">
+                    Below Information Required for Part C
+                  </h5>
+                </div>
+
+                {/* Row 1 */}
+                <div className="col-md-3">
+                  <label className="form-label">Area Code</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    maxLength={3}
+                    value={remitterDetail.areaCode || ""}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                      handleInput("areaCode", e);
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-3">
+                  <label className="form-label">AO Type</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    maxLength={2}
+                    value={remitterDetail.aoType || ""}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                      handleInput("aoType", e);
+                    }}
+                  />
+                </div>
+
+                <div className="col-md-3">
+                  <label className="form-label">Range Code</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={remitterDetail.rangeCode || ""}
+                    onChange={(e) => handleInput("rangeCode", e)}
+                  />
+                </div>
+
+                <div className="col-md-3">
+                  <label className="form-label">AO Number</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={remitterDetail.aoNumber || ""}
+                    onChange={(e) => handleInput("aoNumber", e)}
+                  />
+                </div>
+
+                {/* Row 2 */}
+                <div className="col-md-6 mt-3">
+                  <label className="form-label">
+                    Principal Place of Business <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={remitterDetail.princPlcBusRemter || ""}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                      handleInput("princPlcBusRemter", e);
+                    }}
+                  />
+                </div>
               </div>
+
+              {/* 
+              <div className="col-md-3">
+                <label className="form-label">Domestic Flag</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={remitterDetail.domesticFlg}
+                  onChange={(e) => handleInput("domesticFlg", e)}
+                />
+              </div> */}
+
+
+
+
+
 
             </div>
 

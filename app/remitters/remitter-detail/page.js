@@ -239,10 +239,10 @@ export default function AddRemitter() {
         if (!remitterDetail.remitterStatus) {
             statusError = "Remitter Status is required";
         }
-        debugger
-        if (!remitterDetail.princPlcBusRemter) {
-            princPlcBusRemterError = "Remitter PrincPlcBusRemter is required";
-        }
+        // debugger
+        // if (!remitterDetail.princPlcBusRemter) {
+        //     princPlcBusRemterError = "Remitter PrincPlcBusRemter is required";
+        // }
 
 
         if (!remitterDetail.remitterCountry) {
