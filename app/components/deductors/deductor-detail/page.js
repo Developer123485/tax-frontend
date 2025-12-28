@@ -850,9 +850,9 @@ export default function DeductorDetail(props) {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={(e) => props.handleSaveDeductor(e)}
+                  onClick={(e) => props.goToResponsibleDetail(e)}
                 >
-                  Save Deductor
+                  Next
                 </button>
               </div>
             </div>

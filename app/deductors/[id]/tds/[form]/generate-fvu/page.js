@@ -427,7 +427,7 @@ export default function GenerateFVU({ params }) {
       toast.error("No file is available for download. Please click on 'Generate FVU'.");
       return;
     }
-    if (deductorInfo.deductorTan && deductorInfo.tracesPassword) {
+    if (deductorInfo.itdLogin && deductorInfo.itdPassword) {
       setShowExtension(true);
     } else {
       toast.error("TRACES Tan and password do not exist for the deductor");

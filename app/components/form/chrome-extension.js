@@ -13,8 +13,8 @@ export default function EnableExtensionModal(props) {
             Quarter: searchParams.get("quarter"),
             DeductorName: dedName,
             CategoryId: parseInt(searchParams.get("categoryId")),
-            Password: deductorInfo.tracesPassword,
-            Tan: deductorInfo.deductorTan,
+            Password: deductorInfo.itdPassword,
+            Tan: deductorInfo.itdLogin,
         };
         // const payload = {
         //     Tan: "PTLJ10787A",              // user TAN
