@@ -305,7 +305,7 @@ export default function GenerateFVU({ params }) {
       setTokenError("Token number should be 15 digits");
       return;
     }
-    if (!selectedData && interestAndfines?.isDownloadCSIAllow) {
+    if (!selectedData && interestAndfines?.isDownloadCSIAllow == true) {
       toast.error("Please select CSI file");
       return;
     }
@@ -899,7 +899,7 @@ export default function GenerateFVU({ params }) {
                   <span className="text-danger"> {tokenError}</span>
                 </div>
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
-                  {interestAndfines?.isCSIDownloadLoading &&
+                  {interestAndfines?.isDownloadCSIAllow &&
                     <>
                       <div className="col-md-7">
                         <p className="mb-0">
@@ -930,7 +930,7 @@ export default function GenerateFVU({ params }) {
                       </div>
                     </>
                   }
-                  {!interestAndfines?.isCSIDownloadLoading &&
+                  {!interestAndfines?.isDownloadCSIAllow &&
                     <div className="col-md-10">
                       <p className="mb-0 text-danger">
                         Since challan verification is not required for this return, you don’t need to upload a CSI file.
