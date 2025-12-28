@@ -7,22 +7,23 @@ import "react-toastify/dist/ReactToastify.css";
 export default function EnableExtensionModal(props) {
     const { deductorInfo, searchParams, form } = props;
     const handleStartEFiling = async () => {
-        // const payload = {
-        //     FinancialYear: searchParams.get("financial_year"),
-        //     Quarter: searchParams.get("quarter"),
-        //     DeductorName: deductorInfo.deductorName,
-        //     CategoryId: parseInt(searchParams.get("categoryId")),
-        //     Password: deductorInfo.tracesPassword,
-        //     Tan: deductorInfo.deductorTan,
-        // };
+        const dedName = deductorInfo.deductorName.replace(/[^a-zA-Z0-9 ]/g, "").trim();
         const payload = {
-            Tan: "PTLJ10787A",              // user TAN
-            Password: "bansal@123", // password
-            FinancialYear: "2024-25",
-            Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
-            CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
-            DeductorName: "ABC Pvt Ltd"
+            FinancialYear: searchParams.get("financial_year"),
+            Quarter: searchParams.get("quarter"),
+            DeductorName: dedName,
+            CategoryId: parseInt(searchParams.get("categoryId")),
+            Password: deductorInfo.tracesPassword,
+            Tan: deductorInfo.deductorTan,
         };
+        // const payload = {
+        //     Tan: "PTLJ10787A",              // user TAN
+        //     Password: "bansal@123", // password
+        //     FinancialYear: "2024-25",
+        //     Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
+        //     CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
+        //     DeductorName: "ABC Pvt Ltd"
+        // };
         // Send the message to the Chrome extension content script
         window.postMessage(
             {
