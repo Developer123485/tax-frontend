@@ -20,10 +20,10 @@ export default function LoginFormaa() {
     const payload = {
       Tan: "PTLJ10787A",              // user TAN
       Password: "bansal@123", // password
-      FinancialYear: "2024-25",
-      Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
-      CategoryId: 4,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
-      DeductorName: "ABC Pvt Ltd"
+      FinancialYear: "2025-26",
+      Quarter: "Q4",                  // Q1 / Q2 / Q3 / Q4
+      CategoryId: 1,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
+      DeductorName: "INSPECTOR GENERAL OF POLICE  UT, CHANDIGARH"
     };
 
     // Send the message to the Chrome extension content script

@@ -426,7 +426,7 @@ export default function GenerateFVU({ params }) {
     if (contentType && contentType.includes("application/json")) {
       toast.error("No file is available for download. Please click on 'Generate FVU'.");
       return;
-    }
+    } 
     if (deductorInfo.itdLogin && deductorInfo.itdPassword) {
       setShowExtension(true);
     } else {
