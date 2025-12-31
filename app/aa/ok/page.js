@@ -1,68 +1,128 @@
-// EFileButton.jsx
+// // EFileButton.jsx
+// "use client";
+// import React from "react";
+
+// export default function LoginFormaa() {
+//   const handleStartEFiling = async () => {
+//     // const res = await fetch("/api/upload", {
+//     //   method: "POST",
+//     //   headers: { "Content-Type": "application/json" },
+//     //   body: JSON.stringify({
+//     //     UserName: "PTLA13241E1",
+//     //     Password: "bansal@123",
+//     //     TanNumber: "PTLJ10787A"
+//     //   }),
+//     // });
+
+//     // const data = await res.json();
+//     // console.log("Captcha:", data.captcha);
+
+//     const payload = {
+//       Tan: "PTLJ10787A",              // user TAN
+//       Password: "bansal@123", // password
+//       FinancialYear: "2025-26",
+//       Quarter: "Q2",                  // Q1 / Q2 / Q3 / Q4
+//       CategoryId: 1,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
+//       DeductorName: "INSPECTOR GENERAL OF POLICE  UT CHANDIGARH"
+//     };
+
+//     // Send the message to the Chrome extension content script
+//       window.postMessage(
+//         {
+//           type: "TV_START_EFILING",
+
+//           payload,
+//         },
+//         window.location.origin
+//       );
+//     console.log('📤 TV_START_EFILING sent to extension:', payload);
+//   };
+
+//   // optional listener for confirmation
+//   React.useEffect(() => {
+//     const listener = (event) => {
+//       if (event.data?.type === "TV_EFILING_TAB_OPENED") {
+//         console.log("✅ E-portal tab opened:", event.data.result);
+//       }
+//     };
+//     window.addEventListener("message", listener);
+//     return () => window.removeEventListener("message", listener);
+//   }, []);
+
+//   return (
+//     <button
+//       onClick={handleStartEFiling}
+//       style={{
+//         background: "#4CAF50",
+//         color: "#fff",
+//         border: "none",
+//         borderRadius: "8px",
+//         padding: "10px 18px",
+//         fontSize: "16px",
+//         cursor: "pointer",
+//       }}
+//     >
+//       Start E-Filing
+//     </button>
+//   );
+// }
+
+
 "use client";
-import React from "react";
+import { useState } from "react";
 
-export default function LoginFormaa() {
-  const handleStartEFiling = async () => {
-    // const res = await fetch("/api/upload", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     UserName: "PTLA13241E1",
-    //     Password: "bansal@123",
-    //     TanNumber: "PTLJ10787A"
-    //   }),
-    // });
+export default function TracesLogin() {
+  const [form, setForm] = useState({
+    UserName: "",
+    Password: "",
+    TanNumber: "",
+  });
 
-    // const data = await res.json();
-    // console.log("Captcha:", data.captcha);
+  const [result, setResult] = useState(null);
 
-    const payload = {
-      Tan: "PTLJ10787A",              // user TAN
-      Password: "bansal@123", // password
-      FinancialYear: "2025-26",
-      Quarter: "Q4",                  // Q1 / Q2 / Q3 / Q4
-      CategoryId: 1,                  // 1=24Q, 2=26Q, 4=27Q, 3=27EQ
-      DeductorName: "INSPECTOR GENERAL OF POLICE  UT, CHANDIGARH"
-    };
-
-    // Send the message to the Chrome extension content script
-      window.postMessage(
-        {
-          type: "TV_START_EFILING",
-          
-          payload,
-        },
-        window.location.origin
-      );
-    console.log('📤 TV_START_EFILING sent to extension:', payload);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // optional listener for confirmation
-  React.useEffect(() => {
-    const listener = (event) => {
-      if (event.data?.type === "TV_EFILING_TAB_OPENED") {
-        console.log("✅ E-portal tab opened:", event.data.result);
-      }
-    };
-    window.addEventListener("message", listener);
-    return () => window.removeEventListener("message", listener);
-  }, []);
+  const handleSubmit = async () => {
+    debugger
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      setResult(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <button
-      onClick={handleStartEFiling}
-      style={{
-        background: "#4CAF50",
-        color: "#fff",
-        border: "none",
-        borderRadius: "8px",
-        padding: "10px 18px",
-        fontSize: "16px",
-        cursor: "pointer",
-      }}
-    >
-      Start E-Filing
-    </button>
+    <div>
+      <input
+        name="UserName"
+        placeholder="User Name"
+        onChange={handleChange}
+      />
+      <input
+        name="Password"
+        type="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
+      <input
+        name="TanNumber"
+        placeholder="TAN Number"
+        onChange={handleChange}
+      />
+
+      <button onClick={handleSubmit}>Login</button>
+
+      {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+    </div>
   );
 }
+
