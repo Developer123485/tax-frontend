@@ -1,65 +1,86 @@
 import { NextResponse } from "next/server";
-import { Builder, By, until } from "selenium-webdriver";
-import chrome from "selenium-webdriver/chrome";
-import fs from "fs";
+import puppeteer from "puppeteer"; // full puppeteer
 
-export async function POST(req) {
-  let driver;
+export async function POST(request) {
+  let browser;
 
   try {
-    const body = await req.json();
-    const { userName, password, tanNumber } = body;
+    const body = await request.json();
+    const { UserName, Password, TanNumber } = body;
 
-    // Chrome options
-    const options = new chrome.Options();
-    options.addArguments(
-      "--headless=new",
-      "--no-sandbox",
-      "--disable-dev-shm-usage",
-      "--window-size=1920,1080"
-    );
-
-    options.setChromeBinaryPath("/usr/bin/chromium-browser");
-
-    driver = await new Builder()
-      .forBrowser("chrome")
-      .setChromeOptions(options)
-      .build();
-
-    await driver.get("https://nriservices.tdscpc.gov.in/nriapp/login.xhtml");
-
-    await driver.findElement(By.id("userId")).sendKeys(userName);
-    await driver.findElement(By.id("psw")).sendKeys(password);
-    await driver.findElement(By.id("tanpan")).sendKeys(tanNumber);
-
-    // Wait for captcha
-    await driver.sleep(3000);
-
-    const captchaImg = await driver.findElement(By.id("captchaImg"));
-    const src = await captchaImg.getAttribute("src");
-
-    let base64Image;
-
-    if (src.startsWith("data:image")) {
-      base64Image = src.split(",")[1];
-    } else {
-      // Screenshot fallback
-      const screenshot = await captchaImg.takeScreenshot(true);
-      base64Image = screenshot;
+    if (!UserName || !Password || !TanNumber) {
+      return NextResponse.json(
+        { error: "UserName, Password, and TanNumber are required" },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({
-      captcha: `data:image/png;base64,${base64Image}`,
+    // 🚀 Launch browser
+    browser = await puppeteer.launch({
+      headless: true, // ❗ TRACES blocks headless
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-blink-features=AutomationControlled",
+        "--disable-dev-shm-usage",
+        "--disable-infobars",
+        "--window-size=1400,900",
+      ],
     });
 
-  } catch (error) {
-    return NextResponse.json(
-      { error: error.message },
-      { status: 400 }
+    const page = await browser.newPage();
+
+    await page.setViewport({ width: 1280, height: 900 });
+
+    // Real user agent
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+      "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     );
-  } finally {
-    if (driver) {
-      await driver.quit();
-    }
+
+    // Headers
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": "en-US,en;q=0.9",
+      "Upgrade-Insecure-Requests": "1",
+    });
+
+    // Open login page
+    await page.goto(
+      "https://www.tdscpc.gov.in/app/login.xhtml?usr=Ded",
+      { waitUntil: "networkidle2" }
+    );
+
+    // Fill fields with proper waits
+    await page.waitForSelector("#userId", { timeout: 10000 });
+    await page.type("#userId", UserName, { delay: 50 });
+
+    await page.waitForSelector("#psw", { timeout: 10000 });
+    await page.type("#psw", Password, { delay: 50 });
+
+    await page.waitForSelector("#tanpan", { timeout: 10000 });
+    await page.type("#tanpan", TanNumber, { delay: 50 });
+
+    // Small delay for captcha render
+    await new Promise((r) => setTimeout(r, 2000));
+
+    // 🔐 CAPTCHA handling
+    await page.waitForSelector("#captchaImg", { timeout: 10000 });
+    const captchaElement = await page.$("#captchaImg");
+
+    const captchaBase64 = await captchaElement.screenshot({
+      encoding: "base64",
+    });
+
+    return NextResponse.json({
+      success: true,
+      message:
+        "Fields filled successfully. Please show captcha to user and submit manually.",
+      captcha: `data:image/png;base64,${captchaBase64}`,
+    });
+  } catch (err) {
+    return NextResponse.json(
+      { error: err.message || err.toString() },
+      { status: 500 }
+    );
   }
 }
