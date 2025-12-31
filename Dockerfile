@@ -1,10 +1,17 @@
-FROM node:18-bullseye
+# FROM node:18-bullseye
 
-# Install dependencies
-RUN apt-get update && apt-get install -y wget gnupg ca-certificates
+# # Install dependencies
+# RUN apt-get update && apt-get install -y wget gnupg ca-certificates
 
+# RUN apt-get update && apt-get install -y \
+#     xvfb fluxbox x11vnc novnc websockify net-tools
+
+# Use official Node.js image
+FROM node:18
+
+# Install dependencies for Puppeteer/Chrome
 RUN apt-get update && apt-get install -y \
-    xvfb fluxbox x11vnc novnc websockify net-tools
+    xvfb fluxbox x11vnc novnc websockify net-tools wget gnupg
 
 # Add Google Chrome’s official repository and key
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-linux.gpg \
