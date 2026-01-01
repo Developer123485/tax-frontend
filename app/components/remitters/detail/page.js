@@ -81,7 +81,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={75}
+                  maxLength={125}
                   value={remitterDetail.name}
                   onChange={(e) => handleInput("name", e)}
                 />
@@ -158,7 +158,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={25}
+                  maxLength={50}
                   value={remitterDetail.remitterFlat}
                   onChange={(e) => handleInput("remitterFlat", e)}
                 />
@@ -172,11 +172,12 @@ export default function RemitterDetail(props) {
 
               {/* Building */}
               <div className="col-md-3">
-                <label className="form-label">Building Name</label>
+                <label className="form-label">Building Name
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={25}
+                  maxLength={50}
                   value={remitterDetail.remitterBuilding}
                   onChange={(e) =>
                     handleInput("remitterBuilding", e)
@@ -196,7 +197,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={25}
+                  maxLength={50}
                   value={remitterDetail.remitterStreet}
                   onChange={(e) => handleInput("remitterStreet", e)}
                 />
@@ -210,11 +211,13 @@ export default function RemitterDetail(props) {
 
               {/* Area */}
               <div className="col-md-3">
-                <label className="form-label">Area/Locality</label>
+                <label className="form-label">Area/Locality
+                  <span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={25}
+                  maxLength={50}
                   value={remitterDetail.remitterArea}
                   onChange={(e) => handleInput("remitterArea", e)}
                 />
@@ -227,11 +230,13 @@ export default function RemitterDetail(props) {
 
               {/* City */}
               <div className="col-md-3">
-                <label className="form-label">Town/City/District</label>
+                <label className="form-label">Town/City/District
+                  <span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  maxLength={25}
+                  maxLength={50}
                   value={remitterDetail.remitterCity}
                   onChange={(e) => handleInput("remitterCity", e)}
                 />
@@ -405,6 +410,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
+                  maxLength={125}
                   value={remitterDetail.responsibleName}
                   onChange={(e) => handleInput("responsibleName", e)}
                 />
@@ -422,6 +428,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="text"
                   className="form-control"
+                  maxLength={125}
                   value={remitterDetail.fatherName}
                   onChange={(e) => handleInput("fatherName", e)}
                 />

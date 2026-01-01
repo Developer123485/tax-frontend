@@ -129,7 +129,9 @@ export default function AddRemitter() {
         remitterDetail.remitterCountry,
         remitterDetail.remitterResidential,
         remitterDetail.remitterStatus,
-        remitterDetail.code
+        remitterDetail.code,
+        remitterDetail.remitterCity,
+        remitterDetail.remitterArea
     ]);
 
     function getRemiter() {
@@ -329,6 +331,16 @@ export default function AddRemitter() {
         if (!remitterDetail.remitterFlat) {
             remitterFlatNoError = "Remitter flat no is required";
         }
+
+        // FLAT NO
+        if (!remitterDetail.remitterCity) {
+            remitterDistrictError = "Remitter City no is required";
+        }
+
+        // FLAT NO
+        if (!remitterDetail.remitterArea) {
+            remitterAreaError = "Remitter Area is required";
+        }
         if (
             remitterDetail.remitterFlat &&
             regexs.test(remitterDetail.remitterFlat)
@@ -403,7 +415,9 @@ export default function AddRemitter() {
             princPlcBusRemterError ||
             fatherError ||
             responsibleNameError ||
-            designationError
+            designationError ||
+            cityError ||
+            remitterCountryError
         ) {
             setRemitterErrors((prevState) => ({
                 ...prevState,
@@ -425,7 +439,8 @@ export default function AddRemitter() {
                 codeError,
                 remitterResidentialError,
                 statusError,
-                princPlcBusRemterError
+                princPlcBusRemterError,
+                remitterCountryError
             }));
             return false;
         }
@@ -449,9 +464,10 @@ export default function AddRemitter() {
             remitterResidentialError: "",
             statusError: "",
             princPlcBusRemterError: "",
-            fatherError,
-            responsibleNameError,
-            designationError,
+            fatherError: "",
+            responsibleNameError: "",
+            designationError: "",
+            remitterCountryError: ""
         }));
 
         return true;
