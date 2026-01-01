@@ -106,7 +106,7 @@ export default function AddBankDetail({ params }) {
 
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
-                    <BankDetailForm
+                    {bankNames && <BankDetailForm
                         bankDetail={bankDetail}
                         errors={errors}
                         isDirty={isDirty}
@@ -114,6 +114,7 @@ export default function AddBankDetail({ params }) {
                         handleInput={handleInput}
                         handleSave={saveBankDetail}
                     />
+                    }
                 </div>
             </section>
         </>

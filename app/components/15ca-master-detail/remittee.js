@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProcessPopup from "../modals/processing";
 import SearchableDropdown from "../deductors/searchable-dropdown";
+import { CommonService } from "@/app/services/common.service";
 
 export default function RemitteeDetail(props) {
     const router = useRouter(null);
@@ -10,7 +11,7 @@ export default function RemitteeDetail(props) {
     const {
         handleInputRemitter,
         remittee,
-        remitterErrors,
+        remitteeErrors,
         enumList,
         isDirty
     } = props;
@@ -44,9 +45,9 @@ export default function RemitteeDetail(props) {
                                 }
                                 }
                             />
-                            {isDirty && remitterErrors.code && (
+                            {isDirty && remitteeErrors.code && (
                                 <span className="text-danger">
-                                    {remitterErrors.code}
+                                    {remitteeErrors.code}
                                 </span>
                             )}
                         </div>
@@ -60,11 +61,12 @@ export default function RemitteeDetail(props) {
                                 type="text"
                                 className="form-control"
                                 value={remittee.name || ""}
+                                maxLength={125}
                                 onChange={(e) => handleInput("name", e)}
                             />
-                            {isDirty && remitterErrors.name && (
+                            {isDirty && remitteeErrors.name && (
                                 <span className="text-danger">
-                                    {remitterErrors.name}
+                                    {remitteeErrors.name}
                                 </span>
                             )}
                         </div>
@@ -73,7 +75,7 @@ export default function RemitteeDetail(props) {
                         {/* === PAN === */}
                         <div className="col-md-3">
                             <label className="form-label">
-                                PAN <span className="text-danger">*</span>
+                                PAN
                             </label>
                             <input
                                 type="text"
@@ -89,9 +91,9 @@ export default function RemitteeDetail(props) {
                                     handleInput("remitteePan", e);
                                 }}
                             />
-                            {isDirty && remitterErrors.remitteePan && (
+                            {isDirty && remitteeErrors.remitteePan && (
                                 <span className="text-danger">
-                                    {remitterErrors.remitteePan}
+                                    {remitteeErrors.remitteePan}
                                 </span>
                             )}
                         </div>
@@ -101,13 +103,16 @@ export default function RemitteeDetail(props) {
 
                         {/* === FLAT === */}
                         <div className="col-md-3">
-                            <label className="form-label">Flat / Door No.</label>
+                            <label className="form-label">Flat / Door No.
+                                <span className="text-danger">*</span>
+                            </label>
                             <input
                                 type="text"
                                 className="form-control"
                                 value={remittee.remitteeFlat || ""}
                                 onChange={(e) => handleInput("remitteeFlat", e)}
                             />
+                            {isDirty && remitteeErrors.remitteeFlat && <span className="text-danger">{remitteeErrors.remitteeFlat}</span>}
                         </div>
 
                         {/* === BUILDING === */}
@@ -115,6 +120,7 @@ export default function RemitteeDetail(props) {
                             <label className="form-label">Building Name</label>
                             <input
                                 type="text"
+                                maxLength={50}
                                 className="form-control"
                                 value={remittee.remitteeBuilding || ""}
                                 onChange={(e) => handleInput("remitteeBuilding", e)}
@@ -123,10 +129,12 @@ export default function RemitteeDetail(props) {
 
                         {/* === STREET === */}
                         <div className="col-md-3">
-                            <label className="form-label">Street</label>
+                            <label className="form-label">Street
+                            </label>
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={50}
                                 value={remittee.remitteeStreet || ""}
                                 onChange={(e) => handleInput("remitteeStreet", e)}
                             />
@@ -134,24 +142,32 @@ export default function RemitteeDetail(props) {
 
                         {/* === AREA === */}
                         <div className="col-md-3">
-                            <label className="form-label">Area</label>
+                            <label className="form-label">Area
+                                <span className="text-danger">*</span>
+                            </label>
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={50}
                                 value={remittee.remitteeArea || ""}
                                 onChange={(e) => handleInput("remitteeArea", e)}
                             />
+                            {isDirty && remitteeErrors.remitteeArea && <span className="text-danger">{remitteeErrors.remitteeArea}</span>}
                         </div>
 
                         {/* === CITY === */}
                         <div className="col-md-3">
-                            <label className="form-label">City</label>
+                            <label className="form-label">City
+                                <span className="text-danger">*</span>
+                            </label>
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={50}
                                 value={remittee.remitteeCity || ""}
                                 onChange={(e) => handleInput("remitteeCity", e)}
                             />
+                            {isDirty && remitteeErrors.remitteeCity && <span className="text-danger">{remitteeErrors.remitteeCity}</span>}
                         </div>
 
                         {/* === STATE === */}
@@ -160,6 +176,7 @@ export default function RemitteeDetail(props) {
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={75}
                                 value={remittee.remitteeState || ""}
                                 onChange={(e) => handleInput("remitteeState", e)}
                             />
@@ -169,7 +186,7 @@ export default function RemitteeDetail(props) {
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country</span>
-                                {/* <span className="text-danger"> *</span> */}
+                                <span className="text-danger"> *</span>
                             </label>
                             {enumList.countries && enumList.countries.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("remitteeCountry", e)}
@@ -177,30 +194,31 @@ export default function RemitteeDetail(props) {
                                 options={enumList.countries}
                             ></SearchableDropdown>
                             }
-                            {/* {remitterErrors.remitterStateError && (
+                            {isDirty && remitteeErrors.remitteeCountry && (
                                 <span className="text-danger">
-                                    {remitterErrors.remitterStateError}
+                                    {remitteeErrors.remitteeCountry}
                                 </span>
-                            )} */}
+                            )}
                         </div>
 
                         {/* === PINCODE === */}
                         <div className="col-md-3">
                             <label className="form-label">
                                 Zip Code
+                                <span className="text-danger"> *</span>
                             </label>
                             <input
                                 type="text"
-                                maxLength={6}
+                                maxLength={8}
                                 className="form-control"
                                 value={remittee.remitteePincode || ""}
                                 onChange={(e) => handleInput("remitteePincode", e)}
                             />
-                            {/* {remitterErrors.remitteePincodeError && (
+                            {isDirty && remitteeErrors.remitteePincode && (
                                 <span className="text-danger">
-                                    {remitterErrors.remitteePincodeError}
+                                    {remitteeErrors.remitteePincode}
                                 </span>
-                            )} */}
+                            )}
                         </div>
 
                         {/* === EMAIL === */}
@@ -214,9 +232,9 @@ export default function RemitteeDetail(props) {
                                 value={remittee.remitteeEmail || ""}
                                 onChange={(e) => handleInput("remitteeEmail", e)}
                             />
-                            {isDirty && remitterErrors.remitteeEmail && (
+                            {isDirty && remitteeErrors.remitteeEmail && (
                                 <span className="text-danger">
-                                    {remitterErrors.remitteeEmail}
+                                    {remitteeErrors.remitteeEmail}
                                 </span>
                             )}
                         </div>
@@ -229,7 +247,11 @@ export default function RemitteeDetail(props) {
                                 maxLength={15}
                                 className="form-control"
                                 value={remittee.remitteePhone || ""}
-                                onChange={(e) => handleInput("remitteePhone", e)}
+                                onChange={(e) => {
+                                    if (CommonService.isNumeric(e.target.value))
+                                        handleInput("remitteePhone", e)
+                                }
+                                }
                             />
                         </div>
 
@@ -247,7 +269,7 @@ export default function RemitteeDetail(props) {
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Status Of Remittee</span>
-                                {/* <span className="text-danger"> *</span> */}
+                                <span className="text-danger"> *</span>
                             </label>
                             {enumList.status && enumList.status.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("status", e)}
@@ -255,11 +277,11 @@ export default function RemitteeDetail(props) {
                                 options={enumList.status}
                             ></SearchableDropdown>
                             }
-                            {/* {isNextDirty && remitterErrors.statusError && (
+                            {isDirty && remitteeErrors.statusError && (
                                 <span className="text-danger">
-                                    {remitterErrors.statusError}
+                                    {remitteeErrors.status}
                                 </span>
-                            )} */}
+                            )}
                         </div>
 
                         <div className="col-md-3">
@@ -285,7 +307,7 @@ export default function RemitteeDetail(props) {
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country Remittance Made
-                                    {/* <span className="text-danger">*</span> */}
+                                    <span className="text-danger">*</span>
                                 </span>
                             </label>
                             {enumList.countryCodeRemitter && enumList.countryCodeRemitter.length > 0 && <SearchableDropdown
@@ -294,16 +316,16 @@ export default function RemitteeDetail(props) {
                                 options={enumList.countryCodeRemitter}
                             ></SearchableDropdown>
                             }
-                            {/* {isDirty && remitterErrors.remitterStateError && (
+                            {isDirty && remitteeErrors.remitterStateError && (
                                 <span className="text-danger">
-                                    {remitterErrors.remitterStateError}
+                                    {remitteeErrors.remitterStateError}
                                 </span>
-                            )} */}
+                            )}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputCountry" className="form-label">
                                 <span>Country Remittance Made Other
-                                    {/* {remittee.countryRemMade == "9999" && <span className="text-danger">*</span>} */}
+                                    {remittee.countryRemMade == "9999" && <span className="text-danger">*</span>}
                                 </span>
                             </label>
                             <input
@@ -313,17 +335,18 @@ export default function RemitteeDetail(props) {
                                 value={remittee.countryRemMadeDesc || ""}
                                 onChange={(e) => handleInput("countryRemMadeDesc", e)}
                             />
-                            {/* {isDirty && remitterErrors.countryRemMadeDesc && (
+                            {isDirty && remitteeErrors.countryRemMadeDesc && (
                                 <span className="text-danger">
-                                    {remitterErrors.countryRemMadeDesc}
+                                    {remitteeErrors.countryRemMadeDesc}
                                 </span>
-                            )} */}
+                            )}
                         </div>
 
                         {/* === PRINCIPAL PLACE OF BUSINESS === */}
                         <div className="col-md-3">
                             <label className="form-label">
                                 Principal Place of Business
+                                <span className="text-danger">*</span>
                             </label>
                             <input
                                 type="text"
@@ -331,11 +354,11 @@ export default function RemitteeDetail(props) {
                                 value={remittee.princPlcBusRemtee || ""}
                                 onChange={(e) => handleInput("princPlcBusRemtee", e)}
                             />
-                            {/* {isDirty && remitterErrors.countryRemMadeDesc && (
+                            {isDirty && remitteeErrors.princPlcBusRemtee && (
                                 <span className="text-danger">
-                                    {remitterErrors.countryRemMadeDesc}
+                                    {remitteeErrors.princPlcBusRemtee}
                                 </span>
-                            )} */}
+                            )}
                         </div>
                     </div>
 

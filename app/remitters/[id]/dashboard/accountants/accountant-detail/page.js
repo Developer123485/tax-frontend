@@ -70,7 +70,7 @@ export default function AddAccountant({ params }) {
 
     useEffect(() => {
         validate();
-    }, [accountant.accountantName, accountant.code, accountant.accountantFirmName, accountant.country, accountant.registrationNo]);
+    }, [accountant.accountantName, accountant.code, accountant.accountantFirmName, accountant.country, accountant.registrationNo, accountant.flatDoorBlockNo, accountant.areaLocality, accountant.townCityDistrict]);
 
     // VALIDATION
     function validate() {
@@ -80,6 +80,9 @@ export default function AddAccountant({ params }) {
         if (!accountant.accountantFirmName) err.accountantFirmName = "Firm name is required";
         if (!accountant.country) err.country = "Country is required";
         if (!accountant.registrationNo) err.registrationNo = "Membership no is required";
+        if (!accountant.flatDoorBlockNo) err.flatDoorBlockNo = "Flat no is required";
+        if (!accountant.areaLocality) err.areaLocality = "Area is required";
+        if (!accountant.townCityDistrict) err.townCityDistrict = "City is required";
         setErrors(err);
         return Object.keys(err).length === 0;
     }
@@ -107,14 +110,14 @@ export default function AddAccountant({ params }) {
 
             <section className="my-5">
                 <div className="container">
-                    <AccountantDetailForm
+                    {enumList && enumList.banks && <AccountantDetailForm
                         accountant={accountant}
                         errors={errors}
                         isDirty={isDirty}
                         enumList={enumList}
                         handleInput={handleInput}
                         handleSave={saveAccountant}
-                    />
+                    />}
                 </div>
             </section>
         </>

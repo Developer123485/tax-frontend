@@ -65,13 +65,16 @@ export default function AccountantDetailForm(props) {
 
                     {/* FLAT */}
                     <div className="col-md-3">
-                        <label className="form-label">Flat / Door No.</label>
+                        <label className="form-label">Flat / Door No.
+                            <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
                             value={accountant.flatDoorBlockNo || ""}
                             onChange={(e) => handleInput("flatDoorBlockNo", e)}
                         />
+                        {isDirty && errors.flatDoorBlockNo && <span className="text-danger">{errors.flatDoorBlockNo}</span>}
                     </div>
 
                     {/* BUILDING */}
@@ -98,24 +101,30 @@ export default function AccountantDetailForm(props) {
 
                     {/* AREA */}
                     <div className="col-md-3">
-                        <label className="form-label">Area / Locality</label>
+                        <label className="form-label">Area / Locality
+                            <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
                             value={accountant.areaLocality || ""}
                             onChange={(e) => handleInput("areaLocality", e)}
                         />
+                        {isDirty && errors.areaLocality && <span className="text-danger">{errors.areaLocality}</span>}
                     </div>
 
                     {/* CITY */}
                     <div className="col-md-3">
-                        <label className="form-label">Town / City</label>
+                        <label className="form-label">Town / City
+                            <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
                             value={accountant.townCityDistrict || ""}
                             onChange={(e) => handleInput("townCityDistrict", e)}
                         />
+                        {isDirty && errors.townCityDistrict && <span className="text-danger">{errors.townCityDistrict}</span>}
                     </div>
 
                     {/* State */}

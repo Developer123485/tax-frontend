@@ -82,7 +82,11 @@ export default function AddRemittee({ params }) {
 
     useEffect(() => {
         validate();
-    }, [remittee.remitteeEmail, remittee.name, remittee.remitteePan, remittee.code]);
+    }, [remittee.remitteeEmail, remittee.name, remittee.remitteePan, remittee.code,
+    remittee.countryRemMade, remittee.countryRemMadeDesc, remittee.remitteeCountry,
+    remittee.status, remittee.remitteeFlat, remittee.remitteeArea, remittee.remitteeCity, remittee.remitteePincode,
+    remittee.princPlcBusRemtee
+    ]);
 
     function loadRemittee() {
         const id = searchParams.get("id");
@@ -114,9 +118,15 @@ export default function AddRemittee({ params }) {
 
         if (!remittee.name) err.name = "Name is required";
         if (!remittee.code) err.code = "Code is required";
-        // if (!remittee.princPlcBusRemtee) err.princPlcBusRemtee = "PrincPlcBusRemtee is required";
-        // if (!remittee.countryRemMade) err.countryRemMade = "Country Remittance is required";
-        // if (!remittee.countryRemMadeDesc && remittee.countryRemMade == "9999") err.countryRemMadeDesc = "Other Country Remittance is required";
+        if (!remittee.remitteeFlat) err.remitteeFlat = "Flat is required";
+        if (!remittee.remitteeCity) err.remitteeCity = "City is required";
+        if (!remittee.remitteeArea) err.remitteeArea = "Area is required";
+        if (!remittee.remitteeCountry) err.remitteeCountry = "Country is required";
+        if (!remittee.remitteePincode) err.remitteePincode = "Zip Code is required";
+        if (!remittee.status) err.status = "status is required";
+        if (!remittee.princPlcBusRemtee) err.princPlcBusRemtee = "PrincPlcBusRemtee is required";
+        if (!remittee.countryRemMade) err.countryRemMade = "Country Remittance is required";
+        if (!remittee.countryRemMadeDesc && remittee.countryRemMade == "9999") err.countryRemMadeDesc = "Other Country Remittance is required";
 
         if (!remittee.remitteePan) err.remitteePan = "PAN is required";
         else if (!panRegex.test(remittee.remitteePan.toUpperCase()))
@@ -159,14 +169,15 @@ export default function AddRemittee({ params }) {
 
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
-                    <RemitteeDetail
+                    {enumList && enumList.banks && <RemitteeDetail
                         remittee={remittee}
-                        remitterErrors={errors}
+                        remitteeErrors={errors}
                         enumList={enumList}
                         isDirty={isDirty}
                         handleInputRemitter={handleInput}
                         handleSave={saveRemittee}
                     />
+                    }
                 </div>
             </section>
         </>
