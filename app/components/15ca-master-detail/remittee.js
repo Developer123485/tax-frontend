@@ -29,6 +29,28 @@ export default function RemitteeDetail(props) {
                             <h5 className="text-blue fw-bold">Remittee Details</h5>
                         </div>
 
+                        <div className="col-md-3">
+                            <label className="form-label">
+                                Remittee Code <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={remittee.code || ""}
+                                maxLength={10}
+                                onChange={(e) => {
+                                    e.target.value = e.target.value.trim().toUpperCase();
+                                    handleInput("code", e)
+                                }
+                                }
+                            />
+                            {isDirty && remitterErrors.code && (
+                                <span className="text-danger">
+                                    {remitterErrors.code}
+                                </span>
+                            )}
+                        </div>
+
                         {/* === NAME === */}
                         <div className="col-md-3">
                             <label className="form-label">
@@ -63,7 +85,7 @@ export default function RemitteeDetail(props) {
                                         : ""
                                 }
                                 onChange={(e) => {
-                                    e.target.value = e.target.value.toUpperCase();
+                                    e.target.value = e.target.value.trim().toUpperCase();
                                     handleInput("remitteePan", e);
                                 }}
                             />
@@ -75,27 +97,7 @@ export default function RemitteeDetail(props) {
                         </div>
 
 
-                        <div className="col-md-3">
-                            <label className="form-label">
-                                Code <span className="text-danger">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={remittee.code || ""}
-                                maxLength={10}
-                                onChange={(e) => {
-                                    e.target.value = e.target.value.toUpperCase();
-                                    handleInput("code", e)
-                                }
-                                }
-                            />
-                            {isDirty && remitterErrors.code && (
-                                <span className="text-danger">
-                                    {remitterErrors.code}
-                                </span>
-                            )}
-                        </div>
+
 
                         {/* === FLAT === */}
                         <div className="col-md-3">

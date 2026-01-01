@@ -23,7 +23,7 @@ export default function AoOrderDetailForm(props) {
                             maxLength={10}
                             value={aoOrder.code || ""}
                             onChange={(e) => {
-                                e.target.value = e.target.value.toUpperCase();
+                                e.target.value = e.target.value.trim().toUpperCase();
                                 handleInput("code", e)
                             }
                             }

@@ -23,7 +23,7 @@ export default function AccountantDetailForm(props) {
                             className="form-control"
                             value={accountant.code || ""}
                             onChange={(e) => {
-                                e.target.value = e.target.value.toUpperCase();
+                                e.target.value = e.target.value.trim().toUpperCase();
                                 handleInput("code", e)
                             }
                             }

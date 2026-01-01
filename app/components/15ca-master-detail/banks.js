@@ -24,7 +24,7 @@ export default function BankDetailForm(props) {
                             value={bankDetail.code || ""}
                             maxLength={10}
                             onChange={(e) => {
-                                e.target.value = e.target.value.toUpperCase();
+                                e.target.value = e.target.value.trim().toUpperCase();
                                 handleInput("code", e)
                             }
                             }

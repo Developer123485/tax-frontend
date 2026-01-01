@@ -125,7 +125,7 @@ export default function DeducteeDetail(props) {
                 : ""
             }
             onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase();
+              e.target.value = e.target.value.trim().toUpperCase();
               handleInput("panNumber", e);
             }}
           />

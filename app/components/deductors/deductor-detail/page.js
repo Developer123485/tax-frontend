@@ -86,7 +86,7 @@ export default function DeductorDetail(props) {
                     autoComplete="off"
                     value={deductorDetail.itdLogin}
                     onChange={(e) => {
-                      e.target.value = e.target.value.toUpperCase();
+                      e.target.value = e.target.value.trim().toUpperCase();
                       handleInput("itdLogin", e);
                     }}
                   />
@@ -258,7 +258,7 @@ export default function DeductorDetail(props) {
                       : ""
                   }
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("deductorTan", e);
                   }}
                 />{" "}
@@ -286,7 +286,7 @@ export default function DeductorDetail(props) {
                       : ""
                   }
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("deductorPan", e);
                   }}
                 />{" "}
@@ -309,7 +309,7 @@ export default function DeductorDetail(props) {
                   maxLength={15}
                   value={deductorDetail.deductorGstNo}
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("deductorGstNo", e);
                   }}
                 />

@@ -60,7 +60,7 @@ export default function RemitterDetail(props) {
                   value={remitterDetail.code}
                   maxLength={10}
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("code", e)
                   }
                   }
@@ -109,7 +109,7 @@ export default function RemitterDetail(props) {
                       : ""
                   }
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("remitterPan", e);
                   }}
                 />
@@ -136,7 +136,7 @@ export default function RemitterDetail(props) {
                       : ""
                   }
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("remitterTan", e);
                   }}
                 />
@@ -477,7 +477,7 @@ export default function RemitterDetail(props) {
                       : ""
                   }
                   onChange={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
+                    e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("incTaxWard", e);
                   }}
                 />
@@ -500,7 +500,7 @@ export default function RemitterDetail(props) {
                     maxLength={3}
                     value={remitterDetail.areaCode || ""}
                     onChange={(e) => {
-                      e.target.value = e.target.value.toUpperCase();
+                      e.target.value = e.target.value.trim().toUpperCase();
                       handleInput("areaCode", e);
                     }}
                   />
@@ -514,7 +514,7 @@ export default function RemitterDetail(props) {
                     maxLength={2}
                     value={remitterDetail.aoType || ""}
                     onChange={(e) => {
-                      e.target.value = e.target.value.toUpperCase();
+                      e.target.value = e.target.value.trim().toUpperCase();
                       handleInput("aoType", e);
                     }}
                   />
@@ -550,7 +550,7 @@ export default function RemitterDetail(props) {
                     className="form-control"
                     value={remitterDetail.princPlcBusRemter || ""}
                     onChange={(e) => {
-                      e.target.value = e.target.value.toUpperCase();
+                      e.target.value = e.target.value.trim().toUpperCase();
                       handleInput("princPlcBusRemter", e);
                     }}
                   />
