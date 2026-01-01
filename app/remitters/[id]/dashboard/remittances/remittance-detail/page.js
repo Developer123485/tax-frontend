@@ -392,7 +392,7 @@ export default function AddRemittance({ params }) {
             <HeaderList />
             <BreadcrumbList breadcrumbs={breadcrumbs} />
             <section className="container my-5">
-                {search.get("partType") == "A" && <RemittanceDetailA
+                {enums && enums.banks && search.get("partType") == "A" && <RemittanceDetailA
                     model={model}
                     errors={errors}
                     enums={enums}
@@ -403,7 +403,7 @@ export default function AddRemittance({ params }) {
                     handleSave={save}
                 />
                 }
-                {search.get("partType") == "B" && <RemittanceDetailB
+                {enums && enums.banks && search.get("partType") == "B" && <RemittanceDetailB
                     model={model}
                     errors={errors}
                     enums={enums}
@@ -414,7 +414,7 @@ export default function AddRemittance({ params }) {
                     handleSave={save}
                 />
                 }
-                {search.get("partType") == "D" && <RemittanceDetailD
+                {enums && enums.banks && search.get("partType") == "D" && <RemittanceDetailD
                     model={model}
                     errors={errors}
                     enums={enums}
@@ -425,7 +425,7 @@ export default function AddRemittance({ params }) {
                     handleSave={save}
                 />
                 }
-                {search.get("partType") == "C" && search.get("formType") == "15CB" && <RemittanceDetailC
+                {enums && enums.banks && search.get("partType") == "C" && search.get("formType") == "15CB" && <RemittanceDetailC
                     model={model}
                     errors={errors}
                     enums={enums}
@@ -437,7 +437,7 @@ export default function AddRemittance({ params }) {
                     handleSave={save}
                 />
                 }
-                {search.get("partType") == "C" && search.get("formType") == "15CA" && <RemittanceDetailCA
+                {enums && enums.banks && search.get("partType") == "C" && search.get("formType") == "15CA" && <RemittanceDetailCA
                     model={model}
                     errors={errors}
                     enums={enums}
