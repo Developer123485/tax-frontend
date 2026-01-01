@@ -207,6 +207,12 @@ export default function AddRemittance({ params }) {
 
     function handleInput(field, e) {
         const value = e?.target?.value ?? e;
+        // Prevent negative numbers
+        if (typeof value === "string" && !isNaN(value)) {
+            if (Number(value) < 0) {
+                return; // ignore negative input
+            }
+        }
         setModel((p) => ({ ...p, [field]: value }));
         if (field == "remitteeId") {
             RemitteeService.getRemittee(e?.target?.value).then(res => {

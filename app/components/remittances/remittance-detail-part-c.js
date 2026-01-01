@@ -139,6 +139,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Amount Payable (INR) <span className="text-danger">*</span></label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
                         onChange={(e) => handleInput("inIndian", e)}
@@ -150,6 +157,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Amount Payable (Foreign) <span className="text-danger">*</span></label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.inForiegn || ""}
                         onChange={(e) => handleInput("inForiegn", e)}
@@ -254,6 +268,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.itActIncomeChargeable || ""}
                         maxLength={18}
@@ -265,6 +286,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         maxLength={18}
                         value={model.itActTaxLiability || ""}
@@ -321,6 +349,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Taxable Income (DTAA)</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.taxIncDtaa || ""}
                         onChange={(e) => handleInput("taxIncDtaa", e)}
@@ -331,6 +366,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Tax Liability (DTAA)</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.taxLiablDtaa || ""}
                         onChange={(e) => handleInput("taxLiablDtaa", e)}
@@ -371,7 +413,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
                         step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.rateTdsADtaa || ""}
                         disabled={model.remForRoyFlg == "N"}
@@ -400,6 +448,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amtToTaxInd || ""}
                         disabled={model.remAcctBusIncFlg == "N"}
@@ -444,6 +499,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amtLongTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
@@ -458,6 +520,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amtShortTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
@@ -530,6 +599,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.rateTdsDDtaa || ""}
                         disabled={model.taxIndDtaaFlg === "N"}
@@ -565,6 +641,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amtPayForgnTds || ""}
                         onChange={(e) => handleInput("amtPayForgnTds", e)}
@@ -578,6 +661,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amtPayIndianTds || ""}
                         onChange={(e) => handleInput("amtPayIndianTds", e)}
@@ -600,6 +690,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Rate Tds Sec B</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.rateTdsSecB || ""}
                         onChange={(e) => handleInput("rateTdsSecB", e)}
@@ -613,6 +710,13 @@ export default function RemittanceDetailCA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.actlAmtTdsForgn || ""}
                         onChange={(e) => handleInput("actlAmtTdsForgn", e)}
@@ -697,6 +801,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">TDS Rate (%) <span className="text-danger">*</span></label>
                     <input
                         type="number"
+ min="0"
+step="0.01"
+ onKeyDown={(e) => {
+        if (["-", "+", "e", "E"].includes(e.key)) {
+            e.preventDefault();
+        }
+    }}
                         step="0.01"
                         className="form-control"
                         value={model.rateOfTds || ""}
@@ -708,6 +819,13 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Amount of TDS <span className="text-danger">*</span></label>
                     <input
                         type="number"
+ min="0"
+step="0.01"
+ onKeyDown={(e) => {
+        if (["-", "+", "e", "E"].includes(e.key)) {
+            e.preventDefault();
+        }
+    }}
                         className="form-control"
                         value={model.amountOfTds || ""}
                         onChange={(e) => handleInput("amountOfTds", e)}

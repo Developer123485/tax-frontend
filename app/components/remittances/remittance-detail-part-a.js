@@ -47,6 +47,13 @@ export default function RemittanceDetailA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
                         onChange={(e) => handleInput("inIndian", e)}
@@ -58,6 +65,13 @@ export default function RemittanceDetailA({
                     <label className="form-label">Aggregate Amount</label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.aggregateAmount || ""}
                         onChange={(e) => handleInput("aggregateAmount", e)}
@@ -161,11 +175,18 @@ export default function RemittanceDetailA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.amountOfTds || ""}
                         onChange={(e) => handleInput("amountOfTds", e)}
                     />
-                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
+                    {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
                 </div>
 
                 {/* TDS Rate */}
@@ -175,6 +196,13 @@ export default function RemittanceDetailA({
                     </label>
                     <input
                         type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.tdsRate || ""}
                         onChange={(e) => handleInput("tdsRate", e)}
