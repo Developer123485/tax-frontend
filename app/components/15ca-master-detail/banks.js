@@ -51,6 +51,21 @@ export default function BankDetailForm(props) {
                         )}
                     </div>
 
+                    {bankDetail.bankName === "999" && (
+                        <div className="col-md-4">
+                            <label className="form-label">Other Bank Name <span className="text-danger">*</span></label>
+                            <input
+                                type="text"
+                                className="form-control "
+                                placeholder="Other Name"
+                                maxLength={125}
+                                value={bankDetail.description || ""}
+                                onChange={(e) => handleInput("description", e)}
+                            />
+                            {isDirty && errors.description && <span className="text-danger">{errors.description}</span>}
+                        </div>
+                    )}
+
                     {/* BRANCH NAME */}
                     <div className="col-md-4">
                         <label className="form-label">
@@ -59,6 +74,7 @@ export default function BankDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={50}
                             value={bankDetail.bankBranchName || ""}
                             onChange={(e) => handleInput("bankBranchName", e)}
                         />
@@ -73,6 +89,7 @@ export default function BankDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={7}
                             value={bankDetail.bsrCode || ""}
                             onChange={(e) => handleInput("bsrCode", e)}
                         />
@@ -80,21 +97,6 @@ export default function BankDetailForm(props) {
                             <span className="text-danger">{errors.bsrCode}</span>
                         )}
                     </div>
-                    {/* BSR CODE */}
-                    <div className="col-md-4">
-                        <label className="form-label">Description</label>
-                        <textarea
-                            type="text"
-                            className="form-control"
-                            value={bankDetail.description || ""}
-                            rows={2}
-                            onChange={(e) => handleInput("description", e)}
-                        />
-                        {isDirty && errors.description && (
-                            <span className="text-danger">{errors.description}</span>
-                        )}
-                    </div>
-
                     <div className="col-md-12 mt-4">
                         <button
                             className="btn btn-primary"
