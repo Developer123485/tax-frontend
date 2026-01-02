@@ -149,13 +149,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inIndian", value);
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
@@ -167,13 +172,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inForiegn", value);
+                        }}
                         className="form-control"
                         value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
                     />
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
@@ -280,14 +290,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("itActIncomeChargeable", value);
+                        }}
                         className="form-control"
                         value={model.itActIncomeChargeable || ""}
-                        maxLength={18}
-                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
                     />
                 </div>
 
@@ -298,14 +312,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("itActTaxLiability", value);
+                        }}
                         className="form-control"
-                        maxLength={18}
                         value={model.itActTaxLiability || ""}
-                        onChange={(e) => handleInput("itActTaxLiability", e)}
                     />
                 </div>
 
@@ -361,13 +379,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("taxIncDtaa", value);
+                        }}
                         className="form-control"
                         value={model.taxIncDtaa || ""}
-                        onChange={(e) => handleInput("taxIncDtaa", e)}
                     />
                 </div>
 
@@ -378,13 +401,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("taxLiablDtaa", value);
+                        }}
                         className="form-control"
                         value={model.taxLiablDtaa || ""}
-                        onChange={(e) => handleInput("taxLiablDtaa", e)}
                     />
                 </div>
 
@@ -425,14 +453,19 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("rateTdsADtaa", value);
                         }}
                         className="form-control"
                         value={model.rateTdsADtaa || ""}
                         disabled={model.remForRoyFlg == "N"}
-                        onChange={(e) => handleInput("rateTdsADtaa", e)}
                     />
                     {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
@@ -460,14 +493,19 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amtToTaxInd", value);
                         }}
                         className="form-control"
                         value={model.amtToTaxInd || ""}
                         disabled={model.remAcctBusIncFlg == "N"}
-                        onChange={(e) => handleInput("amtToTaxInd", e)}
                     />
                     {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
@@ -511,14 +549,19 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amtLongTrm", value);
                         }}
                         className="form-control"
                         value={model.amtLongTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
-                        onChange={(e) => handleInput("amtLongTrm", e)}
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
                 </div>
@@ -532,14 +575,19 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amtShortTrm", value);
                         }}
                         className="form-control"
                         value={model.amtShortTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
-                        onChange={(e) => handleInput("amtShortTrm", e)}
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
                 </div>
@@ -611,15 +659,19 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("rateTdsDDtaa", value);
                         }}
                         className="form-control"
                         value={model.rateTdsDDtaa || ""}
                         disabled={model.taxIndDtaaFlg === "N"}
-                        maxLength={125}
-                        onChange={(e) => handleInput("rateTdsDDtaa", e)}
                     />
                     {isDirty && model.taxIndDtaaFlg == "Y" && errors.rateTdsDDtaa && <span className="text-danger">{errors.rateTdsDDtaa}</span>}
                 </div>
@@ -653,13 +705,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amtPayForgnTds", value);
+                        }}
                         className="form-control"
                         value={model.amtPayForgnTds || ""}
-                        onChange={(e) => handleInput("amtPayForgnTds", e)}
                     />
                     {isDirty && errors.amtPayForgnTds && <span className="text-danger">{errors.amtPayForgnTds}</span>}
                 </div>
@@ -673,13 +730,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amtPayIndianTds", value);
+                        }}
                         className="form-control"
                         value={model.amtPayIndianTds || ""}
-                        onChange={(e) => handleInput("amtPayIndianTds", e)}
                     />
                     {isDirty && errors.amtPayIndianTds && <span className="text-danger">{errors.amtPayIndianTds}</span>}
                 </div>
@@ -691,13 +753,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("rateTdsSecbFlg", value);
+                        }}
                         className="form-control"
                         value={model.rateTdsSecbFlg || ""}
-                        onChange={(e) => handleInput("rateTdsSecbFlg", e)}
                     />
                 </div>
 
@@ -709,13 +776,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("rateTdsSecB", value);
+                        }}
                         className="form-control"
                         value={model.rateTdsSecB || ""}
-                        onChange={(e) => handleInput("rateTdsSecB", e)}
                     />
                 </div>
 
@@ -729,13 +801,18 @@ export default function RemittanceDetailCA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("actlAmtTdsForgn", value);
+                        }}
                         className="form-control"
                         value={model.actlAmtTdsForgn || ""}
-                        onChange={(e) => handleInput("actlAmtTdsForgn", e)}
                     />
                     {isDirty && errors.actlAmtTdsForgn && <span className="text-danger">{errors.actlAmtTdsForgn}</span>}
                 </div>

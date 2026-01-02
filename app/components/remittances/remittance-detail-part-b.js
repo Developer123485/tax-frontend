@@ -64,28 +64,21 @@ export default function RemittanceDetailB({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("aggregateAmount", value);
+                        }}
                         className="form-control"
                         value={model.aggregateAmount || ""}
-                        onChange={(e) => handleInput("aggregateAmount", e)}
                     />
                 </div>
 
-                {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" &&
-                    <div className="col-md-4">
-                        <label className="form-label">Accountants <span className="text-danger">*</span></label>
-                        <SearchableDropdown
-                            id={model.accountantDetailId}
-                            options={dropdowns.accountants}
-                            setEventId={(e) => handleInput("accountantDetailId", e)}
-                        />
-                        {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
-                    </div>
-                } */}
 
                 {/* COUNTRY */}
                 <div className="col-md-4">
@@ -144,13 +137,18 @@ export default function RemittanceDetailB({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inIndian", value);
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
@@ -165,13 +163,18 @@ export default function RemittanceDetailB({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inForiegn", value);
+                        }}
                         className="form-control"
                         value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
                     />
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
@@ -244,34 +247,6 @@ export default function RemittanceDetailB({
                     </div>
                 </div>
                 {/* BANK DROPDOWN */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Bank <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.bankDetailId}
-                        options={enums.banks}
-                        setEventId={(e) => handleInput("bankDetailId", e)}
-                    />
-                    {errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
-                </div> */}
-
-                {/* AMOUNTS */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Amount Payable</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.amountPayable || ""}
-                        onChange={(e) => handleInput("amountPayable", e)}
-                    />
-                </div> */}
-
                 <div className="col-md-4">
                     <label className="form-label">TDS Amount
                         <span className="text-danger">*</span>
@@ -280,252 +255,22 @@ step="0.01"
                         type="number"
                         min="0"
                         step="0.01"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                         onKeyDown={(e) => {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amountOfTds", value);
+                        }}
                         className="form-control"
                         value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
                     />
                     {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
                 </div>
-
-                {/* <div className="col-md-4">
-                    <label className="form-label">Actual Remittance After TDS</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.actualRemittanceAfterTds || ""}
-                        onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
-                    />
-                </div> */}
-
-
-
-
-                {/* TDS DATE */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">TDS Deduction Date</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        value={model.tdsDeductionDate ?? ""}
-                        onChange={(e) => handleInput("tdsDeductionDate", e)}
-                    />
-                </div> */}
-
-                {/* <div className="col-md-4">
-                    <label className="form-label">Country</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.country || ""}
-                        onChange={(e) => handleInput("country", e)}
-                    />
-                </div> */}
-
-                {/* Aggregate Amount */}
-
-
-                {/* Amount Payable */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Amount Payable</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.amountPayable || ""}
-                        onChange={(e) => handleInput("amountPayable", e)}
-                    />
-                </div> */}
-
-                {/* Amount Of TDS */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">TDS Amount</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
-                    />
-                </div> */}
-
-                {/* In Foreign */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Amount Payable (Foreign Currency)</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
-                    />
-                </div> */}
-
-                {/* In Indian */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Amount Payable (INR)</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
-                    />
-                </div> */}
-
-                {/* Grossed Up */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Grossed Up Amount</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.grossedUp || ""}
-                        onChange={(e) => handleInput("grossedUp", e)}
-                    />
-                </div> */}
-
-                {/* IT Act Section */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">IT Act Relevant Section</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.itActRelevantSection || ""}
-                        onChange={(e) => handleInput("itActRelevantSection", e)}
-                    />
-                </div> */}
-
-                {/* IT Act Income Chargeable */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Income Chargeable (IT Act)</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.itActIncomeChargeable || ""}
-                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
-                    />
-                </div> */}
-
-                {/* IT Act Tax Liability */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Tax Liability (IT Act)</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.itActTaxLiability || ""}
-                        onChange={(e) => handleInput("itActTaxLiability", e)}
-                    />
-                </div> */}
-
-                {/* DTAA Available */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">DTAA Residency Available</label>
-                    <select
-                        className="form-control"
-                        value={model.dtaaTaxResidencyAvailable ?? ""}
-                        onChange={(e) => handleInput("dtaaTaxResidencyAvailable", e)}
-                    >
-                        <option value="">Select</option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div> */}
-
-                {/* DTAA Relevant */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">DTAA Relevant</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.dtaaRelevant || ""}
-                        onChange={(e) => handleInput("dtaaRelevant", e)}
-                    />
-                </div> */}
-
-                {/* DTAA Article */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">DTAA Relevant Article</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.dtaaRelevantArticle || ""}
-                        onChange={(e) => handleInput("dtaaRelevantArticle", e)}
-                    />
-                </div> */}
-
-                {/* DTAA TDS Rate */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">DTAA TDS Rate (%)</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.dtaaTdsRatePercentage || ""}
-                        onChange={(e) => handleInput("dtaaTdsRatePercentage", e)}
-                    />
-                </div> */}
 
                 {/* TDS Rate */}
                 <div className="col-md-4">
@@ -537,34 +282,22 @@ step="0.01"
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("tdsRate", value);
+                        }}
                         className="form-control"
                         value={model.tdsRate || ""}
-                        onChange={(e) => handleInput("tdsRate", e)}
                     />
                     {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
                 </div>
 
-                {/* Actual Remittance */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Actual Remittance After TDS</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.actualRemittanceAfterTds || ""}
-                        onChange={(e) => handleInput("actualRemittanceAfterTds", e)}
-                    />
-                </div> */}
 
                 {/* TDS Deduction Date */}
                 <div className="col-md-4">

@@ -102,16 +102,18 @@ export default function RemittanceDetailD({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inIndian", value);
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
-                        onChange={(e) => {
-                            debugger
-                            handleInput("inIndian", e)
-                        }}
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
@@ -126,13 +128,18 @@ export default function RemittanceDetailD({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inForiegn", value);
+                        }}
                         className="form-control"
                         value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
                     />
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
