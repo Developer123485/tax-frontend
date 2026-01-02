@@ -185,7 +185,6 @@ export default function BankDetailList({ params }) {
                             <div className="row justify-content-between">
                                 <div
                                     className="col-md-4"
-
                                     onClick={(e) => router.push(`/remitters/${remitterId}/dashboard/banks/banks-detail`)}
                                 >
                                     <div className="content-box border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
