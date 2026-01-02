@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Dropdown, Form, InputGroup, Button } from 'react-bootstrap';
+import { useRouter } from "next/navigation";
 
 export default function SearchableDropdown(props) {
+    const router = useRouter(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const filteredOptions = props?.options?.filter(option =>
@@ -43,8 +45,7 @@ export default function SearchableDropdown(props) {
                     overflowY: "auto"
                 }}
             >
-
-                <InputGroup className="mb-2">
+                <InputGroup className="mb-2 search-input-group">
                     <Form.Control
                         autoFocus
                         type="text"
@@ -52,19 +53,36 @@ export default function SearchableDropdown(props) {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onClick={(e) => e.stopPropagation()}
+                        className="search-input"
                     />
+
+                    {props?.url && (
+                        <Button
+                            variant="outline-primary"
+                            className="search-btn add-btn"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(props.url);
+                            }}
+                            title="Add New"
+                        >
+                            <i className="fa fa-plus"></i>
+                        </Button>
+                    )}
 
                     <Button
                         variant="outline-secondary"
+                        className="search-btn clear-btn"
                         onClick={(e) => {
                             e.stopPropagation();
                             setSearchTerm('');
                         }}
-                        title="Clear"
+                        title="Clear Search"
                     >
                         <i className="fa fa-times"></i>
                     </Button>
                 </InputGroup>
+
 
 
                 {filteredOptions?.length > 0 ? (

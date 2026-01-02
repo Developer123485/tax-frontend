@@ -12,7 +12,8 @@ export default function RemittanceDetailA({
     handleSave,
     enums,
     dropdowns,
-    isDirty
+    isDirty,
+    remitterId
 }) {
 
     return (
@@ -25,16 +26,18 @@ export default function RemittanceDetailA({
                     <SearchableDropdown
                         id={model.remitteeId}
                         options={dropdowns.remittees}
+                        url={`/remitters/${remitterId}/dashboard/remittees/remittee-detail`}
                         setEventId={(e) => handleInput("remitteeId", e)}
                     />
                     {isDirty && errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
                 </div>
 
-                {/* REMITTEE DROPDOWN */}
+                {/* Banks DROPDOWN */}
                 <div className="col-md-4">
                     <label className="form-label">Banks <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
+                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         options={dropdowns.banks}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />

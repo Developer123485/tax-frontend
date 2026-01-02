@@ -1363,3 +1363,38 @@ input.has-error {
 .react-datepicker-popper {
   z-index: 999;
 }
+
+.search-input-group {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.search-input {
+  border-right: none;
+  box-shadow: none !important;
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  border-left: none;
+}
+
+.add-btn {
+  color: #0d6efd;
+}
+
+.add-btn:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.clear-btn {
+  color: #6c757d;
+}
+
+.clear-btn:hover {
+  background-color: #f8f9fa;
+}

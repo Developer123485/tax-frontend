@@ -25,6 +25,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Remittee <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
+                        url={`/remitters/${remitterId}/dashboard/remittees/remittee-detail`}
                         options={dropdowns.remittees}
                         setEventId={(e) => handleInput("remitteeId", e)}
                     />
@@ -36,6 +37,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
+                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         options={dropdowns.banks}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
@@ -47,6 +49,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">AO Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
+                        url={`/remitters/${remitterId}/dashboard/ao-order/ao-order-detail`}
                         options={dropdowns.aoDetails}
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
@@ -58,6 +61,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Accountant <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.accountantDetailId}
+                        url={`/remitters/${remitterId}/dashboard/accountants/accountant-detail`}
                         options={dropdowns.accountants}
                         setEventId={(e) => handleInput("accountantDetailId", e)}
                     />

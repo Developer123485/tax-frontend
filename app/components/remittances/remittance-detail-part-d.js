@@ -25,6 +25,7 @@ export default function RemittanceDetailD({
                     <label className="form-label">Remittees <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
+                        url={`/remitters/${remitterId}/dashboard/remittees/remittee-detail`}
                         options={dropdowns.remittees}
                         setEventId={(e) => handleInput("remitteeId", e)}
                     />
@@ -36,52 +37,12 @@ export default function RemittanceDetailD({
                     <label className="form-label">Banks <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
+                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         options={dropdowns.banks}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
-
-
-                {/* <div className="col-md-4">
-                    <label className="form-label">Aggregate Amount</label>
-                    <input
-                        type="number"
- min="0"
-step="0.01"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.aggregateAmount || ""}
-                        onChange={(e) => handleInput("aggregateAmount", e)}
-                    />
-                </div> */}
-                {/* REMITTEE DROPDOWN */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
-                    <SearchableDropdown
-                        id={model.aoOrderDetailId}
-                        options={dropdowns.aoDetails}
-                        setEventId={(e) => handleInput("aoOrderDetailId", e)}
-                    />
-                    {errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
-                </div> */}
-
-                {/* REMITTEE DROPDOWN */}
-                {/* {partType == "C" &&
-                    <div className="col-md-4">
-                        <label className="form-label">Accountants <span className="text-danger">*</span></label>
-                        <SearchableDropdown
-                            id={model.accountantDetailId}
-                            options={dropdowns.accountants}
-                            setEventId={(e) => handleInput("accountantDetailId", e)}
-                        />
-                        {errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
-                    </div>
-                } */}
 
                 {/* COUNTRY */}
                 <div className="col-md-4">

@@ -400,6 +400,7 @@ export default function AddRemittance({ params }) {
             <section className="container my-5">
                 {enums && enums.banks && search.get("partType") == "A" && <RemittanceDetailA
                     model={model}
+                    remitterId={remitterId}
                     errors={errors}
                     enums={enums}
                     dropdowns={dropdowns}
@@ -412,6 +413,7 @@ export default function AddRemittance({ params }) {
                 {enums && enums.banks && search.get("partType") == "B" && <RemittanceDetailB
                     model={model}
                     errors={errors}
+                    remitterId={remitterId}
                     enums={enums}
                     dropdowns={dropdowns}
                     isDirty={isDirty}
@@ -423,6 +425,7 @@ export default function AddRemittance({ params }) {
                 {enums && enums.banks && search.get("partType") == "D" && <RemittanceDetailD
                     model={model}
                     errors={errors}
+                    remitterId={remitterId}
                     enums={enums}
                     dropdowns={dropdowns}
                     isDirty={isDirty}
@@ -436,6 +439,7 @@ export default function AddRemittance({ params }) {
                     errors={errors}
                     enums={enums}
                     dropdowns={dropdowns}
+                    remitterId={remitterId}
                     isDirty={isDirty}
                     handleInput={handleInput}
                     partType={search.get("partType")}
@@ -448,6 +452,7 @@ export default function AddRemittance({ params }) {
                     errors={errors}
                     enums={enums}
                     dropdowns={dropdowns}
+                    remitterId={remitterId}
                     isDirty={isDirty}
                     handleInput={handleInput}
                     partType={search.get("partType")}

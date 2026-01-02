@@ -26,6 +26,7 @@ export default function RemittanceDetailCA({
                     <SearchableDropdown
                         id={model.remitteeId}
                         options={dropdowns.remittees}
+                        url={`/remitters/${remitterId}/dashboard/remittees/remittee-detail`}
                         setEventId={(e) => handleInput("remitteeId", e)}
                     />
                     {isDirty && errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
@@ -37,6 +38,7 @@ export default function RemittanceDetailCA({
                     <SearchableDropdown
                         id={model.bankDetailId}
                         options={dropdowns.banks}
+                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
@@ -48,6 +50,7 @@ export default function RemittanceDetailCA({
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
                         options={dropdowns.aoDetails}
+                        url={`/remitters/${remitterId}/dashboard/ao-order/ao-order-detail`}
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
                     {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
@@ -58,6 +61,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Accountant <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.accountantDetailId}
+                        url={`/remitters/${remitterId}/dashboard/accountants/accountant-detail`}
                         options={dropdowns.accountants}
                         setEventId={(e) => handleInput("accountantDetailId", e)}
                     />
