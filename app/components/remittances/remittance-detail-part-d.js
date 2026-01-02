@@ -100,7 +100,7 @@ export default function RemittanceDetailD({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -126,7 +126,7 @@ export default function RemittanceDetailD({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();

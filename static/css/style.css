@@ -1398,3 +1398,11 @@ input.has-error {
 .clear-btn:hover {
   background-color: #f8f9fa;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

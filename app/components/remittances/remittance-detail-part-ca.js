@@ -147,7 +147,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -170,7 +170,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -288,7 +288,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -310,7 +310,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -377,7 +377,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -399,7 +399,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -451,7 +451,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -491,7 +491,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -547,7 +547,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -573,7 +573,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -657,7 +657,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -703,7 +703,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -728,7 +728,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -751,7 +751,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -774,7 +774,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -799,7 +799,7 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
@@ -900,13 +900,13 @@ export default function RemittanceDetailCA({
                     <input
                         type="number"
  min="0"
-step="0.01"
+step="1"
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
         }
     }}
-                        step="0.01"
+                        step="1"
                         className="form-control"
                         value={model.rateOfTds || ""}
                         onChange={(e) => handleInput("rateOfTds", e)}
@@ -918,7 +918,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+step="1"
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
