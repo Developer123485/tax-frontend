@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, Form } from 'react-bootstrap';
+import { Dropdown, Form, InputGroup, Button } from 'react-bootstrap';
 
 export default function SearchableDropdown(props) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -43,14 +43,29 @@ export default function SearchableDropdown(props) {
                     overflowY: "auto"
                 }}
             >
-                <Form.Control
-                    autoFocus
-                    type="text"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    onClick={(e) => e.stopPropagation()}
-                />
+
+                <InputGroup className="mb-2">
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+
+                    <Button
+                        variant="outline-secondary"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSearchTerm('');
+                        }}
+                        title="Clear"
+                    >
+                        <i className="fa fa-times"></i>
+                    </Button>
+                </InputGroup>
+
 
                 {filteredOptions?.length > 0 ? (
                     filteredOptions?.map((option, index) => (
