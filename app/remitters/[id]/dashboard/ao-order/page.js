@@ -91,7 +91,7 @@ export default function AoOrderList({ params }) {
                     <a
                         onClick={() =>
                             router.push(
-                                `/remitters/${remitterId}/dashboard/ao-orders/aoorder-detail?id=${row.id}`
+                                `/remitters/${remitterId}/dashboard/ao-order/ao-order-detail?id=${row.id}`
                             )
                         }
                     >
