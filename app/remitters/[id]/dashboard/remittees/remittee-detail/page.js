@@ -91,7 +91,7 @@ export default function AddRemittee({ params }) {
     function loadRemittee() {
         const id = searchParams.get("id");
         if (id) {
-            RemitteeService.getRemittee(parseInt(id), remitterId).then((res) => {
+            RemitteeService.getRemittee(remitterId, parseInt(id)).then((res) => {
                 if (res?.id > 0) setRemittee(res);
             });
         }
