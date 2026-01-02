@@ -13,7 +13,8 @@ export default function RemittanceDetailCA({
     enums,
     dropdowns,
     isDirty,
-    formType
+    formType,
+    remitterId
 }) {
     return (
         <form autoComplete="off">

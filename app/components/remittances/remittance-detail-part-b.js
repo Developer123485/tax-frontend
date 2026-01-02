@@ -12,7 +12,8 @@ export default function RemittanceDetailB({
     handleSave,
     enums,
     dropdowns,
-    isDirty
+    isDirty,
+    remitterId
 }) {
 
     return (
