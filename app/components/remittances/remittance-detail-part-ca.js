@@ -683,7 +683,14 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Secb Flg</label>
                     <input
-                        type="text"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        onKeyDown={(e) => {
+                            if (["-", "+", "e", "E"].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
                         className="form-control"
                         value={model.rateTdsSecbFlg || ""}
                         onChange={(e) => handleInput("rateTdsSecbFlg", e)}
