@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import ProcessPopup from "../modals/processing";
+import DatePicker from "react-datepicker";
 
 export default function AoOrderDetailForm(props) {
     const { aoOrder, errors, handleInput, handleSave, isDirty } = props;
@@ -111,13 +112,16 @@ export default function AoOrderDetailForm(props) {
                         <label className="form-label">Order Date
                             {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
                         </label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            disabled={aoOrder.isAoOrderObtained == "N"}
-                            value={aoOrder.orderDate || ""}
-                            maxLength={125}
-                            onChange={(e) => handleInput("orderDate", e)}
+                        <DatePicker
+                            autoComplete="off"
+                            selected={aoOrder.orderDate}
+                            id="dateOfDoposit"
+                            className="form-control w-100"
+                            onChange={(e) => {
+                                handleInput("orderDate", e);
+                            }}
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText="dd/MM/yyyy"
                         />
                         {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.orderDate && (
                             <span className="text-danger">
