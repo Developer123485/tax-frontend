@@ -53,13 +53,18 @@ export default function RemittanceDetailA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("inIndian", value);
+                        }}
                         className="form-control"
                         value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
@@ -71,13 +76,18 @@ export default function RemittanceDetailA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("aggregateAmount", value);
+                        }}
                         className="form-control"
                         value={model.aggregateAmount || ""}
-                        onChange={(e) => handleInput("aggregateAmount", e)}
                     />
                 </div>
 
@@ -182,13 +192,18 @@ export default function RemittanceDetailA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("amountOfTds", value);
+                        }}
                         className="form-control"
                         value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
                     />
                     {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
                 </div>
@@ -203,13 +218,18 @@ export default function RemittanceDetailA({
                         min="0"
                         step="0.01"
                         onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
+                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if ((value.match(/\./g) || []).length > 1) return;
+                            if (value.replace(".", "").length > 18) return;
+                            handleInput("rateOfTds", value);
+                        }}
                         className="form-control"
                         value={model.rateOfTds || ""}
-                        onChange={(e) => handleInput("rateOfTds", e)}
                     />
                     {isDirty && errors.rateOfTds && <span className="text-danger">{errors.rateOfTds}</span>}
                 </div>
