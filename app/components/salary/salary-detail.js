@@ -132,6 +132,7 @@ export default function SalaryDetail(props) {
                 </span>
                 <span className="salary-dates-wrap">
                   <DatePicker
+                    onKeyDown={(e) => e.preventDefault()}
                     autoComplete="off"
                     selected={salaryDetail.periodOfFromDate}
                     id="periodOfFromDate"
@@ -152,6 +153,7 @@ export default function SalaryDetail(props) {
                 </span>
                 <span className="salary-dates-wrap">
                   <DatePicker
+                    onKeyDown={(e) => e.preventDefault()}
                     autoComplete="off"
                     selected={salaryDetail.periodOfToDate}
                     id="periodOfToDate"
@@ -217,6 +219,7 @@ export default function SalaryDetail(props) {
                 </span>
                 <span className="salary-dates-wrap">
                   <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                     autoComplete="off"
                     selected={salaryDetail.dateOfBirth}
                     className="form-control rounded-start-0"
@@ -235,6 +238,7 @@ export default function SalaryDetail(props) {
                 </span>
                 <span className="salary-dates-wrap">
                   <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                     autoComplete="off"
                     selected={salaryDetail.periodOfFromDate}
                     id="periodOfFromDate"
@@ -255,6 +259,7 @@ export default function SalaryDetail(props) {
                 </span>
                 <span className="salary-dates-wrap">
                   <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                     autoComplete="off"
                     selected={salaryDetail.periodOfToDate}
                     id="periodOfToDate"

@@ -934,6 +934,7 @@ export default function TDSForm({ params }) {
             </label>
             <div>
               <DatePicker
+                onKeyDown={(e) => e.preventDefault()}
                 autoComplete="off"
                 selected={verificationDate}
                 id="verificationDate"

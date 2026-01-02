@@ -84,6 +84,7 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
                     <DatePicker
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.certificateDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
@@ -181,6 +182,7 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
                     <DatePicker
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.proposedDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
@@ -741,6 +743,7 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <DatePicker
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.dednDateTds}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
@@ -778,6 +781,8 @@ export default function RemittanceDetailCA({
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
                         onChange={(e) => handleInput("verificationDate", e)}
+                        minDate={new Date()}
+                        onKeyDown={(e) => e.preventDefault()}
                     />
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
@@ -847,6 +852,7 @@ step="0.01"
                 <div className="col-md-4">
                     <label className="form-label">Date of Deduction</label>
                     <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                         selected={model.dateOfDeduction}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"

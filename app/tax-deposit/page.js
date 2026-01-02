@@ -806,6 +806,7 @@ export default function TaxDeposit() {
                   Date Of Deduction From
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={taxDepositForm.dateOfDeductionFrom}
                   id="dateOfDeductionFrom"
@@ -820,6 +821,7 @@ export default function TaxDeposit() {
                   Date Of Deduction To
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={taxDepositForm.dateOfDeductionTo}
                   id="dateOfDeductionTo"
@@ -860,6 +862,7 @@ export default function TaxDeposit() {
                   DueDate
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={taxDepositForm.dueDate}
                   id="dueDate"
@@ -874,6 +877,7 @@ export default function TaxDeposit() {
                   Extended Date
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={taxDepositForm.extendedDate}
                   id="extendedDate"

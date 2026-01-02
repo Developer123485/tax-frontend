@@ -2351,6 +2351,7 @@ export default function SalaryModalForm(props) {
                         </td>
                         <td>
                           <DatePicker
+                            onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={salaryDetail.dateFromWhichtheEmployee}
                             id="dateFromWhichtheEmployee"
@@ -2371,6 +2372,7 @@ export default function SalaryModalForm(props) {
                         <td>
                           {" "}
                           <DatePicker
+                            onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={salaryDetail.dateToWhichtheEmployee}
                             id="dateToWhichtheEmployee"

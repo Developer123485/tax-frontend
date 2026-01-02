@@ -155,6 +155,7 @@ export default function ResponsibleDetail(props) {
                 <span>Date Of Birth</span>
               </label>
               <DatePicker
+                onKeyDown={(e) => e.preventDefault()}
                 autoComplete="off"
                 selected={deductorDetail.responsibleDOB}
                 id="inputDOB"

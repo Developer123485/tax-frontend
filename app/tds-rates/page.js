@@ -643,6 +643,7 @@ export default function TDSRates() {
                         style={{ marginRight: "4px" }}
                       >From: </span>
                       <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                         autoComplete="off"
                         selected={dateFrom}
                         id="applicableFrom"
@@ -655,6 +656,7 @@ export default function TDSRates() {
                         style={{ marginLeft: "4px" }}
                       >To: </span>
                       <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                         autoComplete="off"
                         selected={dateTo}
                         id="applicableTo"
@@ -971,6 +973,7 @@ export default function TDSRates() {
                   Applicable From
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={tdsRate.applicableFrom}
                   id="applicableFrom"
@@ -985,6 +988,7 @@ export default function TDSRates() {
                   Applicable To
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={tdsRate.applicableTo}
                   id="applicableTo"

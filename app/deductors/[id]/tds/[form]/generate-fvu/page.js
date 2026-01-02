@@ -426,7 +426,7 @@ export default function GenerateFVU({ params }) {
     if (contentType && contentType.includes("application/json")) {
       toast.error("No file is available for download. Please click on 'Generate FVU'.");
       return;
-    } 
+    }
     if (deductorInfo.itdLogin && deductorInfo.itdPassword) {
       setShowExtension(true);
     } else {
@@ -1037,6 +1037,7 @@ export default function GenerateFVU({ params }) {
                 <div className="date-picker-group">
                   <label>From Date:</label>
                   <DatePicker
+                    onKeyDown={(e) => e.preventDefault()}
                     selected={fromDate}
                     onChange={(date) => setFromDate(date)}
                     dateFormat="dd-MMM-yyyy"
@@ -1053,6 +1054,7 @@ export default function GenerateFVU({ params }) {
                 <div className="date-picker-group">
                   <label>To Date:</label>
                   <DatePicker
+                    onKeyDown={(e) => e.preventDefault()}
                     selected={toDate}
                     onChange={(date) => setToDate(date)}
                     dateFormat="dd-MMM-yyyy"

@@ -861,6 +861,7 @@ export default function ReturnFilling() {
                   Due Date
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={returnFilling.dueDates}
                   id="dueDate"
@@ -875,6 +876,7 @@ export default function ReturnFilling() {
                   Extended Date
                 </label>
                 <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={returnFilling.extendedDate}
                   id="extendedDate"

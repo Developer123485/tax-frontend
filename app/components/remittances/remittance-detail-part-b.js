@@ -229,6 +229,7 @@ export default function RemittanceDetailB({
                     </label>
                     <div>
                         <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={model.proposedDate}
                             id="dateOfDoposit"
@@ -570,6 +571,7 @@ step="0.01"
                     <label className="form-label">TDS Deduction Date</label>
                     <div>
                         <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={model.tdsDeductionDate}
                             id="dateOfDoposit"
@@ -608,6 +610,7 @@ step="0.01"
                         <span className="text-danger">*</span>
                     </label>
                     <DatePicker
+onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"

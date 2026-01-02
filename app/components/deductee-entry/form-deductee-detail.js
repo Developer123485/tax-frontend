@@ -241,6 +241,7 @@ export default function DeducteeFormEntryDetail(props) {
           </label>
           <div>
             <DatePicker
+              onKeyDown={(e) => e.preventDefault()}
               autoComplete="off"
               selected={deducteeEntry.dateOfPaymentCredit}
               id="inputDateofPayment"
@@ -263,6 +264,7 @@ export default function DeducteeFormEntryDetail(props) {
           </label>
           <div>
             <DatePicker
+              onKeyDown={(e) => e.preventDefault()}
               autoComplete="off"
               selected={deducteeEntry.dateOfDeduction}
               id="inputDateofDeduction"
@@ -569,6 +571,7 @@ export default function DeducteeFormEntryDetail(props) {
               </label>
               <div>
                 <DatePicker
+                  onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={deducteeEntry.challanDate}
                   id="challanDate"

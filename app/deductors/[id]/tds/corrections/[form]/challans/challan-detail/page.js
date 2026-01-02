@@ -291,6 +291,7 @@ export default function ChallanDetail({ params }) {
                     </label>
                     <div>
                       <DatePicker
+                        onKeyDown={(e) => e.preventDefault()}
                         autoComplete="off"
                         selected={challanDetail.dateOfDeposit}
                         id="dateOfDoposit"

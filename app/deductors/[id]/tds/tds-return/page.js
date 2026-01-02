@@ -53,7 +53,7 @@ export default function TDSReturn({ params }) {
   const customStyles = {
     rows: {
       style: {
-      
+
         minHeight: "45px",
       },
     },
@@ -484,7 +484,7 @@ export default function TDSReturn({ params }) {
                         fixedHeaderScrollHeight="340px"
                         columns={columns}
                         data={tdsReturns?.tdsReturnList}
-                        
+
                         pagination={true}
                         paginationServer
                         customStyles={customStyles}
@@ -616,6 +616,7 @@ export default function TDSReturn({ params }) {
                   Field On
                 </label>
                 <DatePicker
+                  onKeyDown={(e) => e.preventDefault()}
                   autoComplete="off"
                   selected={tdsReturnForm.filedOn}
                   id="filedOn"

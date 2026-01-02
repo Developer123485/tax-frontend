@@ -193,6 +193,7 @@ export default function EmployeeDetail(props) {
             <span>DOB</span>
           </label>
           <DatePicker
+            onKeyDown={(e) => e.preventDefault()}
             autoComplete="off"
             selected={employeeDetail.dob}
             id="inputDOB"

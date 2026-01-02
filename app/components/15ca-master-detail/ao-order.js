@@ -113,6 +113,7 @@ export default function AoOrderDetailForm(props) {
                             {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
                         </label>
                         <DatePicker
+                            onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={aoOrder.orderDate}
                             id="dateOfDoposit"
