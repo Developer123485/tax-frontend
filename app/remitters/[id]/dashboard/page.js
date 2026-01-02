@@ -62,21 +62,21 @@ export default function Dashboard({ params }) {
         },
     ]);
 
-    const fileSelectHandler = (event) => {
-        setSelectedFile(event.target.files[0]);
-        setFileName(event.target.files[0].name);
-        handleFileChange(event.target.files[0]);
-    };
+    // const fileSelectHandler = (event) => {
+    //     setSelectedFile(event.target.files[0]);
+    //     setFileName(event.target.files[0].name);
+    //     handleFileChange(event.target.files[0]);
+    // };
 
-    function download() {
-        const url = "/static/pdf/Deductee_Employee_Master_Template.xlsx";
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "Deductee_Employee_Master_Template.xlsx";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+    // function download() {
+    //     const url = "/static/pdf/Deductee_Employee_Master_Template.xlsx";
+    //     const link = document.createElement("a");
+    //     link.href = url;
+    //     link.download = "Deductee_Employee_Master_Template.xlsx";
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    // }
 
     return (
         <>
@@ -248,7 +248,7 @@ export default function Dashboard({ params }) {
                 delete={(e) => deleteCorrectionDeductor(e)}
             ></DeleteConfirmation>
             {showLoader && <ProcessPopup showLoader={showLoader}></ProcessPopup>}
-            {show && <ImportDeductorTXTPopup fetchDeductors={fetchCorrectionStatements} show={show} deductorId={deductorId} financialYear={financialYear} quarter={quarter} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>}
+            {/* {show && <ImportDeductorTXTPopup fetchDeductors={fetchCorrectionStatements} show={show} deductorId={deductorId} financialYear={financialYear} quarter={quarter} setShow={(e) => setShow(e)}></ImportDeductorTXTPopup>} */}
         </>
     );
 }

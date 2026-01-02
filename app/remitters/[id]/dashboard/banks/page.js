@@ -83,7 +83,7 @@ export default function BankDetailList({ params }) {
                         <a
                             onClick={() =>
                                 router.push(
-                                    `/remitters/${remitterId}/dashboard/bank-details/bank-detail?id=${row.id}`
+                                    `/remitters/${remitterId}/dashboard/banks/bank-detail?id=${row.id}`
                                 )
                             }
                         >
