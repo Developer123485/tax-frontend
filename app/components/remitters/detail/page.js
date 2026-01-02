@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import ProcessPopup from "../../modals/processing";
 import { CommonService } from "@/app/services/common.service";
 import SearchableDropdown from "../../deductors/searchable-dropdown";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function RemitterDetail(props) {
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused1, setIsFocused1] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [isFocused3, setIsFocused3] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const highlightStyle = {
     padding: "8px",
@@ -49,6 +51,47 @@ export default function RemitterDetail(props) {
               <div className="col-md-12 mt-0">
                 <h5 className="text-blue fw-bold">Remitter Details</h5>
               </div>
+
+              <div className="col-md-3">
+                <label className="form-label">ITD User Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="ABCD10787A"
+                  value={remitterDetail.itdLogin}
+                  maxLength={20}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.trim().toUpperCase();
+                    handleInput("itdLogin", e)
+                  }}
+                />
+              </div>
+
+
+              <div className="col-md-3">
+                <label className="form-label">Password
+                </label>
+                <div className="input-group ">
+
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control"
+                    placeholder="Password"
+                    value={remitterDetail.password}
+                    maxLength={25}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.trim();
+                      handleInput("password", e)
+                    }}
+                  />
+                  <button type="button" className="eye-icon"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </button>
+                </div>
+              </div>
+
 
               <div className="col-md-3">
                 <label className="form-label">Remitter Code

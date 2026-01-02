@@ -81,6 +81,8 @@ export default function AddRemitter() {
         motherName: "",
         desgination: "",
         code: "",
+        password: "",
+        itdLogin: ""
     });
     const [remitterErrors, setRemitterErrors] = useState({
         remitterStateError: "",
