@@ -224,7 +224,6 @@ export default function RemitteeDetail(props) {
                         {/* === EMAIL === */}
                         <div className="col-md-3">
                             <label className="form-label">Email Address
-                                <span className="text-danger">*</span>
                             </label>
                             <input
                                 type="text"

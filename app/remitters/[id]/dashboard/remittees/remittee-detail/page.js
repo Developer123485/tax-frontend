@@ -127,13 +127,9 @@ export default function AddRemittee({ params }) {
         if (!remittee.princPlcBusRemtee) err.princPlcBusRemtee = "PrincPlcBusRemtee is required";
         if (!remittee.countryRemMade) err.countryRemMade = "Country Remittance is required";
         if (!remittee.countryRemMadeDesc && remittee.countryRemMade == "9999") err.countryRemMadeDesc = "Other Country Remittance is required";
-
-        if (!remittee.remitteePan) err.remitteePan = "PAN is required";
-        else if (!panRegex.test(remittee.remitteePan.toUpperCase()))
+        if (!panRegex.test(remittee.remitteePan.toUpperCase()))
             err.remitteePan = "Invalid PAN format (ABCDE1234F)";
-
-        if (!remittee.remitteeEmail) err.remitteeEmail = "Email is required";
-        else if (!emailRegex.test(remittee.remitteeEmail))
+        if (!emailRegex.test(remittee.remitteeEmail))
             err.remitteeEmail = "Invalid email format";
 
         // if (remittee.remitteePincode && remittee.remitteePincode.length !== 6)
