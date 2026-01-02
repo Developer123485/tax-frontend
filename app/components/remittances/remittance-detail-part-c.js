@@ -83,9 +83,9 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-4">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
-                     <DatePicker
-placeholderText="dd/MM/yyyy"
-onKeyDown={(e) => e.preventDefault()}
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.certificateDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
@@ -182,9 +182,9 @@ onKeyDown={(e) => e.preventDefault()}
                 {/* PROPOSED DATE */}
                 <div className="col-md-4">
                     <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
-                     <DatePicker
-placeholderText="dd/MM/yyyy"
-onKeyDown={(e) => e.preventDefault()}
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.proposedDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
@@ -737,13 +737,15 @@ onKeyDown={(e) => e.preventDefault()}
                     <label className="form-label">TDS Deduction Date
                         <span className="text-danger">*</span>
                     </label>
-                     <DatePicker
-placeholderText="dd/MM/yyyy"
-onKeyDown={(e) => e.preventDefault()}
-                        selected={model.dednDateTds}
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
+                        selected={model.dateOfDeduction}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("dednDateTds", e)}
+                        minDate={new Date(2004, 3, 1)}
+                        maxDate={new Date()}
+                        onChange={(e) => handleInput("dateOfDeduction", e)}
                     />
                     {isDirty && errors.dednDateTds && <span className="text-danger">{errors.dednDateTds}</span>}
                 </div>
@@ -772,9 +774,9 @@ onKeyDown={(e) => e.preventDefault()}
                     <label className="form-label">Verification Date
                         <span className="text-danger">*</span>
                     </label>
-                     <DatePicker
-placeholderText="dd/MM/yyyy"
-onKeyDown={(e) => e.preventDefault()}
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"

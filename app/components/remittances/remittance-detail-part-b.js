@@ -255,7 +255,7 @@ export default function RemittanceDetailB({
                         type="number"
                         min="0"
                         step="1"
-                         onKeyDown={(e) => {
+                        onKeyDown={(e) => {
                             if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
                                 e.preventDefault();
                             }
@@ -307,12 +307,14 @@ export default function RemittanceDetailB({
                             placeholderText="dd/MM/yyyy"
                             onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
-                            selected={model.tdsDeductionDate}
+                            selected={model.dateOfDeduction}
                             id="dateOfDoposit"
                             className="form-control w-100"
                             onChange={(e) => {
-                                handleInput("tdsDeductionDate", e);
+                                handleInput("dateOfDeduction", e);
                             }}
+                            minDate={new Date(2004, 3, 1)}
+                            maxDate={new Date()}
                             dateFormat="dd/MM/yyyy"
                         />
                     </div>

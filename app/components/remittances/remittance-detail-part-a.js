@@ -248,6 +248,8 @@ export default function RemittanceDetailA({
                             onChange={(e) => {
                                 handleInput("dateOfDeduction", e);
                             }}
+                            minDate={new Date(2004, 3, 1)}
+                            maxDate={new Date()}
                             dateFormat="dd/MM/yyyy"
                         />
                     </div>
