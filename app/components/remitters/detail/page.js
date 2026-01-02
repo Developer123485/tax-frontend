@@ -77,11 +77,11 @@ export default function RemitterDetail(props) {
                     type={showPassword ? "text" : "password"}
                     className="form-control"
                     placeholder="Password"
-                    value={remitterDetail.password}
+                    value={remitterDetail.itdPassword}
                     maxLength={25}
                     onChange={(e) => {
                       e.target.value = e.target.value.trim();
-                      handleInput("password", e)
+                      handleInput("itdPassword", e)
                     }}
                   />
                   <button type="button" className="eye-icon"
