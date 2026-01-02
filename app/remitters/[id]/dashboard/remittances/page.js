@@ -101,7 +101,12 @@ export default function RemittanceList({ params }) {
                 <div className="d-flex justify-content-center">
                     <a
                         onClick={() => {
-                            router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?id=${row.id}&partType=${searchParams.get("partType")}`)
+                            if (searchParams.get("formType")) {
+                                router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?id=${row.id}&partType=${searchParams.get("partType")}&formType=${searchParams.get("formType")}`)
+                            } else {
+                                router.push(`/remitters/${remitterId}/dashboard/remittances/remittance-detail?id=${row.id}&partType=${searchParams.get("partType")}`)
+                            }
+
                         }}
                     >
                         <Image
