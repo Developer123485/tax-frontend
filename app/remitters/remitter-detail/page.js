@@ -416,7 +416,6 @@ export default function AddRemitter() {
             fatherError ||
             responsibleNameError ||
             designationError ||
-            cityError ||
             remitterCountryError
         ) {
             setRemitterErrors((prevState) => ({
@@ -532,7 +531,7 @@ export default function AddRemitter() {
             <section className="my-5 my-md-4">
                 <div className="container mt-5">
                     <div className="">
-                        {active === 0 && (
+                        {enumList && enumList.banks && active === 0 && (
                             <RemitterDetail
                                 setActive={(e) => setActive(e)}
                                 enumList={enumList}
