@@ -241,8 +241,8 @@ export default function RemittanceDetailA({
                         value={model.i_We}
                         onChange={(e) => handleInput("i_We", e)}
                     >
-                        <option value="I">I</option>
-                        <option value="WE">WE</option>
+                        <option value="1">I</option>
+                        <option value="2">WE</option>
                     </select>
                     {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
                 </div>
