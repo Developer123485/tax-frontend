@@ -48,7 +48,7 @@ export default function RemittanceDetailD({
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -138,7 +138,7 @@ step="0.01"
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -162,7 +162,7 @@ step="0.01"
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -318,7 +318,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -337,7 +337,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -355,7 +355,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -400,7 +400,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -418,7 +418,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -436,7 +436,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -454,7 +454,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -472,7 +472,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -501,7 +501,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -519,7 +519,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -573,7 +573,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -593,7 +593,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();
@@ -612,7 +612,7 @@ step="0.01"
                     <input
                         type="number"
  min="0"
-step="0.01"
+
  onKeyDown={(e) => {
         if (["-", "+", "e", "E"].includes(e.key)) {
             e.preventDefault();

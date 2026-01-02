@@ -48,7 +48,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -66,7 +66,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -176,7 +176,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -197,7 +197,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
