@@ -202,6 +202,13 @@ export default function AddRemittance({ params }) {
     model.certificateDate,
     model.grossedUp,
     model.basisTaxIncDtaa,
+    model.amtPayIndianTds,
+    model.amtPayForgnTds,
+    model.rateTdsSecbFlg,
+    model.certificateNo,
+    model.actlAmtTdsForgn,
+    model.dednDateTds,
+    model.verificationDate
     ]);
 
 
