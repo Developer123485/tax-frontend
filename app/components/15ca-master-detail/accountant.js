@@ -196,8 +196,9 @@ export default function AccountantDetailForm(props) {
                         )}
                     </div>
 
-                    {/* SAVE BUTTON */}
-                    <div className="col-md-12 mt-3">
+                </div>
+                <div className="row mt-3">
+                    <div className="col-md-12">
                         <button
                             type="button"
                             className="btn btn-primary"
@@ -207,6 +208,7 @@ export default function AccountantDetailForm(props) {
                         </button>
                     </div>
                 </div>
+
             </form>
 
             <ProcessPopup />
