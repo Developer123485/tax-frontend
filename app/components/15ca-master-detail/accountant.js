@@ -170,16 +170,30 @@ export default function AccountantDetailForm(props) {
 
                     {/* REG NO */}
                     <div className="col-md-3">
-                        <label className="form-label">Registration No
-                            <span className="text-danger">*</span>
+                        <label className="form-label">
+                            Registration No <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             value={accountant.registrationNo || ""}
-                            onChange={(e) => handleInput("registrationNo", e)}
+                            maxLength={8} // ensures no more than 8 digits
+                            onChange={(e) => {
+                                let value = e.target.value.replace(/\D/g, ""); // remove non-digits
+                                handleInput("registrationNo", value);
+                            }}
+                            onBlur={(e) => {
+                                let value = e.target.value;
+                                if (value) {
+                                    // pad with leading zeros if less than 8 digits
+                                    value = value.padStart(8, "0");
+                                    handleInput("registrationNo", value);
+                                }
+                            }}
                         />
-                        {isDirty && errors.registrationNo && <span className="text-danger">{errors.registrationNo}</span>}
+                        {isDirty && errors.registrationNo && (
+                            <span className="text-danger">{errors.registrationNo}</span>
+                        )}
                     </div>
 
                     {/* SAVE BUTTON */}

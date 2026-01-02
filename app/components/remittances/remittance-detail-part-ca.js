@@ -16,6 +16,12 @@ export default function RemittanceDetailCA({
     formType,
     remitterId
 }) {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const financialYearStart =
+        today.getMonth() + 1 >= 4
+            ? new Date(currentYear, 3, 1) // April 1st of this year
+            : new Date(currentYear - 1, 3, 1); // A
     return (
         <form autoComplete="off">
             <div className="row bg-light-gray px-2 py-2 rounded-3 g-3 my-4">
@@ -89,7 +95,10 @@ export default function RemittanceDetailCA({
                         selected={model.certificateDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("certificateDate", e)}
+                        onChange={(date) => handleInput("certificateDate", date)}
+                        minDate={financialYearStart}
+                        maxDate={today}
+                        dropdownMode="select"
                     />
                     {isDirty && errors.certificateDate && <span className="text-danger">{errors.certificateDate}</span>}
                 </div>
