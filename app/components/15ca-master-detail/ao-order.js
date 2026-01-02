@@ -2,6 +2,7 @@
 import React from "react";
 import ProcessPopup from "../modals/processing";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function AoOrderDetailForm(props) {
     const { aoOrder, errors, handleInput, handleSave, isDirty } = props;
@@ -118,9 +119,13 @@ export default function AoOrderDetailForm(props) {
                             selected={aoOrder.orderDate}
                             id="dateOfDoposit"
                             className="form-control w-100"
+                            maxDate={new Date()}
                             onChange={(e) => {
                                 handleInput("orderDate", e);
                             }}
+                            showMonthDropdown
+                            showYearDropdown
+                            dropdownMode="select"
                             dateFormat="dd/MM/yyyy"
                             placeholderText="dd/MM/yyyy"
                         />
