@@ -215,7 +215,7 @@ export default function AddRemittance({ params }) {
         }
         setModel((p) => ({ ...p, [field]: value }));
         if (field == "remitteeId") {
-            RemitteeService.getRemittee(e?.target?.value).then(res => {
+            RemitteeService.getRemittee(remitterId, e).then(res => {
                 setModel((p) => ({ ...p, ["country"]: res.countryRemMade }));
                 setModel((p) => ({ ...p, ["countryOther"]: res.countryRemMadeDesc }));
                 setModel((p) => ({ ...p, ["currency"]: res.currency }));
