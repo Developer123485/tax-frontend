@@ -115,7 +115,6 @@ export default function AddRemittee({ params }) {
     // ----------------------------------------------------
     function validate() {
         let err = {};
-
         if (!remittee.name) err.name = "Name is required";
         if (!remittee.code) err.code = "Code is required";
         if (!remittee.remitteeFlat) err.remitteeFlat = "Flat is required";
@@ -127,9 +126,9 @@ export default function AddRemittee({ params }) {
         if (!remittee.princPlcBusRemtee) err.princPlcBusRemtee = "PrincPlcBusRemtee is required";
         if (!remittee.countryRemMade) err.countryRemMade = "Country Remittance is required";
         if (!remittee.countryRemMadeDesc && remittee.countryRemMade == "9999") err.countryRemMadeDesc = "Other Country Remittance is required";
-        if (!panRegex.test(remittee.remitteePan.toUpperCase()))
+        if (remittee.remitteePan && !panRegex.test(remittee.remitteePan.toUpperCase()))
             err.remitteePan = "Invalid PAN format (ABCDE1234F)";
-        if (!emailRegex.test(remittee.remitteeEmail))
+        if (remittee.remitteeEmail && !emailRegex.test(remittee.remitteeEmail))
             err.remitteeEmail = "Invalid email format";
 
         // if (remittee.remitteePincode && remittee.remitteePincode.length !== 6)

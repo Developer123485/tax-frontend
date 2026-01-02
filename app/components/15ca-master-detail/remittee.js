@@ -272,11 +272,11 @@ export default function RemitteeDetail(props) {
                             </label>
                             {enumList.status && enumList.status.length > 0 && <SearchableDropdown
                                 setEventId={(e) => handleInput("status", e)}
-                                id={remittee.remitterStatus}
+                                id={remittee.status}
                                 options={enumList.status}
                             ></SearchableDropdown>
                             }
-                            {isDirty && remitteeErrors.statusError && (
+                            {isDirty && remitteeErrors.status && (
                                 <span className="text-danger">
                                     {remitteeErrors.status}
                                 </span>
@@ -315,9 +315,9 @@ export default function RemitteeDetail(props) {
                                 options={enumList.countryCodeRemitter}
                             ></SearchableDropdown>
                             }
-                            {isDirty && remitteeErrors.remitterStateError && (
+                            {isDirty && remitteeErrors.countryRemMade && (
                                 <span className="text-danger">
-                                    {remitteeErrors.remitterStateError}
+                                    {remitteeErrors.countryRemMade}
                                 </span>
                             )}
                         </div>
