@@ -48,7 +48,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        
+                        step="0.01"
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -66,7 +66,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        
+                        step="0.01"
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -176,7 +176,7 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        
+                        step="0.01"
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
@@ -197,17 +197,17 @@ export default function RemittanceDetailA({
                     <input
                         type="number"
                         min="0"
-                        
+                        step="0.01"
                         onKeyDown={(e) => {
                             if (["-", "+", "e", "E"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         className="form-control"
-                        value={model.tdsRate || ""}
-                        onChange={(e) => handleInput("tdsRate", e)}
+                        value={model.rateOfTds || ""}
+                        onChange={(e) => handleInput("rateOfTds", e)}
                     />
-                    {isDirty && errors.tdsRate && <span className="text-danger">{errors.tdsRate}</span>}
+                    {isDirty && errors.rateOfTds && <span className="text-danger">{errors.rateOfTds}</span>}
                 </div>
 
                 {/* TDS Deduction Date */}
@@ -216,11 +216,11 @@ export default function RemittanceDetailA({
                     <div>
                         <DatePicker
                             autoComplete="off"
-                            selected={model.tdsDeductionDate}
+                            selected={model.dateOfDeduction}
                             id="dateOfDoposit"
                             className="form-control w-100"
                             onChange={(e) => {
-                                handleInput("tdsDeductionDate", e);
+                                handleInput("dateOfDeduction", e);
                             }}
                             dateFormat="dd/MM/yyyy"
                             placeholderText="dd/MM/yyyy"

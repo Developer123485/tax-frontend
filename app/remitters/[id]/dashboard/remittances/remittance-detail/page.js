@@ -171,7 +171,7 @@ export default function AddRemittance({ params }) {
         validate();
     }, [model.nature, model.otherNature, model.accountantDetailId,
     model.bankDetailId, model.aoOrderDetailId, model.remitterId, model.purposeCode, model.purposeCode1,
-    model.amountOfTds, model.tdsRate, model.currency, model.currencyOther, model.country, model.countryOther,
+    model.amountOfTds, model.rateOfTds, model.currency, model.currencyOther, model.country, model.countryOther,
     model.proposedDate,
     model.grossedUp,
     model.dtaaTaxResidencyAvailable,
@@ -234,7 +234,7 @@ export default function AddRemittance({ params }) {
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";
             if (!model.amountOfTds) e.amountOfTds = "required!";
-            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.rateOfTds) e.rateOfTds = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
             if (!model.i_We) e.i_We = "required!";
@@ -258,7 +258,7 @@ export default function AddRemittance({ params }) {
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";
             if (!model.amountOfTds) e.amountOfTds = "required!";
-            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.rateOfTds) e.rateOfTds = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
@@ -351,7 +351,7 @@ export default function AddRemittance({ params }) {
             if (!model.otherNature && model.nature == "16.99") e.otherNature = "required!";
             if (!model.purposeCode1) e.purposeCode1 = "required!";
             if (!model.amountOfTds) e.amountOfTds = "required!";
-            if (!model.tdsRate) e.tdsRate = "required!";
+            if (!model.rateOfTds) e.rateOfTds = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
