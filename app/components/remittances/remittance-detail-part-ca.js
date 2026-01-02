@@ -84,6 +84,7 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
                     <DatePicker
+                        placeholderText="dd/MM/yyyy"
                         onKeyDown={(e) => e.preventDefault()}
                         selected={model.certificateDate}
                         className="form-control"
@@ -182,6 +183,7 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
                     <DatePicker
+                        placeholderText="dd/MM/yyyy"
                         onKeyDown={(e) => e.preventDefault()}
                         selected={model.proposedDate}
                         className="form-control"
@@ -743,6 +745,7 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <DatePicker
+                        placeholderText="dd/MM/yyyy"
                         onKeyDown={(e) => e.preventDefault()}
                         selected={model.dednDateTds}
                         className="form-control"
@@ -777,6 +780,7 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <DatePicker
+                        placeholderText="dd/MM/yyyy"
                         selected={model.verificationDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"

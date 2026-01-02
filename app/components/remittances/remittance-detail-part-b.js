@@ -229,7 +229,8 @@ export default function RemittanceDetailB({
                     </label>
                     <div>
                         <DatePicker
-onKeyDown={(e) => e.preventDefault()}
+                            placeholderText="dd/MM/yyyy"
+                            onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={model.proposedDate}
                             id="dateOfDoposit"
@@ -238,7 +239,6 @@ onKeyDown={(e) => e.preventDefault()}
                                 handleInput("proposedDate", e);
                             }}
                             dateFormat="dd/MM/yyyy"
-                            placeholderText="dd/MM/yyyy"
                         />
                         {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                     </div>
@@ -571,7 +571,8 @@ step="0.01"
                     <label className="form-label">TDS Deduction Date</label>
                     <div>
                         <DatePicker
-onKeyDown={(e) => e.preventDefault()}
+                            placeholderText="dd/MM/yyyy"
+                            onKeyDown={(e) => e.preventDefault()}
                             autoComplete="off"
                             selected={model.tdsDeductionDate}
                             id="dateOfDoposit"
@@ -580,7 +581,6 @@ onKeyDown={(e) => e.preventDefault()}
                                 handleInput("tdsDeductionDate", e);
                             }}
                             dateFormat="dd/MM/yyyy"
-                            placeholderText="dd/MM/yyyy"
                         />
                     </div>
 
@@ -610,7 +610,8 @@ onKeyDown={(e) => e.preventDefault()}
                         <span className="text-danger">*</span>
                     </label>
                     <DatePicker
-onKeyDown={(e) => e.preventDefault()}
+                        placeholderText="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"

@@ -83,7 +83,8 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-4">
                     <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
-                    <DatePicker
+                     <DatePicker
+placeholderText="dd/MM/yyyy"
 onKeyDown={(e) => e.preventDefault()}
                         selected={model.certificateDate}
                         className="form-control"
@@ -181,7 +182,8 @@ onKeyDown={(e) => e.preventDefault()}
                 {/* PROPOSED DATE */}
                 <div className="col-md-4">
                     <label className="form-label">Proposed Date <span className="text-danger">*</span></label>
-                    <DatePicker
+                     <DatePicker
+placeholderText="dd/MM/yyyy"
 onKeyDown={(e) => e.preventDefault()}
                         selected={model.proposedDate}
                         className="form-control"
@@ -735,7 +737,8 @@ onKeyDown={(e) => e.preventDefault()}
                     <label className="form-label">TDS Deduction Date
                         <span className="text-danger">*</span>
                     </label>
-                    <DatePicker
+                     <DatePicker
+placeholderText="dd/MM/yyyy"
 onKeyDown={(e) => e.preventDefault()}
                         selected={model.dednDateTds}
                         className="form-control"
@@ -769,7 +772,8 @@ onKeyDown={(e) => e.preventDefault()}
                     <label className="form-label">Verification Date
                         <span className="text-danger">*</span>
                     </label>
-                    <DatePicker
+                     <DatePicker
+placeholderText="dd/MM/yyyy"
 onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
@@ -843,7 +847,8 @@ step="0.01"
 
                 <div className="col-md-4">
                     <label className="form-label">Date of Deduction</label>
-                    <DatePicker
+                     <DatePicker
+placeholderText="dd/MM/yyyy"
 onKeyDown={(e) => e.preventDefault()}
                         selected={model.dateOfDeduction}
                         className="form-control"
