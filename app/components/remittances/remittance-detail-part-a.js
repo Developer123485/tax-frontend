@@ -49,18 +49,18 @@ export default function RemittanceDetailA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 15) return;
                             handleInput("inIndian", value);
                         }}
                         className="form-control"
@@ -72,18 +72,18 @@ export default function RemittanceDetailA({
                 <div className="col-md-4">
                     <label className="form-label">Aggregate Amount</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 15) return;
                             handleInput("aggregateAmount", value);
                         }}
                         className="form-control"
@@ -188,18 +188,18 @@ export default function RemittanceDetailA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 15) return;
                             handleInput("amountOfTds", value);
                         }}
                         className="form-control"
@@ -214,18 +214,18 @@ export default function RemittanceDetailA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 15) return;
                             handleInput("rateOfTds", value);
                         }}
                         className="form-control"

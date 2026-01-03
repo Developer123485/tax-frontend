@@ -196,6 +196,30 @@ export default function AccountantDetailForm(props) {
                         )}
                     </div>
 
+                    <div className="col-md-3">
+                        <label className="form-label">
+                            Membership No
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={accountant.membershipNumber || ""}
+                            maxLength={6} // ensures no more than 8 digits
+                            onChange={(e) => {
+                                let value = e.target.value.replace(/\D/g, ""); // remove non-digits
+                                handleInput("membershipNumber", value);
+                            }}
+                            onBlur={(e) => {
+                                let value = e.target.value;
+                                if (value) {
+                                    // pad with leading zeros if less than 8 digits
+                                    value = value.padStart(6, "0");
+                                    handleInput("membershipNumber", value);
+                                }
+                            }}
+                        />
+                    </div>
+
                 </div>
                 <div className="row mt-3">
                     <div className="col-md-12">

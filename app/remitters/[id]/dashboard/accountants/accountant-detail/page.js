@@ -29,6 +29,7 @@ export default function AddAccountant({ params }) {
         country: "",
         pinCode: "",
         registrationNo: "",
+        membershipNumber: "",
         code: "",
         createdDate: null,
         updatedDate: null,
