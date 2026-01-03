@@ -59,7 +59,7 @@ export default function RemitterDetail(props) {
                   className="form-control"
                   placeholder="ABCD10787A"
                   value={remitterDetail.itdLogin}
-                  maxLength={20}
+                  maxLength={10}
                   onChange={(e) => {
                     e.target.value = e.target.value.trim().toUpperCase();
                     handleInput("itdLogin", e)
@@ -377,7 +377,7 @@ export default function RemitterDetail(props) {
                 <input
                   type="email"
                   className="form-control"
-                  maxLength={50}
+                  maxLength={125}
                   value={remitterDetail.remitterEmail}
                   onChange={(e) => handleInput("remitterEmail", e)}
                 />
@@ -575,8 +575,12 @@ export default function RemitterDetail(props) {
                   <input
                     type="text"
                     className="form-control"
+                    maxLength={3}
                     value={remitterDetail.rangeCode || ""}
-                    onChange={(e) => handleInput("rangeCode", e)}
+                    onChange={(e) => {
+                      if (CommonService.isNumeric(e.target.value))
+                        handleInput("rangeCode", e)
+                    }}
                   />
                 </div>
 
@@ -585,8 +589,12 @@ export default function RemitterDetail(props) {
                   <input
                     type="text"
                     className="form-control"
+                    maxLength={2}
                     value={remitterDetail.aoNumber || ""}
-                    onChange={(e) => handleInput("aoNumber", e)}
+                    onChange={(e) => {
+                      if (CommonService.isNumeric(e.target.value))
+                        handleInput("aoNumber", e)
+                    }}
                   />
                 </div>
 
