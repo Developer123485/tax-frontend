@@ -99,17 +99,11 @@ export default function RemittanceDetailD({
                     </label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        inputMode="decimal"
                         onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 18) return;
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("inIndian", value);
                         }}
                         className="form-control"
@@ -126,17 +120,11 @@ export default function RemittanceDetailD({
                     </label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        inputMode="decimal"
                         onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 18) return;
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("inForiegn", value);
                         }}
                         className="form-control"

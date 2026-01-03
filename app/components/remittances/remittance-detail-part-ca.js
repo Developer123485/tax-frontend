@@ -154,18 +154,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Amount Payable (INR) <span className="text-danger">*</span></label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("inIndian", value);
                         }}
                         className="form-control"
@@ -177,18 +171,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Amount Payable (Foreign) <span className="text-danger">*</span></label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("inForiegn", value);
                         }}
                         className="form-control"
@@ -295,18 +283,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("itActIncomeChargeable", value);
                         }}
                         className="form-control"
@@ -317,18 +299,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("itActTaxLiability", value);
                         }}
                         className="form-control"
@@ -384,18 +360,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Taxable Income (DTAA)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("taxIncDtaa", value);
                         }}
                         className="form-control"
@@ -406,18 +376,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Tax Liability (DTAA)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("taxLiablDtaa", value);
                         }}
                         className="form-control"
@@ -458,18 +422,12 @@ export default function RemittanceDetailCA({
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("rateTdsADtaa", value);
                         }}
                         className="form-control"
@@ -498,18 +456,12 @@ export default function RemittanceDetailCA({
                         {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("amtToTaxInd", value);
                         }}
                         className="form-control"
@@ -554,18 +506,12 @@ export default function RemittanceDetailCA({
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("amtLongTrm", value);
                         }}
                         className="form-control"
@@ -580,18 +526,12 @@ export default function RemittanceDetailCA({
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("amtShortTrm", value);
                         }}
                         className="form-control"
@@ -664,18 +604,12 @@ export default function RemittanceDetailCA({
                         {model.taxIndDtaaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("rateTdsDDtaa", value);
                         }}
                         className="form-control"
@@ -710,18 +644,12 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("amtPayForgnTds", value);
                         }}
                         className="form-control"
@@ -735,18 +663,12 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("amtPayIndianTds", value);
                         }}
                         className="form-control"
@@ -758,18 +680,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Secb Flg</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("rateTdsSecbFlg", value);
                         }}
                         className="form-control"
@@ -781,18 +697,12 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Sec B</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("rateTdsSecB", value);
                         }}
                         className="form-control"
@@ -806,18 +716,12 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
+                        type="text"
+                        inputMode="decimal"
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
                             handleInput("actlAmtTdsForgn", value);
                         }}
                         className="form-control"
