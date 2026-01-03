@@ -265,6 +265,9 @@ export default function AddRemitter() {
         if (!remitterDetail.remitterCountry) {
             remitterCountryError = "Remitter Country is required";
         }
+        if (remitterDetail.remitterCountry && remitterDetail.remitterCountry === "113" && remitterDetail.remitterState == "38") {
+            remitterCountryError = "India is not allowed as the country when the state is Overseas.";
+        }
 
         if (!remitterDetail.remitterResidential) {
             remitterResidentialError = "Remitter Residential Status is required";
