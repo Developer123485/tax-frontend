@@ -60,18 +60,18 @@ export default function RemittanceDetailB({
                 <div className="col-md-4">
                     <label className="form-label">Aggregate Amount</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 18) return;
                             handleInput("aggregateAmount", value);
                         }}
                         className="form-control"
@@ -133,23 +133,24 @@ export default function RemittanceDetailB({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 18) return;
                             handleInput("inIndian", value);
                         }}
                         className="form-control"
                         value={model.inIndian || ""}
                     />
+
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
@@ -159,18 +160,18 @@ export default function RemittanceDetailB({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 18) return;
                             handleInput("inForiegn", value);
                         }}
                         className="form-control"
@@ -252,18 +253,18 @@ export default function RemittanceDetailB({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 18) return;
                             handleInput("amountOfTds", value);
                         }}
                         className="form-control"
@@ -278,18 +279,18 @@ export default function RemittanceDetailB({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         onKeyDown={(e) => {
-                            if (!/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+                            if (!/^[0-9]$/.test(e.key) &&
+                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            if ((value.match(/\./g) || []).length > 1) return;
-                            if (value.replace(".", "").length > 18) return;
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length > 18) return;
                             handleInput("tdsRate", value);
                         }}
                         className="form-control"
