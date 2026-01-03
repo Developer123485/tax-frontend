@@ -476,10 +476,6 @@ export default function AddRemitter() {
         e.preventDefault();
         setIsNextDirty(true);
         if (validateRemitterDetail()) {
-            if (remitterDetail.itdLogin && (remitterDetail.itdLogin != remitterDetail.remitterTan)) {
-                toast.error("Remitter tan and ITD login tan should be equal");
-                return;
-            }
             RemittersService.saveRemitter(remitterDetail)
                 .then((res) => {
                     if (res && res > 0) {
