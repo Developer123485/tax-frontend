@@ -779,6 +779,7 @@ export default function RemittanceDetailCA({
                         onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
+                        minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
                         onChange={(e) => handleInput("verificationDate", e)}
                     />
