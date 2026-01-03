@@ -83,7 +83,6 @@ export default function BankDetailForm(props) {
                         )}
                     </div>
 
-                    {/* BSR CODE */}
                     <div className="col-md-4">
                         <label className="form-label">BSR Code</label>
                         <input
@@ -91,12 +90,19 @@ export default function BankDetailForm(props) {
                             className="form-control"
                             maxLength={7}
                             value={bankDetail.bsrCode || ""}
-                            onChange={(e) => handleInput("bsrCode", e)}
+                            onChange={(e) => {
+                                let value = e.target.value.toUpperCase();
+                                const regex = /^(\d{0,3})([A-Z0-9]{0,4})$/i;
+                                if (regex.test(value)) {
+                                    handleInput("bsrCode", value);
+                                }
+                            }}
                         />
                         {isDirty && errors.bsrCode && (
                             <span className="text-danger">{errors.bsrCode}</span>
                         )}
                     </div>
+
                     <div className="col-md-12 mt-4">
                         <button
                             className="btn btn-primary"
