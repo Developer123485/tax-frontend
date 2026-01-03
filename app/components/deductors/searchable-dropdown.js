@@ -3,12 +3,17 @@ import { Dropdown, Form, InputGroup, Button } from 'react-bootstrap';
 import { useRouter } from "next/navigation";
 
 export default function SearchableDropdown(props) {
-    const router = useRouter(null);
+    const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+
     const filteredOptions = props?.options?.filter(option =>
         option?.value?.toLowerCase()?.includes(searchTerm.toLowerCase())
     );
+
+    const selectedValue =
+        filteredOptions?.find(p => p.key === props.id)?.value || "Select";
+
     const handleSelect = (eventKey) => {
         props.setEventId(eventKey);
         setSearchTerm('');
@@ -16,28 +21,43 @@ export default function SearchableDropdown(props) {
     };
 
     return (
-        <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)} onSelect={handleSelect}>
+        <Dropdown
+            show={showDropdown}
+            onToggle={() => setShowDropdown(!showDropdown)}
+            onSelect={handleSelect}
+        >
+            {/* CUSTOM TOGGLE */}
             <Dropdown.Toggle
-                className="bg-white text-dark border w-100 d-flex align-items-center justify-content-between"
+                as="div"
+                className="form-control d-flex align-items-center justify-content-between cursor-pointer"
                 style={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis"
+                    cursor: "pointer"
                 }}
             >
-                {filteredOptions && filteredOptions.length > 0 && props.id &&
-                    filteredOptions.find(p => p.key == props.id)?.value
-                    ? filteredOptions.find(p => p.key == props.id)?.value
-                    : "Select"
-                }
+                {/* Selected Text */}
+                <span
+                    className="text-truncate"
+                    style={{ maxWidth: "90%" }}
+                >
+                    {selectedValue}
+                </span>
 
+                {/* Close Icon */}
                 {props.id && (
-                    <span className="ms-2 text-danger" onClick={(e) => { e.stopPropagation(); props.setEventId(""); }}>
+                    <span
+                        className="ms-2 text-danger"
+                        style={{ cursor: "pointer", flexShrink: 0 }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            props.setEventId("");
+                        }}
+                    >
                         <i className="fa-solid fa-circle-xmark"></i>
                     </span>
                 )}
             </Dropdown.Toggle>
 
+            {/* DROPDOWN MENU */}
             <Dropdown.Menu
                 className="w-100"
                 style={{
@@ -45,7 +65,7 @@ export default function SearchableDropdown(props) {
                     overflowY: "auto"
                 }}
             >
-                <InputGroup className="mb-2 search-input-group">
+                <InputGroup className="mb-2">
                     <Form.Control
                         autoFocus
                         type="text"
@@ -53,18 +73,15 @@ export default function SearchableDropdown(props) {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onClick={(e) => e.stopPropagation()}
-                        className="search-input"
                     />
 
                     {props?.url && (
                         <Button
                             variant="outline-primary"
-                            className="search-btn add-btn"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 router.push(props.url);
                             }}
-                            title="Add New"
                         >
                             <i className="fa fa-plus"></i>
                         </Button>
@@ -72,26 +89,22 @@ export default function SearchableDropdown(props) {
 
                     <Button
                         variant="outline-secondary"
-                        className="search-btn clear-btn"
                         onClick={(e) => {
                             e.stopPropagation();
                             setSearchTerm('');
                         }}
-                        title="Clear Search"
                     >
                         <i className="fa fa-times"></i>
                     </Button>
                 </InputGroup>
 
-
-
                 {filteredOptions?.length > 0 ? (
-                    filteredOptions?.map((option, index) => (
+                    filteredOptions.map((option, index) => (
                         <Dropdown.Item
                             eventKey={option.key}
                             key={index}
                             active={props.id === option.key}
-                            className="text-wrap" // <-- highlight selected item
+                            className="text-wrap"
                         >
                             {option.value}
                         </Dropdown.Item>
@@ -100,6 +113,6 @@ export default function SearchableDropdown(props) {
                     <Dropdown.Item disabled>No results found</Dropdown.Item>
                 )}
             </Dropdown.Menu>
-        </Dropdown >
+        </Dropdown>
     );
-};
+}
