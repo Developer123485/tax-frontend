@@ -220,8 +220,11 @@ export default function AddRemittance({ params }) {
                 return; // ignore negative input
             }
         }
+        if (field == "purposeCode") {
+            setModel((p) => ({ ...p, ["purposeCode1"]: "" }));
+        }
         setModel((p) => ({ ...p, [field]: value }));
-        if (field == "remitteeId") {
+        if (field == "remitteeId" && e) {
             RemitteeService.getRemittee(remitterId, e).then(res => {
                 setModel((p) => ({ ...p, ["country"]: res.countryRemMade }));
                 setModel((p) => ({ ...p, ["countryOther"]: res.countryRemMadeDesc }));
@@ -295,7 +298,6 @@ export default function AddRemittance({ params }) {
             setErrors(e);
             return Object.keys(e).length === 0;
         }
-        debugger
         if (search.get("partType") == "C" && search.get("formType") == "15CA") {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
