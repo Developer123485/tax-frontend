@@ -1,9 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SearchableDropdown from "../deductors/searchable-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+/* ---------- NUMERIC VALIDATOR ----------
+   - positive only
+   - max 14 digits
+   - max 2 decimals
+---------------------------------------- */
+const handlePositiveDecimal = (value, onValid) => {
+    const regex = /^\d{0,14}(\.\d{0,2})?$/;
+    if (regex.test(value)) {
+        onValid(value);
+    }
+};
 
 export default function RemittanceDetailA({
     model,
@@ -15,14 +27,17 @@ export default function RemittanceDetailA({
     isDirty,
     remitterId
 }) {
-
     return (
         <form autoComplete="off">
             <div className="row bg-light-gray px-1 py-1 rounded-3 g-3 my-4">
+
                 <h5 className="text-blue fw-bold">Remittance Details</h5>
-                {/* REMITTEE DROPDOWN */}
+
+                {/* REMITTEE */}
                 <div className="col-md-4">
-                    <label className="form-label">Remittees <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Remittees <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.remitteeId}
                         options={dropdowns.remittees}
@@ -32,68 +47,60 @@ export default function RemittanceDetailA({
                     {isDirty && errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
                 </div>
 
-                {/* Banks DROPDOWN */}
+                {/* BANK */}
                 <div className="col-md-4">
-                    <label className="form-label">Banks <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Banks <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.bankDetailId}
-                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         options={dropdowns.banks}
+                        url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
 
+                {/* AMOUNT PAYABLE */}
                 <div className="col-md-4">
-                    <label className="form-label">Amount Payable (INR)
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        Amount Payable (INR) <span className="text-danger">*</span>
                     </label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 15) return;
-                            handleInput("inIndian", value);
-                        }}
+                        inputMode="decimal"
                         className="form-control"
                         value={model.inIndian || ""}
+                        onChange={(e) =>
+                            handlePositiveDecimal(e.target.value, (v) =>
+                                handleInput("inIndian", v)
+                            )
+                        }
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
 
+                {/* AGGREGATE AMOUNT */}
                 <div className="col-md-4">
                     <label className="form-label">Aggregate Amount</label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 15) return;
-                            handleInput("aggregateAmount", value);
-                        }}
+                        inputMode="decimal"
                         className="form-control"
                         value={model.aggregateAmount || ""}
+                        onChange={(e) =>
+                            handlePositiveDecimal(e.target.value, (v) =>
+                                handleInput("aggregateAmount", v)
+                            )
+                        }
                     />
                 </div>
 
                 {/* COUNTRY */}
                 <div className="col-md-4">
-                    <label className="form-label">Country <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Country <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.country}
                         options={enums.countryCodeRemitter}
@@ -101,15 +108,18 @@ export default function RemittanceDetailA({
                     />
                     {isDirty && errors.country && <span className="text-danger">{errors.country}</span>}
                 </div>
+
+                {/* OTHER COUNTRY */}
                 {model.country === "9999" && (
                     <div className="col-md-4">
-                        <label className="form-label">Other Country <span className="text-danger">*</span></label>
+                        <label className="form-label">
+                            Other Country <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
-                            className="form-control "
-                            placeholder="Other Country Name"
+                            className="form-control"
                             value={model.countryOther || ""}
-                            onChange={(e) => handleInput("countryOther", e)}
+                            onChange={(e) => handleInput("countryOther", e.target.value)}
                         />
                         {isDirty && errors.countryOther && <span className="text-danger">{errors.countryOther}</span>}
                     </div>
@@ -117,7 +127,9 @@ export default function RemittanceDetailA({
 
                 {/* NATURE */}
                 <div className="col-md-4">
-                    <label className="form-label">Natures <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Natures <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.nature}
                         options={enums.incomeNatureType}
@@ -125,22 +137,28 @@ export default function RemittanceDetailA({
                     />
                     {isDirty && errors.nature && <span className="text-danger">{errors.nature}</span>}
                 </div>
+
+                {/* OTHER NATURE */}
                 {model.nature === "16.99" && (
                     <div className="col-md-4">
-                        <label className="form-label">Others Natures <span className="text-danger">*</span></label>
+                        <label className="form-label">
+                            Others Natures <span className="text-danger">*</span>
+                        </label>
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Enter other nature"
                             value={model.otherNature || ""}
-                            onChange={(e) => handleInput("otherNature", e)}
+                            onChange={(e) => handleInput("otherNature", e.target.value)}
                         />
                         {isDirty && errors.otherNature && <span className="text-danger">{errors.otherNature}</span>}
                     </div>
                 )}
 
+                {/* PURPOSE CATEGORY */}
                 <div className="col-md-4">
-                    <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Rev Pur Category <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.purposeCode}
                         options={enums.rbiClassificationType}
@@ -149,124 +167,107 @@ export default function RemittanceDetailA({
                     {isDirty && errors.purposeCode && <span className="text-danger">{errors.purposeCode}</span>}
                 </div>
 
-
+                {/* PURPOSE CODE */}
                 <div className="col-md-4">
-                    <label className="form-label">Rev Pur Code(Select before Rev Pur Category) <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        Rev Pur Code <span className="text-danger">*</span>
+                    </label>
                     <SearchableDropdown
                         id={model.purposeCode1}
-                        options={model.purposeCode ? enums.rbiPurposeCode.filter(item =>
-                            item.key.startsWith(model.purposeCode)
-                        ) : null}
+                        options={
+                            model.purposeCode
+                                ? enums.rbiPurposeCode.filter((i) =>
+                                    i.key.startsWith(model.purposeCode)
+                                )
+                                : []
+                        }
                         setEventId={(e) => handleInput("purposeCode1", e)}
                     />
                     {isDirty && errors.purposeCode1 && <span className="text-danger">{errors.purposeCode1}</span>}
                 </div>
 
+                {/* PROPOSED DATE */}
                 <div className="col-md-4">
-                    <label className="form-label">Proposed Date
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        Proposed Date <span className="text-danger">*</span>
                     </label>
-                    <div>
-                        <DatePicker
-                            placeholderText="dd/MM/yyyy"
-                            onKeyDown={(e) => e.preventDefault()}
-                            autoComplete="off"
-                            selected={model.proposedDate}
-                            id="dateOfDoposit"
-                            className="form-control w-100"
-                            onChange={(e) => {
-                                handleInput("proposedDate", e);
-                            }}
-                            dateFormat="dd/MM/yyyy"
-                        />
-                        {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
-                    </div>
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        selected={model.proposedDate}
+                        className="form-control w-100"
+                        dateFormat="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
+                        onChange={(e) => handleInput("proposedDate", e)}
+                    />
+                    {isDirty && errors.proposedDate && <span className="text-danger">{errors.proposedDate}</span>}
                 </div>
 
+                {/* TDS AMOUNT */}
                 <div className="col-md-4">
-                    <label className="form-label">TDS Amount
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        TDS Amount <span className="text-danger">*</span>
                     </label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 15) return;
-                            handleInput("amountOfTds", value);
-                        }}
+                        inputMode="decimal"
                         className="form-control"
                         value={model.amountOfTds || ""}
+                        onChange={(e) =>
+                            handlePositiveDecimal(e.target.value, (v) =>
+                                handleInput("amountOfTds", v)
+                            )
+                        }
                     />
                     {isDirty && errors.amountOfTds && <span className="text-danger">{errors.amountOfTds}</span>}
                 </div>
 
-                {/* TDS Rate */}
+                {/* RATE OF TDS */}
                 <div className="col-md-4">
-                    <label className="form-label">Rate Of TDS
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        Rate Of TDS <span className="text-danger">*</span>
                     </label>
                     <input
                         type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        onKeyDown={(e) => {
-                            if (!/^[0-9]$/.test(e.key) &&
-                                !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, "");
-                            if (value.length > 15) return;
-                            handleInput("rateOfTds", value);
-                        }}
+                        inputMode="decimal"
                         className="form-control"
                         value={model.rateOfTds || ""}
+                        onChange={(e) =>
+                            handlePositiveDecimal(e.target.value, (v) =>
+                                handleInput("rateOfTds", v)
+                            )
+                        }
                     />
                     {isDirty && errors.rateOfTds && <span className="text-danger">{errors.rateOfTds}</span>}
                 </div>
 
-                {/* TDS Deduction Date */}
+                {/* TDS DEDUCTION DATE */}
                 <div className="col-md-4">
                     <label className="form-label">TDS Deduction Date</label>
-                    <div>
-                        <DatePicker
-                            placeholderText="dd/MM/yyyy"
-                            onKeyDown={(e) => e.preventDefault()}
-                            autoComplete="off"
-                            selected={model.dateOfDeduction}
-                            id="dateOfDoposit"
-                            className="form-control w-100"
-                            onChange={(e) => {
-                                handleInput("dateOfDeduction", e);
-                            }}
-                            minDate={new Date(2004, 3, 1)}
-                            maxDate={new Date()}
-                            dateFormat="dd/MM/yyyy"
-                        />
-                    </div>
+                    <DatePicker
+                        placeholderText="dd/MM/yyyy"
+                        selected={model.dateOfDeduction}
+                        className="form-control w-100"
+                        dateFormat="dd/MM/yyyy"
+                        minDate={new Date(2004, 3, 1)}
+                        maxDate={new Date()}
+                        onKeyDown={(e) => e.preventDefault()}
+                        onChange={(e) => handleInput("dateOfDeduction", e)}
+                    />
                 </div>
 
+                {/* DECLARATION */}
                 <div className="col-md-12">
                     <h5 className="fw-bold mt-4">Declaration</h5>
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">I / We
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        I / We <span className="text-danger">*</span>
                     </label>
                     <select
                         className="form-select"
                         value={model.i_We}
-                        onChange={(e) => handleInput("i_We", e)}
+                        onChange={(e) => handleInput("i_We", e.target.value)}
                     >
                         <option value="1">I</option>
                         <option value="2">WE</option>
@@ -275,38 +276,44 @@ export default function RemittanceDetailA({
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">Verification Date
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        Verification Date <span className="text-danger">*</span>
                     </label>
                     <DatePicker
                         placeholderText="dd/MM/yyyy"
-                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
+                        onKeyDown={(e) => e.preventDefault()}
                         onChange={(e) => handleInput("verificationDate", e)}
                     />
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
+
                 <div className="col-md-4">
-                    <label className="form-label">Place
-                        <span className="text-danger">*</span>
+                    <label className="form-label">
+                        Place <span className="text-danger">*</span>
                     </label>
                     <input
+                        type="text"
                         className="form-control"
                         value={model.verificationPlace || ""}
-                        onChange={(e) => handleInput("verificationPlace", e)}
+                        onChange={(e) => handleInput("verificationPlace", e.target.value)}
                     />
                     {isDirty && errors.verificationPlace && <span className="text-danger">{errors.verificationPlace}</span>}
-
                 </div>
 
-                {/* SAVE BUTTON */}
+                {/* SAVE */}
                 <div className="col-md-12 mt-4">
-                    <button className="btn btn-primary" type="button" onClick={handleSave}>
+                    <button
+                        className="btn btn-primary"
+                        type="button"
+                        onClick={handleSave}
+                    >
                         Save Remittance
                     </button>
                 </div>
+
             </div>
         </form>
     );
