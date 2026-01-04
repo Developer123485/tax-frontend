@@ -6,6 +6,7 @@ import BreadcrumbList from "@/app/components/breadcrumbs/page";
 import { ToastContainer, toast } from "react-toastify";
 import { AoOrderService } from "@/app/services/ao-order.service";
 import AoOrderDetailForm from "@/app/components/15ca-master-detail/ao-order";
+import { EnumService } from "@/app/services/enum.service";
 
 export default function AddAoOrder({ params }) {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function AddAoOrder({ params }) {
     const searchParams = useSearchParams();
     const [isDirty, setIsDirty] = useState(false);
     const remitterId = resolvedParams?.id;
+    const [enumList, setEnumList] = useState({});
 
     const [aoOrder, setAoOrder] = useState({
         id: 0,
@@ -39,7 +41,12 @@ export default function AddAoOrder({ params }) {
         { name: "AO Order Detail", isActive: true }
     ]);
 
-    useEffect(() => loadAoOrder(), []);
+    useEffect(() => {
+        EnumService.getEnumStatues().then((res) => {
+            if (res) setEnumList(res);
+        });
+        loadAoOrder()
+    }, []);
 
     function loadAoOrder() {
         const id = searchParams.get("id");
@@ -104,6 +111,7 @@ export default function AddAoOrder({ params }) {
                         aoOrder={aoOrder}
                         errors={errors}
                         isDirty={isDirty}
+                        enumList={enumList}
                         handleInput={handleInput}
                         handleSave={saveAoOrder}
                     />

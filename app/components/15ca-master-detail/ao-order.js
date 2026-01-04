@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function AoOrderDetailForm(props) {
-    const { aoOrder, errors, handleInput, handleSave, isDirty } = props;
+    const { aoOrder, errors, handleInput, handleSave, isDirty, enumList } = props;
 
     return (
         <>
@@ -43,13 +43,12 @@ export default function AoOrderDetailForm(props) {
                         <label className="form-label">
                             Section <span className="text-danger">*</span>
                         </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            maxLength={15}
-                            value={aoOrder.section || ""}
-                            onChange={(e) => handleInput("section", e)}
-                        />
+                        {enumList.sectionCodeAO && enumList.sectionCodeAO.length > 0 && <SearchableDropdown
+                            setEventId={(e) => handleInput("section", e)}
+                            id={aoOrder.section}
+                            options={enumList.sectionCodeAO}
+                        ></SearchableDropdown>
+                        }
                         {isDirty && errors.section && (
                             <span className="text-danger">{errors.section}</span>
                         )}
