@@ -230,7 +230,7 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Rev Pur Category <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode}
-                        options={enums.revPurCategory}
+                        options={enums.rbiClassificationType}
                         setEventId={(e) => handleInput("purposeCode", e)}
                     />
                     {isDirty && errors.purposeCode && <span className="text-danger">{errors.purposeCode}</span>}
@@ -242,7 +242,7 @@ export default function RemittanceDetailCA({
                         id={model.purposeCode1}
                         options={
                             model.purposeCode
-                                ? enums.revPurCode.filter(x =>
+                                ? enums.rbiPurposeCode.filter(x =>
                                     x.key.startsWith(model.purposeCode)
                                 )
                                 : []
