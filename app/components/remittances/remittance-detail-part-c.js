@@ -16,6 +16,12 @@ export default function RemittanceDetailCA({
     formType,
     remitterId
 }) {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const financialYearStart =
+        today.getMonth() + 1 >= 4
+            ? new Date(currentYear, 3, 1) // April 1st of this year
+            : new Date(currentYear - 1, 3, 1); // A
     return (
         <form autoComplete="off">
             <div className="row bg-light-gray px-2 py-2 rounded-3 g-3 my-4">
@@ -26,8 +32,8 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Remittee <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.remitteeId}
-                        options={dropdowns.remittees}
                         url={`/remitters/${remitterId}/dashboard/remittees/remittee-detail`}
+                        options={dropdowns.remittees}
                         setEventId={(e) => handleInput("remitteeId", e)}
                     />
                     {isDirty && errors.remitteeId && <span className="text-danger">{errors.remitteeId}</span>}
@@ -38,16 +44,15 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Bank <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.bankDetailId}
-                        options={dropdowns.banks}
                         url={`/remitters/${remitterId}/dashboard/banks/banks-detail`}
+                        options={dropdowns.banks}
                         setEventId={(e) => handleInput("bankDetailId", e)}
                     />
                     {isDirty && errors.bankDetailId && <span className="text-danger">{errors.bankDetailId}</span>}
                 </div>
 
                 {/* AO */}
-                {/* Is AO Order Obtained */}
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label className="form-label">AO Order Obtained</label>
                     <select
                         className="form-select"
@@ -58,8 +63,8 @@ export default function RemittanceDetailCA({
                         <option value="Y">Yes</option>
                     </select>
                 </div>
-                <div className="col-md-4">
-                    <label className="form-label">AO Details <span className="text-danger">*</span></label>
+                {model.isAoOrderObtained === "Y" && <div className="col-md-4">
+                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
                         options={dropdowns.aoDetails}
@@ -68,6 +73,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
+                }
 
                 {/* ACCOUNTANT */}
                 <div className="col-md-4">
@@ -101,7 +107,10 @@ export default function RemittanceDetailCA({
                         selected={model.certificateDate}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("certificateDate", e)}
+                        onChange={(date) => handleInput("certificateDate", date)}
+                        minDate={financialYearStart}
+                        maxDate={today}
+                        dropdownMode="select"
                     />
                     {isDirty && errors.certificateDate && <span className="text-danger">{errors.certificateDate}</span>}
                 </div>
@@ -157,17 +166,16 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Amount Payable (INR) <span className="text-danger">*</span></label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("inIndian", value);
                         }}
                         className="form-control"
                         value={model.inIndian || ""}
-                        onChange={(e) => handleInput("inIndian", e)}
                     />
                     {isDirty && errors.inIndian && <span className="text-danger">{errors.inIndian}</span>}
                 </div>
@@ -175,17 +183,16 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Amount Payable (Foreign) <span className="text-danger">*</span></label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("inForiegn", value);
                         }}
                         className="form-control"
                         value={model.inForiegn || ""}
-                        onChange={(e) => handleInput("inForiegn", e)}
                     />
                     {isDirty && errors.inForiegn && <span className="text-danger">{errors.inForiegn}</span>}
                 </div>
@@ -288,36 +295,32 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Income Chargeable (IT Act)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("itActIncomeChargeable", value);
                         }}
                         className="form-control"
                         value={model.itActIncomeChargeable || ""}
-                        maxLength={18}
-                        onChange={(e) => handleInput("itActIncomeChargeable", e)}
                     />
                 </div>
 
                 <div className="col-md-4">
                     <label className="form-label">Tax Liability (IT Act)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("itActTaxLiability", value);
                         }}
                         className="form-control"
-                        maxLength={18}
                         value={model.itActTaxLiability || ""}
-                        onChange={(e) => handleInput("itActTaxLiability", e)}
                     />
                 </div>
 
@@ -369,34 +372,32 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Taxable Income (DTAA)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("taxIncDtaa", value);
                         }}
                         className="form-control"
                         value={model.taxIncDtaa || ""}
-                        onChange={(e) => handleInput("taxIncDtaa", e)}
                     />
                 </div>
 
                 <div className="col-md-4">
                     <label className="form-label">Tax Liability (DTAA)</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("taxLiablDtaa", value);
                         }}
                         className="form-control"
                         value={model.taxLiablDtaa || ""}
-                        onChange={(e) => handleInput("taxLiablDtaa", e)}
                     />
                 </div>
 
@@ -433,18 +434,17 @@ export default function RemittanceDetailCA({
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("rateTdsADtaa", value);
                         }}
                         className="form-control"
                         value={model.rateTdsADtaa || ""}
                         disabled={model.remForRoyFlg == "N"}
-                        onChange={(e) => handleInput("rateTdsADtaa", e)}
                     />
                     {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
@@ -468,18 +468,17 @@ export default function RemittanceDetailCA({
                         {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("amtToTaxInd", value);
                         }}
                         className="form-control"
                         value={model.amtToTaxInd || ""}
                         disabled={model.remAcctBusIncFlg == "N"}
-                        onChange={(e) => handleInput("amtToTaxInd", e)}
                     />
                     {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
@@ -519,18 +518,17 @@ export default function RemittanceDetailCA({
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("amtLongTrm", value);
                         }}
                         className="form-control"
                         value={model.amtLongTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
-                        onChange={(e) => handleInput("amtLongTrm", e)}
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
                 </div>
@@ -540,18 +538,17 @@ export default function RemittanceDetailCA({
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("amtShortTrm", value);
                         }}
                         className="form-control"
                         value={model.amtShortTrm || ""}
                         disabled={model.remOnCapGainFlg == "N"}
-                        onChange={(e) => handleInput("amtShortTrm", e)}
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
                 </div>
@@ -619,19 +616,17 @@ export default function RemittanceDetailCA({
                         {model.taxIndDtaaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("rateTdsDDtaa", value);
                         }}
                         className="form-control"
                         value={model.rateTdsDDtaa || ""}
                         disabled={model.taxIndDtaaFlg === "N"}
-                        maxLength={125}
-                        onChange={(e) => handleInput("rateTdsDDtaa", e)}
                     />
                     {isDirty && model.taxIndDtaaFlg == "Y" && errors.rateTdsDDtaa && <span className="text-danger">{errors.rateTdsDDtaa}</span>}
                 </div>
@@ -661,17 +656,16 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("amtPayForgnTds", value);
                         }}
                         className="form-control"
                         value={model.amtPayForgnTds || ""}
-                        onChange={(e) => handleInput("amtPayForgnTds", e)}
                     />
                     {isDirty && errors.amtPayForgnTds && <span className="text-danger">{errors.amtPayForgnTds}</span>}
                 </div>
@@ -681,17 +675,16 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("amtPayIndianTds", value);
                         }}
                         className="form-control"
                         value={model.amtPayIndianTds || ""}
-                        onChange={(e) => handleInput("amtPayIndianTds", e)}
                     />
                     {isDirty && errors.amtPayIndianTds && <span className="text-danger">{errors.amtPayIndianTds}</span>}
                 </div>
@@ -700,9 +693,15 @@ export default function RemittanceDetailCA({
                     <label className="form-label">Rate Tds Secb Flg</label>
                     <input
                         type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("rateTdsSecbFlg", value);
+                        }}
                         className="form-control"
                         value={model.rateTdsSecbFlg || ""}
-                        onChange={(e) => handleInput("rateTdsSecbFlg", e)}
                     />
                 </div>
 
@@ -710,17 +709,16 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Sec B</label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("rateTdsSecB", value);
                         }}
                         className="form-control"
                         value={model.rateTdsSecB || ""}
-                        onChange={(e) => handleInput("rateTdsSecB", e)}
                     />
                 </div>
 
@@ -730,17 +728,16 @@ export default function RemittanceDetailCA({
                         <span className="text-danger">*</span>
                     </label>
                     <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        onKeyDown={(e) => {
-                            if (["-", "+", "e", "E"].includes(e.key)) {
-                                e.preventDefault();
-                            }
+                        type="text"
+                        inputMode="decimal"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                            if (!regex.test(value)) return;
+                            handleInput("actlAmtTdsForgn", value);
                         }}
                         className="form-control"
                         value={model.actlAmtTdsForgn || ""}
-                        onChange={(e) => handleInput("actlAmtTdsForgn", e)}
                     />
                     {isDirty && errors.actlAmtTdsForgn && <span className="text-danger">{errors.actlAmtTdsForgn}</span>}
                 </div>
@@ -752,7 +749,7 @@ export default function RemittanceDetailCA({
                     <DatePicker
                         placeholderText="dd/MM/yyyy"
                         onKeyDown={(e) => e.preventDefault()}
-                        selected={model.dateOfDeduction}
+                        selected={model.dateOfDeductionS}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
                         minDate={new Date(2004, 3, 1)}
@@ -788,27 +785,15 @@ export default function RemittanceDetailCA({
                     </label>
                     <DatePicker
                         placeholderText="dd/MM/yyyy"
-                        onKeyDown={(e) => e.preventDefault()}
                         selected={model.verificationDate}
                         className="form-control"
                         minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
                         onChange={(e) => handleInput("verificationDate", e)}
+                        onKeyDown={(e) => e.preventDefault()}
                     />
                     {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
                 </div>
-
-                {/* <div className="col-md-4">
-                    <label className="form-label">Designation
-                        <span className="text-danger">*</span>
-                    </label>
-                    <input
-                        className="form-control"
-                        value={model.verDesignation || ""}
-                        onChange={(e) => handleInput("verDesignation", e)}
-                    />
-                    {isDirty && errors.verDesignation && <span className="text-danger">{errors.verDesignation}</span>}
-                </div> */}
 
                 <div className="col-md-4">
                     <label className="form-label">Place
@@ -822,69 +807,6 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.verificationPlace && <span className="text-danger">{errors.verificationPlace}</span>}
 
                 </div>
-
-
-                {/* TDS */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">TDS Rate (%) <span className="text-danger">*</span></label>
-                    <input
-                        type="number"
- min="0"
-step="1"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        step="1"
-                        className="form-control"
-                        value={model.rateOfTds || ""}
-                        onChange={(e) => handleInput("rateOfTds", e)}
-                    />
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">Amount of TDS <span className="text-danger">*</span></label>
-                    <input
-                        type="number"
- min="0"
-step="1"
- onKeyDown={(e) => {
-        if (["-", "+", "e", "E"].includes(e.key)) {
-            e.preventDefault();
-        }
-    }}
-                        className="form-control"
-                        value={model.amountOfTds || ""}
-                        onChange={(e) => handleInput("amountOfTds", e)}
-                    />
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">Date of Deduction</label>
-                     <DatePicker
-placeholderText="dd/MM/yyyy"
-onKeyDown={(e) => e.preventDefault()}
-                        selected={model.dateOfDeduction}
-                        className="form-control"
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("dateOfDeduction", e)}
-                    />
-                </div> */}
-
-                {/* TAX PAYABLE */}
-                {/* <div className="col-md-4">
-                    <label className="form-label">Whether Tax Payable <span className="text-danger">*</span></label>
-                    <select
-                        className="form-select"
-                        value={model.wheatherTaxPayable || ""}
-                        onChange={(e) => handleInput("wheatherTaxPayable", e)}
-                    >
-                        <option value="">Select</option>
-                        <option value="Y">Yes</option>
-                        <option value="N">No</option>
-                    </select>
-                </div> */}
 
                 {/* SAVE */}
                 <div className="col-md-12 mt-3">
