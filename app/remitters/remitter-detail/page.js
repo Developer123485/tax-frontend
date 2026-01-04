@@ -484,6 +484,10 @@ export default function AddRemitter() {
             toast.error("Validation is in progress.");
         }
         if (validateRemitterDetail()) {
+            if (remitterDetail.itdLogin && (remitterDetail.itdLogin != remitterDetail.remitterPan)) {
+                toast.error("Remitter Pan and ITD login tan should be equal");
+                return;
+            }
             RemittersService.saveRemitter(remitterDetail)
                 .then((res) => {
                     if (res && res > 0) {
