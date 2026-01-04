@@ -490,7 +490,7 @@ export default function RemitterDetail(props) {
                   type="text"
                   className="form-control"
                   value={remitterDetail.desgination}
-                  maxLength={75}
+                  maxLength={20}
                   onChange={(e) => handleInput("desgination", e)}
                 />
                 {isNextDirty && remitterErrors.designationError && (
@@ -606,6 +606,7 @@ export default function RemitterDetail(props) {
                   <input
                     type="text"
                     className="form-control"
+                    maxLength={75}
                     value={remitterDetail.princPlcBusRemter || ""}
                     onChange={(e) => {
                       e.target.value = e.target.value.trim().toUpperCase();
@@ -615,12 +616,12 @@ export default function RemitterDetail(props) {
                 </div>
                 <div className="col-md-3">
                   <label className="form-label">Domestic Flag</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={remitterDetail.domesticFlg}
-                    onChange={(e) => handleInput("domesticFlg", e)}
-                  />
+                  {enumList.resdentialStatus && enumList.resdentialStatus.length > 0 && <SearchableDropdown
+                    setEventId={(e) => handleInput("domesticFlg", e)}
+                    id={remitterDetail.domesticFlg}
+                    options={enumList.resdentialStatus}
+                  ></SearchableDropdown>
+                  }
                 </div>
               </div>
 
