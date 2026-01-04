@@ -52,16 +52,28 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* AO */}
-                <div className="col-md-4">
-                    <label className="form-label">AO Details <span className="text-danger">*</span></label>
+                <div className="col-md-3">
+                    <label className="form-label">AO Order Obtained</label>
+                    <select
+                        className="form-select"
+                        value={model.isAoOrderObtained || "N"}
+                        onChange={(e) => handleInput("isAoOrderObtained", e)}
+                    >
+                        <option value="N">No</option>
+                        <option value="Y">Yes</option>
+                    </select>
+                </div>
+                {model.isAoOrderObtained == "Y" && <div className="col-md-4">
+                    <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
-                        url={`/remitters/${remitterId}/dashboard/ao-order/ao-order-detail`}
                         options={dropdowns.aoDetails}
+                        url={`/remitters/${remitterId}/dashboard/ao-order/ao-order-detail`}
                         setEventId={(e) => handleInput("aoOrderDetailId", e)}
                     />
                     {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
+                }
 
                 {/* ACCOUNTANT */}
                 <div className="col-md-4">

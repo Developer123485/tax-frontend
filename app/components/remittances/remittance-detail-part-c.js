@@ -46,6 +46,18 @@ export default function RemittanceDetailCA({
                 </div>
 
                 {/* AO */}
+                {/* Is AO Order Obtained */}
+                <div className="col-md-3">
+                    <label className="form-label">AO Order Obtained</label>
+                    <select
+                        className="form-select"
+                        value={model.isAoOrderObtained || "N"}
+                        onChange={(e) => handleInput("isAoOrderObtained", e)}
+                    >
+                        <option value="N">No</option>
+                        <option value="Y">Yes</option>
+                    </select>
+                </div>
                 <div className="col-md-4">
                     <label className="form-label">AO Details <span className="text-danger">*</span></label>
                     <SearchableDropdown

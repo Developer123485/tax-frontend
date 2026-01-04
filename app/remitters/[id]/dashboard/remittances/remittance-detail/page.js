@@ -31,6 +31,7 @@ export default function AddRemittance({ params }) {
         // BASIC
         // =====================
         country: "",
+        isAoOrderObtained: "N",
         countryOther: null,
 
         aggregateAmount: null,

@@ -45,7 +45,8 @@ export default function RemittanceList({ params }) {
         itActDetails: {},
         dtaadetails: {},
         tdsDetails: {},
-        acctntDetls: {}
+        acctntDetls: {},
+        aoOrderDetails: {},
     });
 
 
@@ -316,6 +317,15 @@ export default function RemittanceList({ params }) {
                     revPurCategory: getValue(remittanceNode, "FORM15CB:RevPurCategory"),
                     revPurCode: getValue(remittanceNode, "FORM15CB:RevPurCode"),
                     taxPayGrossSecb: getValue(remittanceNode, "FORM15CB:TaxPayGrossSecb")
+                },
+
+                aoOrderDetails: {
+                    orderAoFlg: getValue(itActNode, "FORM15CB:OrderAoFlg"),
+                    certSection: getValue(itActNode, "FORM15CB:CertSection"),
+                    nameAo: getValue(itActNode, "FORM15CB:NameAo"),
+                    desgAo: getValue(itActNode, "FORM15CB:DesgAo"),
+                    orderDateAo: getValue(itActNode, "FORM15CB:OrderDateAo"),
+                    orderNumAo: getValue(itActNode, "FORM15CB:OrderNumAo"),
                 },
 
                 /* ---------------- IT Act ---------------- */

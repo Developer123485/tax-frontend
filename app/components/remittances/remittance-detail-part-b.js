@@ -46,7 +46,20 @@ export default function RemittanceDetailB({
                 </div>
 
                 {/* Ao DROPDOWN */}
-                <div className="col-md-4">
+
+                {/* Is AO Order Obtained */}
+                <div className="col-md-3">
+                    <label className="form-label">AO Order Obtained</label>
+                    <select
+                        className="form-select"
+                        value={model.isAoOrderObtained || "N"}
+                        onChange={(e) => handleInput("isAoOrderObtained", e)}
+                    >
+                        <option value="N">No</option>
+                        <option value="Y">Yes</option>
+                    </select>
+                </div>
+                {model.isAoOrderObtained == "Y" && <div className="col-md-4">
                     <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}
@@ -56,6 +69,7 @@ export default function RemittanceDetailB({
                     />
                     {isDirty && errors.aoOrderDetailId && <span className="text-danger">{errors.aoOrderDetailId}</span>}
                 </div>
+                }
 
                 <div className="col-md-4">
                     <label className="form-label">Aggregate Amount</label>
