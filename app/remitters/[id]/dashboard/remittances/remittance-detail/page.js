@@ -252,8 +252,6 @@ export default function AddRemittance({ params }) {
             if (!model.verificationDate) e.verificationDate = "required!";
             if (!model.country) e.country = "Select Country";
             if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
-            setErrors(e);
-            return Object.keys(e).length === 0;
         }
         if (search.get("partType") == "B") {
             if (!model.nature) e.nature = "Nature is required";
@@ -275,8 +273,6 @@ export default function AddRemittance({ params }) {
             if (!model.i_We) e.i_We = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
-            setErrors(e);
-            return Object.keys(e).length === 0;
         }
         if (search.get("partType") == "D") {
             if (!model.nature) e.nature = "Nature is required";
@@ -295,14 +291,11 @@ export default function AddRemittance({ params }) {
             if (!model.countryOther && model.country == "9999") e.countryOther = "Required";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
-            setErrors(e);
-            return Object.keys(e).length === 0;
         }
         if (search.get("partType") == "C" && search.get("formType") == "15CA") {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
-
             if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
             if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";
@@ -341,9 +334,6 @@ export default function AddRemittance({ params }) {
             if (!model.amtPayIndianTds) e.amtPayIndianTds = "required!";
             if (!model.actlAmtTdsForgn) e.actlAmtTdsForgn = "required!";
             if (!model.dednDateTds) e.dednDateTds = "required!";
-
-            setErrors(e);
-            return Object.keys(e).length === 0;
         }
         if (search.get("partType") == "C" && search.get("formType") == "15CB") {
             if (!model.nature) e.nature = "Nature is required";
@@ -370,14 +360,17 @@ export default function AddRemittance({ params }) {
             if (!model.i_We) e.i_We = "required!";
             if (!model.verificationPlace) e.verificationPlace = "required!";
             if (!model.verificationDate) e.verificationDate = "required!";
-            setErrors(e);
-            return Object.keys(e).length === 0;
         }
+        setErrors(e);
+        return Object.keys(e).length === 0;
     }
 
     function save(e) {
         e.preventDefault();
         setIsDirty(true);
+        if (Object.keys(errors).length > 0) {
+            toast.error("Validation is in progress.");
+        }
         if (!validate()) return;
         model.remitterId = remitterId;
         model.formType = search.get("partType");

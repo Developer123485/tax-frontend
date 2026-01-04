@@ -480,6 +480,9 @@ export default function AddRemitter() {
     function saveRemitter(e) {
         e.preventDefault();
         setIsNextDirty(true);
+        if (Object.keys(errors).length > 0) {
+            toast.error("Validation is in progress.");
+        }
         if (validateRemitterDetail()) {
             RemittersService.saveRemitter(remitterDetail)
                 .then((res) => {
