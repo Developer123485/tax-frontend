@@ -15,7 +15,7 @@ export default function SearchableDropdown(props) {
         filteredOptions?.find(p => p.key === props.id)?.value || "Select";
 
     const handleSelect = (eventKey) => {
-        props.setEventId(eventKey);
+        props.setEventId(props?.url ? parseInt(eventKey) : eventKey);
         setSearchTerm('');
         setShowDropdown(false);
     };
@@ -71,7 +71,10 @@ export default function SearchableDropdown(props) {
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => {
+                            debugger
+                            setSearchTerm(e.target.value)
+                        }}
                         onClick={(e) => e.stopPropagation()}
                     />
 
