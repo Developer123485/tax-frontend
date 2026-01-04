@@ -107,14 +107,14 @@ export default function AddAoOrder({ params }) {
 
             <section className="my-5">
                 <div className="container">
-                    <AoOrderDetailForm
+                    {enumList && enumList.sectionCodeAO && <AoOrderDetailForm
                         aoOrder={aoOrder}
                         errors={errors}
                         isDirty={isDirty}
                         enumList={enumList}
                         handleInput={handleInput}
                         handleSave={saveAoOrder}
-                    />
+                    />}
                 </div>
             </section>
         </>
