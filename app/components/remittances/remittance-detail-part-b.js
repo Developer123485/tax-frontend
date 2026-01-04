@@ -59,7 +59,7 @@ export default function RemittanceDetailB({
                         <option value="Y">Yes</option>
                     </select>
                 </div>
-                {model.isAoOrderObtained == "Y" && <div className="col-md-4">
+                {model.isAoOrderObtained === "Y" && <div className="col-md-4">
                     <label className="form-label">Ao Details <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.aoOrderDetailId}

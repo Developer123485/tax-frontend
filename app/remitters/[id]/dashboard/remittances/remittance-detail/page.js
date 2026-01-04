@@ -258,7 +258,7 @@ export default function AddRemittance({ params }) {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
-            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+            if (!model.aoOrderDetailId && model.isAoOrderObtained == "Y") e.aoOrderDetailId = "Select AO Detail";
             if (!model.currency) e.currency = "Select Currency";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
             if (!model.country) e.country = "Select Country";
@@ -297,7 +297,7 @@ export default function AddRemittance({ params }) {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
-            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+            if (!model.aoOrderDetailId && model.isAoOrderObtained == "Y") e.aoOrderDetailId = "Select AO Detail";
             if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";
             if (!model.grossedUp) e.grossedUp = "Required!";
@@ -340,7 +340,7 @@ export default function AddRemittance({ params }) {
             if (!model.nature) e.nature = "Nature is required";
             if (!model.remitteeId) e.remitteeId = "Select remittee";
             if (!model.bankDetailId) e.bankDetailId = "Select bank";
-            if (!model.aoOrderDetailId) e.aoOrderDetailId = "Select AO Detail";
+            if (!model.aoOrderDetailId && model.isAoOrderObtained == "Y") e.aoOrderDetailId = "Select AO Detail";
             if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";
             if (!model.grossedUp) e.grossedUp = "Required!";
