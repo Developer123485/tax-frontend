@@ -37,33 +37,20 @@ export default function AoOrderDetailForm(props) {
                         )}
                     </div>
 
-                    {/* Is AO Order Obtained */}
-                    <div className="col-md-3">
-                        <label className="form-label">AO Order Obtained</label>
-                        <select
-                            className="form-select"
-                            value={aoOrder.isAoOrderObtained || "N"}
-                            onChange={(e) => handleInput("isAoOrderObtained", e)}
-                        >
-                            <option value="N">No</option>
-                            <option value="Y">Yes</option>
-                        </select>
-                    </div>
 
                     {/* Section */}
                     <div className="col-md-3">
                         <label className="form-label">
-                            Section {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
+                            Section <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             maxLength={15}
-                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.section || ""}
                             onChange={(e) => handleInput("section", e)}
                         />
-                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.section && (
+                        {isDirty && errors.section && (
                             <span className="text-danger">{errors.section}</span>
                         )}
                     </div>
@@ -71,17 +58,16 @@ export default function AoOrderDetailForm(props) {
                     {/* Assessing Officer Name */}
                     <div className="col-md-3">
                         <label className="form-label">
-                            Assessing Officer Name {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
+                            Assessing Officer Name  <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.assessingOfficerName || ""}
                             maxLength={125}
                             onChange={(e) => handleInput("assessingOfficerName", e)}
                         />
-                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerName && (
+                        {isDirty && errors.assessingOfficerName && (
                             <span className="text-danger">
                                 {errors.assessingOfficerName}
                             </span>
@@ -91,17 +77,16 @@ export default function AoOrderDetailForm(props) {
                     {/* Designation */}
                     <div className="col-md-3">
                         <label className="form-label">Designation
-                            {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
+                            <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             maxLength={125}
-                            disabled={aoOrder.isAoOrderObtained == "N"}
                             value={aoOrder.assessingOfficerDesignation || ""}
                             onChange={(e) => handleInput("assessingOfficerDesignation", e)}
                         />
-                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.assessingOfficerDesignation && (
+                        {isDirty && errors.assessingOfficerDesignation && (
                             <span className="text-danger">
                                 {errors.assessingOfficerDesignation}
                             </span>
@@ -111,7 +96,7 @@ export default function AoOrderDetailForm(props) {
                     {/* Order Date */}
                     <div className="col-md-3">
                         <label className="form-label">Order Date
-                            {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
+                            <span className="text-danger">*</span>
                         </label>
                         <DatePicker
                             onKeyDown={(e) => e.preventDefault()}
@@ -129,7 +114,7 @@ export default function AoOrderDetailForm(props) {
                             dateFormat="dd/MM/yyyy"
                             placeholderText="dd/MM/yyyy"
                         />
-                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.orderDate && (
+                        {isDirty && errors.orderDate && (
                             <span className="text-danger">
                                 {errors.orderDate}
                             </span>
@@ -139,17 +124,16 @@ export default function AoOrderDetailForm(props) {
                     {/* Certificate Number */}
                     <div className="col-md-3">
                         <label className="form-label">Order Certificate No
-                            {aoOrder.isAoOrderObtained == "Y" && <span className="text-danger">*</span>}
+                            <span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            disabled={aoOrder.isAoOrderObtained == "N"}
                             maxLength={10}
                             value={aoOrder.orderCertificateNumber || ""}
                             onChange={(e) => handleInput("orderCertificateNumber", e)}
                         />
-                        {isDirty && aoOrder.isAoOrderObtained == "Y" && errors.orderCertificateNumber && (
+                        {isDirty && errors.orderCertificateNumber && (
                             <span className="text-danger">
                                 {errors.orderCertificateNumber}
                             </span>

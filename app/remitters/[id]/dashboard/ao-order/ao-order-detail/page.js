@@ -16,7 +16,6 @@ export default function AddAoOrder({ params }) {
 
     const [aoOrder, setAoOrder] = useState({
         id: 0,
-        isAoOrderObtained: "",
         section: "",
         assessingOfficerName: "",
         assessingOfficerDesignation: "",
@@ -58,23 +57,20 @@ export default function AddAoOrder({ params }) {
 
     useEffect(() => {
         validate();
-    }, [aoOrder.code, aoOrder.isAoOrderObtained, aoOrder.section, aoOrder.assessingOfficerName, aoOrder.assessingOfficerDesignation, aoOrder.orderCertificateNumber, aoOrder.orderDate]);
+    }, [aoOrder.code, aoOrder.section, aoOrder.assessingOfficerName, aoOrder.assessingOfficerDesignation, aoOrder.orderCertificateNumber, aoOrder.orderDate]);
 
     function validate() {
         let err = {};
         if (!aoOrder.code) err.code = "Code is required";
-        if (aoOrder.isAoOrderObtained == "Y") {
-            if (!aoOrder.section) err.section = "Section is required";
-            if (!aoOrder.assessingOfficerName)
-                err.assessingOfficerName = "Assessing Officer Name is required";
-            if (!aoOrder.assessingOfficerDesignation)
-                err.assessingOfficerDesignation = "Assessing Officer Designation is required";
-            if (!aoOrder.orderCertificateNumber)
-                err.orderCertificateNumber = "Order Certificate is required";
-            if (!aoOrder.orderDate)
-                err.orderDate = "Order Date is required";
-        }
-
+        if (!aoOrder.section) err.section = "Section is required";
+        if (!aoOrder.assessingOfficerName)
+            err.assessingOfficerName = "Assessing Officer Name is required";
+        if (!aoOrder.assessingOfficerDesignation)
+            err.assessingOfficerDesignation = "Assessing Officer Designation is required";
+        if (!aoOrder.orderCertificateNumber)
+            err.orderCertificateNumber = "Order Certificate is required";
+        if (!aoOrder.orderDate)
+            err.orderDate = "Order Date is required";
         setErrors(err);
         return Object.keys(err).length === 0;
     }
