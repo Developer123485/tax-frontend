@@ -108,6 +108,7 @@ export default function RemitteeDetail(props) {
                             </label>
                             <input
                                 type="text"
+                                maxLength={50}
                                 className="form-control"
                                 value={remittee.remitteeFlat || ""}
                                 onChange={(e) => handleInput("remitteeFlat", e)}
@@ -228,6 +229,7 @@ export default function RemitteeDetail(props) {
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={125}
                                 value={remittee.remitteeEmail || ""}
                                 onChange={(e) => handleInput("remitteeEmail", e)}
                             />
@@ -243,7 +245,7 @@ export default function RemitteeDetail(props) {
                             <label className="form-label">Phone Number</label>
                             <input
                                 type="text"
-                                maxLength={15}
+                                maxLength={10}
                                 className="form-control"
                                 value={remittee.remitteePhone || ""}
                                 onChange={(e) => {
@@ -297,6 +299,7 @@ export default function RemitteeDetail(props) {
                             <input
                                 className="form-control"
                                 disabled={remittee.currency !== "99"}
+                                maxLength={50}
                                 value={remittee.currencyOther || ""}
                                 onChange={(e) => handleInput("currencyOther", e)}
                             />
@@ -330,6 +333,7 @@ export default function RemitteeDetail(props) {
                             <input
                                 type="text"
                                 className="form-control"
+                                maxLength={125}
                                 disabled={remittee.countryRemMade != "9999"}
                                 value={remittee.countryRemMadeDesc || ""}
                                 onChange={(e) => handleInput("countryRemMadeDesc", e)}
@@ -349,6 +353,7 @@ export default function RemitteeDetail(props) {
                             </label>
                             <input
                                 type="text"
+                                maxLength={75}
                                 className="form-control"
                                 value={remittee.princPlcBusRemtee || ""}
                                 onChange={(e) => handleInput("princPlcBusRemtee", e)}

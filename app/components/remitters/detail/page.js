@@ -372,7 +372,7 @@ export default function RemitterDetail(props) {
               {/* Email */}
               <div className="col-md-3">
                 <label className="form-label">
-                  Email
+                  Email<span className="text-danger">*</span>
                 </label>
                 <input
                   type="email"
@@ -381,16 +381,18 @@ export default function RemitterDetail(props) {
                   value={remitterDetail.remitterEmail}
                   onChange={(e) => handleInput("remitterEmail", e)}
                 />
-                {/* {isNextDirty && remitterErrors.remitterEmailIdError && (
+                {isNextDirty && remitterErrors.remitterEmailIdError && (
                   <span className="text-danger">
                     {remitterErrors.remitterEmailIdError}
                   </span>
-                )} */}
+                )}
               </div>
 
               {/* Phone */}
               <div className="col-md-3">
-                <label className="form-label">Phone Number</label>
+                <label className="form-label">Phone Number
+                  <span className="text-danger">*</span>
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -401,9 +403,12 @@ export default function RemitterDetail(props) {
                       handleInput("remitterPhone", e);
                   }}
                 />
+                {isNextDirty && remitterErrors.remitterPhoneError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterPhoneError}
+                  </span>
+                )}
               </div>
-
-
 
               <div className="col-md-3">
                 <label htmlFor="inputCountry" className="form-label">
@@ -614,7 +619,7 @@ export default function RemitterDetail(props) {
                     }}
                   />
                 </div>
-                <div className="col-md-3">
+                {/* <div className="col-md-3">
                   <label className="form-label">Domestic Flag</label>
                   {enumList.resdentialStatus && enumList.resdentialStatus.length > 0 && <SearchableDropdown
                     setEventId={(e) => handleInput("domesticFlg", e)}
@@ -622,7 +627,7 @@ export default function RemitterDetail(props) {
                     options={enumList.resdentialStatus}
                   ></SearchableDropdown>
                   }
-                </div>
+                </div> */}
               </div>
 
             </div>

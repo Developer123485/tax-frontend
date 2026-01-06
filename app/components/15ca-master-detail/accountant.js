@@ -73,6 +73,7 @@ export default function AccountantDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={50}
                             value={accountant.flatDoorBlockNo || ""}
                             onChange={(e) => handleInput("flatDoorBlockNo", e)}
                         />
@@ -84,6 +85,7 @@ export default function AccountantDetailForm(props) {
                         <label className="form-label">Building / Village</label>
                         <input
                             type="text"
+                            maxLength={50}
                             className="form-control"
                             value={accountant.premisesBuildingVillage || ""}
                             onChange={(e) => handleInput("premisesBuildingVillage", e)}
@@ -95,6 +97,7 @@ export default function AccountantDetailForm(props) {
                         <label className="form-label">Street / PO</label>
                         <input
                             type="text"
+                            maxLength={50}
                             className="form-control"
                             value={accountant.roadStreetPostOffice || ""}
                             onChange={(e) => handleInput("roadStreetPostOffice", e)}
@@ -108,6 +111,7 @@ export default function AccountantDetailForm(props) {
                         </label>
                         <input
                             type="text"
+                            maxLength={50}
                             className="form-control"
                             value={accountant.areaLocality || ""}
                             onChange={(e) => handleInput("areaLocality", e)}
@@ -122,6 +126,7 @@ export default function AccountantDetailForm(props) {
                         </label>
                         <input
                             type="text"
+                            maxLength={50}
                             className="form-control"
                             value={accountant.townCityDistrict || ""}
                             onChange={(e) => handleInput("townCityDistrict", e)}

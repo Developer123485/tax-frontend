@@ -100,6 +100,7 @@ export default function AddRemitter() {
         remitterResidentialError: "",
         codeError: "",
         princPlcBusRemterError: "",
+        remitterPhoneError: "",
         fatherError: "",
         responsibleNameError: "",
         designationError: "",
@@ -120,6 +121,7 @@ export default function AddRemitter() {
         remitterDetail.remitterTan,
         remitterDetail.remitterPan,
         remitterDetail.remitterEmail,
+        remitterDetail.remitterPhone,
         remitterDetail.remitterFlat,
         remitterDetail.remitterState,
         remitterDetail.remitterPincode,
@@ -216,6 +218,7 @@ export default function AddRemitter() {
         let remitterStateError = "";
         let remitterPincodeError = "";
         let remitterEmailIdError = "";
+        let remitterPhoneError = "";
         let remitterNameError = "";
         let remitterTanError = "";
         let remitterBranchError = "";
@@ -256,6 +259,10 @@ export default function AddRemitter() {
         if (!remitterDetail.remitterStatus) {
             statusError = "Remitter Status is required";
         }
+
+        if (!remitterDetail.remitterPhone) {
+            remitterPhoneError = "Remitter Phone is required";
+        }
         // debugger
         // if (!remitterDetail.princPlcBusRemter) {
         //     princPlcBusRemterError = "Remitter PrincPlcBusRemter is required";
@@ -286,18 +293,17 @@ export default function AddRemitter() {
             remitterPincodeError = "The remitter PIN code must be 6 digits.";
         }
 
-        // EMAIL
-        // if (!remitterDetail.remitterEmail) {
-        //     remitterEmailIdError = "Remitter email is required";
-        // }
-        // if (remitterDetail.remitterEmail) {
-        //     const regx = String(remitterDetail.remitterEmail)
-        //         .toLowerCase()
-        //         .match(emailRegex);
-        //     if (!regx) {
-        //         remitterEmailIdError = "Remitter email is invalid.";
-        //     }
-        // }
+        if (!remitterDetail.remitterEmail) {
+            remitterEmailIdError = "Remitter email is required";
+        }
+        if (remitterDetail.remitterEmail) {
+            const regx = String(remitterDetail.remitterEmail)
+                .toLowerCase()
+                .match(emailRegex);
+            if (!regx) {
+                remitterEmailIdError = "Remitter email is invalid.";
+            }
+        }
 
         // NAME
         if (!remitterDetail.name) {
@@ -421,7 +427,8 @@ export default function AddRemitter() {
             fatherError ||
             responsibleNameError ||
             designationError ||
-            remitterCountryError
+            remitterCountryError ||
+            remitterPhoneError
         ) {
             setRemitterErrors((prevState) => ({
                 ...prevState,
@@ -444,7 +451,8 @@ export default function AddRemitter() {
                 remitterResidentialError,
                 statusError,
                 princPlcBusRemterError,
-                remitterCountryError
+                remitterCountryError,
+                remitterPhoneError
             }));
             return false;
         }
@@ -471,7 +479,8 @@ export default function AddRemitter() {
             fatherError: "",
             responsibleNameError: "",
             designationError: "",
-            remitterCountryError: ""
+            remitterCountryError: "",
+            remitterPhoneError: ""
         }));
 
         return true;
@@ -480,7 +489,7 @@ export default function AddRemitter() {
     function saveRemitter(e) {
         e.preventDefault();
         setIsNextDirty(true);
-        if (Object.keys(errors).length > 0) {
+        if (!validateRemitterDetail()) {
             toast.error("Validation is in progress.");
         }
         if (validateRemitterDetail()) {

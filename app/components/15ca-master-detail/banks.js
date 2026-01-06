@@ -74,7 +74,7 @@ export default function BankDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
-                            maxLength={50}
+                            maxLength={100}
                             value={bankDetail.bankBranchName || ""}
                             onChange={(e) => handleInput("bankBranchName", e)}
                         />
