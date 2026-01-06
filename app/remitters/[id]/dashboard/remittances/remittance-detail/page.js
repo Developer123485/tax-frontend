@@ -68,6 +68,8 @@ export default function AddRemittance({ params }) {
         // IT ACT
         // =====================
         itActRelevantSection: "",
+        remittanceCharIndia: "",
+        reasonNot: "",
         itActIncomeChargeable: null,
         itActTaxLiability: null,
         itActBasisForTax: "",
@@ -209,7 +211,9 @@ export default function AddRemittance({ params }) {
     model.certificateNo,
     model.actlAmtTdsForgn,
     model.dednDateTds,
-    model.verificationDate
+    model.verificationDate,
+    model.remittanceCharIndia,
+    model.reasonNot
     ]);
 
 
@@ -335,6 +339,7 @@ export default function AddRemittance({ params }) {
             if (!model.amtPayIndianTds) e.amtPayIndianTds = "required!";
             if (!model.actlAmtTdsForgn) e.actlAmtTdsForgn = "required!";
             if (!model.dednDateTds) e.dednDateTds = "required!";
+            if (!model.rateTdsSecbFlg) e.rateTdsSecbFlg = "Required!";
         }
         if (search.get("partType") == "C" && search.get("formType") == "15CB") {
             if (!model.nature) e.nature = "Nature is required";
@@ -343,6 +348,13 @@ export default function AddRemittance({ params }) {
             if (!model.accountantDetailId) e.accountantDetailId = "Select Account Detail";
             if (!model.currency) e.currency = "Select Currency";
             if (!model.grossedUp) e.grossedUp = "Required!";
+            if (!model.remittanceCharIndia) e.remittanceCharIndia = "Required!";
+            if (!model.rateTdsSecbFlg) e.rateTdsSecbFlg = "Required!";
+            if (!model.reasonNot && model.remittanceCharIndia == "N") e.reasonNot = "Required!";
+            if (!model.itActRelevantSection && model.remittanceCharIndia == "Y") e.itActRelevantSection = "Required!";
+            if (!model.itActIncomeChargeable && model.remittanceCharIndia == "Y") e.itActIncomeChargeable = "Required!";
+            if (!model.itActTaxLiability && model.remittanceCharIndia == "Y") e.itActTaxLiability = "Required!";
+            if (!model.itActBasisForTax && model.remittanceCharIndia == "Y") e.itActBasisForTax = "Required!";
             if (!model.currencyOther && model.currency == "99") e.currencyOther = "Required";
             if (!model.country) e.country = "Select Country";
             if (!model.countryOther && model.country == "9999") e.countryOther = "Required";

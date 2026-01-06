@@ -231,17 +231,51 @@ export default function RemittanceDetailCA({
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">IT Act Relevant Section</label>
+                    <label className="form-label">Remittance Char India <span className="text-danger">*</span></label>
+                    <select
+                        className="form-select"
+                        value={model.remittanceCharIndia || ""}
+                        onChange={(e) => handleInput("remittanceCharIndia", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.remittanceCharIndia && <span className="text-danger">{errors.remittanceCharIndia}</span>}
+                </div>
+
+                {model.remittanceCharIndia == "N" && <div className="col-md-4">
+                    <label className="form-label">Reason Not
+                        <span className="text-danger">*</span>
+                    </label>
+                    <input
+                        className="form-control"
+                        value={model.reasonNot || ""}
+                        maxLength={125}
+                        onChange={(e) => handleInput("reasonNot", e)}
+                    />
+                    {isDirty && errors.reasonNot && <span className="text-danger">{errors.reasonNot}</span>}
+                </div>
+                }
+
+                {model.remittanceCharIndia == "Y" && <div className="col-md-4">
+                    <label className="form-label">IT Act Relevant Section
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         className="form-control"
                         value={model.itActRelevantSection || ""}
                         maxLength={30}
                         onChange={(e) => handleInput("itActRelevantSection", e)}
                     />
+                    {isDirty && errors.itActRelevantSection && <span className="text-danger">{errors.itActRelevantSection}</span>}
                 </div>
+                }
 
-                <div className="col-md-4">
-                    <label className="form-label">Income Chargeable (IT Act)</label>
+                {model.remittanceCharIndia == "Y" && <div className="col-md-4">
+                    <label className="form-label">Income Chargeable (IT Act)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="text"
                         inputMode="decimal"
@@ -254,10 +288,13 @@ export default function RemittanceDetailCA({
                         className="form-control"
                         value={model.itActIncomeChargeable || ""}
                     />
-                </div>
+                    {isDirty && errors.itActIncomeChargeable && <span className="text-danger">{errors.itActIncomeChargeable}</span>}
+                </div>}
 
-                <div className="col-md-4">
-                    <label className="form-label">Tax Liability (IT Act)</label>
+                {model.remittanceCharIndia == "Y" && < div className="col-md-4">
+                    <label className="form-label">Tax Liability (IT Act)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         type="text"
                         inputMode="decimal"
@@ -270,16 +307,20 @@ export default function RemittanceDetailCA({
                         className="form-control"
                         value={model.itActTaxLiability || ""}
                     />
-                </div>
+                    {isDirty && errors.itActTaxLiability && <span className="text-danger">{errors.itActTaxLiability}</span>}
+                </div>}
 
-                <div className="col-md-4">
-                    <label className="form-label">Basis for Tax (IT Act)</label>
+                {model.remittanceCharIndia == "Y" && <div className="col-md-4">
+                    <label className="form-label">Basis for Tax (IT Act)
+                        <span className="text-danger">*</span>
+                    </label>
                     <input
                         className="form-control"
                         value={model.itActBasisForTax || ""}
                         onChange={(e) => handleInput("itActBasisForTax", e)}
                     />
-                </div>
+                    {isDirty && errors.itActBasisForTax && <span className="text-danger">{errors.itActBasisForTax}</span>}
+                </div>}
 
                 <div className="col-md-12">
                     <h5 className="fw-bold mt-4">DTAA</h5>
@@ -639,18 +680,16 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Secb Flg</label>
-                    <input
-                        type="text"
-                        inputMode="decimal"
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
-                            if (!regex.test(value)) return;
-                            handleInput("rateTdsSecbFlg", value);
-                        }}
-                        className="form-control"
+                    <select
+                        className="form-select"
                         value={model.rateTdsSecbFlg || ""}
-                    />
+                        onChange={(e) => handleInput("rateTdsSecbFlg", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="1">As Per Income-Tax Act</option>
+                        <option value="2">As Per DTAA</option>
+                    </select>
+                    {isDirty && errors.rateTdsSecbFlg && <span className="text-danger">{errors.rateTdsSecbFlg}</span>}
                 </div>
 
 
@@ -763,6 +802,6 @@ export default function RemittanceDetailCA({
                     </button>
                 </div>
             </div>
-        </form>
+        </form >
     );
 }

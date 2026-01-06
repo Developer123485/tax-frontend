@@ -691,18 +691,16 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-4">
                     <label className="form-label">Rate Tds Secb Flg</label>
-                    <input
-                        type="text"
-                        inputMode="decimal"
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
-                            if (!regex.test(value)) return;
-                            handleInput("rateTdsSecbFlg", value);
-                        }}
-                        className="form-control"
+                    <select
+                        className="form-select"
                         value={model.rateTdsSecbFlg || ""}
-                    />
+                        onChange={(e) => handleInput("rateTdsSecbFlg", e)}
+                    >
+                        <option value="">Select</option>
+                        <option value="1">As Per Income-Tax Act</option>
+                        <option value="2">As Per DTAA</option>
+                    </select>
+                    {isDirty && errors.rateTdsSecbFlg && <span className="text-danger">{errors.rateTdsSecbFlg}</span>}
                 </div>
 
 
