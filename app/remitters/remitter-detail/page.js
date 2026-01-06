@@ -81,6 +81,10 @@ export default function AddRemitter() {
         motherName: "",
         desgination: "",
         code: "",
+        iorWe: "",
+        remitterHonorific: "",
+        beneficiaryHonorific: "",
+        beneficiaryName: "",
     });
     const [remitterErrors, setRemitterErrors] = useState({
         remitterStateError: "",
@@ -104,6 +108,7 @@ export default function AddRemitter() {
         fatherError: "",
         responsibleNameError: "",
         designationError: "",
+        remitterHonorificError: ""
     });
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
@@ -235,6 +240,7 @@ export default function AddRemitter() {
         let fatherError = "";
         let responsibleNameError = "";
         let designationError = "";
+        let remitterHonorificError = "";
         let princPlcBusRemterError = "";
         let regexs = /^[^a-zA-Z0-9]+$/;
 
@@ -254,6 +260,10 @@ export default function AddRemitter() {
         }
         if (!remitterDetail.desgination) {
             designationError = "Designation is required";
+        }
+
+        if (!remitterDetail.remitterHonorific) {
+            remitterHonorificError = "Remitter Honorific is required";
         }
 
         if (!remitterDetail.remitterStatus) {
@@ -427,6 +437,7 @@ export default function AddRemitter() {
             fatherError ||
             responsibleNameError ||
             designationError ||
+            remitterHonorificError ||
             remitterCountryError ||
             remitterPhoneError
         ) {
@@ -446,6 +457,7 @@ export default function AddRemitter() {
                 fatherError,
                 responsibleNameError,
                 designationError,
+                remitterHonorificError,
                 remitterPanError,
                 codeError,
                 remitterResidentialError,
@@ -479,6 +491,7 @@ export default function AddRemitter() {
             fatherError: "",
             responsibleNameError: "",
             designationError: "",
+            remitterHonorificError: "",
             remitterCountryError: "",
             remitterPhoneError: ""
         }));

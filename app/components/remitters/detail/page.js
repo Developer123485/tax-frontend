@@ -115,6 +115,28 @@ export default function RemitterDetail(props) {
                 )}
               </div>
 
+              <div className="col-md-3">
+                <label className="form-label">Remitter Honorific
+                  <span className="text-danger">*</span>
+                </label>
+                <select
+                  className="form-select"
+                  value={remitterDetail.beneficiaryHonorific || ""}
+                  onChange={(e) => handleInput("beneficiaryHonorific", e.target.value)}
+                >
+                  <option value="">Select</option>
+                  <option value="01">Mr</option>
+                  <option value="02">Mrs</option>
+                  <option value="03">M/s</option>
+                </select>
+
+                {isNextDirty && remitterErrors.remitterHonorificError && (
+                  <span className="text-danger">
+                    {remitterErrors.remitterHonorificError}
+                  </span>
+                )}
+              </div>
+
               {/* Name */}
               <div className="col-md-3">
                 <label className="form-label">
@@ -628,6 +650,58 @@ export default function RemitterDetail(props) {
                   ></SearchableDropdown>
                   }
                 </div> */}
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <h5 className="text-primary fw-bold mb-3">
+                    Below All Information Required for Form CB Only
+                  </h5>
+                </div>
+
+                <div className="col-md-3">
+                  <label className="form-label">IorWe
+                  </label>
+                  <select
+                    className="form-select"
+                    value={remitterDetail.iorWe}
+                    onChange={(e) => handleInput("iorWe", e)}
+                  >
+                    <option value="">Select</option>
+                    <option value="01">I</option>
+                    <option value="02">WE</option>
+                  </select>
+                </div>
+
+
+                {/* Row 1 */}
+                <div className="col-md-3">
+                  <label className="form-label">Beneficiary Honorific
+                  </label>
+                  <select
+                    className="form-select"
+                    value={remitterDetail.beneficiaryHonorific || ""}
+                    onChange={(e) => handleInput("beneficiaryHonorific", e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    <option value="01">Mr</option>
+                    <option value="02">Mrs</option>
+                    <option value="03">M/s</option>
+                  </select>
+                </div>
+
+                <div className="col-md-3">
+                  <label className="form-label">Beneficiary Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    maxLength={125}
+                    value={remitterDetail.beneficiaryName || ""}
+                    onChange={(e) => {
+                      handleInput("beneficiaryName", e);
+                    }}
+                  />
+                </div>
               </div>
 
             </div>
