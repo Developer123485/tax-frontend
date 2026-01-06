@@ -80,7 +80,11 @@ export default function AddAccountant({ params }) {
         if (!accountant.code) err.code = "Code is required";
         if (!accountant.accountantFirmName) err.accountantFirmName = "Firm name is required";
         if (!accountant.country) err.country = "Country is required";
-        if (!accountant.registrationNo) err.registrationNo = "Membership no is required";
+        if (!accountant.state) err.state = "State is required";
+        if (!accountant.membershipNumber) err.membershipNumber = "Membership no is required";
+        if (accountant.country && accountant.country !== "113" && accountant.state !== "38") {
+            err.country = "NRI country is not allowed when the state is not Overseas.";
+        }
         if (!accountant.flatDoorBlockNo) err.flatDoorBlockNo = "Flat no is required";
         if (!accountant.areaLocality) err.areaLocality = "Area is required";
         if (!accountant.townCityDistrict) err.townCityDistrict = "City is required";

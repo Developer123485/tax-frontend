@@ -40,6 +40,7 @@ export default function AccountantDetailForm(props) {
                             type="text"
                             className="form-control"
                             value={accountant.accountantName || ""}
+                            maxLength={125}
                             onChange={(e) => handleInput("accountantName", e)}
                         />
                         {isDirty && errors.accountantName && (
@@ -57,6 +58,7 @@ export default function AccountantDetailForm(props) {
                         <input
                             type="text"
                             className="form-control"
+                            maxLength={125}
                             value={accountant.accountantFirmName || ""}
                             onChange={(e) => handleInput("accountantFirmName", e)}
                         />
@@ -130,7 +132,7 @@ export default function AccountantDetailForm(props) {
                     {/* State */}
                     <div className="col-md-3">
                         <label htmlFor="inputCountry" className="form-label">
-                            <span>State</span>
+                            <span>State<span className="text-danger">*</span></span>
                         </label>
                         {enumList.states && enumList.states.length > 0 && <SearchableDropdown
                             setEventId={(e) => handleInput("state", e)}
@@ -138,6 +140,10 @@ export default function AccountantDetailForm(props) {
                             options={enumList.states}
                         ></SearchableDropdown>
                         }
+                        {isDirty && errors.state &&
+                            < span className="text-danger">{errors.state}</span>
+                        }
+
                     </div>
 
                     {/* COUNTRY */}
@@ -171,7 +177,7 @@ export default function AccountantDetailForm(props) {
                     {/* REG NO */}
                     <div className="col-md-3">
                         <label className="form-label">
-                            Registration No <span className="text-danger">*</span>
+                            Registration No
                         </label>
                         <input
                             type="text"
@@ -191,14 +197,12 @@ export default function AccountantDetailForm(props) {
                                 }
                             }}
                         />
-                        {isDirty && errors.registrationNo && (
-                            <span className="text-danger">{errors.registrationNo}</span>
-                        )}
+
                     </div>
 
                     <div className="col-md-3">
                         <label className="form-label">
-                            Membership No
+                            Membership No<span className="text-danger">*</span>
                         </label>
                         <input
                             type="text"
@@ -218,6 +222,9 @@ export default function AccountantDetailForm(props) {
                                 }
                             }}
                         />
+                        {isDirty && errors.membershipNumber && (
+                            <span className="text-danger">{errors.membershipNumber}</span>
+                        )}
                     </div>
 
                 </div>
@@ -233,7 +240,7 @@ export default function AccountantDetailForm(props) {
                     </div>
                 </div>
 
-            </form>
+            </form >
 
             <ProcessPopup />
         </>
