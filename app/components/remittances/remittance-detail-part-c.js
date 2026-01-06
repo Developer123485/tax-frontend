@@ -63,34 +63,6 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.accountantDetailId && <span className="text-danger">{errors.accountantDetailId}</span>}
                 </div>
 
-                {/* CERTIFICATE */}
-                <div className="col-md-4">
-                    <label className="form-label">Certificate No <span className="text-danger">*</span></label>
-                    <input
-                        className="form-control"
-                        value={model.certificateNo || ""}
-                        maxLength={15}
-                        onChange={(e) => handleInput("certificateNo", e)}
-                    />
-                    {isDirty && errors.certificateNo && <span className="text-danger">{errors.certificateNo}</span>}
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">Certificate Date <span className="text-danger">*</span></label>
-                    <DatePicker
-                        placeholderText="dd/MM/yyyy"
-                        onKeyDown={(e) => e.preventDefault()}
-                        selected={model.certificateDate}
-                        className="form-control"
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(date) => handleInput("certificateDate", date)}
-                        minDate={financialYearStart}
-                        maxDate={today}
-                        dropdownMode="select"
-                    />
-                    {isDirty && errors.certificateDate && <span className="text-danger">{errors.certificateDate}</span>}
-                </div>
-
                 {/* COUNTRY */}
                 <div className="col-md-4">
                     <label className="form-label">Country <span className="text-danger">*</span></label>
