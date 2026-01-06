@@ -747,12 +747,12 @@ export default function RemittanceDetailCA({
                     <DatePicker
                         placeholderText="dd/MM/yyyy"
                         onKeyDown={(e) => e.preventDefault()}
-                        selected={model.dateOfDeductionS}
+                        selected={model.dednDateTds}
                         className="form-control"
                         dateFormat="dd/MM/yyyy"
                         minDate={new Date(2004, 3, 1)}
                         maxDate={new Date()}
-                        onChange={(e) => handleInput("dateOfDeduction", e)}
+                        onChange={(e) => handleInput("dednDateTds", e)}
                     />
                     {isDirty && errors.dednDateTds && <span className="text-danger">{errors.dednDateTds}</span>}
                 </div>
