@@ -585,7 +585,7 @@ export default function ChallanDetail({ params }) {
                   </div>
                   <div className="col-md-3">
                     <label htmlFor="penalty" className="form-label">
-                      <span>TDS/TCS-Interest(As Per deductee Annex.)</span>
+                      <span>TDS/TCS-Interest(As Per deductee Annex)</span>
                     </label>
 
                     <input
@@ -606,7 +606,7 @@ export default function ChallanDetail({ params }) {
 
                   <div className="col-md-3">
                     <label htmlFor="penalty" className="form-label">
-                      <span>TDS/TCS-Other(As Per deductee Annex.)</span>
+                      <span>TDS/TCS-Other(As Per deductee Annex)</span>
                     </label>
 
                     <input
