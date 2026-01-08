@@ -16,6 +16,7 @@ export const CorrectionsService = {
     undoChallans,
     undoDeductor,
     undoDeducteeEntrys,
+    updateDeductorFvu,
     getCorrectionDeducteeEntry,
     getCorrectionDeducteeDropdowns,
     saveCorrectionDeducteeEntry,
@@ -27,8 +28,47 @@ export const CorrectionsService = {
     saveCorrectionEmployee,
     saveCorrectionDeductee,
     finalCorrectionReport,
-    exportFormData
+    exportFormData,
+    fetchLateFeePayable,
+    fetchInterestCalculate,
+    fetchShortDeductions
 };
+
+
+async function fetchLateFeePayable(model, value) {
+    let axiosConfig;
+    if (value) {
+        axiosConfig = {
+            responseType: "blob",
+        };
+    }
+    const result = await api.post(`correctionStatements/fetch/lateFeePayable/${value}`, model, axiosConfig);
+    return result;
+}
+
+async function fetchInterestCalculate(model, value) {
+    let axiosConfig;
+    if (value) {
+        axiosConfig = {
+            responseType: "blob",
+        };
+    }
+    const result = await api.post(`correctionStatements/fetch/interestCalculateReports/${value}`, model, axiosConfig);
+    return result;
+}
+
+async function fetchShortDeductions(model, value) {
+    let axiosConfig;
+    if (value) {
+        axiosConfig = {
+            responseType: "blob",
+        };
+    }
+    const result = await api.post(`correctionStatements/fetch/shortDeductionReports/${value}`, model, axiosConfig);
+    return result;
+}
+
+
 
 async function getCorrectionChallans(model) {
     const result = await api.post(`correctionStatements/challans/fetch`, model);
@@ -52,6 +92,11 @@ async function undoDeductor(model) {
 
 async function undoDeducteeEntrys(model) {
     const result = await api.post(`correctionStatements/deducteeEntry/undo`, model);
+    return result;
+}
+
+async function updateDeductorFvu(model, deductorId) {
+    const result = await api.post(`correctionStatements/fuvUpdateDeductor/${deductorId}`, model);
     return result;
 }
 

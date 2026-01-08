@@ -10,8 +10,6 @@ import { FuvValidateReturnService } from "@/app/services/fuvValidateReturn.servi
 import { saveAs } from "file-saver";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FormsService } from "@/app/services/forms.service";
-import { DeductorsService } from "@/app/services/deductors.service";
 import { Modal } from "react-bootstrap";
 import JSZip from 'jszip';
 import DatePicker from "react-datepicker";
@@ -20,6 +18,7 @@ import { apiUrl } from "@/app/config";
 import axios from "axios";
 import ProcessPopup from "@/app/components/modals/processing";
 import EnableExtensionModal from "@/app/components/form/chrome-extension";
+import { CorrectionsService } from "@/app/services/corrections.service";
 
 export default function GenerateFVU({ params }) {
     const resolvedParams = use(params);
@@ -77,7 +76,7 @@ export default function GenerateFVU({ params }) {
         {
             name: form,
             isActive: false,
-            href: `/deductors/${deductorId}/tds/${form}${typeof window !== "undefined" ? window.location.search : ""
+            href: `/deductors/${deductorId}/tds/corrections/${form}${typeof window !== "undefined" ? window.location.search : ""
                 }`,
         },
         {
@@ -102,17 +101,8 @@ export default function GenerateFVU({ params }) {
     }, [currentPage, pageSize]);
 
 
-    const handleFolderChange = (e) => {
-        const files = e.target.files;
-        if (files.length > 0) {
-            const path = files[0].webkitRelativePath;
-            const folderName = path.split('/')[0]; // gets the root folder name
-            setOutputPath(folderName);
-        }
-    };
-
     function getDeductor(deductorId) {
-        DeductorsService.getDeductor(deductorId).then(
+        CorrectionsService.getCorrectionStatement(deductorId, parseInt(searchParams.get("correctionId"))).then(
             (res) => {
                 if (res) {
                     setIsResponsibleChange(res.isChangeResponsibleAddress == "Y" ? "Y" : "N");
@@ -129,9 +119,10 @@ export default function GenerateFVU({ params }) {
             financialYear: searchParams.get("financial_year"),
             quarter: searchParams.get("quarter"),
             deductorId: deductorId,
+            correctionId: parseInt(searchParams.get("correctionId")),
             categoryId: parseInt(searchParams.get("categoryId")),
         };
-        FuvValidateReturnService.validateReturn(model)
+        FuvValidateReturnService.validateCorrectionReturn(model)
             .then((res) => {
                 if (res == true) {
                     setIsError(false);
@@ -172,8 +163,9 @@ export default function GenerateFVU({ params }) {
             quarter: searchParams.get("quarter"),
             deductorId: deductorId,
             categoryId: parseInt(searchParams.get("categoryId")),
+            correctionId: parseInt(searchParams.get("correctionId"))
         };
-        FuvValidateReturnService.getInterestAndfines(model)
+        FuvValidateReturnService.getCorrectionInterestAndfines(model)
             .then((res) => {
                 if (res) {
                     setInterestAndfines(res);
@@ -284,7 +276,7 @@ export default function GenerateFVU({ params }) {
             isChangeTdsReturn: isTdsReturn,
             tokenNo: tokenNo,
         }
-        await DeductorsService.updateDeductorFvu(model, deductorId);
+        await CorrectionsService.updateDeductorFvu(model, deductorId);
         setIsDirty(null);
     }
 
@@ -511,87 +503,87 @@ export default function GenerateFVU({ params }) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white rounded-4 px-4 py-4 my-3">
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <h6 class="fw-bold">PAN Status</h6>
-                                    </div>
-                                </div>
+                            {/* <div class="bg-white rounded-4 px-4 py-4 my-3">
+                <div class="row mb-2">
+                  <div class="col-md-12">
+                    <h6 class="fw-bold">PAN Status</h6>
+                  </div>
+                </div>
 
-                                <div class="row g-3 rounded-4 align-items-center text-center">
-                                    <div class="col"
-                                        onClick={(e) => {
-                                            router.push(
-                                                pathname +
-                                                "/pan-status" +
-                                                window.location.search + "&type=All"
-                                            );
-                                        }}
-                                    >
-                                        <div class="border border-1 rounded-3 p-3 h-100">
-                                            <h6 class="fw-bold mb-1">{interestAndfines?.allPanStatus || "0"}</h6>
-                                            <p class="mb-0 fs-14">All</p>
-                                        </div>
-                                    </div>
+                <div class="row g-3 rounded-4 align-items-center text-center">
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=All"
+                      );
+                    }}
+                  >
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.allPanStatus || "0"}</h6>
+                      <p class="mb-0 fs-14">All</p>
+                    </div>
+                  </div>
 
-                                    <div class="col"
-                                        onClick={(e) => {
-                                            router.push(
-                                                pathname +
-                                                "/pan-status" +
-                                                window.location.search + "&type=Valid and Operative"
-                                            );
-                                        }}
-                                    >
-                                        <div class="border border-1 rounded-3 p-3 h-100">
-                                            <h6 class="fw-bold mb-1">{interestAndfines?.validStatus || "0"}</h6>
-                                            <p class="mb-0 fs-14">Active/Valid</p>
-                                        </div>
-                                    </div>
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=Valid and Operative"
+                      );
+                    }}
+                  >
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.validStatus || "0"}</h6>
+                      <p class="mb-0 fs-14">Active/Valid</p>
+                    </div>
+                  </div>
 
-                                    <div class="col"
-                                        onClick={() => {
-                                            const queryString = window.location.search;
-                                            const separator = queryString ? "&" : "?";
-                                            router.push(`${pathname}/pan-status${queryString}${separator}type=Invalid`);
-                                        }}
-                                    >
-                                        <div class="border border-1 rounded-3 p-3 h-100">
-                                            <h6 class="fw-bold mb-1">{interestAndfines?.notValidStatus || "0"}</h6>
-                                            <p class="mb-0 fs-14">Invalid</p>
-                                        </div>
-                                    </div>
-                                    <div class="col"
-                                        onClick={(e) => {
-                                            router.push(
-                                                pathname +
-                                                "/pan-status" +
-                                                window.location.search + "&type=InOperative"
-                                            );
-                                        }}
-                                    >
-                                        <div class="border border-1 rounded-3 p-3 h-100">
-                                            <h6 class="fw-bold mb-1">{interestAndfines?.inOperativeStatus || "0"}</h6>
-                                            <p class="mb-0 fs-14">InOperative</p>
-                                        </div>
-                                    </div>
+                  <div class="col"
+                    onClick={() => {
+                      const queryString = window.location.search;
+                      const separator = queryString ? "&" : "?";
+                      router.push(`${pathname}/pan-status${queryString}${separator}type=Invalid`);
+                    }}
+                  >
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.notValidStatus || "0"}</h6>
+                      <p class="mb-0 fs-14">Invalid</p>
+                    </div>
+                  </div>
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search + "&type=InOperative"
+                      );
+                    }}
+                  >
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.inOperativeStatus || "0"}</h6>
+                      <p class="mb-0 fs-14">InOperative</p>
+                    </div>
+                  </div>
 
-                                    <div class="col"
-                                        onClick={(e) => {
-                                            router.push(
-                                                pathname +
-                                                "/pan-status" +
-                                                window.location.search
-                                            );
-                                        }}
-                                    >
-                                        <div class="border border-1 rounded-3 p-3 h-100">
-                                            <h6 class="fw-bold mb-1">{interestAndfines?.notVerifyStatus || "0"}</h6>
-                                            <p class="mb-0 fs-14">Not Verified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                  <div class="col"
+                    onClick={(e) => {
+                      router.push(
+                        pathname +
+                        "/pan-status" +
+                        window.location.search
+                      );
+                    }}
+                  >
+                    <div class="border border-1 rounded-3 p-3 h-100">
+                      <h6 class="fw-bold mb-1">{interestAndfines?.notVerifyStatus || "0"}</h6>
+                      <p class="mb-0 fs-14">Not Verified</p>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
 
                             <div className="bg-white rounded-4 px-4 py-4 my-3">
                                 <div className="row mb-2">
