@@ -29,6 +29,7 @@ export default function GenerateFVU({ params }) {
     const [showLoader, setShowLoader] = useState(true);
     const [isDirectLoading, setIsDirectLoading] = useState(false);
     const fileInputRef = useRef(null);
+    const fileConsoInputRef = useRef(null);
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -48,6 +49,7 @@ export default function GenerateFVU({ params }) {
     const [interestAndfines, setInterestAndfines] = useState(null);
     const [deductorInfo, setDeductorInfo] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
+    const [selectedConsoData, setSelectedConsoData] = useState(null);
     const [confirmTitle, setConfirmTitle] = useState("");
     const [tokenNo, setTokenNo] = useState("");
     const [isDirty, setIsDirty] = useState(null);
@@ -138,12 +140,11 @@ export default function GenerateFVU({ params }) {
                 else {
                     toast.error(e?.message);
                 }
-                setShowLoader(false);
             })
             .catch((e) => {
             })
             .finally((f) => {
-                setShowLoader(false);
+
             });
     }
 
@@ -179,6 +180,7 @@ export default function GenerateFVU({ params }) {
                 }
             })
             .finally((f) => {
+                setShowLoader(false);
             });
     }
 
@@ -284,6 +286,11 @@ export default function GenerateFVU({ params }) {
         setSelectedData(event.target.files[0]);
     };
 
+
+    const consoFileSelectHandler = (event) => {
+        setSelectedConsoData(event.target.files[0]);
+    };
+
     async function generateFuv(e) {
         e.preventDefault();
         setIsFileSaved(false);
@@ -301,6 +308,10 @@ export default function GenerateFVU({ params }) {
             toast.error("Please select CSI file");
             return;
         }
+        if (!selectedConsoData) {
+            toast.error("Please select Conso file");
+            return;
+        }
         setLoading(true);
         try {
             let csiFileRead;
@@ -314,6 +325,7 @@ export default function GenerateFVU({ params }) {
             // Step 3: Prepare and call API
             const formData = new FormData();
             formData.append("csiFile", !interestAndfines?.isDownloadCSIAllow ? csiFileRead : selectedData);
+            formData.append("consoFile", selectedConsoData);
             formData.append("financialYear", searchParams.get("financial_year"));
             formData.append("quarter", searchParams.get("quarter"));
             formData.append("deductorId", deductorId);
@@ -343,6 +355,7 @@ export default function GenerateFVU({ params }) {
             setSelectedData(null);
             setLoading(false);
             fileInputRef.current.value = '';
+            fileConsoInputRef.current.value = '';
         }
     }
 
@@ -890,7 +903,7 @@ export default function GenerateFVU({ params }) {
                                     </div>
                                     <span className="text-danger"> {tokenError}</span>
                                 </div>
-                                <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
+                                <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
                                     {interestAndfines?.isDownloadCSIAllow &&
                                         <>
                                             <div className="col-md-7">
@@ -930,6 +943,27 @@ export default function GenerateFVU({ params }) {
                                             </p>
                                         </div>
                                     }
+                                </div>
+                                <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
+                                    <>
+                                        <div className="col-md-7">
+                                            <p className="mb-0">
+                                                Please upload the Conso file
+                                            </p>
+                                        </div>
+                                        <div className="col-md-5 d-flex justify-content-end">
+                                            <div className="d-flex">
+                                                <input
+                                                    type="file"
+                                                    accept=".csi"
+                                                    id="fileConsoInputRef"
+                                                    ref={fileConsoInputRef}
+                                                    name="fileConsoInputRef"
+                                                    onChange={consoFileSelectHandler}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 </div>
 
                             </div>
