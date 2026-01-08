@@ -688,14 +688,14 @@ export default function TDSForm({ params }) {
                     <div className="col-md-12">
                       <div className="content-box bg-white border border-1 px-1 py-2 px-md-4 py-md-3 rounded-3">
                         <div className="row align-items-center"
-                        // onClick={(e) => {
-                        //   if (formsDashboardDetail.certificateCount > 0) {
-                        //   } else {
-                        //     router.push(
-                        //       pathname + "/generate-fvu" + window.location.search
-                        //     );
-                        //   }
-                        // }}
+                          onClick={(e) => {
+                            if (formsDashboardDetail.certificateCount > 0) {
+                            } else {
+                              router.push(
+                                pathname + "/generate-fvu" + window.location.search
+                              );
+                            }
+                          }}
                         >
                           <div className="col-md-4" >
                             <Image
