@@ -389,6 +389,7 @@ export default function RemittanceDetailCA({
                         value={model.taxLiablDtaa || ""}
                     />
                 </div>
+                <div className="col-md-4"></div>
 
                 <div className="col-md-4">
                     <label className="form-label">Remittance for Royalty <span className="text-danger">*</span></label>
@@ -555,8 +556,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.basisTaxIncDtaa && <span className="text-danger">{errors.basisTaxIncDtaa}</span>}
                 </div>
-
-
+                <div className="col-md-8"></div>
                 <div className="col-md-4">
                     <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
                     <select
@@ -584,7 +584,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.otherRemDtaa == "Y" && errors.natureRemDtaa && <span className="text-danger">{errors.natureRemDtaa}</span>}
                 </div>
-
+                <div className="col-md-4"></div>
 
                 <div className="col-md-4">
                     <label className="form-label">Tax Ind Dtaa Flg <span className="text-danger">*</span></label>
