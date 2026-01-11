@@ -330,13 +330,13 @@ export default function GenerateFVU({ params }) {
             formData.append("quarter", searchParams.get("quarter"));
             formData.append("deductorId", deductorId);
             formData.append("categoryId", parseInt(searchParams.get("categoryId")));
+            formData.append("correctionId", parseInt(searchParams.get("correctionId")));
             formData.append("folderInputPath", folderInputPath);
-
             const startYear = parseInt(searchParams.get("financial_year").split("-")[0]);
             const endYear = startYear + 1;
             formData.append("assesmentYear", `${endYear}-${(endYear + 1).toString().slice(-2)}`);
 
-            const res = await FuvValidateReturnService.generateFVU(formData);
+            const res = await FuvValidateReturnService.generateCorrectionFVU(formData);
             if (!res) return;
 
 

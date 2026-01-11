@@ -10,7 +10,8 @@ export const FuvValidateReturnService = {
     directEFiling,
     generate24GFVU,
     autoFill,
-    validateCorrectionReturn
+    validateCorrectionReturn,
+    generateCorrectionFVU
 };
 
 async function validateReturn(model) {
@@ -46,6 +47,11 @@ async function getCorrectionInterestAndfines(model) {
 
 async function generateFVU(model) {
     const result = await api.post(`fuvValidateReturn/generatefvu`, model);
+    return result;
+}
+
+async function generateCorrectionFVU(model) {
+    const result = await api.post(`FVUCorrection/generatefvu`, model);
     return result;
 }
 
