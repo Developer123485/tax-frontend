@@ -747,54 +747,6 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-12">
-                    <h5 className="fw-bold mt-4">Declaration</h5>
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">I / We
-                        <span className="text-danger">*</span>
-                    </label>
-                    <select
-                        className="form-select"
-                        value={model.i_We}
-                        onChange={(e) => handleInput("i_We", e)}
-                    >
-                        <option value="1">I</option>
-                        <option value="2">WE</option>
-                    </select>
-                    {isDirty && errors.i_We && <span className="text-danger">{errors.i_We}</span>}
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">Verification Date
-                        <span className="text-danger">*</span>
-                    </label>
-                    <DatePicker
-                        placeholderText="dd/MM/yyyy"
-                        selected={model.verificationDate}
-                        className="form-control"
-                        minDate={new Date()}
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(e) => handleInput("verificationDate", e)}
-                        onKeyDown={(e) => e.preventDefault()}
-                    />
-                    {isDirty && errors.verificationDate && <span className="text-danger">{errors.verificationDate}</span>}
-                </div>
-
-                <div className="col-md-4">
-                    <label className="form-label">Place
-                        <span className="text-danger">*</span>
-                    </label>
-                    <input
-                        className="form-control"
-                        value={model.verificationPlace || ""}
-                        onChange={(e) => handleInput("verificationPlace", e)}
-                    />
-                    {isDirty && errors.verificationPlace && <span className="text-danger">{errors.verificationPlace}</span>}
-
-                </div>
-
                 {/* SAVE */}
                 <div className="col-md-12 mt-3">
                     <button type="button" className="btn btn-primary" onClick={handleSave}>

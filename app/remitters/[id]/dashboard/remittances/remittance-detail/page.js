@@ -370,9 +370,6 @@ export default function AddRemittance({ params }) {
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";
-            if (!model.i_We) e.i_We = "required!";
-            if (!model.verificationPlace) e.verificationPlace = "required!";
-            if (!model.verificationDate) e.verificationDate = "required!";
             if (!model.remAcctBusIncFlg) e.remAcctBusIncFlg = "required!";
             if (!model.remOnCapGainFlg) e.remOnCapGainFlg = "required!";
             if (!model.otherRemDtaa) e.otherRemDtaa = "required!";
