@@ -36,7 +36,8 @@ export default function AddAccountant({ params }) {
         createdBy: null,
         updatedBy: null,
         userId: 0,
-        remitterId: remitterId
+        remitterId: remitterId,
+        iorWe: "02"
     });
 
     const [errors, setErrors] = useState({});

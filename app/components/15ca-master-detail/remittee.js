@@ -52,6 +52,28 @@ export default function RemitteeDetail(props) {
                             )}
                         </div>
 
+                        {/* Row 1 */}
+                        <div className="col-md-3">
+                            <label className="form-label">Beneficiary Honorific
+                                <span className="text-danger">*</span>
+                            </label>
+                            <select
+                                className="form-select"
+                                value={remittee.beneficiaryHonorific || ""}
+                                onChange={(e) => handleInput("beneficiaryHonorific", e.target.value)}
+                            >
+                                <option value="">Select</option>
+                                <option value="01">Mr</option>
+                                <option value="02">Mrs</option>
+                                <option value="03">M/s</option>
+                            </select>
+                            {isDirty && remitteeErrors.beneficiaryHonorific && (
+                                <span className="text-danger">
+                                    {remitteeErrors.beneficiaryHonorific}
+                                </span>
+                            )}
+                        </div>
+
                         {/* === NAME === */}
                         <div className="col-md-3">
                             <label className="form-label">

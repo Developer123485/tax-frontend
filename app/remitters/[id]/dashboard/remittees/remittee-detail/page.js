@@ -66,7 +66,8 @@ export default function AddRemittee({ params }) {
         remitterId: 0,
         status: "",
         currency: "",
-        currencyOther: ""
+        currencyOther: "",
+        beneficiaryHonorific: ""
     });
 
     const [errors, setErrors] = useState({});
@@ -120,6 +121,7 @@ export default function AddRemittee({ params }) {
         if (!remittee.remitteeFlat) err.remitteeFlat = "Flat is required";
         if (!remittee.remitteeCity) err.remitteeCity = "City is required";
         if (!remittee.remitteeArea) err.remitteeArea = "Area is required";
+        if (!remittee.beneficiaryHonorific) err.beneficiaryHonorific = "Beneficiary Honorific is required";
         if (!remittee.remitteeCountry) err.remitteeCountry = "Country is required";
         if (!remittee.remitteePincode) err.remitteePincode = "Zip Code is required";
         if (!remittee.status) err.status = "status is required";

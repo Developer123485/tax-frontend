@@ -31,6 +31,19 @@ export default function AccountantDetailForm(props) {
                         {isDirty && errors.code && <span className="text-danger">{errors.code}</span>}
                     </div>
 
+                    <div className="col-md-3">
+                        <label className="form-label">IorWe
+                        </label>
+                        <select
+                            className="form-select"
+                            value={accountant.iorWe}
+                            onChange={(e) => handleInput("iorWe", e)}
+                        >
+                            <option value="01">I</option>
+                            <option value="02">WE</option>
+                        </select>
+                    </div>
+
                     {/* NAME */}
                     <div className="col-md-3">
                         <label className="form-label">
