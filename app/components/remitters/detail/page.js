@@ -121,8 +121,8 @@ export default function RemitterDetail(props) {
                 </label>
                 <select
                   className="form-select"
-                  value={remitterDetail.beneficiaryHonorific || ""}
-                  onChange={(e) => handleInput("beneficiaryHonorific", e)}
+                  value={remitterDetail.remitterHonorific || ""}
+                  onChange={(e) => handleInput("remitterHonorific", e)}
                 >
                   <option value="">Select</option>
                   <option value="01">Mr</option>
