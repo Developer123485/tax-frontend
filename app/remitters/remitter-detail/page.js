@@ -81,10 +81,7 @@ export default function AddRemitter() {
         motherName: "",
         desgination: "",
         code: "",
-        iorWe: "",
         remitterHonorific: "",
-        beneficiaryHonorific: "",
-        beneficiaryName: "",
     });
     const [remitterErrors, setRemitterErrors] = useState({
         remitterStateError: "",

@@ -86,7 +86,8 @@ export default function AddRemittee({ params }) {
     }, [remittee.remitteeEmail, remittee.name, remittee.remitteePan, remittee.code,
     remittee.countryRemMade, remittee.countryRemMadeDesc, remittee.remitteeCountry,
     remittee.status, remittee.remitteeFlat, remittee.remitteeArea, remittee.remitteeCity, remittee.remitteePincode,
-    remittee.princPlcBusRemtee
+    remittee.princPlcBusRemtee,
+    remittee.beneficiaryHonorific
     ]);
 
     function loadRemittee() {
