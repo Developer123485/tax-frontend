@@ -123,7 +123,6 @@ export default function GenerateFVU({ params }) {
           setIsResponsibleChange(res.isChangeResponsibleAddress == "Y" ? "Y" : "N");
           setIsDeductorChange(res.isChangeDeductorAddress == "Y" ? "Y" : "N");
           setIsTdsReturn(res.isChangeTdsReturn == "Y" ? "Y" : "N");
-          setTokenNo(res.tokenNo);
           setDeductorInfo(res);
         }
       })
@@ -182,6 +181,7 @@ export default function GenerateFVU({ params }) {
       .then((res) => {
         if (res) {
           setInterestAndfines(res);
+          setTokenNo(res.tokenNo);
         }
       }).catch(e => {
         if (e?.response?.data?.errorMessage) {
