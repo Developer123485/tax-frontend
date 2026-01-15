@@ -268,13 +268,11 @@ export default function GenerateFVU({ params }) {
           }
         }).finally(f => {
           setIsCSIDownloadLoading(false);
-          setFromDate(null);
           setCsiInfoError((prevState) => ({
             ...prevState,
             fromError: "",
             toError: ""
           }));
-          setToDate(null);
         })
       }
     } else {
