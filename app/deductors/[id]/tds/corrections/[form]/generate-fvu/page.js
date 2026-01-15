@@ -31,7 +31,7 @@ export default function GenerateFVU({ params }) {
     const fileInputRef = useRef(null);
     const fileConsoInputRef = useRef(null);
     const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
+    const [toDate, setToDate] = useState(new Date());
     const [loading, setLoading] = useState(false);
     const [isDownloadLoading, setIsDownloadLoading] = useState(false);
     const [isCSIDownloadLoading, setIsCSIDownloadLoading] = useState(false);
@@ -100,6 +100,11 @@ export default function GenerateFVU({ params }) {
         } else {
             router.push("/deductors");
         }
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const financialYearStart = month < 3 ? year - 1 : year;
+        setFromDate(new Date(financialYearStart, 3, 1));
     }, [currentPage, pageSize]);
 
 
@@ -1066,6 +1071,7 @@ export default function GenerateFVU({ params }) {
                                         onKeyDown={(e) => e.preventDefault()}
                                         selected={fromDate}
                                         onChange={(date) => setFromDate(date)}
+                                        maxDate={new Date()}
                                         dateFormat="dd-MMM-yyyy"
                                         placeholderText="Select From Date"
                                         className="datepicker-input"
@@ -1084,6 +1090,7 @@ export default function GenerateFVU({ params }) {
                                         selected={toDate}
                                         onChange={(date) => setToDate(date)}
                                         dateFormat="dd-MMM-yyyy"
+                                        maxDate={new Date()}
                                         placeholderText="Select To Date"
                                         className="datepicker-input"
                                     />
