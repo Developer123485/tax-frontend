@@ -199,9 +199,15 @@ export default function RemittanceList({ params }) {
         setErrors([]);
         RemittanceService.generateXml(id, remitterId).then(res => {
             const url = window.URL.createObjectURL(new Blob([res]));
+            let formType = "";
+            if (search.get("partType") == "C" && search.get("formType") == "15CB") {
+                formType = "CB_" + search.get("partType");
+            } else {
+                formType = "CA_" + search.get("partType");
+            }
             const a = document.createElement("a");
             a.href = url;
-            a.download = `FORM15CA_${id}.xml`;; // suggested filename
+            a.download = `FORM15${formType}_${id}.xml`;; // suggested filename
             document.body.appendChild(a);
             a.click();
             a.remove();
