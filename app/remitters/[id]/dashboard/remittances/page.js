@@ -200,7 +200,7 @@ export default function RemittanceList({ params }) {
         RemittanceService.generateXml(id, remitterId).then(res => {
             const url = window.URL.createObjectURL(new Blob([res]));
             let formType = "";
-            if (search.get("partType") == "C" && search.get("formType") == "15CB") {
+            if (searchParams.get("partType") == "C" && searchParams.get("formType") == "15CB") {
                 formType = "CB_" + search.get("partType");
             } else {
                 formType = "CA_" + search.get("partType");
