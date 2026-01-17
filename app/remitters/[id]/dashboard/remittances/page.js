@@ -198,12 +198,13 @@ export default function RemittanceList({ params }) {
     function generateXml(id) {
         setErrors([]);
         RemittanceService.generateXml(id, remitterId).then(res => {
+
             const url = window.URL.createObjectURL(new Blob([res]));
             let formType = "";
             if (searchParams.get("partType") == "C" && searchParams.get("formType") == "15CB") {
-                formType = "CB_" + search.get("partType");
+                formType = "CB_" + searchParams.get("partType");
             } else {
-                formType = "CA_" + search.get("partType");
+                formType = "CA_" + searchParams.get("partType");
             }
             const a = document.createElement("a");
             a.href = url;
