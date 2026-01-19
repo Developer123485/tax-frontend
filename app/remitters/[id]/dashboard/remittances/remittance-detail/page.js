@@ -315,8 +315,9 @@ export default function AddRemittance({ params }) {
             if (!model.remForRoyFlg) e.remForRoyFlg = "required!";
             if (model.remForRoyFlg == "Y" && !model.artDtaa) e.artDtaa = "required!";
             if (model.remForRoyFlg == "Y" && !model.rateTdsADtaa) e.rateTdsADtaa = "required!";
-            if (model.remAcctBusIncFlg == "Y" && !model.amtToTaxInd) e.amtToTaxInd = "required!";
-            if (model.remAcctBusIncFlg == "N" && !model.rateDednDtaa) e.rateDednDtaa = "required!";
+            if (model.incLiabIndiaFlg == "Y" && !model.amtToTaxInd) e.amtToTaxInd = "required!";
+            if (model.incLiabIndiaFlg == "N" && !model.rateDednDtaa) e.rateDednDtaa = "required!";
+            if (model.remAcctBusIncFlg == "Y" && !model.incLiabIndiaFlg) e.incLiabIndiaFlg = "required!";
             if (!model.inIndian) e.inIndian = "required!";
             if (!model.inForiegn) e.inForiegn = "required!";
             if (!model.proposedDate) e.proposedDate = "required!";

@@ -439,8 +439,12 @@ export default function RemittanceDetailCA({
                     {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
 
+
                 <div className="col-md-4">
-                    <label className="form-label">Rem Acct Bus Inc Flg <span className="text-danger">*</span></label>
+                    <label className="form-label">
+                        In case the remittance is on account of business income
+                        <span className="text-danger">*</span>
+                    </label>
                     <select
                         className="form-select"
                         value={model.remAcctBusIncFlg || ""}
@@ -454,8 +458,24 @@ export default function RemittanceDetailCA({
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">Amount to be Taxed in India
-                        {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}
+                    <label className="form-label">Whether such income is liable to tax in India
+                        {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}</label>
+                    <select
+                        className="form-select"
+                        value={model.IncLiabIndiaFlg || ""}
+                        onChange={(e) => handleInput("IncLiabIndiaFlg", e)}
+                        disabled={model.remAcctBusIncFlg == "N"}
+                    >
+                        <option value="">Select</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                    {isDirty && errors.IncLiabIndiaFlg && <span className="text-danger">{errors.IncLiabIndiaFlg}</span>}
+                </div>
+
+                <div className="col-md-4">
+                    <label className="form-label">If so, the basis of arriving at rate of deduction of tax
+                        {model.IncLiabIndiaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
                     <input
                         type="text"
@@ -468,20 +488,20 @@ export default function RemittanceDetailCA({
                         }}
                         className="form-control"
                         value={model.amtToTaxInd || ""}
-                        disabled={model.remAcctBusIncFlg == "N"}
+                        disabled={model.IncLiabIndiaFlg == "N"}
                     />
                     {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">Rate Dedn Dtaa
-                        {errors.remAcctBusIncFlg == "N" && <span className="text-danger">*</span>}
+                    <label className="form-label">If not, please furnish brief reasons thereof, specifying relevant article of DTAA
+                        {errors.IncLiabIndiaFlg == "N" && <span className="text-danger">*</span>}
                     </label>
                     <input
                         type="text"
                         className="form-control"
                         value={model.rateDednDtaa || ""}
-                        disabled={model.remAcctBusIncFlg == "Y"}
+                        disabled={model.IncLiabIndiaFlg == "Y"}
                         onChange={(e) => handleInput("rateDednDtaa", e)}
                     />
                     {isDirty && model.remAcctBusIncFlg == "N" && errors.rateDednDtaa && <span className="text-danger">{errors.rateDednDtaa}</span>}
