@@ -543,45 +543,47 @@ export default function RemittanceDetailCA({
                         disabled={model.remOnCapGainFlg == "N"}
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
-                </div>
+                </div>}
+
+
+                {model.remOnCapGainFlg == "Y"
+                    && <div className="col-md-4">
+                        <label className="form-label">Short Term Capital Gain
+                            {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
+                        </label>
+                        <input
+                            type="text"
+                            inputMode="decimal"
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                const regex = /^\d{0,14}(\.\d{0,2})?$/;
+                                if (!regex.test(value)) return;
+                                handleInput("amtShortTrm", value);
+                            }}
+                            className="form-control"
+                            value={model.amtShortTrm || ""}
+                            disabled={model.remOnCapGainFlg == "N"}
+                        />
+                        {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
+                    </div>
                 }
 
-                {model.remOnCapGainFlg == "Y" && <div className="col-md-4">
-                    <label className="form-label">Short Term Capital Gain
-                        {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
-                    </label>
-                    <input
-                        type="text"
-                        inputMode="decimal"
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const regex = /^\d{0,14}(\.\d{0,2})?$/;
-                            if (!regex.test(value)) return;
-                            handleInput("amtShortTrm", value);
-                        }}
-                        className="form-control"
-                        value={model.amtShortTrm || ""}
-                        disabled={model.remOnCapGainFlg == "N"}
-                    />
-                    {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
-                </div>
+                {model.remOnCapGainFlg == "Y" &&
+                    <div className="col-md-4">
+                        <label className="form-label">Basis Tax Inc Dtaa
+                            {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={model.basisTaxIncDtaa || ""}
+                            disabled={model.remOnCapGainFlg == "N"}
+                            onChange={(e) => handleInput("basisTaxIncDtaa", e)}
+                        />
+                        {isDirty && model.remOnCapGainFlg == "Y" && errors.basisTaxIncDtaa && <span className="text-danger">{errors.basisTaxIncDtaa}</span>}
+                    </div>
                 }
 
-                {model.remOnCapGainFlg == "Y" && <div className="col-md-4">
-                    <label className="form-label">Basis Tax Inc Dtaa
-                        {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={model.basisTaxIncDtaa || ""}
-                        disabled={model.remOnCapGainFlg == "N"}
-                        onChange={(e) => handleInput("basisTaxIncDtaa", e)}
-                    />
-                    {isDirty && model.remOnCapGainFlg == "Y" && errors.basisTaxIncDtaa && <span className="text-danger">{errors.basisTaxIncDtaa}</span>}
-                </div>
-                }
-                <div className="col-md-8"></div>
                 <div className="col-md-4">
                     <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
                     <select
@@ -610,8 +612,6 @@ export default function RemittanceDetailCA({
                     {isDirty && model.otherRemDtaa == "Y" && errors.natureRemDtaa && <span className="text-danger">{errors.natureRemDtaa}</span>}
                 </div>
                 }
-                <div className="col-md-4"></div>
-
                 <div className="col-md-4">
                     <label className="form-label">Tax Ind Dtaa Flg <span className="text-danger">*</span></label>
                     <select
