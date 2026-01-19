@@ -197,7 +197,7 @@ export default function RemittanceDetailCA({
                 </div>
 
                 <div className="col-md-4">
-                    <label className="form-label">Rev Pur Code (Select before Rev Pur Category)*</label>
+                    <label className="form-label">Rev Pur Code (Select before Rev Pur Category) <span className="text-danger">*</span></label>
                     <SearchableDropdown
                         id={model.purposeCode1}
                         options={
