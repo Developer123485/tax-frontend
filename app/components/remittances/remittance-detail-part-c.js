@@ -405,7 +405,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.remForRoyFlg && <span className="text-danger">{errors.remForRoyFlg}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {model.remForRoyFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Art Dtaa
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -417,9 +417,9 @@ export default function RemittanceDetailCA({
                         onChange={(e) => handleInput("artDtaa", e)}
                     />
                     {isDirty && model.remForRoyFlg == "Y" && errors.artDtaa && <span className="text-danger">{errors.artDtaa}</span>}
-                </div>
+                </div>}
 
-                <div className="col-md-4">
+                {model.remForRoyFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">DTAA TDS Rate (%)
                         {model.remForRoyFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -438,6 +438,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remForRoyFlg == "Y" && errors.rateTdsADtaa && <span className="text-danger">{errors.rateTdsADtaa}</span>}
                 </div>
+                }
 
 
                 <div className="col-md-4">
@@ -457,7 +458,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.remAcctBusIncFlg && <span className="text-danger">{errors.remAcctBusIncFlg}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {model.remAcctBusIncFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Whether such income is liable to tax in India
                         {model.remAcctBusIncFlg == "Y" && <span className="text-danger">*</span>}</label>
                     <select
@@ -471,9 +472,9 @@ export default function RemittanceDetailCA({
                         <option value="N">No</option>
                     </select>
                     {isDirty && errors.IncLiabIndiaFlg && <span className="text-danger">{errors.IncLiabIndiaFlg}</span>}
-                </div>
+                </div>}
 
-                <div className="col-md-4">
+                {model.IncLiabIndiaFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">If so, the basis of arriving at rate of deduction of tax
                         {model.IncLiabIndiaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -492,9 +493,10 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
+                }
 
-                <div className="col-md-4">
-                    <label className="form-label">If not, please furnish brief reasons thereof, specifying relevant article of DTAA
+                {errors.IncLiabIndiaFlg == "N" && <div className="col-md-4">
+                    <label className="form-label">specifying relevant article of DTAA
                         {errors.IncLiabIndiaFlg == "N" && <span className="text-danger">*</span>}
                     </label>
                     <input
@@ -505,7 +507,7 @@ export default function RemittanceDetailCA({
                         onChange={(e) => handleInput("rateDednDtaa", e)}
                     />
                     {isDirty && model.remAcctBusIncFlg == "N" && errors.rateDednDtaa && <span className="text-danger">{errors.rateDednDtaa}</span>}
-                </div>
+                </div>}
 
 
                 <div className="col-md-4">
@@ -523,7 +525,7 @@ export default function RemittanceDetailCA({
                 </div>
 
 
-                <div className="col-md-4">
+                {model.remOnCapGainFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Long Term Capital Gain
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -542,8 +544,9 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtLongTrm && <span className="text-danger">{errors.amtLongTrm}</span>}
                 </div>
+                }
 
-                <div className="col-md-4">
+                {model.remOnCapGainFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Short Term Capital Gain
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -562,8 +565,9 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.amtShortTrm && <span className="text-danger">{errors.amtShortTrm}</span>}
                 </div>
+                }
 
-                <div className="col-md-4">
+                {model.remOnCapGainFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Basis Tax Inc Dtaa
                         {model.remOnCapGainFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -576,6 +580,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.remOnCapGainFlg == "Y" && errors.basisTaxIncDtaa && <span className="text-danger">{errors.basisTaxIncDtaa}</span>}
                 </div>
+                }
                 <div className="col-md-8"></div>
                 <div className="col-md-4">
                     <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
@@ -591,7 +596,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.otherRemDtaa && <span className="text-danger">{errors.otherRemDtaa}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {model.otherRemDtaa == "Y" && <div className="col-md-4">
                     <label className="form-label">Nature Rem Dtaa
                         {model.otherRemDtaa == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -604,6 +609,7 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.otherRemDtaa == "Y" && errors.natureRemDtaa && <span className="text-danger">{errors.natureRemDtaa}</span>}
                 </div>
+                }
                 <div className="col-md-4"></div>
 
                 <div className="col-md-4">
@@ -620,7 +626,7 @@ export default function RemittanceDetailCA({
                     {isDirty && errors.taxIndDtaaFlg && <span className="text-danger">{errors.taxIndDtaaFlg}</span>}
                 </div>
 
-                <div className="col-md-4">
+                {model.taxIndDtaaFlg == "Y" && <div className="col-md-4">
                     <label className="form-label">Rate Tds DDtaa
                         {model.taxIndDtaaFlg == "Y" && <span className="text-danger">*</span>}
                     </label>
@@ -639,8 +645,9 @@ export default function RemittanceDetailCA({
                     />
                     {isDirty && model.taxIndDtaaFlg == "Y" && errors.rateTdsDDtaa && <span className="text-danger">{errors.rateTdsDDtaa}</span>}
                 </div>
+                }
 
-                <div className="col-md-4">
+                {model.taxIndDtaaFlg == "N" && <div className="col-md-4">
                     <label className="form-label">Rel Art DetlD Dtaa
                         {model.taxIndDtaaFlg == "N" && <span className="text-danger">*</span>}
                     </label>
@@ -653,7 +660,7 @@ export default function RemittanceDetailCA({
                         onChange={(e) => handleInput("relArtDetlDDtaa", e)}
                     />
                     {isDirty && model.taxIndDtaaFlg == "N" && errors.relArtDetlDDtaa && <span className="text-danger">{errors.relArtDetlDDtaa}</span>}
-                </div>
+                </div>}
 
 
                 <div className="col-md-12">
