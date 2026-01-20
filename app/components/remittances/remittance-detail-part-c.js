@@ -491,22 +491,21 @@ export default function RemittanceDetailCA({
                         value={model.amtToTaxInd || ""}
                         disabled={model.IncLiabIndiaFlg == "N"}
                     />
-                    {isDirty && model.remAcctBusIncFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
+                    {isDirty && model.IncLiabIndiaFlg == "Y" && errors.amtToTaxInd && <span className="text-danger">{errors.amtToTaxInd}</span>}
                 </div>
                 }
 
-                {errors.IncLiabIndiaFlg == "N" && <div className="col-md-4">
+                {model.IncLiabIndiaFlg == "N" && <div className="col-md-4">
                     <label className="form-label">specifying relevant article of DTAA
-                        {errors.IncLiabIndiaFlg == "N" && <span className="text-danger">*</span>}
+                        {model.IncLiabIndiaFlg == "N" && <span className="text-danger">*</span>}
                     </label>
                     <input
                         type="text"
                         className="form-control"
                         value={model.rateDednDtaa || ""}
-                        disabled={model.IncLiabIndiaFlg == "Y"}
                         onChange={(e) => handleInput("rateDednDtaa", e)}
                     />
-                    {isDirty && model.remAcctBusIncFlg == "N" && errors.rateDednDtaa && <span className="text-danger">{errors.rateDednDtaa}</span>}
+                    {isDirty && model.IncLiabIndiaFlg == "N" && errors.rateDednDtaa && <span className="text-danger">{errors.rateDednDtaa}</span>}
                 </div>}
 
 
