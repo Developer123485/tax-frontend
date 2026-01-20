@@ -291,7 +291,10 @@ export default function ImportDeductorTXTPopup(props) {
                           maxLength={10}
                           value={deductorCode}
                           className="form-control"
-                          onChange={(e) => setDeductorCode(e.target.value)}
+                          onChange={(e) => {
+                            e.target.value = e.target.value.toUpperCase().trim();
+                            setDeductorCode(e.target.value)
+                          }}
                           id="deductorCode"
                         ></input>
                       )}
