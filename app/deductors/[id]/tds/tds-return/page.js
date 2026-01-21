@@ -260,12 +260,19 @@ export default function TDSReturn({ params }) {
       }));
     }
   }
-
   function openEditModal(id) {
-    const res = tdsReturns.tdsReturnList.find((p) => p.id == id);
-    setTdsReturnForm(res);
+    const res = tdsReturns.tdsReturnList.find(p => p.id === id);
+    if (!res) return;
+    const updatedRes = {
+      ...res,
+      filedOn: res.filedOn
+        ? CommonService.parseDDMMYYYY(res.filedOn)
+        : null
+    };
+    setTdsReturnForm(updatedRes);
     setOpenTdsReturns(true);
   }
+
 
   function deleteTdsReturn(e) {
     e.preventDefault();

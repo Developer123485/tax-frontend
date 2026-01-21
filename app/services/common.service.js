@@ -10,8 +10,14 @@ export const CommonService = {
   getCategory,
   isAlphabetSpecial,
   dateAndTimeFormat,
-  formatDate
+  formatDate,
+  parseDDMMYYYY
 };
+
+function parseDDMMYYYY(dateStr) {
+  const [dd, mm, yyyy] = dateStr.split("/");
+  return new Date(`${yyyy}-${mm}-${dd}`);
+}
 
 function formatDate(dateString) {
   const date = new Date(dateString);
