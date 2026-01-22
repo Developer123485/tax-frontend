@@ -22,7 +22,7 @@ export default function SearchableDropdown(props) {
 
     return (
         <Dropdown
-            show={showDropdown}
+            show={!props.disabled && showDropdown}
             onToggle={() => setShowDropdown(!showDropdown)}
             onSelect={handleSelect}
         >

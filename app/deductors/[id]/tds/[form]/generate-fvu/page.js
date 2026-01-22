@@ -20,6 +20,7 @@ import { apiUrl } from "@/app/config";
 import axios from "axios";
 import ProcessPopup from "@/app/components/modals/processing";
 import EnableExtensionModal from "@/app/components/form/chrome-extension";
+import SearchableDropdown from "@/app/components/deductors/searchable-dropdown";
 
 export default function GenerateFVU({ params }) {
   const resolvedParams = use(params);
@@ -31,6 +32,7 @@ export default function GenerateFVU({ params }) {
   const [isDirectLoading, setIsDirectLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [fromDate, setFromDate] = useState(null);
+  const [tdsReturnId, setTdsReturnId] = useState(null);
   const [toDate, setToDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [isDownloadLoading, setIsDownloadLoading] = useState(false);
@@ -181,7 +183,10 @@ export default function GenerateFVU({ params }) {
       .then((res) => {
         if (res) {
           setInterestAndfines(res);
-          setTokenNo(res.tokenNo);
+          setIsDeductorChange(res.isChangeDeductorAddress);
+          setIsResponsibleChange(res.isChangeResponsibleAddress);
+          setIsTdsReturn(res.isChangeTdsReturn);
+          setTdsReturnId(res.tdsReturnId);
         }
       }).catch(e => {
         if (e?.response?.data?.errorMessage) {
@@ -285,10 +290,13 @@ export default function GenerateFVU({ params }) {
       isChangeDeductorAddress: isDeductorChange,
       isChangeResponsibleAddress: isResponsibleChange,
       isChangeTdsReturn: isTdsReturn,
-      tokenNo: tokenNo,
+      tdsReturnId: tdsReturnId,
+      categoryId: parseInt(searchParams.get("categoryId")),
+      quarter: searchParams.get("quarter"),
+      financialYear: searchParams.get("financial_year"),
     }
     await DeductorsService.updateDeductorFvu(model, deductorId);
-    setIsDirty(null);
+    setIsDirty(false);
   }
 
   const fileSelectHandler = (event) => {
@@ -863,7 +871,8 @@ export default function GenerateFVU({ params }) {
                           value={"N"}
                           checked={isTdsReturn == "N"}
                           onChange={(e) => {
-                            setIsTdsReturn("N")
+                            setIsTdsReturn("N");
+                            setTdsReturnId(null);
                             setIsDirty(true);
                           }}
                         />
@@ -875,14 +884,25 @@ export default function GenerateFVU({ params }) {
                   </div>
                 </div>
                 <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
-                  <div className="col-md-9">
+                  <div className="col-md-7">
                     <p className="mb-0">
                       Please provide the 15-digit Token Number (Provisional Receipt Number)
                       of the last TDS return filed
                     </p>
                   </div>
-                  <div className="col-md-3 d-flex justify-content-end">
-                    <input
+                  <div className="col-md-5">
+                    {interestAndfines?.tokenList && <SearchableDropdown
+                      id={tdsReturnId}
+                      options={interestAndfines?.tokenList}
+                      disabled={isTdsReturn == "N"}
+                      url={`/deductors/${deductorId}/tds/tds-return?financial_year=${searchParams.get("financial_year")}`}
+                      setEventId={(e) => {
+                        setTdsReturnId(e);
+                        setIsDirty(true);
+                      }}
+                    />
+                    }
+                    {/* <input
                       type="text"
                       placeholder="15 Digit PRN"
                       className="form-control"
@@ -892,13 +912,13 @@ export default function GenerateFVU({ params }) {
                       onChange={(e) => {
                         setTokenNo(e.target.value);
                         if (e.target.value && e.target.value.length == 15) {
-                          setIsDirty(true);
+                          setIsDirty(!isDirty);
                         }
                         if (tokenNo && !e.target.value) {
-                          setIsDirty(true);
+                          setIsDirty(!isDirty);
                         }
                       }}
-                    />
+                    /> */}
                   </div>
                   <span className="text-danger"> {tokenError}</span>
                 </div>
