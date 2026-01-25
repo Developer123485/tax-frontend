@@ -272,8 +272,6 @@ export default function AddDeductor() {
       deductorDetail.deductorTan &&
       deductorDetail.deductorTan.length === 10
     ) {
-
-
       const regx = tanRegex.test(
         deductorDetail.deductorTan.toLocaleUpperCase()
       );

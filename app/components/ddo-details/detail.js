@@ -80,15 +80,19 @@ export default function DDODetail(props) {
                         <span>Tan</span>
                         <span className="text-danger"> *</span>
                     </label>
-
                     <input
                         type="text"
-                        placeholder=""
                         className="form-control"
                         id="tan"
+                        placeholder="ABCD10787A"
                         maxLength={10}
-                        value={ddoDetail.tan}
+                        value={
+                            ddoDetail.tan
+                                ? ddoDetail.tan.toUpperCase()
+                                : ""
+                        }
                         onChange={(e) => {
+                            e.target.value = e.target.value.trim().toUpperCase();
                             handleInput("tan", e);
                         }}
                     />

@@ -132,6 +132,20 @@ export default function AddDdoDetail({ params }) {
         if (!ddoDetail.tan) {
             tanError = "DDO tan is required";
         }
+        if (ddoDetail.tan && ddoDetail.tan.length != 10) {
+            tanError = "The deductor tan must be 10 digits.";
+        }
+        if (
+            ddoDetail.tan &&
+            ddoDetail.tan.length === 10
+        ) {
+            const regx = tanRegex.test(
+                ddoDetail.tan.toLocaleUpperCase()
+            );
+            if (!regx) {
+                tanError = "DDO tan is Invalid";
+            }
+        }
         if (!ddoDetail.state) {
             stateError = "DDO State is required";
         }
@@ -144,6 +158,7 @@ export default function AddDdoDetail({ params }) {
         if (!ddoDetail.pincode) {
             pincodeError = "DDO pincode is required";
         }
+
         if (
             nameError ||
             tanError ||
