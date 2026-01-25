@@ -55,17 +55,21 @@ export default function ImportDeductorTXTPopup(props) {
     const lines = text.split(/\r?\n/).filter((line) => line.trim() !== "");
     lines.map((line) => {
       const fields = line.split("^");
-      if (fields && fields[1] == "BH") {
-        const obj = {
-          deductorName: fields[18] || "",
-          pan: fields[14] || "",
-          tan: fields[12] || "",
-          financialYear:
-            fields[16].substring(0, 4) + "-" + fields[16].substring(6, 4) || "",
-          form: fields[4] || "",
-          quarter: fields[17] || "",
-        };
-        setDeductorInfo(obj);
+      if (fields[4] && (fields[4] == "24Q" || fields[4] == "26Q" || fields[4] == "27Q" || fields[4] == "27EQ")) {
+        if (fields && fields[1] == "BH") {
+          const obj = {
+            deductorName: fields[18] || "",
+            pan: fields[14] || "",
+            tan: fields[12] || "",
+            financialYear:
+              fields[16].substring(0, 4) + "-" + fields[16].substring(6, 4) || "",
+            form: fields[4] || "",
+            quarter: fields[17] || "",
+          };
+          setDeductorInfo(obj);
+        }
+      } else {
+        toast.error("Select Valid file")
       }
     });
   };
@@ -198,7 +202,7 @@ export default function ImportDeductorTXTPopup(props) {
                   </div>
                 </div>
               </div>
-              {selectedFile && (
+              {selectedFile && deductorInfo?.deductorName && (
                 <>
                   <div className="col-md-12 my-4">
                     <div className="border border-1 px-1 py-2 px-md-3 py-md-3 rounded-3">
