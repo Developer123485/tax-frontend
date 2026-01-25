@@ -49,29 +49,17 @@ export default function DDOWiseDetail(props) {
     return (
         <>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <label htmlFor="inputddo" className="form-label">
                         <span>DDO Details</span>
                         <span className="text-danger"> *</span>
                     </label>
-                    <div className="d-flex align-items-center">
-                        {ddoDropdowns && ddoDropdowns.length > 0 && <SearchableDropdown
-                            setEventId={props.setDdoId}
-                            id={ddoWiseDetail.ddoDetailId}
-                            options={ddoDropdowns}
-                        ></SearchableDropdown>}
-                        <button
-                            type="button"
-                            className="btn btn-primary w-100 ms-3"
-                            onClick={(e) =>
-                                router.push(
-                                    `/deductors/${props.deductorId}/tds/24g-form/ddo-details/detail`
-                                )
-                            }
-                        >
-                            Add
-                        </button>
-                    </div>
+                    <SearchableDropdown
+                        setEventId={props.setDdoId}
+                        id={ddoWiseDetail.ddoDetailId}
+                        url={`/deductors/${props.deductorId}/tds/24g-form/ddo-details/detail`}
+                        options={ddoDropdowns}
+                    ></SearchableDropdown>
                     <div className="">
                         {isDirty && ddoErrors.nameError && (
                             <span className="text-danger">
@@ -80,7 +68,7 @@ export default function DDOWiseDetail(props) {
                         )}
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label htmlFor="taxAmount" className="form-label">
                         <span>Tax Amount</span>
                     </label>
@@ -103,7 +91,7 @@ export default function DDOWiseDetail(props) {
                         </span>
                     )}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label htmlFor="totalTds" className="form-label">
                         <span>Total TDS</span>
                     </label>
@@ -126,7 +114,7 @@ export default function DDOWiseDetail(props) {
                         </span>
                     )}
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <label htmlFor="natureDeduction" className="form-label">
                         <span>Nature Of Deduction</span>
                     </label>

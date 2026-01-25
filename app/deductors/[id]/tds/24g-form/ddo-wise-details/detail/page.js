@@ -142,10 +142,10 @@ export default function AddDdoWiseDetail({ params }) {
             totalTdsError = "Total Tds is required";
         }
         if (!ddoWiseDetail.ddoDetailId) {
-            totalTdsError = "DDO detail is required";
+            nameError = "DDO detail is required";
         }
         if (!ddoWiseDetail.taxAmount) {
-            nameError = "Tax Amount is required";
+            taxAmountError = "Tax Amount is required";
         }
         if (
             totalTdsError ||
