@@ -337,9 +337,11 @@ export default function TDSReturn({ params }) {
   }
 
   function resetForm() {
+    setIsDirty(false);
     setTdsReturnForm((prevState) => ({
       ...prevState,
       ["rNumber"]: null,
+      ["id"]: null,
       ["formName"]: null,
       ["quarter"]: null,
       ["uploadType"]: "Regular",
