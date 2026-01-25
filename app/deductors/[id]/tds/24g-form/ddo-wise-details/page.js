@@ -19,6 +19,7 @@ import { FormsService } from "@/app/services/forms.service";
 import api from "@/app/utils/interceptors";
 import { saveAs } from "file-saver";
 import { FuvValidateReturnService } from "@/app/services/fuvValidateReturn.service";
+import { DeductorsService } from "@/app/services/deductors.service";
 
 export default function DdoWiseDetails({ params }) {
     const resolvedParams = use(params);
@@ -34,8 +35,10 @@ export default function DdoWiseDetails({ params }) {
     const [deleteId, setDeleteId] = useState(0);
     const [financialYear, setFinancialYear] = useState("");
     const [selectedMonth, setSelectedMonth] = useState("");
+    const [deductorInfo, setDeductorInfo] = useState(null);
     const [ddoWiseDetails, setDdoWiseDetails] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
+    const [isDownloadLoading, setIsDownloadLoading] = useState(false);
     const [confirmTitle, setConfirmTitle] = useState("");
     const [totalItems, setTotalItems] = useState(0);
     const searchParams = useSearchParams(null);
@@ -123,7 +126,17 @@ export default function DdoWiseDetails({ params }) {
         setFinancialYears(yearList);
         setFinancialYear(fy);
         setSelectedMonth(String(currentMonth + 1).padStart(2, "0"));
+        getDeductor(deductorId);
     }, []);
+
+    function getDeductor(deductorId) {
+        DeductorsService.getDeductor(deductorId).then(
+            (res) => {
+                if (res) {
+                    setDeductorInfo(res);
+                }
+            })
+    }
 
     useEffect(() => {
         fetchDdoWiseDetails();
@@ -208,6 +221,34 @@ export default function DdoWiseDetails({ params }) {
             setIsLoading(false);
         }
     };
+
+    async function downloadFvuFiles(e) {
+        e.preventDefault();
+        setIsDownloadLoading(true);
+        const dedName = deductorInfo.deductorName.replace(/[^a-zA-Z0-9 ]/g, "").trim();
+        try {
+            const response = await fetch(`https://py-api.taxvahan.site/get-fvu24g-file?param1=${dedName}&param2=${financialYear}&param3=${selectedMonth}}`);
+            if (!response.ok) {
+                toast.error("Failed to download ZIP");
+                return;
+            }
+            const contentType = response.headers.get("Content-Type");
+            // If response is JSON instead of ZIP, it's likely an error message
+            if (contentType && contentType.includes("application/json")) {
+                toast.error("No file is available for download. Please click on 'Generate FVU'.");
+                return;
+            }
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const fileName = deductorInfo.deductorName + "_" + financialYear + "_" + selectedMonth + ".zip";
+            saveAs(url, fileName);
+            setIsFileSaved(true);
+        } catch (error) {
+            toast.error(error.message || "Download failed.");
+        } finally {
+            setIsDownloadLoading(false);
+        }
+    }
 
     return (
         <>
@@ -315,8 +356,8 @@ export default function DdoWiseDetails({ params }) {
                 <div className="container">
                     <div className="bg-white border border-1 rounded-3 pb-2">
                         <div className="row px-3 py-3 align-items-center datatable-header">
-                            <div className="col-md-3">
-                                <h4 className="mb-0">DDO Wise Details</h4>
+                            <div className="col-md-2">
+                                <h4 className="mb-0">DDO Details</h4>
                             </div>
                             <div className="col-md-2">
                                 <select className="form-select" value={financialYear} onChange={(e) => setFinancialYear(e.target.value)}>
@@ -328,17 +369,28 @@ export default function DdoWiseDetails({ params }) {
                                     {monthsShort.map((m, i) => <option key={i} value={m.value}>{m.label}</option>)}
                                 </select>
                             </div>
-                            <div className="col-md-6 d-flex align-items-center justify-content-end">
-                                <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download 24G</button>
+                            <div className="col-md-7 d-flex align-items-center justify-content-end">
+                                <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download</button>
                                 <button className="btn btn-outline-primary me-3" onClick={() => {
                                     setConfirmTitle("Bulk DDO Wise Details");
                                     setDeleteConfirm(true);
-                                }} disabled={!selectedData?.length}>Bulk Delete</button>
+                                }} disabled={!selectedData?.length}>Bulk/Delete</button>
                                 <button className="btn btn-primary me-3" onClick={() => {
                                     setConfirmTitle("All DDO Wise Details");
                                     setDeleteConfirm(true);
                                 }} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Delete All</button>
-                                <button className="btn btn-primary" onClick={generateFuv} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Generate FVU</button>
+                                <button className="btn btn-primary me-3" onClick={generateFuv} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Generate FVU</button>
+                                <button type="button" disabled={isDownloadLoading} onClick={(e) => downloadFvuFiles(e)} className="btn btn-primary ">
+                                    {isDownloadLoading && (
+                                        <span
+                                            className="spinner-grow spinner-grow-sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                    )}
+                                    Download files
+                                </button>
+
                             </div>
                         </div>
 
@@ -350,7 +402,7 @@ export default function DdoWiseDetails({ params }) {
                                         fixedHeaderScrollHeight="340px"
                                         columns={columns}
                                         data={ddoWiseDetails.ddoWiseDetailList}
-                                        
+
                                         pagination
                                         paginationServer
                                         paginationTotalRows={ddoWiseDetails.totalRows}

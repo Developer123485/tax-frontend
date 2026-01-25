@@ -310,11 +310,8 @@ export default function GenerateFVU({ params }) {
     // Step 1: Ask user to pick folder RIGHT NOW inside user gesture
     setTokenError("");
 
-    if (isTdsReturn === "Y" && !tokenNo) {
-      setTokenError("Token number is required");
-      return;
-    } else if (isTdsReturn === "Y" && tokenNo.length !== 15) {
-      setTokenError("Token number should be 15 digits");
+    if (isTdsReturn === "Y" && !tdsReturnId) {
+      setTokenError("Token is required");
       return;
     }
     if (!selectedData && interestAndfines?.isDownloadCSIAllow == true) {
@@ -883,26 +880,26 @@ export default function GenerateFVU({ params }) {
                     </div>
                   </div>
                 </div>
-                <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
-                  <div className="col-md-7">
-                    <p className="mb-0">
-                      Please provide the 15-digit Token Number (Provisional Receipt Number)
-                      of the last TDS return filed
-                    </p>
-                  </div>
-                  <div className="col-md-5">
-                    {interestAndfines?.tokenList && <SearchableDropdown
-                      id={tdsReturnId}
-                      options={interestAndfines?.tokenList}
-                      disabled={isTdsReturn == "N"}
-                      url={`/deductors/${deductorId}/tds/tds-return?financial_year=${searchParams.get("financial_year")}`}
-                      setEventId={(e) => {
-                        setTdsReturnId(e);
-                        setIsDirty(true);
-                      }}
-                    />
-                    }
-                    {/* <input
+                {isTdsReturn == "N" &&
+                  <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
+                    <div className="col-md-7">
+                      <p className="mb-0">
+                        Please provide the 15-digit Token Number (Provisional Receipt Number)
+                        of the last TDS return filed
+                      </p>
+                    </div>
+                    <div className="col-md-5">
+                      <SearchableDropdown
+                        id={tdsReturnId}
+                        options={interestAndfines?.tokenList}
+                        disabled={isTdsReturn == "N"}
+                        url={`/deductors/${deductorId}/tds/tds-return?financial_year=${searchParams.get("financial_year")}`}
+                        setEventId={(e) => {
+                          setTdsReturnId(e);
+                          setIsDirty(true);
+                        }}
+                      />
+                      {/* <input
                       type="text"
                       placeholder="15 Digit PRN"
                       className="form-control"
@@ -919,9 +916,10 @@ export default function GenerateFVU({ params }) {
                         }
                       }}
                     /> */}
+                    </div>
+                    <span className="text-danger"> {tokenError}</span>
                   </div>
-                  <span className="text-danger"> {tokenError}</span>
-                </div>
+                }
                 <div className="row px-2 py-3 bg-light-blue rounded-4 align-items-center">
                   {interestAndfines?.isDownloadCSIAllow &&
                     <>
