@@ -880,7 +880,7 @@ export default function GenerateFVU({ params }) {
                     </div>
                   </div>
                 </div>
-                {isTdsReturn == "N" &&
+                {isTdsReturn == "Y" &&
                   <div className="row px-2 py-3 mb-3 bg-light-blue rounded-4 align-items-center">
                     <div className="col-md-7">
                       <p className="mb-0">
