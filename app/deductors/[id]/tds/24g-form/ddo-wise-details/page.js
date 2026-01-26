@@ -246,7 +246,6 @@ export default function DdoWiseDetails({ params }) {
             const url = URL.createObjectURL(blob);
             const fileName = deductorInfo.deductorName + "_" + financialYear + "_" + selectedMonth + ".zip";
             saveAs(url, fileName);
-            setIsFileSaved(true);
         } catch (error) {
             toast.error(error.message || "Download failed.");
         } finally {
