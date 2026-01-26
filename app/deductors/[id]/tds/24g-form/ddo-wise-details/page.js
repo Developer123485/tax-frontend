@@ -226,8 +226,12 @@ export default function DdoWiseDetails({ params }) {
         e.preventDefault();
         setIsDownloadLoading(true);
         const dedName = deductorInfo.deductorName.replace(/[^a-zA-Z0-9 ]/g, "").trim();
+        const month = selectedMonth.toString();
+        const monthName = new Date(2026, parseInt(month) - 1)
+            .toLocaleString('en-US', { month: 'long' });
+
         try {
-            const response = await fetch(`https://py-api.taxvahan.site/get-fvu24g-file?param1=${dedName}&param2=${financialYear}&param3=${selectedMonth}}`);
+            const response = await fetch(`https://py-api.taxvahan.site/get-fvu24g-file?param1=${dedName}&param2=${financialYear}&param3=${monthName}`);
             if (!response.ok) {
                 toast.error("Failed to download ZIP");
                 return;
