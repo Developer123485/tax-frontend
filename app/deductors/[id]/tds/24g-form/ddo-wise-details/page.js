@@ -379,8 +379,15 @@ export default function DdoWiseDetails({ params }) {
                                     setConfirmTitle("All DDO Wise Details");
                                     setDeleteConfirm(true);
                                 }} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Delete All</button>
-                                <button className="btn btn-primary me-3" onClick={generateFuv} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Generate FVU</button>
-                                <button type="button" disabled={isDownloadLoading} onClick={(e) => downloadFvuFiles(e)} className="btn btn-primary ">
+                                <button className="btn btn-primary me-3" onClick={generateFuv} disabled={loading || !ddoWiseDetails?.ddoWiseDetailList?.length}>
+                                    {loading && (
+                                        <span
+                                            className="spinner-grow spinner-grow-sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                    )}Generate FVU</button>
+                                <button type="button" disabled={isDownloadLoading || !ddoWiseDetails?.ddoWiseDetailList?.length} onClick={(e) => downloadFvuFiles(e)} className="btn btn-primary ">
                                     {isDownloadLoading && (
                                         <span
                                             className="spinner-grow spinner-grow-sm"
