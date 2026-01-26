@@ -268,15 +268,20 @@ export default function DDODetail(props) {
                     <label htmlFor="ddoRegNo" className="form-label">
                         <span>DDO Reg No</span>
                     </label>
-
                     <input
                         type="text"
                         placeholder=""
                         className="form-control"
+                        maxLength={10}
                         id="ddoRegNo"
                         value={ddoDetail.ddoRegNo}
                         onChange={(e) => handleInput("ddoRegNo", e)}
                     />
+                    {isDirty && ddoErrors.ddoRegNoError && (
+                        <span className="text-danger">
+                            {ddoErrors.ddoRegNoError}
+                        </span>
+                    )}
                 </div>
                 <div className="col-md-3">
                     <label htmlFor="ddoCode" className="form-label">

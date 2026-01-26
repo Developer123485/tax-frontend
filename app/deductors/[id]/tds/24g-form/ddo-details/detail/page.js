@@ -78,6 +78,7 @@ export default function AddDdoDetail({ params }) {
         cityError: "",
         stateError: "",
         pincodeError: "",
+        ddoRegNoError: "",
     });
     useEffect(() => {
         EnumService.getEnumStatues().then((res) => {
@@ -97,6 +98,7 @@ export default function AddDdoDetail({ params }) {
         ddoDetail.address1,
         ddoDetail.pincode,
         ddoDetail.city,
+        ddoDetail.ddoRegNo
     ]);
 
 
@@ -126,6 +128,7 @@ export default function AddDdoDetail({ params }) {
         let cityError = "";
         let stateError = "";
         let pincodeError = "";
+        let ddoRegNoError = "";
         if (!ddoDetail.name) {
             nameError = "DDO name is required";
         }
@@ -134,6 +137,9 @@ export default function AddDdoDetail({ params }) {
         }
         if (ddoDetail.tan && ddoDetail.tan.length != 10) {
             tanError = "The deductor tan must be 10 digits.";
+        }
+        if (ddoDetail.ddoRegNo && ddoDetail.ddoRegNo.length != 10) {
+            ddoRegNoError = "The ddoRegNo must be 10 digits.";
         }
         if (
             ddoDetail.tan &&
@@ -165,7 +171,8 @@ export default function AddDdoDetail({ params }) {
             address1Error ||
             cityError ||
             stateError ||
-            pincodeError
+            pincodeError ||
+            ddoRegNoError
         ) {
             setDdoErrors((prevState) => ({
                 ...prevState,
@@ -174,7 +181,8 @@ export default function AddDdoDetail({ params }) {
                 address1Error,
                 cityError,
                 stateError,
-                pincodeError
+                pincodeError,
+                ddoRegNoError
             }));
             return false;
         }
@@ -185,7 +193,8 @@ export default function AddDdoDetail({ params }) {
             address1Error,
             cityError,
             stateError,
-            pincodeError
+            pincodeError,
+            ddoRegNoError
         }));
         return true;
     }
