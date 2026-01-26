@@ -21,7 +21,21 @@ import { saveAs } from "file-saver";
 import { FuvValidateReturnService } from "@/app/services/fuvValidateReturn.service";
 import { DeductorsService } from "@/app/services/deductors.service";
 
+
+
 export default function DdoWiseDetails({ params }) {
+    const yearList = [];
+    const currentYear1 = new Date().getFullYear();
+    for (let i = 6; i >= 0; i--) {
+        const start = currentYear1 - i;
+        yearList.push(`${start}-${(start + 1).toString().slice(-2)}`);
+    }
+
+    const now = new Date();
+    const currentMonth = now.getMonth(); // Jan = 0
+    let startYear = now.getFullYear();
+    if (currentMonth < 3) startYear -= 1;
+    const fy = `${startYear}-${(startYear + 1).toString().slice(-2)}`;
     const resolvedParams = use(params);
     const deductorId = resolvedParams?.id;
     const ddoId = resolvedParams?.ddoId;
@@ -33,8 +47,8 @@ export default function DdoWiseDetails({ params }) {
     const [isloading, setIsLoading] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const [deleteId, setDeleteId] = useState(0);
-    const [financialYear, setFinancialYear] = useState("");
-    const [selectedMonth, setSelectedMonth] = useState("");
+    const [financialYear, setFinancialYear] = useState(fy);
+    const [selectedMonth, setSelectedMonth] = useState(String(currentMonth + 1).padStart(2, "0"));
     const [deductorInfo, setDeductorInfo] = useState(null);
     const [ddoWiseDetails, setDdoWiseDetails] = useState(null);
     const [selectedData, setSelectedData] = useState(null);
@@ -46,7 +60,7 @@ export default function DdoWiseDetails({ params }) {
         useState(false);
     const [quarter, setQuarter] = useState("");
     const currentYear = new Date().getFullYear();
-    const [financialYears, setFinancialYears] = useState([]);
+    const [financialYears, setFinancialYears] = useState(yearList);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(50);
 
@@ -110,22 +124,6 @@ export default function DdoWiseDetails({ params }) {
     ];
 
     useEffect(() => {
-        const yearList = [];
-        const currentYear = new Date().getFullYear();
-        for (let i = 6; i >= 0; i--) {
-            const start = currentYear - i;
-            yearList.push(`${start}-${(start + 1).toString().slice(-2)}`);
-        }
-
-        const now = new Date();
-        const currentMonth = now.getMonth(); // Jan = 0
-        let startYear = now.getFullYear();
-        if (currentMonth < 3) startYear -= 1;
-        const fy = `${startYear}-${(startYear + 1).toString().slice(-2)}`;
-
-        setFinancialYears(yearList);
-        setFinancialYear(fy);
-        setSelectedMonth(String(currentMonth + 1).padStart(2, "0"));
         getDeductor(deductorId);
     }, []);
 
@@ -359,7 +357,7 @@ export default function DdoWiseDetails({ params }) {
                 <div className="container">
                     <div className="bg-white border border-1 rounded-3 pb-2">
                         <div className="row px-3 py-3 align-items-center datatable-header">
-                            <div className="col-md-2">
+                            <div className="col-md-4">
                                 <h4 className="mb-0">DDO Details</h4>
                             </div>
                             <div className="col-md-2">
@@ -372,16 +370,16 @@ export default function DdoWiseDetails({ params }) {
                                     {monthsShort.map((m, i) => <option key={i} value={m.value}>{m.label}</option>)}
                                 </select>
                             </div>
-                            <div className="col-md-7 d-flex align-items-center justify-content-end">
-                                <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download</button>
+                            <div className="col-md-5 d-flex align-items-center justify-content-end">
+                                {/* <button className="btn btn-outline-primary me-3" onClick={downloadFile}>Download</button> */}
                                 <button className="btn btn-outline-primary me-3" onClick={() => {
                                     setConfirmTitle("Bulk DDO Wise Details");
                                     setDeleteConfirm(true);
                                 }} disabled={!selectedData?.length}>Bulk/Delete</button>
-                                <button className="btn btn-primary me-3" onClick={() => {
+                                {/* <button className="btn btn-primary me-3" onClick={() => {
                                     setConfirmTitle("All DDO Wise Details");
                                     setDeleteConfirm(true);
-                                }} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Delete All</button>
+                                }} disabled={!ddoWiseDetails?.ddoWiseDetailList?.length}>Delete All</button> */}
                                 <button className="btn btn-primary me-3" onClick={generateFuv} disabled={loading || !ddoWiseDetails?.ddoWiseDetailList?.length}>
                                     {loading && (
                                         <span
