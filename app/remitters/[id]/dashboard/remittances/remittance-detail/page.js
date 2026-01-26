@@ -213,7 +213,10 @@ export default function AddRemittance({ params }) {
     model.dednDateTds,
     model.verificationDate,
     model.remittanceCharIndia,
-    model.reasonNot
+    model.reasonNot,
+    model.incLiabIndiaFlg,
+    model.remAcctBusIncFlg,
+    model.amtToTaxInd
     ]);
 
 
