@@ -213,7 +213,7 @@ export default function DDODetail(props) {
                         onChange={(e) => handleInput("state", e)}
                     >
                         <option defaultValue={""}>Select</option>
-                        {enumList.states?.filter(p => p.value != "OVERSEAS")?.map((option, index) => (
+                        {enumList.ministryState?.filter(p => p.value != "OVERSEAS")?.map((option, index) => (
                             <option key={index} value={option.key}>
                                 {option.value}
                             </option>
