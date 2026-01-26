@@ -392,7 +392,7 @@ export default function RemittanceDetailCA({
                 <div className="col-md-4"></div>
 
                 <div className="col-md-4">
-                    <label className="form-label">Remittance for Royalty <span className="text-danger">*</span></label>
+                    <label className="form-label"><strong>A.</strong > Royalty <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
                         value={model.remForRoyFlg || ""}
@@ -443,7 +443,7 @@ export default function RemittanceDetailCA({
 
                 <div className="col-md-4">
                     <label className="form-label">
-                        In case the remittance is on account of business income
+                        <strong>B.</strong > Business Income
                         <span className="text-danger">*</span>
                     </label>
                     <select
@@ -510,7 +510,7 @@ export default function RemittanceDetailCA({
 
 
                 <div className="col-md-4">
-                    <label className="form-label">Rem On Cap Gain Flg <span className="text-danger">*</span></label>
+                    <label className="form-label"><strong>C.</strong > Capital Gains <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
                         value={model.remOnCapGainFlg || ""}
@@ -584,7 +584,7 @@ export default function RemittanceDetailCA({
                 }
 
                 <div className="col-md-4">
-                    <label className="form-label">Other Rem Dtaa <span className="text-danger">*</span></label>
+                    <label className="form-label"><strong>D.</strong > Other Remittance  <span className="text-danger">*</span></label>
                     <select
                         className="form-select"
                         value={model.otherRemDtaa || ""}
