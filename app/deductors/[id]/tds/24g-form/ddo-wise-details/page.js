@@ -200,7 +200,10 @@ export default function DdoWiseDetails({ params }) {
             await FuvValidateReturnService.generate24GFVU({ financialYear, deductorId, month: selectedMonth });
             toast.success("FVU generated successfully");
         } catch (e) {
-            toast.error(e?.response?.data?.errorMessage || e.message);
+            if (e?.response?.data?.errorMessage)
+                toast.error(e?.response?.data?.errorMessage || e.message);
+            else
+                toast.error(e?.response?.data || e.message);
         } finally {
             setLoading(false);
         }
