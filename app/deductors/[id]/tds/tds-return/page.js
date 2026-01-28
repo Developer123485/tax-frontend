@@ -341,7 +341,7 @@ export default function TDSReturn({ params }) {
     setTdsReturnForm((prevState) => ({
       ...prevState,
       ["rNumber"]: null,
-      ["id"]: null,
+      ["id"]: 0,
       ["formName"]: null,
       ["quarter"]: null,
       ["uploadType"]: "Regular",
