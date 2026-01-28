@@ -70,7 +70,7 @@ export default function ImportDeductorTXTPopup(props) {
           setDeductorInfo(obj);
         }
         else {
-          toast.error("Select Valid file")
+          toast.error("Upload File (Only 24Q, 26Q, 27Q, or 27EQ files are allowed)")
         }
       }
     });
