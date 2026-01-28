@@ -55,8 +55,9 @@ export default function ImportDeductorTXTPopup(props) {
     const lines = text.split(/\r?\n/).filter((line) => line.trim() !== "");
     lines.map((line) => {
       const fields = line.split("^");
-      if (fields[4] && (fields[4] == "24Q" || fields[4] == "26Q" || fields[4] == "27Q" || fields[4] == "27EQ")) {
-        if (fields && fields[1] == "BH") {
+      if (fields && fields[1] == "BH") {
+        if (fields[4] && (fields[4] == "24Q" || fields[4] == "26Q" || fields[4] == "27Q" || fields[4] == "27EQ")) {
+
           const obj = {
             deductorName: fields[18] || "",
             pan: fields[14] || "",
@@ -68,8 +69,9 @@ export default function ImportDeductorTXTPopup(props) {
           };
           setDeductorInfo(obj);
         }
-      } else {
-        toast.error("Select Valid file")
+        else {
+          toast.error("Select Valid file")
+        }
       }
     });
   };
