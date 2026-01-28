@@ -397,12 +397,9 @@ export default function TDSReturn({ params }) {
       }
       tdsReturnForm.deductorId = deductorId;
       tdsReturnForm.fy = searchParams.get("financial_year");
-      debugger
       ReportingService.submitTdsReturn(tdsReturnForm)
         .then((res) => {
-          debugger
-          if (res) {
-            debugger
+          if (res != null) {
             if (res == 0) {
               toast.error("TDS Return for already exist");
             } else {
